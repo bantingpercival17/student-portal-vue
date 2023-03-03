@@ -1,14 +1,19 @@
 import { createStore } from 'vuex'
-
-export default createStore({
-  state: {
+import auth from './module/auth'
+import { SHOW_LOADING_MUTATION } from './storeConstants'
+const store = createStore({
+  modules: {
+    auth
   },
-  getters: {
+  state() {
+    return {
+      showLoading: false
+    }
   },
   mutations: {
-  },
-  actions: {
-  },
-  modules: {
+    [SHOW_LOADING_MUTATION](state, payload) {
+      state.showLoading = payload
+    }
   }
 })
+export default store
