@@ -1,4 +1,4 @@
-import { APPLICANT_LOGIN_ACTION, AUTH_ACTION, AUTO_LOGIN_ACTION, GET_USER_IMAGE, GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, LOGIN_ACTION, LOGOUT_ACTION, SET_USER_TOKEN_MUTATION, TESTING_ACTION } from '@/store/storeConstants'
+import { APPLICANT_LOGIN_ACTION, AUTH_ACTION, AUTO_LOGIN_ACTION, GET_USER_IMAGE, GET_USER_TOKEN, GET_USER_NAME, IS_USER_AUTHENTICATE_GETTER, LOGIN_ACTION, LOGOUT_ACTION, SET_USER_TOKEN_MUTATION, TESTING_ACTION } from '@/store/storeConstants'
 import axios from 'axios'
 import LoginValidation from '@/services/validation/LoginValidation.js'
 export default {
@@ -32,6 +32,9 @@ export default {
 
         [IS_USER_AUTHENTICATE_GETTER]: (state) => {
             return !!state.token
+        },
+        [GET_USER_NAME]: (state) => {
+            return state.name
         }
     },
     actions: {
