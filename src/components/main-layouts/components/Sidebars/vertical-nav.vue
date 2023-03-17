@@ -63,8 +63,8 @@
             </a>
             <ul class="sub-nav collapse" id="sidebar-enrollment" data-bs-parent="#sidebar-menu">
                 <li class="nav-item">
-                    <router-link :class="`nav-link ${checkActive('student-layout.enrollment') ? 'active' : ''}`"
-                        aria-current="page" :to="{ name: 'student-layout.enrollment' }">
+                    <router-link :class="`nav-link ${checkActive('student-layout.enrollment-overview') ? 'active' : ''}`"
+                        aria-current="page" :to="{ name: 'student-layout.enrollment-overview' }">
                         <i class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
                                 <g>
@@ -108,8 +108,8 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a :class="`nav-link ${checkActive(payment) ? 'active' : ''}`" data-bs-toggle="collapse"
-                href="#sidebar-payment" role="button" aria-expanded="false" aria-controls="sidebar-payment">
+            <a :class="`nav-link ${checkActive(payment) ? 'active' : ''}`" data-bs-toggle="collapse" href="#sidebar-payment"
+                role="button" aria-expanded="false" aria-controls="sidebar-payment">
                 <i class="icon">
                     <svg width="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"

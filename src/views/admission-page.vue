@@ -46,6 +46,13 @@
                             {{ errors.message }}
                         </p>
                     </div>
+                    <div v-if="networkError.code" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
+                        role="alert">
+                        <span class="fw-bolder">{{ networkError.code }}</span>
+                        <p class="mt-3">
+                            {{ networkError.message }}
+                        </p>
+                    </div>
                     <div class="contact-form mt-3">
                         <form @submit.prevent="applicantRegister" method="post">
                             <div class="col-md-12">
@@ -390,6 +397,7 @@ export default {
         }
         return {
             errors: [],
+            networkError: [],
             validateClass: '',
             formData
         }
@@ -404,14 +412,18 @@ export default {
                 console.log(response)
                 this.showLoading(false)
                 this.$router.push('/applicant/login')
-
             }).catch((error) => {
-                if (error.response.status === 422) {
-                    this.errors = error.response.data.errors
-                    console.log(this.errors)
-                }
-                this.showLoading(false)
                 console.error(error)
+                if (error.code === 'ERR_NETWORK') {
+                    this.networkError = error
+                } else {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors
+                        console.log(this.errors)
+                    }
+                }
+
+                this.showLoading(false)
             })
         }
     }

@@ -37,7 +37,7 @@ const studentRoute = (prop) => [
   },
   {
     path: '/student/enrollment/overview',
-    name: prop + '.enrollment',
+    name: prop + '.enrollment-overview',
     meta: { auth: true, name: 'Enrollment Overview', user: 'student' },
     component: () => import('../views/student/enrollment/enrollment-overview.vue')
   },

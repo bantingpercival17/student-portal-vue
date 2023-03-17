@@ -1,4 +1,4 @@
-import { AUTH_ACTION, AUTO_LOGIN_ACTION, GET_USER_IMAGE, GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, LOGIN_ACTION, LOGOUT_ACTION, SET_USER_TOKEN_MUTATION, TESTING_ACTION } from '@/store/storeConstants'
+import { APPLICANT_LOGIN_ACTION, AUTH_ACTION, AUTO_LOGIN_ACTION, GET_USER_IMAGE, GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, LOGIN_ACTION, LOGOUT_ACTION, SET_USER_TOKEN_MUTATION, TESTING_ACTION } from '@/store/storeConstants'
 import axios from 'axios'
 import LoginValidation from '@/services/validation/LoginValidation.js'
 export default {
@@ -53,7 +53,12 @@ export default {
                 url: 'student/login'
             })
         },
-
+        async [APPLICANT_LOGIN_ACTION](context, payload) {
+            return context.dispatch(AUTH_ACTION, {
+                ...payload,
+                url: 'applicant/login'
+            })
+        },
         [AUTO_LOGIN_ACTION](context) {
             const userData = localStorage.getItem('userData')
             if (userData) {
@@ -81,6 +86,7 @@ export default {
                     console.log('Save Detials')
                 }
             } catch (error) {
+                console.log(error)
                 console.log(error.response)
                 const errorMessage = LoginValidation.serverError(error.response)
                 console.log(errorMessage)
