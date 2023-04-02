@@ -2,6 +2,7 @@
     <div id="loading">
         <loader />
     </div>
+    <server-loader v-if="showLoading"></server-loader>
     <!-- loader END -->
     <sidebar :minisidebar="sidebarmini" @makeminisidebar="onsidebarmini" />
     <main class="main-content">
@@ -21,22 +22,28 @@
 import loader from '@/components/main-layouts/components/student-loader.vue'
 import PageHeader from '@/components/main-layouts/components/student-page-header.vue'
 import PageFooter from '@/components/main-layouts/components/page-footer.vue'
-/* import Sidebar from '@/components/custom/partials/Sidebars/Sidebar' */
 import sidebar from '@/components/main-layouts/components/Sidebars/side-bar.vue'
-import axios from 'axios'
+import serverLoader from '@/components/main-layouts/components/server-loader.vue'
+import { mapState } from 'vuex'
 export default {
     name: 'student-layout',
     components: {
         PageHeader,
         loader,
         PageFooter,
-        sidebar
+        sidebar,
+        serverLoader
     },
     data() {
         return {
             sidebarmini: false,
             user: null
         }
+    },
+    computed: {
+        ...mapState({
+            showLoading: state => state.showLoading
+        })
     },
     methods: {
         onsidebarmini(e) {
@@ -46,10 +53,5 @@ export default {
             this.sidebarmini = e
         }
     }
-    /* ,async created() {
-        const response = await axios.get('student')
-        this.$store.dispatch('student', response.data.student)
-        console.log(response.data.student)
-    } */
 }
 </script>

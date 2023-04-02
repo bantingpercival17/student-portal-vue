@@ -33,7 +33,7 @@
                             </svg>
                         </i>
                         <i class="sidenav-mini-icon"> CE </i>
-                        <span class="item-name">{{ childItem.name }}</span>
+                        <span class="item-name">{{ childItem.name }} </span>
                     </router-link>
                 </li>
             </ul>

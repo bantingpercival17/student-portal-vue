@@ -4,10 +4,12 @@
             <small>{{ label.toUpperCase() }} <span class="text-danger">*</span></small>
         </label>
         <select :value="value" @input="$emit('update:value', $event.target.value)" class="form-select">
-            <option value="">Select {{label }}</option>
-            <option v-for="item in data" :key="item">
-                {{ item }}</option>
+            <option value="">Select {{ label }}</option>
+            <option v-for="item in data" :key="item" :value="item.id">
+                {{ item.agency_name }}</option>
         </select>
+        <span class="badge bg-danger mt-2" v-if="error">{{
+            error[0] }}</span>
     </div>
 </template>
 <script>

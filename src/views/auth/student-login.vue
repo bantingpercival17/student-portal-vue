@@ -1,13 +1,13 @@
 <template>
     <div class=" row align-items-center">
-        <div class="res-hide col-lg-7 d-md-block d-none p-0">
+        <div class="res-hide col-lg-7 col-md-0 d-md-block d-none p-0">
             <img src="@/assets/resources/banner/bma-building.png" class="img-fluid gradient-main vh-100" alt="images">
         </div>
-        <div class="col-lg-5 auth-padding">
+        <div class="col-lg-5 col-md-12 auth-padding">
             <div class="card-body">
                 <h2 class="mb-2 text-center"><b>STUDENT PORTAL</b></h2>
                 <p class="text-center">SIGN IN</p>
-                <form @submit.prevent="onLogin" class="row g-3">
+                <form @submit.prevent="onLogin" class="row">
                     <div class="">
                         <div class="col-lg-12">
                             <div class="form-group">
