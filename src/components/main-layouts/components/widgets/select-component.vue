@@ -8,6 +8,8 @@
             <option v-for="item in data" :key="item">
                 {{ item }}</option>
         </select>
+        <span class="badge bg-danger mt-2" v-if="error">{{
+            error[0] }}</span>
     </div>
 </template>
 <script>
