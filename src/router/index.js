@@ -87,13 +87,19 @@ const studentRoute = (prop) => [
     path: '/student/onboard/mopm',
     name: prop + '.onboard-mopm',
     meta: { auth: true, name: 'MOPM', user: 'student' },
-    component: () => import('../views/student/dashboard.vue')
+    component: () => import('../views/student/onboard/mopm/mopm-view.vue')
   },
   {
     path: '/student/onboard/enrollment',
     name: prop + '.onboard-enrollment',
     meta: { auth: true, name: 'Onboard Training Enrollment', user: 'student' },
     component: () => import('../views/student/onboard/enrollment/enrollment-overview.vue')
+  },
+  {
+    path: '/student/onboard/mopm/view',
+    name: prop + '.onboard-mopm-view',
+    meta: { auth: true, name: 'Performance Report View', user: 'student' },
+    component: () => import('../views/student/onboard/mopm/performance-report-view.vue')
   }
 ]
 const routes = [
