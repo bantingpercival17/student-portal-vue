@@ -57,8 +57,8 @@
                                     <td></td>
                                     <td>
                                         <router-link class="btn btn-sm btn-outline-primary"
-                                            :to="{ name: 'student-layout.onboard-mopm-view', query:{v:data2.id} }">view</router-link>
-                                        <button class="btn btn-sm btn-outline-info">report</button>
+                                            :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(data2.id) } }">view</router-link>
+                                       <button class="btn btn-sm btn-outline-info">report</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -195,6 +195,9 @@ export default {
         }),
         setData(event) {
             this.shipboardId = event.target.getAttribute('data-id')
+        },
+        encrypt(data) {
+            return btoa(data)
         },
         async submitForm() {
             this.showLoading(true)
