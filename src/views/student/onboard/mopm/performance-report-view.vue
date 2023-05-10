@@ -106,12 +106,11 @@
                                     </p>
                                     <div v-if="task.length > 2">
                                         <small class="form-label"><b>REMARKS<sup class="text-danger">*</sup></b></small>
-                                        <label for="" class="form-control">{{ report.remarks }}</label>
+                                        <label for="" class="form-control">{{ report.remark }}</label>
                                     </div>
                                     <div class="form-group">
                                         <small class="form-label"> <b> ATTACH FILES <sup
                                                     class="text-danger">*</sup></b></small>
-
                                         <table>
                                             <tbody>
                                                 <tr>
@@ -126,46 +125,126 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                            </div>
-                            <div v-else>
-                                <form @submit.prevent="submitForm(item, task[0])" method="post" id="form_{{ task[1] }}"
-                                    enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <p class="h6">
-                                            <b>{{ task[0].toUpperCase() }}</b>
-                                        </p>
-                                        <div v-if="task.length > 2">
-                                            <div class="form-group">
-                                                <small class="form-label"><b>REMARKS<sup
-                                                            class="text-danger">*</sup></b></small>
-                                                <textarea class="form-control" v-model="forms.remarks[item]" cols="30"
-                                                    rows="3"></textarea>
-                                                <div v-if="forms.errors[item]">
-                                                    <span class="badge bg-danger mt-2" v-if="forms.errors[item].remarks">{{
-                                                        forms.errors[item].remarks[0] }}</span>
-                                                </div>
+                                    <div class="document-status">
+                                        <div class="mt-2">
+                                            <div v-if="report.is_approved">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-12">
+                                                        <small class="fw-bolder text-muted">DOCUMENT STATUS</small><br>
+                                                        <div v-if="report.is_approved === 1">
+                                                            <p class="badge bg-primary h5">APPROVED DOCUMENTS</p>
+                                                        </div>
+                                                        <div v-else>
+                                                            <p class="badge bg-danger h5">DISAPPROVED DOCUMENTS</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-12">
+                                                        <small class="fw-bolder text-muted">DOCUMENT VERIFIER:</small><br>
+                                                        <p class="badge bg-info h5">{{ staffName(report.staff) }}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-12">
+                                                        <small class="fw-bolder text-muted">DATE VERIFIED:</small><br>
+                                                        <p class="badge bg-info h5">{{ getFormatDate(report.updated_at)
+                                                        }}
+                                                        </p>
+                                                    </div>
+                                                    <div v-if="report.feedback != null" class="col-lg-12 col-md-12">
+                                                        <small class="fw-bolder text-muted">REMARKS:</small><br>
+                                                        <label for="" class="form-control">{{ report.feedback }}</label>
+                                                    </div>
 
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <small class="form-label"><b>ATTACH FILES<sup
-                                                        class="text-danger">*</sup></b></small>
-                                            <div class="form-group">
-                                                <input type="file" class="form-control" ref="fileInput" multiple
-                                                    v-on:change="handleFileUpload($event, item)">
-                                                <div v-if="forms.errors[item]">
-                                                    <span class="badge bg-danger mt-2" v-if="forms.errors[item].files">{{
-                                                        forms.errors[item].files[0] }}</span>
+
+                                                    <div v-if="report.is_approved === 2">
+                                                        <form @submit.prevent="submitForm(item, task[0])" method="post"
+                                                            id="form_{{ task[1] }}" enctype="multipart/form-data">
+                                                            <div class="form-group">
+                                                                <p class="h6">
+                                                                    <b>{{ task[0].toUpperCase() }}</b>
+                                                                </p>
+
+                                                                <div class="form-group">
+                                                                    <small class="form-label"><b>ATTACH FILES<sup
+                                                                                class="text-danger">*</sup></b></small>
+                                                                    <div class="form-group">
+                                                                        <input type="file" class="form-control"
+                                                                            ref="fileInput" multiple
+                                                                            v-on:change="handleFileUpload($event, item)">
+                                                                        <div v-if="forms.errors[item]">
+                                                                            <span class="badge bg-danger mt-2"
+                                                                                v-if="forms.errors[item].files">{{
+                                                                                    forms.errors[item].files[0] }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div v-if="task.length > 2">
+                                                                    <div class="form-group">
+                                                                        <small class="form-label"><b>REMARKS<sup
+                                                                                    class="text-danger">*</sup></b></small>
+                                                                        <textarea class="form-control"
+                                                                            v-model="forms.remarks[item]" cols="30"
+                                                                            rows="3"></textarea>
+                                                                        <div v-if="forms.errors[item]">
+                                                                            <span class="badge bg-danger mt-2"
+                                                                                v-if="forms.errors[item].remarks">{{
+                                                                                    forms.errors[item].remarks[0] }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="float-end">
+                                                                    <button class="btn btn-primary"
+                                                                        type="submit">SUBMIT</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="float-end">
-                                            <button class="btn btn-primary" type="submit">SUBMIT</button>
+                                            <div v-else>
+                                                <p class="badge bg-info h5">DOCUMENTS IS UNDER VERIFICATION OF OBT OFFICER
+                                                </p>
+                                            </div>
+
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
+                        </div>
+                        <div v-if="checkDocument(task[0])">
+                            <form @submit.prevent="submitForm(item, task[0])" method="post" id="form_{{ task[1] }}"
+                                enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <p class="h6">
+                                        <b>{{ task[0].toUpperCase() }}</b>
+                                    </p>
+
+                                    <div class="form-group">
+                                        <small class="form-label"><b>ATTACH FILES<sup
+                                                    class="text-danger">*</sup></b></small>
+                                        <div class="form-group">
+                                            <input type="file" class="form-control" ref="fileInput" multiple
+                                                v-on:change="handleFileUpload($event, item)">
+                                            <div v-if="forms.errors[item]">
+                                                <span class="badge bg-danger mt-2" v-if="forms.errors[item].files">{{
+                                                    forms.errors[item].files[0] }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-if="task.length > 2">
+                                        <div class="form-group">
+                                            <small class="form-label"><b>REMARKS<sup class="text-danger">*</sup></b></small>
+                                            <textarea class="form-control" v-model="forms.remarks[item]" cols="30"
+                                                rows="3"></textarea>
+                                            <div v-if="forms.errors[item]">
+                                                <span class="badge bg-danger mt-2" v-if="forms.errors[item].remarks">{{
+                                                    forms.errors[item].remarks[0] }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="float-end">
+                                        <button class="btn btn-primary" type="submit">SUBMIT</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div v-else>
@@ -175,6 +254,17 @@
                                 <p class="h6">
                                     <b>{{ task[0].toUpperCase() }}</b>
                                 </p>
+                                <div class="form-group">
+                                    <small class="form-label"><b>ATTACH FILES<sup class="text-danger">*</sup></b></small>
+                                    <div class="form-group">
+                                        <input type="file" class="form-control" ref="fileInput" multiple
+                                            v-on:change="handleFileUpload($event, item)">
+                                        <div v-if="forms.errors[item]">
+                                            <span class="badge bg-danger mt-2" v-if="forms.errors[item].files">{{
+                                                forms.errors[item].files[0] }}</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div v-if="task.length > 2">
                                     <div class="form-group">
                                         <small class="form-label"><b>REMARKS<sup class="text-danger">*</sup></b></small>
@@ -185,17 +275,6 @@
                                                 forms.errors[item].remarks[0] }}</span>
                                         </div>
 
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <small class="form-label"><b>ATTACH FILES<sup class="text-danger">*</sup></b></small>
-                                    <div class="form-group">
-                                        <input type="file" class="form-control" ref="fileInput" multiple
-                                            v-on:change="handleFileUpload($event, item)">
-                                        <div v-if="forms.errors[item]">
-                                            <span class="badge bg-danger mt-2" v-if="forms.errors[item].files">{{
-                                                forms.errors[item].files[0] }}</span>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="float-end">
@@ -209,7 +288,7 @@
             </div>
         </div>
     </div>
-    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl" ariaLabelled="exampleModalLabel"
+    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xlg" ariaLabelled="exampleModalLabel"
         :ariaHidden="true" contentrole="document">
         <model-header :dismissable="true">
             <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">DOCUMENT VIEWER
@@ -282,6 +361,7 @@ export default {
             isEdit: false,
             errors: [],
             performanceReport: [],
+            documents: [],
             tasks: [],
             formLoading: '',
             forms: {
@@ -315,6 +395,7 @@ export default {
             }
         }).then((response) => {
             this.performanceReport = response.data.data // Set the Performance Report Information
+            this.documents = this.performanceReport.document_attachments
             this.tasks = response.data.documents // Set the Document of Performance Report
             this.isLoading = false
         }).catch((error) => {
@@ -396,11 +477,40 @@ export default {
         },
         getFileType(data) {
             const extension = data.split('.').pop()
-            return 'icon-' + extension
+            return 'icon-' + extension.toLowerCase()
         },
         documentViewer(file) {
-           this.link = ''
-           this.link = file
+            this.link = ''
+            this.link = file
+        },
+        checkDocument(data) {
+            let status = true
+            this.documents.forEach((item, index) => {
+                if (item.journal_type === data) {
+                    status = false
+                }
+            })
+            return status
+        },
+        getFormatDate(inputDate) {
+            // create a new Date object with the input date string
+            var date = new Date(inputDate)
+            // define an array of month names
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ]
+            // get the day, month, and year values from the date object
+            var day = date.getDate()
+            var month = monthNames[date.getMonth()] // add 1 to adjust for 0-indexed months
+            var year = date.getFullYear()
+            // format the date as 'dd/mm/yyyy'
+            const formattedDate = month + ' ' + day + ', ' + year
+            return formattedDate
+        },
+        staffName(data) {
+            const name = data.first_name + ' ' + data.last_name
+            return name.toUpperCase()
         }
     }
 }
