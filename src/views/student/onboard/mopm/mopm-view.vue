@@ -58,7 +58,7 @@
                                     <td>
                                         <router-link class="btn btn-sm btn-outline-primary"
                                             :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(data2.id) } }">view</router-link>
-                                       <button class="btn btn-sm btn-outline-info">report</button>
+                                        <button class="btn btn-sm btn-outline-info">report</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -104,11 +104,11 @@
                                 :error="errors.date_preferred" />
                         </div>
                         <div class="col-md-12 col-lg-6">
-                            <inputComponentV2 label="Inputted to Daily Journal" v-model:value="inputDailyJournal"
-                                :error="errors.input" />
+                            <selectComponent label="Inputted to Daily Journal" :data="yesOrNo"
+                                v-model:value="inputDailyJournal" :error="errors.input" />
                         </div>
                         <div class="col-md-12 col-lg-6">
-                            <inputComponentV2 label="Signed by Officer/Master" v-model:value="signed"
+                            <selectComponent label="Signed by Officer/Master" :data="yesOrNo" v-model:value="signed"
                                 :error="errors.signed" />
                         </div>
                         <div class="col-md-12 col-lg-12">
@@ -139,6 +139,7 @@ import loadingPage from './mopm-loading-view.vue'
 import labelComponent from '@/components/main-layouts/components/widgets/label-component.vue'
 import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 import textAreaComponent from '@/components/main-layouts/components/widgets/text-area-component.vue'
+import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
 import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, SHOW_LOADING_MUTATION } from '@/store/storeConstants'
 import { mapGetters, mapMutations } from 'vuex'
 import Swal from 'sweetalert2'
@@ -147,6 +148,7 @@ export default {
     name: 'ShipboardMonitoringOverview',
     data() {
         return {
+            yesOrNo: ['Yes', 'No'],
             isLoading: true,
             shipboardInformation: [],
             errors: [],
@@ -165,7 +167,8 @@ export default {
         labelComponent,
         inputComponentV2,
         textAreaComponent,
-        loadingPage
+        loadingPage,
+        selectComponent
     },
     computed: {
         ...mapGetters('auth', {

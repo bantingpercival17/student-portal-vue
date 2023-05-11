@@ -62,10 +62,10 @@
                         </div>
                         <div class="col-md-6 col-lg-6">
                             <label-component label="Inputted to Daily Journal"
-                                :value="performanceReport.daily_journal.toString()" />
+                                :value="convertToText(performanceReport.daily_journal)" />
                         </div>
                         <div class="col-md-6 col-lg-6">
-                            <label-component label="Signed by Officer/Master" :value="performanceReport.have_signature.toString()
+                            <label-component label="Signed by Officer/Master" :value="convertToText(performanceReport.have_signature)
                                 " />
                         </div>
                         <div class="col-md-12 col-lg-12">
@@ -196,6 +196,11 @@
                                                                 </div>
                                                             </div>
                                                         </form>
+                                                        <div v-if="forms.errors[item].message">
+                                                            <span class="badge bg-danger mt-2"
+                                                                v-if="forms.errors[item].remarks">{{
+                                                                    forms.errors[item].message }}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -224,8 +229,11 @@
                                             <input type="file" class="form-control" ref="fileInput" multiple
                                                 v-on:change="handleFileUpload($event, item)">
                                             <div v-if="forms.errors[item]">
-                                                <span class="badge bg-danger mt-2" v-if="forms.errors[item].files">{{
-                                                    forms.errors[item].files[0] }}</span>
+                                                <div v-for="(data, index) in forms.errors[item]" :key="index">
+                                                    <span class="badge bg-danger mt-2">{{
+                                                        data[0] }}</span>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -235,7 +243,7 @@
                                             <textarea class="form-control" v-model="forms.remarks[item]" cols="30"
                                                 rows="3"></textarea>
                                             <div v-if="forms.errors[item]">
-                                                <span class="badge bg-danger mt-2" v-if="forms.errors[item].remarks">{{
+                                                <span class="badge bg-danger mt-2" v-if="forms.errors[item].message">{{
                                                     forms.errors[item].remarks[0] }}</span>
                                             </div>
                                         </div>
@@ -245,6 +253,10 @@
                                     </div>
                                 </div>
                             </form>
+                            <div v-if="forms.errors[item]">
+                                <span class="badge bg-danger mt-2" v-if="forms.errors[item].message">{{
+                                    forms.errors[item].message }}</span>
+                            </div>
                         </div>
                     </div>
                     <div v-else>
@@ -282,6 +294,10 @@
                                 </div>
                             </div>
                         </form>
+                        <div v-if="forms.errors[item]">
+                            <span class="badge bg-danger mt-2" v-if="forms.errors[item].message">{{
+                                forms.errors[item].message }}</span>
+                        </div>
                     </div>
                 </div>
 
@@ -511,6 +527,9 @@ export default {
         staffName(data) {
             const name = data.first_name + ' ' + data.last_name
             return name.toUpperCase()
+        },
+        convertToText(data) {
+            return data === 1 ? 'Yes' : 'No'
         }
     }
 }
