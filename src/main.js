@@ -5,4 +5,5 @@ import router from './router'
 import store from './store'
 import globalComponent from './assets/plugins/global-components.js'
 import axios from './axios'
-createApp(App).use(store).use(router).use(globalComponent).use(axios).mount('#app')
+import db from './store/database/index.js'
+createApp(App).use(store).use(router).use(globalComponent).use(axios).use(db).mount('#app')

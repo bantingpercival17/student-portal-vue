@@ -1,17 +1,21 @@
 <template>
-    <div class=" row align-items-center">
-        <div class="res-hide col-lg-7 col-md-0 d-md-block d-none p-0">
-            <img src="@/assets/resources/banner/bma-building.png" class="img-fluid gradient-main vh-100" alt="images">
-        </div>
-        <div class="col-lg-5 col-md-12 auth-padding">
-            <div class="card-body">
+    <div class="row m-0 align-items-center vh-100">
+
+        <div class="col-lg-5 col-md-12 ">
+            <div class="card-body auth-padding">
+                <center>
+                    <img src="@/assets/resources/image/bma-logo-1.png"
+                        class="center img-fluid avatar avatar-100 rounded-circle" alt="logo">
+                </center>
                 <h2 class="mb-2 text-center"><b>STUDENT PORTAL</b></h2>
                 <p class="text-center">SIGN IN</p>
                 <form @submit.prevent="onLogin" class="row">
                     <div class="">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="validationCustomemail" class="form-label">Email</label>
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>EMAIL<span class="text-danger">*</span></small>
+                                </label>
                                 <input type="email" class="form-control border-primary" id="validationCustomemail"
                                     v-model.trim="username">
                                 <span class="badge bg-danger mt-2" v-if="errors.email">{{ errors.email }}</span>
@@ -19,7 +23,9 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="validationCustompassword" class="form-label">Password</label>
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>PASSWORD<span class="text-danger">*</span></small>
+                                </label>
                                 <input type="password" class="form-control border-primary" id="validationCustompassword"
                                     v-model.trim="password">
                                 <span class="badge bg-danger mt-2" v-if="errors.password">{{ errors.password }}</span>
@@ -40,6 +46,9 @@
                     </div>
                 </form>
             </div>
+        </div>
+        <div class="res-hide col-lg-7 col-md-0 d-md-block d-none p-0">
+            <img src="@/assets/resources/banner/bma-building.png" class="img-fluid gradient-main vh-100" alt="images">
         </div>
     </div>
 </template>

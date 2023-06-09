@@ -14,6 +14,26 @@ const defaultchildRoutes = (prop) => [
     name: prop + '.admission',
     meta: { auth: false, name: 'Admission', user: 'guest' },
     component: () => import('../views/admission-page.vue')
+  }
+ /*  {
+    path: '/student/login',
+    name: prop + '.student-login',
+    meta: { auth: false, name: 'Student Login', user: 'guest' },
+    component: () => import('../views/auth/student-login.vue')
+  },
+  {
+    path: '/applicant/login',
+    name: prop + '.applicant-login',
+    meta: { auth: false, name: 'Applicant Login', user: 'guest' },
+    component: () => import('../views/auth/applicant-login.vue')
+  } */
+]
+const authRoute = (prop) => [
+  {
+    path: '/',
+    name: prop + '.home',
+    meta: { auth: false, name: 'Student Login', user: 'guest' },
+    component: () => import('../views/auth/student-login.vue')
   },
   {
     path: '/student/login',
@@ -105,13 +125,19 @@ const studentRoute = (prop) => [
 const routes = [
   {
     path: '/',
+    name: 'auth-layout',
+    component: () => import('../components/main-layouts/auth-layout.vue'),
+    children: authRoute('auth-layout')
+  },
+  {
+    path: '/',
     name: 'app-layout',
     component: () => import('../components/main-layouts/app-layout.vue'),
     children: defaultchildRoutes('app-layout')
   },
   {
     path: '/student',
-    student: 'student-layout',
+    name: 'student-layout',
     component: () => import('../components/main-layouts/student-layout.vue'),
     children: studentRoute('student-layout')
   },

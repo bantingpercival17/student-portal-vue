@@ -1,9 +1,11 @@
 <template>
-  <div class="loader ">
-    <div class="loader-body word-spacing">
+  <center>
+    <div class="loader ">
+      <div class="loader-body word-spacing">
         <h1 class="loader-title fw-bold">BALIWAG MARITIME ACADEMY, INC.</h1>
+      </div>
     </div>
-</div>
+  </center>
 </template>
 <script>
 export default {

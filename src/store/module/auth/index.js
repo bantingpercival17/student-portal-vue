@@ -91,7 +91,8 @@ export default {
             } catch (error) {
                 console.log(error)
                 console.log(error.response)
-                const errorMessage = LoginValidation.serverError(error.response)
+                /* const errorMessage = LoginValidation.serverError(error.response) */
+                const errorMessage = 'Server Offline'
                 console.log(errorMessage)
                 throw errorMessage
             }

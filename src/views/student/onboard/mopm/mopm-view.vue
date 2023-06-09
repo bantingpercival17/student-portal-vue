@@ -144,6 +144,8 @@ import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, SHOW_LOADING_MUTATION } fr
 import { mapGetters, mapMutations } from 'vuex'
 import Swal from 'sweetalert2'
 import axios from 'axios'
+import { getData, putData } from '@/store/database/model.js'
+
 export default {
     name: 'ShipboardMonitoringOverview',
     data() {
@@ -181,10 +183,11 @@ export default {
             headers: {
                 Authorization: 'Bearer ' + this.token
             }
-        }).then((response) => {
+        }).then(async (response) => {
             const data = response.data.data
             console.log(data)
             this.shipboardInformation = data.shipboard_information
+            await putData('myKey', data.shipboard_information)
             console.log(this.shipboardInformation)
             this.isLoading = false
         }).catch((error) => {
