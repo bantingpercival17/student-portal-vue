@@ -13,360 +13,364 @@
             </div>
         </div>
         <div class="card-body">
-            <form @submit.prevent="updateDetails" method="post">
-                <label for="" class="text-primary fw-bolder h4">STUDENT DETAILS</label>
-                <div class="row">
-                    <div class="col-xl col-md">
-                        <input-component label="LAST NAME" v-model:value="lastName" :error="errors.last_name" />
-                    </div>
-                    <div class="col-xl col-md">
-                        <input-component label="FIRST NAME" v-model:value="firstName" :error="errors.first_name" />
-                    </div>
-                    <div class="col-xl col-md">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>MIDDLE NAME <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" v-model="middleName">
-                            <div class="form-check">
-                                <input class="form-check-input input-middle-name" type="checkbox" value="n/a"
-                                    v-model="middleName" id="flexCheckDefault1">
-                                <small class="form-check-label validate-checkbox" data-input="input-middle-name"
-                                    for="flexCheckDefault1">
-                                    I don't have Middle name
-                                </small>
-                            </div>
-                            <span class="badge bg-danger mt-2" v-if="errors.middle_name">{{ errors.middle_name[0] }}</span>
-
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-md">
-                        <input-component label="MIDDLE INITIAL" v-model:value="middleInitial"
-                            :error="errors.middle_initial" />
-                    </div>
-                    <div class="col-xl-2 col-md">
-                        <input-component label="EXTENSION" v-model:value="extensionName" :error="errors.extension_name" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-4 col-md">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>GENDER <span class="text-danger">*</span></small>
-                            </label>
-                            <select name="gender" v-model="gender" id="" class="form-select border border-primary">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-xl col-md-6 mb-xl-0">
-                        <input-component label="HEIGHT - CM" v-model:value="height" :error="errors.height" />
-                    </div>
-                    <div class="col-xl col-md-6 mb-xl-0">
-                        <input-component label="WEIGHT - LBS" v-model:value="weight" :error="errors.weight" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl col-md-4 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>BIRTH DATE <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="date" v-model="birthDate">
-                            <span class="badge bg-danger mt-2" v-if="errors.birth_date">{{ errors.birth_date[0] }}</span>
-                        </div>
-                    </div>
-                    <div class="col-xl-9 col-md-8 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>BIRTH PLACE <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="birthPlace">
-                            <span class="badge bg-danger mt-2" v-if="errors.birth_place">{{ errors.birth_place[0] }}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl col-md-6 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>CIVIL STATUS <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="civilStatus">
-                            <span class="badge bg-danger mt-2" v-if="errors.civil_status">{{ errors.civil_status[0]
-                            }}</span>
-                        </div>
-                    </div>
-                    <div class="col-xl col-md-6 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>NATIONALITY <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="nationality">
-                            <span class="badge bg-danger mt-2" v-if="errors.nationality">{{ errors.nationality[0] }}</span>
-                        </div>
-                    </div>
-                    <div class="col-xl col-md-6 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>RELIGION <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="religion">
-                            <span class="badge bg-danger mt-2" v-if="errors.religion">{{ errors.religion[0] }}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-6 col-md-6 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>CONTACT NUMBER <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="contactNumber">
-                            <span class="badge bg-danger mt-2" v-if="errors.contact_number">{{ errors.contact_number[0]
-                            }}</span>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-md-6 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>EMAIL <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="personalEmail">
-                            <span class="badge bg-danger mt-2" v-if="errors.personal_email">{{ errors.personal_email[0]
-                            }}</span>
-                        </div>
-                    </div>
-                </div>
-                <label for="" class="text-primary fw-bolder h4">ADDRESS</label>
-                <div class="row">
-                    <div class="col-xl-6 col-md-6 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>HOUSE NO. / STREET / BLDG NO <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="street">
-                            <span class="badge bg-danger mt-2" v-if="errors.street">{{ errors.street[0] }}</span>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-md-6 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>BARANGAY <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="barangay">
-                            <span class="badge bg-danger mt-2" v-if="errors.barangay">{{ errors.barangay[0] }}</span>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 col-md-6 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>MUNICIPALITY <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="municipality">
-                            <span class="badge bg-danger mt-2" v-if="errors.municipality">{{ errors.municipality[0]
-                            }}</span>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-6 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>PROVINCE <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="province">
-                            <span class="badge bg-danger mt-2" v-if="errors.province">{{ errors.province[0] }}</span>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-6 mb-xl-0">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>ZIP CODE <span class="text-danger">*</span></small>
-                            </label>
-                            <input class="form-control border border-primary" type="text" v-model="zip_code">
-                            <span class="badge bg-danger mt-2" v-if="errors.zip_code">{{ errors.zip_code[0] }}</span>
-                        </div>
-                    </div>
-                </div>
-                <label for="" class="text-primary fw-bolder h4">EDUCATIONAL DETAILS</label>
-                <br>
-                <label for="" class="text-primary fw-bolder h4">PARENT DETAILS</label>
-                <div class="father-information">
-                    <label for="example-text-input" class="form-control-label text-info"><b>Father's Information</b></label>
+            <div v-if="isLoading">
+            <h2 class="fw-bolder text-info">LOADING</h2>
+            </div>
+            <div v-else>
+                <form @submit.prevent="updateDetails" method="post">
+                    <label for="" class="text-primary fw-bolder h4">STUDENT DETAILS</label>
                     <div class="row">
-                        <div class="col-xl-4 col-md-6 ">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>LAST NAME <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="fatherLastName">
-                                <span class="badge bg-danger mt-2" v-if="errors.father_last_name">{{
-                                    errors.father_last_name[0] }}</span>
-                            </div>
+                        <div class="col-xl col-md">
+                            <input-component label="LAST NAME" v-model:value="lastName" :error="errors.last_name" />
                         </div>
-                        <div class="col-xl-4 col-md-6 ">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>FIRST NAME <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="fatherFirstName">
-                                <span class="badge bg-danger mt-2" v-if="errors.father_first_name">{{
-                                    errors.father_first_name[0] }}</span>
-                            </div>
+                        <div class="col-xl col-md">
+                            <input-component label="FIRST NAME" v-model:value="firstName" :error="errors.first_name" />
                         </div>
-                        <div class="col-xl-4 col-md-6 ">
+                        <div class="col-xl col-md">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
                                     <small>MIDDLE NAME <span class="text-danger">*</span></small>
                                 </label>
-                                <input class="form-control border border-primary" type="text" v-model="fatherMiddleName">
-                                <span class="badge bg-danger mt-2" v-if="errors.father_middle_name">{{
-                                    errors.father_middle_name[0] }}</span>
+                                <input class="form-control form-control-sm border border-primary" v-model="middleName">
+                                <div class="form-check">
+                                    <input class="form-check-input input-middle-name" type="checkbox" value="n/a"
+                                        v-model="middleName" id="flexCheckDefault1">
+                                    <small class="form-check-label validate-checkbox" data-input="input-middle-name"
+                                        for="flexCheckDefault1">
+                                        I don't have Middle name
+                                    </small>
+                                </div>
+                                <span class="badge bg-danger mt-2" v-if="errors.middle_name">{{ errors.middle_name[0]
+                                }}</span>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md">
+                            <input-component label="MIDDLE INITIAL" v-model:value="middleInitial"
+                                :error="errors.middle_initial" />
+                        </div>
+                        <div class="col-xl-2 col-md">
+                            <input-component label="EXTENSION" v-model:value="extensionName"
+                                :error="errors.extension_name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>GENDER <span class="text-danger">*</span></small>
+                                </label>
+                                <select name="gender" v-model="gender" id="" class="form-select form-select-sm border border-primary">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
                             </div>
                         </div>
 
+                        <div class="col-xl col-md-6 mb-xl-0">
+                            <input-component label="HEIGHT - CM" v-model:value="height" :error="errors.height" />
+                        </div>
+                        <div class="col-xl col-md-6 mb-xl-0">
+                            <input-component label="WEIGHT - LBS" v-model:value="weight" :error="errors.weight" />
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-3 col-md-6 ">
+                        <div class="col-xl col-md-4 mb-xl-0">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>BIRTH DATE <span class="text-danger">*</span></small>
+                                </label>
+                                <input class="form-control form-control-sm border border-primary" type="date" v-model="birthDate">
+                                <span class="badge bg-danger mt-2" v-if="errors.birth_date">{{ errors.birth_date[0]
+                                }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-md-8 mb-xl-0">
+                            <input-component label="BIRTH PLACE" v-model:value="birthPlace"
+                                :error="errors.birthPlace" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl col-md-6 mb-xl-0">
+                            <input-component label="CIVIL STATUS" v-model:value="civilStatus"
+                                :error="errors.civil_status" />
+                        </div>
+                        <div class="col-xl col-md-6 mb-xl-0">
+                        
+                            <input-component label="NATIONALITY" v-model:value="middleInitial"
+                                :error="errors.middle_initial" />
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>NATIONALITY <span class="text-danger">*</span></small>
+                                </label>
+                                <input class="form-control border border-primary" type="text" v-model="nationality">
+                                <span class="badge bg-danger mt-2" v-if="errors.nationality">{{ errors.nationality[0]
+                                }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl col-md-6 mb-xl-0">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>RELIGION <span class="text-danger">*</span></small>
+                                </label>
+                                <input class="form-control border border-primary" type="text" v-model="religion">
+                                <span class="badge bg-danger mt-2" v-if="errors.religion">{{ errors.religion[0] }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-md-6 mb-xl-0">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
                                     <small>CONTACT NUMBER <span class="text-danger">*</span></small>
                                 </label>
-                                <input class="form-control border border-primary" type="text" v-model="fatherContactNumber">
-                                <span class="badge bg-danger mt-2" v-if="errors.father_contact_number">{{
-                                    errors.father_contact_number[0] }}</span>
+                                <input class="form-control border border-primary" type="text" v-model="contactNumber">
+                                <span class="badge bg-danger mt-2" v-if="errors.contact_number">{{ errors.contact_number[0]
+                                }}</span>
                             </div>
                         </div>
-                        <div class="col-xl-9 col-md-6">
+                        <div class="col-xl-6 col-md-6 mb-xl-0">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>HIGHEST EDUCATIONAL ATTAINMENT <span class="text-danger">*</span></small>
+                                    <small>EMAIL <span class="text-danger">*</span></small>
                                 </label>
-                                <select v-model="fatherEducational" class="form-select">
-                                    <option value="">Select Educational Attainment</option>
-                                    <option v-for="educational in educationalAttainment" :key="educational">
-                                        {{ educational }}</option>
-                                </select>
+                                <input class="form-control border border-primary" type="text" v-model="personalEmail">
+                                <span class="badge bg-danger mt-2" v-if="errors.personal_email">{{ errors.personal_email[0]
+                                }}</span>
                             </div>
                         </div>
-                        <div class="col-md">
+                    </div>
+                    <label for="" class="text-primary fw-bolder h4">ADDRESS</label>
+                    <div class="row">
+                        <div class="col-xl-6 col-md-6 mb-xl-0">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>EMPLOYMENT STATUS <span class="text-danger">*</span></small>
+                                    <small>HOUSE NO. / STREET / BLDG NO <span class="text-danger">*</span></small>
                                 </label>
-                                <select v-model="fatherEmployeeStatus" class="form-select">
-                                    <option value="">Select Employment Status</option>
-                                    <option v-for="status in employmentStatus" :key="status">
+                                <input class="form-control border border-primary" type="text" v-model="street">
+                                <span class="badge bg-danger mt-2" v-if="errors.street">{{ errors.street[0] }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6 mb-xl-0">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>BARANGAY <span class="text-danger">*</span></small>
+                                </label>
+                                <input class="form-control border border-primary" type="text" v-model="barangay">
+                                <span class="badge bg-danger mt-2" v-if="errors.barangay">{{ errors.barangay[0] }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>MUNICIPALITY <span class="text-danger">*</span></small>
+                                </label>
+                                <input class="form-control border border-primary" type="text" v-model="municipality">
+                                <span class="badge bg-danger mt-2" v-if="errors.municipality">{{ errors.municipality[0]
+                                }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>PROVINCE <span class="text-danger">*</span></small>
+                                </label>
+                                <input class="form-control border border-primary" type="text" v-model="province">
+                                <span class="badge bg-danger mt-2" v-if="errors.province">{{ errors.province[0] }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>ZIP CODE <span class="text-danger">*</span></small>
+                                </label>
+                                <input class="form-control border border-primary" type="text" v-model="zip_code">
+                                <span class="badge bg-danger mt-2" v-if="errors.zip_code">{{ errors.zip_code[0] }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <label for="" class="text-primary fw-bolder h4">EDUCATIONAL DETAILS</label>
+                    <br>
+                    <label for="" class="text-primary fw-bolder h4">PARENT DETAILS</label>
+                    <div class="father-information">
+                        <label for="example-text-input" class="form-control-label text-info"><b>Father's
+                                Information</b></label>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-6 ">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label fw-bolder">
+                                        <small>LAST NAME <span class="text-danger">*</span></small>
+                                    </label>
+                                    <input class="form-control border border-primary" type="text" v-model="fatherLastName">
+                                    <span class="badge bg-danger mt-2" v-if="errors.father_last_name">{{
+                                        errors.father_last_name[0] }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6 ">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label fw-bolder">
+                                        <small>FIRST NAME <span class="text-danger">*</span></small>
+                                    </label>
+                                    <input class="form-control border border-primary" type="text" v-model="fatherFirstName">
+                                    <span class="badge bg-danger mt-2" v-if="errors.father_first_name">{{
+                                        errors.father_first_name[0] }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6 ">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label fw-bolder">
+                                        <small>MIDDLE NAME <span class="text-danger">*</span></small>
+                                    </label>
+                                    <input class="form-control border border-primary" type="text"
+                                        v-model="fatherMiddleName">
+                                    <span class="badge bg-danger mt-2" v-if="errors.father_middle_name">{{
+                                        errors.father_middle_name[0] }}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6 ">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label fw-bolder">
+                                        <small>CONTACT NUMBER <span class="text-danger">*</span></small>
+                                    </label>
+                                    <input class="form-control border border-primary" type="text"
+                                        v-model="fatherContactNumber">
+                                    <span class="badge bg-danger mt-2" v-if="errors.father_contact_number">{{
+                                        errors.father_contact_number[0] }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label fw-bolder">
+                                        <small>HIGHEST EDUCATIONAL ATTAINMENT <span class="text-danger">*</span></small>
+                                    </label>
+                                    <select v-model="fatherEducational" class="form-select">
+                                        <option value="">Select Educational Attainment</option>
+                                        <option v-for="educational in educationalAttainment" :key="educational">
+                                            {{ educational }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label fw-bolder">
+                                        <small>EMPLOYMENT STATUS <span class="text-danger">*</span></small>
+                                    </label>
+                                    <select v-model="fatherEmployeeStatus" class="form-select">
+                                        <option value="">Select Employment Status</option>
+                                        <option v-for="status in employmentStatus" :key="status">
+                                            {{ status }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>WORKING ARRANGEMENT ? <span class="text-danger">*</span></small>
+                                </label>
+                                <select v-model="fatherArrangement" class="form-select">
+                                    <option value="">Select Working Arrangement</option>
+                                    <option v-for="status in  arrangement" :key="status">
                                         {{ status }}
                                     </option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>WORKING ARRANGEMENT ? <span class="text-danger">*</span></small>
-                            </label>
-                            <select v-model="fatherArrangement" class="form-select">
-                                <option value="">Select Working Arrangement</option>
-                                <option v-for="status in  arrangement" :key="status">
-                                    {{ status }}
-                                </option>
-                            </select>
-                        </div>
                     </div>
-                </div>
-                <div class="mother-maiden">
-                    <label for="example-text-input" class="form-control-label text-info"><b>Mother Maiden's
-                            Information</b></label>
-                    <div class="row">
-                        <div class="col-md">
-                            <input-component label="LAST  NAME" v-model:value="motherLastName"
-                                :error="errors.mother_last_name" />
+                    <div class="mother-maiden">
+                        <label for="example-text-input" class="form-control-label text-info"><b>Mother Maiden's
+                                Information</b></label>
+                        <div class="row">
+                            <div class="col-md">
+                                <input-component label="LAST  NAME" v-model:value="motherLastName"
+                                    :error="errors.mother_last_name" />
+                            </div>
+                            <div class="col-md">
+                                <input-component label="FIRST NAME" v-model:value="motherfirstName"
+                                    :error="errors.mother_first_name" />
+                            </div>
+                            <div class="col-md">
+                                <input-component label="MIDDLE NAME" v-model:value="mothermiddleName"
+                                    :error="errors.mother_middle_name" />
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <input-component label="FIRST NAME" v-model:value="motherfirstName"
-                                :error="errors.mother_first_name" />
-                        </div>
-                        <div class="col-md">
-                            <input-component label="MIDDLE NAME" v-model:value="mothermiddleName"
-                                :error="errors.mother_middle_name" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6 ">
-                            <input-component label="CONTACT NUMBER" v-model:value="motherContactNumber"
-                                :error="errors.mother_contact_number" />
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6 ">
+                                <input-component label="CONTACT NUMBER" v-model:value="motherContactNumber"
+                                    :error="errors.mother_contact_number" />
 
-                        </div>
-                        <div class="col-xl-9 col-md-6">
-                            <select-component label="Highest Educational Attainment" v-model:value="motherEducational"
-                                :error="errors.mother_educational_attainment" :data="educationalAttainment" />
-                        </div>
-                        <div class="col-md">
-                            <select-component label="Employment Status" v-model:value="motherEmployeeStatus"
-                                :error="errors.mother_employee_status" :data="employmentStatus" />
-                        </div>
-                        <div class="col-md">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>WORKING ARRANGEMENT ? <span class="text-danger">*</span></small>
-                            </label>
-                            <select v-model="fatherArrangement" class="form-select">
-                                <option value="">Select Working Arrangement</option>
-                                <option v-for="status in  arrangement" :key="status">
-                                    {{ status }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="guardian-informtion">
-                    <label for="example-text-input" class="form-control-label text-info"><b>Guardian
-                            Information</b></label>
-                    <div class="row">
-                        <div class="col-md">
-                            <input-component label="LAST  NAME" v-model:value="guardianLastName"
-                                :error="errors.guardian_last_name" />
-                        </div>
-                        <div class="col-md">
-                            <input-component label="FIRST NAME" v-model:value="guardianfirstName"
-                                :error="errors.guardian_first_name" />
-                        </div>
-                        <div class="col-md">
-                            <input-component label="MIDDLE NAME" v-model:value="guardianmiddleName"
-                                :error="errors.guardian_middle_name" />
+                            </div>
+                            <div class="col-xl-9 col-md-6">
+                                <select-component label="Highest Educational Attainment" v-model:value="motherEducational"
+                                    :error="errors.mother_educational_attainment" :data="educationalAttainment" />
+                            </div>
+                            <div class="col-md">
+                                <select-component label="Employment Status" v-model:value="motherEmployeeStatus"
+                                    :error="errors.mother_employee_status" :data="employmentStatus" />
+                            </div>
+                            <div class="col-md">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>WORKING ARRANGEMENT ? <span class="text-danger">*</span></small>
+                                </label>
+                                <select v-model="fatherArrangement" class="form-select">
+                                    <option value="">Select Working Arrangement</option>
+                                    <option v-for="status in  arrangement" :key="status">
+                                        {{ status }}
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6 ">
-                            <input-component label="CONTACT NUMBER" v-model:value="guardianContactNumber"
-                                :error="errors.guardian_contact_number" />
+                    <div class="guardian-informtion">
+                        <label for="example-text-input" class="form-control-label text-info"><b>Guardian
+                                Information</b></label>
+                        <div class="row">
+                            <div class="col-md">
+                                <input-component label="LAST  NAME" v-model:value="guardianLastName"
+                                    :error="errors.guardian_last_name" />
+                            </div>
+                            <div class="col-md">
+                                <input-component label="FIRST NAME" v-model:value="guardianfirstName"
+                                    :error="errors.guardian_first_name" />
+                            </div>
+                            <div class="col-md">
+                                <input-component label="MIDDLE NAME" v-model:value="guardianmiddleName"
+                                    :error="errors.guardian_middle_name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6 ">
+                                <input-component label="CONTACT NUMBER" v-model:value="guardianContactNumber"
+                                    :error="errors.guardian_contact_number" />
 
-                        </div>
-                        <div class="col-xl-9 col-md-6">
-                            <select-component label="Highest Educational Attainment" v-model:value="guardianEducational"
-                                :error="errors.guardian_educational_attainment" :data="educationalAttainment" />
-                        </div>
-                        <div class="col-md">
-                            <select-component label="Employment Status" v-model:value="guardianEmployeeStatus"
-                                :error="errors.guardian_employee_status" :data="employmentStatus" />
-                        </div>
-                        <div class="col-md">
-                            <label for="example-text-input" class="form-control-label fw-bolder">
-                                <small>WORKING ARRANGEMENT ? <span class="text-danger">*</span></small>
-                            </label>
-                            <select v-model="fatherArrangement" class="form-select">
-                                <option value="">Select Working Arrangement</option>
-                                <option v-for="status in  arrangement" :key="status">
-                                    {{ status }}
-                                </option>
-                            </select>
+                            </div>
+                            <div class="col-xl-9 col-md-6">
+                                <select-component label="Highest Educational Attainment" v-model:value="guardianEducational"
+                                    :error="errors.guardian_educational_attainment" :data="educationalAttainment" />
+                            </div>
+                            <div class="col-md">
+                                <select-component label="Employment Status" v-model:value="guardianEmployeeStatus"
+                                    :error="errors.guardian_employee_status" :data="employmentStatus" />
+                            </div>
+                            <div class="col-md">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>WORKING ARRANGEMENT ? <span class="text-danger">*</span></small>
+                                </label>
+                                <select v-model="fatherArrangement" class="form-select">
+                                    <option value="">Select Working Arrangement</option>
+                                    <option v-for="status in  arrangement" :key="status">
+                                        {{ status }}
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary mt-2 w-100">Submit Student Information</button>
-            </form>
+                    <button type="submit" class="btn btn-primary mt-2 w-100">Submit Student Information</button>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -384,6 +388,7 @@ export default {
     },
     data() {
         const inputValidation = {
+            isLoading: true,
             errors: [],
             educationaldetails: [],
             educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/A'],
@@ -484,6 +489,7 @@ export default {
                 this.motherMiddleName = data.parent_details.mother_middle_name
                 console.log(data.parent_details.mother_last_name)
             }
+            this.isLoading = false
         }).catch((error) => {
             console.log(error)
             console.log(error.response)

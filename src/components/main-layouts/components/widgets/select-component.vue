@@ -3,7 +3,7 @@
         <label for="example-text-input" class="form-control-label fw-bolder">
             <small>{{ label.toUpperCase() }} <span class="text-danger">*</span></small>
         </label>
-        <select :value="value" @input="$emit('update:value', $event.target.value)" class="form-select">
+        <select :value="value" @input="$emit('update:value', $event.target.value)" class="form-select form-select-sm">
             <option value="">Select {{label }}</option>
             <option v-for="item in data" :key="item">
                 {{ item }}</option>
