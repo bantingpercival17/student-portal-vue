@@ -5,16 +5,16 @@
             <div class="header-title">
                 <label for="" class="fw-bolder text-primary h4">STUDENT INFORMATION</label>
                 <br>
-                <label for="" class="text-danger">
+                <small for="" class="text-danger">
                     Kindly double check you Student Details and update. <br>
                     NOTE: All data field is required to fill in,
                     type/choose N / A if not applicable
-                </label>
+                </small>
             </div>
         </div>
         <div class="card-body">
             <div v-if="isLoading">
-            <h2 class="fw-bolder text-info">LOADING</h2>
+                <h2 class="fw-bolder text-info">LOADING</h2>
             </div>
             <div v-else>
                 <form @submit.prevent="updateDetails" method="post">
@@ -60,7 +60,8 @@
                                 <label for="example-text-input" class="form-control-label fw-bolder">
                                     <small>GENDER <span class="text-danger">*</span></small>
                                 </label>
-                                <select name="gender" v-model="gender" id="" class="form-select form-select-sm border border-primary">
+                                <select name="gender" v-model="gender" id=""
+                                    class="form-select form-select-sm border border-primary">
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
@@ -80,14 +81,14 @@
                                 <label for="example-text-input" class="form-control-label fw-bolder">
                                     <small>BIRTH DATE <span class="text-danger">*</span></small>
                                 </label>
-                                <input class="form-control form-control-sm border border-primary" type="date" v-model="birthDate">
+                                <input class="form-control form-control-sm border border-primary" type="date"
+                                    v-model="birthDate">
                                 <span class="badge bg-danger mt-2" v-if="errors.birth_date">{{ errors.birth_date[0]
                                 }}</span>
                             </div>
                         </div>
                         <div class="col-xl-9 col-md-8 mb-xl-0">
-                            <input-component label="BIRTH PLACE" v-model:value="birthPlace"
-                                :error="errors.birthPlace" />
+                            <input-component label="BIRTH PLACE" v-model:value="birthPlace" :error="errors.birthPlace" />
                         </div>
                     </div>
                     <div class="row">
@@ -96,98 +97,40 @@
                                 :error="errors.civil_status" />
                         </div>
                         <div class="col-xl col-md-6 mb-xl-0">
-                        
-                            <input-component label="NATIONALITY" v-model:value="middleInitial"
-                                :error="errors.middle_initial" />
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>NATIONALITY <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="nationality">
-                                <span class="badge bg-danger mt-2" v-if="errors.nationality">{{ errors.nationality[0]
-                                }}</span>
-                            </div>
+                            <input-component label="NATIONALITY" v-model:value="nationality" :error="errors.nationality" />
                         </div>
                         <div class="col-xl col-md-6 mb-xl-0">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>RELIGION <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="religion">
-                                <span class="badge bg-danger mt-2" v-if="errors.religion">{{ errors.religion[0] }}</span>
-                            </div>
+                            <input-component label="RELIGION" v-model:value="religion" :error="errors.religion" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xl-6 col-md-6 mb-xl-0">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>CONTACT NUMBER <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="contactNumber">
-                                <span class="badge bg-danger mt-2" v-if="errors.contact_number">{{ errors.contact_number[0]
-                                }}</span>
-                            </div>
+                            <input-component label="CONTACT NUMBER" v-model:value="contactNumber"
+                                :error="errors.contact_number" />
                         </div>
                         <div class="col-xl-6 col-md-6 mb-xl-0">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>EMAIL <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="personalEmail">
-                                <span class="badge bg-danger mt-2" v-if="errors.personal_email">{{ errors.personal_email[0]
-                                }}</span>
-                            </div>
+                            <input-component label="EMAIL" v-model:value="personalEmail" :error="errors.personal_email" />
+
                         </div>
                     </div>
                     <label for="" class="text-primary fw-bolder h4">ADDRESS</label>
                     <div class="row">
                         <div class="col-xl-6 col-md-6 mb-xl-0">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>HOUSE NO. / STREET / BLDG NO <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="street">
-                                <span class="badge bg-danger mt-2" v-if="errors.street">{{ errors.street[0] }}</span>
-                            </div>
+                            <input-component label="HOUSE NO. / STREET / BLDG NO" v-model:value="street"
+                                :error="errors.street" />
                         </div>
                         <div class="col-xl-6 col-md-6 mb-xl-0">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>BARANGAY <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="barangay">
-                                <span class="badge bg-danger mt-2" v-if="errors.barangay">{{ errors.barangay[0] }}</span>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-4 col-md-6 mb-xl-0">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>MUNICIPALITY <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="municipality">
-                                <span class="badge bg-danger mt-2" v-if="errors.municipality">{{ errors.municipality[0]
-                                }}</span>
-                            </div>
+                            <input-component label="BARANGAY" v-model:value="barangay" :error="errors.barangay" />
                         </div>
                         <div class="col-xl-4 col-md-6 mb-xl-0">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>PROVINCE <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="province">
-                                <span class="badge bg-danger mt-2" v-if="errors.province">{{ errors.province[0] }}</span>
-                            </div>
+                            <input-component label="MUNICIPALITY" v-model:value="municipality"
+                                :error="errors.municipality" />
                         </div>
                         <div class="col-xl-4 col-md-6 mb-xl-0">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>ZIP CODE <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control border border-primary" type="text" v-model="zip_code">
-                                <span class="badge bg-danger mt-2" v-if="errors.zip_code">{{ errors.zip_code[0] }}</span>
-                            </div>
+                            <input-component label="PROVINCE" v-model:value="province" :error="errors.province" />
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <input-component label="ZIP CODE" v-model:value="zip_code" :error="errors.zip_code" />
                         </div>
                     </div>
                     <label for="" class="text-primary fw-bolder h4">EDUCATIONAL DETAILS</label>
@@ -198,85 +141,34 @@
                                 Information</b></label>
                         <div class="row">
                             <div class="col-xl-4 col-md-6 ">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label fw-bolder">
-                                        <small>LAST NAME <span class="text-danger">*</span></small>
-                                    </label>
-                                    <input class="form-control border border-primary" type="text" v-model="fatherLastName">
-                                    <span class="badge bg-danger mt-2" v-if="errors.father_last_name">{{
-                                        errors.father_last_name[0] }}</span>
-                                </div>
+                                <input-component label="LAST NAME" v-model:value="fatherLastName"
+                                    :error="errors.father_last_name" />
                             </div>
                             <div class="col-xl-4 col-md-6 ">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label fw-bolder">
-                                        <small>FIRST NAME <span class="text-danger">*</span></small>
-                                    </label>
-                                    <input class="form-control border border-primary" type="text" v-model="fatherFirstName">
-                                    <span class="badge bg-danger mt-2" v-if="errors.father_first_name">{{
-                                        errors.father_first_name[0] }}</span>
-                                </div>
+                                <input-component label="FIRST NAME" v-model:value="fatherFirstName"
+                                    :error="errors.father_first_name" />
                             </div>
                             <div class="col-xl-4 col-md-6 ">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label fw-bolder">
-                                        <small>MIDDLE NAME <span class="text-danger">*</span></small>
-                                    </label>
-                                    <input class="form-control border border-primary" type="text"
-                                        v-model="fatherMiddleName">
-                                    <span class="badge bg-danger mt-2" v-if="errors.father_middle_name">{{
-                                        errors.father_middle_name[0] }}</span>
-                                </div>
+                                <input-component label="MIDDLE NAME" v-model:value="fatherMiddleName"
+                                    :error="errors.father_middle_name" />
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="col-xl-3 col-md-6 ">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label fw-bolder">
-                                        <small>CONTACT NUMBER <span class="text-danger">*</span></small>
-                                    </label>
-                                    <input class="form-control border border-primary" type="text"
-                                        v-model="fatherContactNumber">
-                                    <span class="badge bg-danger mt-2" v-if="errors.father_contact_number">{{
-                                        errors.father_contact_number[0] }}</span>
-                                </div>
+                                <input-component label="CONTACT NUMBER" v-model:value="fatherContactNumber"
+                                    :error="errors.father_contact_number" />
                             </div>
                             <div class="col-xl-9 col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label fw-bolder">
-                                        <small>HIGHEST EDUCATIONAL ATTAINMENT <span class="text-danger">*</span></small>
-                                    </label>
-                                    <select v-model="fatherEducational" class="form-select">
-                                        <option value="">Select Educational Attainment</option>
-                                        <option v-for="educational in educationalAttainment" :key="educational">
-                                            {{ educational }}</option>
-                                    </select>
-                                </div>
+                                <select-component label="Highest Educational Attainment" v-model:value="fatherEducational"
+                                    :error="errors.father_educational_attainment" :data="educationalAttainment" />
                             </div>
                             <div class="col-md">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label fw-bolder">
-                                        <small>EMPLOYMENT STATUS <span class="text-danger">*</span></small>
-                                    </label>
-                                    <select v-model="fatherEmployeeStatus" class="form-select">
-                                        <option value="">Select Employment Status</option>
-                                        <option v-for="status in employmentStatus" :key="status">
-                                            {{ status }}
-                                        </option>
-                                    </select>
-                                </div>
+                                <select-component label="Employment Status" v-model:value="fatherEmployeeStatus"
+                                    :error="errors.father_employee_status" :data="employmentStatus" />
                             </div>
                             <div class="col-md">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>WORKING ARRANGEMENT ? <span class="text-danger">*</span></small>
-                                </label>
-                                <select v-model="fatherArrangement" class="form-select">
-                                    <option value="">Select Working Arrangement</option>
-                                    <option v-for="status in  arrangement" :key="status">
-                                        {{ status }}
-                                    </option>
-                                </select>
+                                <select-component label="Working Arrangement" v-model:value="fatherArrangement"
+                                    :error="errors.father_arrangment" :data="arrangement" />
                             </div>
                         </div>
                     </div>
@@ -312,15 +204,8 @@
                                     :error="errors.mother_employee_status" :data="employmentStatus" />
                             </div>
                             <div class="col-md">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>WORKING ARRANGEMENT ? <span class="text-danger">*</span></small>
-                                </label>
-                                <select v-model="fatherArrangement" class="form-select">
-                                    <option value="">Select Working Arrangement</option>
-                                    <option v-for="status in  arrangement" :key="status">
-                                        {{ status }}
-                                    </option>
-                                </select>
+                                <select-component label="Working Arrangement" v-model:value="motherArrangement"
+                                    :error="errors.mother_arrangment" :data="arrangement" />
                             </div>
                         </div>
                     </div>
@@ -356,15 +241,8 @@
                                     :error="errors.guardian_employee_status" :data="employmentStatus" />
                             </div>
                             <div class="col-md">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>WORKING ARRANGEMENT ? <span class="text-danger">*</span></small>
-                                </label>
-                                <select v-model="fatherArrangement" class="form-select">
-                                    <option value="">Select Working Arrangement</option>
-                                    <option v-for="status in  arrangement" :key="status">
-                                        {{ status }}
-                                    </option>
-                                </select>
+                                <select-component label="Working Arrangement" v-model:value="guardianArrangement"
+                                    :error="errors.guardian_arrangment" :data="arrangement" />
                             </div>
                         </div>
                     </div>
