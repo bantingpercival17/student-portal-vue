@@ -3,35 +3,39 @@
         <LoadingView />
     </div>
     <div v-else>
-        <div class="card ms-5 me-5" data-iq-gsap="onStart" data-iq-position-y="70" data-iq-rotate="0" data-iq-trigger="scroll"
-        data-iq-ease="power.out" data-iq-opacity="0">
-        <div class="card-header">
-            <div class="header-title">
-                <h4 class="card-title fw-bold text-primary">ENROLLMENT OVERVIEW</h4>
+        <div class="card ms-5 me-5" data-iq-gsap="onStart" data-iq-position-y="70" data-iq-rotate="0"
+            data-iq-trigger="scroll" data-iq-ease="power.out" data-iq-opacity="0">
+            <div class="card-header">
+                <div class="header-title">
+                    <h4 class="card-title fw-bold text-primary">ENROLLMENT OVERVIEW</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
+                    <ul class="list-inline p-0 m-0">
+                        <li v-if="semester.semester == 'First Semester'">
+                            <MedicalView :propsData="data" />
+                        </li>
+                        <li>
+                            <RegistartionView :propsData="data" :propsSemester="semester" />
+                        </li>
+                        <li>
+                            <assessmentView :propsData="data" />
+                        </li>
+                        <li>
+                            <tuitionFeeView :propsData="data" :propsTags="tuition" :propsTuitionDetails="tuitionDetails" />
+                        </li>
+                        <li>
+                            <paymentView />
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="card-body">
-            <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
-                <ul class="list-inline p-0 m-0">
-                    <li>
-                        <RegistartionView :propsData="data" :propsSemester="semester" />
-                    </li>
-                    <li>
-                        <assessmentView :propsData="data" />
-                    </li>
-                    <li>
-                        <tuitionFeeView :propsData="data" :propsTags="tuition" :propsTuitionDetails="tuitionDetails" />
-                    </li>
-                    <li>
-                        <paymentView />
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
     </div>
 </template>
 <script>
+import MedicalView from './components/medical-view.vue'
 import RegistartionView from '@/views/student/enrollment/components/registration-view.vue'
 import assessmentView from './components/assessment-view.vue'
 import tuitionFeeView from './components/tuitionFee-view.vue'
@@ -43,6 +47,7 @@ import axios from 'axios'
 export default {
     name: 'EnrollmentOverview',
     components: {
+        MedicalView,
         RegistartionView,
         assessmentView,
         tuitionFeeView,
@@ -72,6 +77,7 @@ export default {
         }).then((response) => {
             this.data = response.data.data
             this.semester = this.data.academic
+            console.log(this.data)
             if (this.data.tuition) {
                 this.tuition = this.data.tuition.tags
                 this.tuitionDetails = this.data.tuition

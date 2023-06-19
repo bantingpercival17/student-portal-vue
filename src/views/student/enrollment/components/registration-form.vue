@@ -62,8 +62,8 @@
                                 </label>
                                 <select name="gender" v-model="gender" id=""
                                     class="form-select form-select-sm border border-primary">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
+                                    <option value="male">Male {{ selectedValue(gender, 'male') }}</option>
+                                    <option value="female">Female {{ selectedValue(gender, 'female') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -395,6 +395,10 @@ export default {
                 }
                 console.error(error)
             })
+        },
+        selectedValue(data, data1) {
+            console.log(data)
+            return data === data1 ? 'selected' : ''
         }
     }
 }
