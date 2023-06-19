@@ -386,6 +386,7 @@ export default {
                 headers: {
                     Authorization: 'Bearer ' + this.token
                 }
+                
             }).then((response) => {
                 console.log(response)
             }).catch((error) => {
