@@ -3,7 +3,7 @@
         <label for="example-text-input" class="form-control-label fw-bolder">
             <small>{{ label.toUpperCase() }}<span class="text-danger">*</span></small>
         </label>
-        <input :type="type" class="form-control  border border-primary" :value="value"
+        <input :type="type" class="form-control form-control-sm border border-primary" :value="value"
             @input="$emit('update:value', $event.target.value)" />
         <span class="badge bg-danger mt-2" v-if="error">{{
             error[0] }}</span>

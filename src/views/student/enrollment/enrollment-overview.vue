@@ -14,19 +14,22 @@
                 <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
                     <ul class="list-inline p-0 m-0">
                         <li v-if="semester.semester == 'First Semester'">
-                            <MedicalView :propsData="data" />
+                            <MedicalView :propsEnrollment="data.enrollment" />
                         </li>
                         <li>
-                            <RegistartionView :propsData="data" :propsSemester="semester" />
+                            <RegistartionView :propsEnrollment="data.enrollment" :propsSemester="semester" />
                         </li>
                         <li>
-                            <assessmentView :propsData="data" />
+                            <AssessmentView :propsEnrollment="data.enrollment" />
                         </li>
                         <li>
-                            <tuitionFeeView :propsData="data" :propsTags="tuition" :propsTuitionDetails="tuitionDetails" />
+                            <tuitionFeeView :enrollment="data.enrollment" :tuitionDetails="data.tuition" :token="token" />
                         </li>
                         <li>
-                            <paymentView />
+                            <paymentView :enrollment="data.enrollment" :tuitionDetails="data.tuition" :token="token"/>
+                        </li>
+                        <li>
+                            <EnrollmentCompleteView :enrollment="data.enrollment" :tuitionDetails="data.tuition" :token="token"/>
                         </li>
                     </ul>
                 </div>
@@ -37,9 +40,10 @@
 <script>
 import MedicalView from './components/medical-view.vue'
 import RegistartionView from '@/views/student/enrollment/components/registration-view.vue'
-import assessmentView from './components/assessment-view.vue'
+import AssessmentView from './components/assessment-view.vue'
 import tuitionFeeView from './components/tuitionFee-view.vue'
 import paymentView from './components/payment-view.vue'
+import EnrollmentCompleteView from './components/enrollment-complete.vue'
 import LoadingView from './loading-view.vue'
 import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER } from '@/store/storeConstants'
 import { mapGetters } from 'vuex'
@@ -49,9 +53,10 @@ export default {
     components: {
         MedicalView,
         RegistartionView,
-        assessmentView,
+        AssessmentView,
         tuitionFeeView,
         paymentView,
+        EnrollmentCompleteView,
         LoadingView
     },
     data() {
