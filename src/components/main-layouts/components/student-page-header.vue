@@ -16,7 +16,7 @@
             <div class="input-group search-input">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mt-2">
-                        HOME
+                        {{ pageTitle }}
                     </ol>
                 </nav>
             </div>
@@ -81,7 +81,8 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'StudentPageHeader',
     props: {
-        fullsidebar: { type: Boolean, default: false }
+        fullsidebar: { type: Boolean, default: false },
+        pageTitle: { type: String }
     },
     computed: {
         ...mapGetters('auth', {

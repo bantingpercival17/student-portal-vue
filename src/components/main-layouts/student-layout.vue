@@ -8,7 +8,7 @@
     <main class="main-content">
         <div class="position-relative">
             <!--Nav Start-->
-            <PageHeader :fullsidebar="sidebarmini" @makefullsidebar="onfullsidebar" />
+            <PageHeader :fullsidebar="sidebarmini" @makefullsidebar="onfullsidebar" :pageTitle="headerTitle" />
             <!--Nav End-->
         </div>
         <div class="conatiner-fluid content-inner mt-6 py-0">
@@ -43,7 +43,10 @@ export default {
     computed: {
         ...mapState({
             showLoading: state => state.showLoading
-        })
+        }),
+        headerTitle() {
+            return this.$route.meta.name
+        }
     },
     methods: {
         onsidebarmini(e) {

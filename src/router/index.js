@@ -65,7 +65,7 @@ const studentRoute = (prop) => [
     path: '/student/enrollment/history',
     name: prop + '.enrollment-history',
     meta: { auth: true, name: 'Enrollment History', user: 'student' },
-    component: () => import('../views/student/dashboard.vue')
+    component: () => import('../views/student/enrollment/enrollment-history-view.vue')
   },
   {
     path: '/student/enrollment/certification',
