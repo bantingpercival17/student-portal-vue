@@ -14,8 +14,8 @@ const defaultchildRoutes = (prop) => [
     name: prop + '.admission',
     meta: { auth: false, name: 'Admission', user: 'guest' },
     component: () => import('../views/admission-page.vue')
-  }
- /*  {
+  },
+  {
     path: '/student/login',
     name: prop + '.student-login',
     meta: { auth: false, name: 'Student Login', user: 'guest' },
@@ -26,7 +26,7 @@ const defaultchildRoutes = (prop) => [
     name: prop + '.applicant-login',
     meta: { auth: false, name: 'Applicant Login', user: 'guest' },
     component: () => import('../views/auth/applicant-login.vue')
-  } */
+  }
 ]
 const authRoute = (prop) => [
   {
@@ -88,13 +88,13 @@ const studentRoute = (prop) => [
   {
     path: '/student/payment/current-payment',
     name: prop + '.current-payment',
-    meta: { auth: true, name: 'current-payment', user: 'student' },
-    component: () => import('../views/student/dashboard.vue')
+    meta: { auth: true, name: 'Payment Overview', user: 'student' },
+    component: () => import('../views/student/payment/overview.vue')
   },
   {
     path: '/student/payment/payment-history',
     name: prop + '.payment-history',
-    meta: { auth: true, name: 'Payment History', user: 'student' },
+    meta: { auth: true, name: 'Payment Assessment History', user: 'student' },
     component: () => import('../views/student/dashboard.vue')
   },
   {
