@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import store from '../store/index'
 import { IS_USER_AUTHENTICATE_GETTER } from '@/store/storeConstants'
+import { studentRoute } from './student-route'
 const defaultchildRoutes = (prop) => [
   {
     path: '/',
@@ -15,18 +16,18 @@ const defaultchildRoutes = (prop) => [
     meta: { auth: false, name: 'Admission', user: 'guest' },
     component: () => import('../views/admission-page.vue')
   },
-  {
-    path: '/student/login',
-    name: prop + '.student-login',
-    meta: { auth: false, name: 'Student Login', user: 'guest' },
-    component: () => import('../views/auth/student-login.vue')
-  },
-  {
-    path: '/applicant/login',
-    name: prop + '.applicant-login',
-    meta: { auth: false, name: 'Applicant Login', user: 'guest' },
-    component: () => import('../views/auth/applicant-login.vue')
-  }
+   {
+     path: '/student/login',
+     name: prop + '.student-login',
+     meta: { auth: false, name: 'Student Login', user: 'guest' },
+     component: () => import('../views/auth/student-login.vue')
+   },
+   {
+     path: '/applicant/login',
+     name: prop + '.applicant-login',
+     meta: { auth: false, name: 'Applicant Login', user: 'guest' },
+     component: () => import('../views/auth/applicant-login.vue')
+   }
 ]
 const authRoute = (prop) => [
   {
@@ -48,87 +49,13 @@ const authRoute = (prop) => [
     component: () => import('../views/auth/applicant-login.vue')
   }
 ]
-const studentRoute = (prop) => [
-  {
-    path: '/student/dashboard',
-    name: prop + '.dashboard',
-    meta: { auth: true, name: 'Dashboard', user: 'student' },
-    component: () => import('../views/student/dashboard.vue')
-  },
-  {
-    path: '/student/enrollment/overview',
-    name: prop + '.enrollment-overview',
-    meta: { auth: true, name: 'Enrollment Overview', user: 'student' },
-    component: () => import('../views/student/enrollment/enrollment-overview.vue')
-  },
-  {
-    path: '/student/enrollment/history',
-    name: prop + '.enrollment-history',
-    meta: { auth: true, name: 'Enrollment History', user: 'student' },
-    component: () => import('../views/student/enrollment/enrollment-history-view.vue')
-  },
-  {
-    path: '/student/enrollment/certification',
-    name: prop + '.enrollment-certification',
-    meta: { auth: true, name: 'Enrollment Certification', user: 'student' },
-    component: () => import('../views/student/dashboard.vue')
-  },
-  {
-    path: '/student/enrollment/registration',
-    name: prop + '.enrollment-registration',
-    meta: { auth: true, name: 'Enrollment Registration', user: 'student' },
-    component: () => import('../views/student/enrollment/components/registration-form.vue')
-  },
-  {
-    path: '/student/payment/current-payment',
-    name: prop + '.payment-current-payment',
-    meta: { auth: true, name: 'Payment Overview', user: 'student' },
-    component: () => import('../views/student/dashboard.vue')
-  },
-  {
-    path: '/student/payment/current-payment',
-    name: prop + '.current-payment',
-    meta: { auth: true, name: 'Payment Overview', user: 'student' },
-    component: () => import('../views/student/payment/overview.vue')
-  },
-  {
-    path: '/student/payment/payment-history',
-    name: prop + '.payment-history',
-    meta: { auth: true, name: 'Payment Assessment History', user: 'student' },
-    component: () => import('../views/student/dashboard.vue')
-  },
-  {
-    path: '/student/payment/student-card',
-    name: prop + '.student-card',
-    meta: { auth: true, name: 'Student Card', user: 'student' },
-    component: () => import('../views/student/dashboard.vue')
-  },
-  {
-    path: '/student/onboard/mopm',
-    name: prop + '.onboard-mopm',
-    meta: { auth: true, name: 'MOPM', user: 'student' },
-    component: () => import('../views/student/onboard/mopm/mopm-view.vue')
-  },
-  {
-    path: '/student/onboard/enrollment',
-    name: prop + '.onboard-enrollment',
-    meta: { auth: true, name: 'Onboard Training Enrollment', user: 'student' },
-    component: () => import('../views/student/onboard/enrollment/enrollment-overview.vue')
-  },
-  {
-    path: '/student/onboard/mopm/view',
-    name: prop + '.onboard-mopm-view',
-    meta: { auth: true, name: 'Performance Report View', user: 'student' },
-    component: () => import('../views/student/onboard/mopm/performance-report-view.vue')
-  }
-]
 const routes = [
-  {
-    path: '/',
-    name: 'auth-layout',
-    component: () => import('../components/main-layouts/auth-layout.vue'),
-    children: authRoute('auth-layout')
-  },
+  /*  {
+     path: '/',
+     name: 'auth-layout',
+     component: () => import('../components/main-layouts/auth-layout.vue'),
+     children: authRoute('auth-layout')
+   }, */
   {
     path: '/',
     name: 'app-layout',
