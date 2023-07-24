@@ -4,31 +4,29 @@
     </div>
     <div v-else>
         <p class="display-6 fw-bolder text-primary">PAYMENT OVERVIEW</p>
-        <div class="table-container" style="max-height: 300px; overflow-y: scroll;">
-            <table class="nav nav-underline bg-soft-primary p-0 text-center mb-5" aria-label="Secondary navigation">
-                <thead class="d-flex">
-                    <tr>
-                        <td :class="onActiveCard('overview')" @click="onChangeActive('overview')">OVERVIEW</td>
-                    </tr>
-                    <tr>
-                        <td :class="onActiveCard('payments')" @click="onChangeActive('payments')">PAYMENT</td>
-                    </tr>
-                    <tr>
-                        <td :class="onActiveCard('payment-histories')" @click="onChangeActive('payment-histories')">
-                            PAYMENT HISTORY
-                        </td>
-                    </tr>
-                    <tr>
-
-                        <td :class="onActiveCard('online-payment')" @click="onChangeActive('online-payment')">ONLINE
-                            PAYMENT</td>
-
-                    </tr>
-                </thead>
-            </table>
-        </div>
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="table-container" style="max-height: 300px; overflow-y: scroll;">
+                    <table class="nav nav-underline bg-soft-primary p-0 text-center mb-5" aria-label="Secondary navigation">
+                        <thead class="d-flex">
+                            <tr>
+                                <td :class="onActiveCard('overview')" @click="onChangeActive('overview')">OVERVIEW</td>
+                            </tr>
+                            <tr>
+                                <td :class="onActiveCard('payments')" @click="onChangeActive('payments')">PAYMENT</td>
+                            </tr>
+                            <tr>
+                                <td :class="onActiveCard('payment-histories')" @click="onChangeActive('payment-histories')">
+                                    PAYMENT HISTORY
+                                </td>
+                            </tr>
+                            <tr>
+                                <td :class="onActiveCard('online-payment')" @click="onChangeActive('online-payment')">ONLINE
+                                    PAYMENT</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
                 <div v-if="cardStatus == 'overview'" class="card shadow">
                     <div class="card-body">
                         <label for="" class="text-info h4">
@@ -87,6 +85,7 @@
                                         <small class="form-label">FEE NAME</small>
                                         <br>
                                         <label class="h5 text-info form-label">
+                                            {{ item.fee_details.particular.particular_name }}
                                             <!-- {{ $additionalFees->fee_details->particular->particular_name }} -->
                                         </label>
 
@@ -97,6 +96,7 @@
                                         <small class="form-label">FEE AMOUNT</small>
                                         <br>
                                         <label class="h5 text-primary form-label">
+                                            {{ item.fee_details.amount }}
                                             <!--  {{ number_format($additionalFees->fee_details->amount, 2) }} -->
                                         </label>
                                     </div>
