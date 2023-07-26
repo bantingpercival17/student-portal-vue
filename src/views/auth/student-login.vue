@@ -9,9 +9,9 @@
                 </center>
                 <h2 class="mb-2 text-center"><b>STUDENT PORTAL</b></h2>
                 <p class="text-center">SIGN IN</p>
-                <span class="badge bg-secondary mt-2">version 1.0.1</span> <br/>
+                <!-- <span class="badge bg-secondary mt-2">version 1.0.1</span> <br/>
                 <span class="badge bg-secondary mt-2">{{ url }}</span> <br/>
-                <span class="badge bg-secondary mt-2">{{ crsf }}</span> <br/>
+                <span class="badge bg-secondary mt-2">{{ crsf }}</span> <br/> -->
                 <form @submit.prevent="onLogin" class="row">
                     <div class="">
                         <div class="col-lg-12">
