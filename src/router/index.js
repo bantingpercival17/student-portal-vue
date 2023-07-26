@@ -23,6 +23,12 @@ const defaultchildRoutes = (prop) => [
      component: () => import('../views/auth/student-login.vue')
    },
    {
+    path: '/student/forget-password',
+    name: prop + '.student-forget-password',
+    meta: { auth: false, name: 'Student Forget Password', user: 'guest' },
+    component: () => import('../views/auth/student-forget-password.vue')
+  },
+   {
      path: '/applicant/login',
      name: prop + '.applicant-login',
      meta: { auth: false, name: 'Applicant Login', user: 'guest' },

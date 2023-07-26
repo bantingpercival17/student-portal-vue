@@ -53,7 +53,7 @@ export default {
         ]
         const payment = [
             { name: 'Current Payment', url: 'student-layout.current-payment' },
-            { name: 'Payment History', url: 'student-layout.payment-history' },
+            /* { name: 'Payment History', url: 'student-layout.payment-history' }, */
             { name: 'Student Card', url: 'student-layout.student-card' }
         ]
         const onboard = [{ name: 'MOPM', url: 'student-layout.onboard-mopm' }, { name: 'Enrollment', url: 'student-layout.onboard-enrollment' }]

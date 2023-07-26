@@ -41,7 +41,8 @@
                                 <input type="checkbox" class="form-check-input" id="customCheck1" v-model="rememberMe">
                                 <label class="form-check-label" for="customCheck1">Remember Me</label>
                             </div>
-                            <a href="recoverpw.html">Forgot Password?</a>
+                            <router-link :to="{ name: 'app-layout.student-forget-password' }" class="">Forgot
+                                Password?</router-link>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
