@@ -166,6 +166,7 @@
                             </div>
                         </div>
                         <hr>
+
                         <h6 class="text-primary mb-1 fw-bolder">ADD TRANSACTION</h6>
                         <form @submit.prevent="submitPaymentTransaction" method="post" enctype="multipart/form-data">
                             <div class="row">
@@ -192,6 +193,8 @@
                                         :error="errors.amount_paid" />
                                 </div>
                             </div>
+                            <a class="badge bg-primary float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">View
+                                Sample Valid Attachment</a>
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
                                     <small>ATTACH PAYMENT RECEIPT<span class="text-danger">*</span></small>
@@ -316,6 +319,35 @@
         </div>
 
     </div>
+    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xlg" dialogClass="modal-lg"
+        ariaLabelled="exampleModalLabel" :ariaHidden="true" contentrole="document">
+        <model-header :dismissable="true">
+            <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">SAMPLE OF VALID PAYMENT
+                ATTACHMENT AND INVALID
+            </h5>
+        </model-header>
+        <model-body>
+            <img src="@/assets/resources/accounting/Instruction.png" class="img-fluid gradient-main vh-100" alt="images">
+        </model-body>
+        <model-footer>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </model-footer>
+    </modal>
+    <!--  <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xlg" ariaLabelled="exampleModalLabel"
+        :ariaHidden="true" contentrole="document">
+        <model-header :dismissable="true">
+            <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">SAMPLE OF VALID PAYMENT
+                ATTACHMENT AND INVALID
+            </h5>
+        </model-header>
+        <model-body>
+            <img src="@/assets/resources/accounting/Instruction.png" class="img-fluid gradient-main vh-100" alt="images">
+        </model-body>
+        <model-footer>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </model-footer>
+
+    </modal> -->
 </template>
 <script>
 import Swal from 'sweetalert2'
