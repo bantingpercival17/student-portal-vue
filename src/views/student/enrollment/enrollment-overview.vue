@@ -90,7 +90,6 @@ export default {
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
-            console.log(error.response.status)
         })
     }
 }

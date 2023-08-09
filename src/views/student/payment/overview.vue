@@ -77,7 +77,7 @@
                         <label class="h5 text-primary fw-bolder">
                             ADDTIONAL FEES
                         </label>
-                        <div v-if="tuitionDetails.additional_fees.length" class="additional-fees mt-3">
+                        <div v-if="tuitionDetails" class="additional-fees mt-3">
                             <div v-for="item in tuitionDetails.additional_fees" :key="item" :value="item.id"
                                 class="row p-0 mt-0 mb-0">
                                 <div class="col-md-4">
@@ -401,14 +401,15 @@ export default {
             this.semester = this.data.currently_enrolled.academic
             this.tuitionDetails = this.data.currently_enrolled.payment_assessment_details_with_transactions
             this.course = this.data.currently_enrolled.course
-            this.tuitionDetails.additional_fees.forEach(element => {
-                this.remarks.push(element.fee_details.particular.particular_name)
-                console.log(element.fee_details.particular.particular_name)
-            })
+            if (this.tuitionDetails) {
+                this.tuitionDetails.additional_fees.forEach(element => {
+                    this.remarks.push(element.fee_details.particular.particular_name)
+                    console.log(element.fee_details.particular.particular_name)
+                })
+            }
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
-            console.log(error.response.status)
         })
     },
     methods: {

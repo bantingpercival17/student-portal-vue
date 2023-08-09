@@ -70,5 +70,17 @@ export const studentRoute = (prop) => [
         name: prop + '.onboard-mopm-view',
         meta: { auth: true, name: 'Performance Report View', user: 'student' },
         component: () => import('../views/student/onboard/mopm/performance-report-view.vue')
+    },
+    {
+        path: '/student/classroom',
+        name: prop + '.subjects-view',
+        meta: { auth: true, name: 'Subject List', user: 'student' },
+        component: () => import('../views/student/classroom/SubjectsView.vue')
+    },
+    {
+        path: '/student/classroom/semestral-grades',
+        name: prop + '.semestral-grade-view',
+        meta: { auth: true, name: 'Semestral Grade', user: 'student' },
+        component: () => import('../views/student/classroom/SemestralGradeView.vue')
     }
 ]
