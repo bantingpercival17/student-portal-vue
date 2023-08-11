@@ -297,6 +297,117 @@
                             </div>
                         </div>
                     </div>
+                    <label for="" class="text-primary fw-bolder h4">ADDITIONAL DETAILS</label>
+                    <div class="additional">
+                        <div class="row">
+                            <div class="col-xl-4 col-md-12">
+                                <select-component label="HOUSEHOLD INCOME" v-model:value="householdIncome"
+                                    :error="errors.household_income" :data="incomeList" />
+                            </div>
+                            <div class="col-xl-8 col-md-12">
+                                <select-component label="Is your family Beneficiary of DSWD Listahan / 4P's ? "
+                                    v-model:value="beneficiary" :error="errors.dswd_beneficiary" :data="beneficiaryList" />
+                            </div>
+                            <div class="col-xl-6 col-md-12">
+                                <select-component label="HOMEOWNERSHIP" v-model:value="homeOwnership"
+                                    :error="errors.home_ownership" :data="homeOwnershipList" />
+                            </div>
+                            <div class="col-xl-6 col-md-12">
+                                <select-component label="CAR OWNERSHIP" v-model:value="carOwnership"
+                                    :error="errors.car_ownership" :data="carOwnershipList" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="additional-info">
+                        <label for="example-text-input" class="form-control-label text-info fw-bolder">
+                            ACCESS TO DISTANCE LEARNING
+                        </label>
+                        <div class="col-xl-12 col-md-12">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>What devices are available at home that the student can use for learning?<span
+                                            class="text-danger">*</span> <small class="text-warning"> Check all that
+                                            applies</small></small>
+                                </label>
+                                <div class="row me-3 ms-3">
+                                    <div v-for="(item, index) in deviceList" :key="index" class="form-check col-md-4">
+                                        <input class="form-check-input" type="checkbox" v-model="deviceSelected"
+                                            :id="`check_box_device_` + index" :value="item">
+                                        <label class="form-check-label" :for="`check_box_device_` + index">
+                                            {{ item }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger mt-2" v-if="errors.available_device">{{
+                                    errors.available_device[0] }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-md-12">
+                            <select-component label="Do you have a way to connect to the internet? "
+                                v-model:value="internetConnection" :error="errors.available_connection"
+                                :data="beneficiaryList" />
+                        </div>
+                        <div class="col-xl-12 col-md-12">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>How do you connect to the Internet?<span class="text-danger">*</span> <small
+                                            class="text-warning"> Check all that
+                                            applies</small></small>
+                                </label>
+                                <div class="row me-3 ms-3">
+                                    <div v-for="(item, index1) in providerList" :key="index1" class="form-check col-md-12">
+                                        <input class="form-check-input" type="checkbox" :id="`check_box_provider_` + index1"
+                                            :value="item" v-model="providerAvailable">
+                                        <label class="form-check-label" :for="`check_box_provider_` + index1">
+                                            {{ item }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger mt-2" v-if="errors.available_provider">{{
+                                    errors.available_provider[0] }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-md-12">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>What Learning Modality do you prefer?<span class="text-danger">*</span> <small
+                                            class="text-warning"> Check all that
+                                            applies</small></small>
+                                </label>
+                                <div class="row me-3 ms-3">
+                                    <div v-for="(item, index2) in learningModalityList" :key="index2" class="form-check col-md-12">
+                                        <input class="form-check-input" type="checkbox" :id="`check_box_modality_` + index2"
+                                            :value="item" v-model="learningModality">
+                                        <label class="form-check-label" :for="`check_box_modality_` + index2">
+                                            {{ item }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger mt-2" v-if="errors.learning_modality">{{
+                                    errors.learning_modality[0] }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-md-12">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>What are the challenges that may affect your learning process through distance education?<span class="text-danger">*</span> <small
+                                            class="text-warning"> Check all that
+                                            applies</small></small>
+                                </label>
+                                <div class="row me-3 ms-3">
+                                    <div v-for="(item, index3) in inputsList" :key="index3" class="form-check col-md-12">
+                                        <input class="form-check-input" type="checkbox" :id="`check_box_learning_` + index3"
+                                            :value="item" v-model="distanceLearning">
+                                        <label class="form-check-label" :for="`check_box_learning_` + index3">
+                                            {{ item }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger mt-2" v-if="errors.distance_learning_effect">{{
+                                    errors.distance_learning_effect[0] }}</span>
+                            </div>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary mt-2 w-100">Submit Student Information</button>
                 </form>
             </div>
@@ -326,6 +437,14 @@ export default {
             educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/A'],
             employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/A'],
             arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/A'],
+            incomeList: ['Below 10,000', '10,000-20,000', '20,000-40,000', '40,000-60,000', '60,000 Above', 'N/A'],
+            beneficiaryList: ['Yes', 'No'],
+            homeOwnershipList: ['Owned', 'Mortgaged', 'Rented'],
+            carOwnershipList: ['1', '2', '3', 'up to 4'],
+            deviceList: ['Cable TV', 'Non-Cable TV', 'Basic Cellphone', 'Smartphone', 'Tablet', 'Radio', 'Desktop Computer', 'Laptop', 'None'],
+            providerList: ['own mobile data', 'own broadband (DSL, Wireless Fiber, Satellite)', 'computer shop', 'other places outside the home with internet connection (library, barangay, neighbor, relatives)', 'none'],
+            learningModalityList: ['online learning', 'Blended', 'Face-to-Face'],
+            inputsList: ['lack of available gadgets / equipment', 'insufficient load/data allowance', 'existing health condition/s', 'difficulty in independent learning', 'conflict with other activities (i.e. house chores)', 'none or lack of available space for studying', 'distractions (i.e. social media, noise from community/ neighbor)', 'none'],
             course: '',
             firstName: '',
             lastName: '',
@@ -377,7 +496,16 @@ export default {
             juniorHighSchoolYear: '',
             seniorHighSchoolName: '',
             seniorHighSchoolAddress: '',
-            seniorHighSchoolYear: ''
+            seniorHighSchoolYear: '',
+            householdIncome: '',
+            beneficiary: '',
+            homeOwnership: '',
+            carOwnership: '',
+            deviceSelected: [],
+            internetConnection: '',
+            providerAvailable: [],
+            distanceLearning: [],
+            learningModality: []
         }
         return inputValidation
     },
@@ -464,7 +592,12 @@ export default {
                 this.guardianEmployeeStatus = data.parent_details.guardian_employment_status
                 this.guardianArrangement = data.parent_details.guardian_working_arrangement
                 this.guardianAddress = data.parent_details.guardian_address
-                /* Educational Background */
+                /* Additional Details */
+                this.householdIncome = data.parent_details.household_income
+                this.beneficiary = data.parent_details.dswd_listahan
+                this.homeOwnership = data.parent_details.homeownership
+                this.carOwnership = data.parent_details.car_ownership
+                /* this.device = data.parent_details.available_devices */
             }
             this.isLoading = false
         }).catch((error) => {
@@ -478,6 +611,7 @@ export default {
         }),
         async updateDetails() {
             this.showLoading(true)
+            console.log(this.deviceSelected)
             const formData = {
                 course: this.course,
                 first_name: this.firstName,
@@ -532,7 +666,18 @@ export default {
                 junior_high_school_year: this.juniorHighSchoolYear,
                 senior_high_school_name: this.seniorHighSchoolName,
                 senior_high_school_address: this.seniorHighSchoolAddress,
-                senior_high_school_year: this.seniorHighSchoolYear
+                senior_high_school_year: this.seniorHighSchoolYear,
+                /* additional information */
+                household_income: this.householdIncome,
+                dswd_beneficiary: this.beneficiary,
+                home_ownership: this.homeOwnership,
+                car_ownership: this.carOwnership,
+                available_device: this.deviceSelected,
+                available_connection: this.internetConnection,
+                available_provider: this.providerAvailable,
+                learning_modality: this.learningModality,
+                distance_learning_effect: this.distanceLearning
+
             }
             axios.post('student/enrollment/registration', formData, {
                 headers: {
