@@ -8,7 +8,7 @@
                     <div class="dropdown m-3 w-100">
                         <a class=" dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                             aria-haspopup="false" aria-expanded="false">
-                            <span class="text-muted">Academic Year : </span>
+                            <span class="text-muted">Academic Year :   </span>
                             <span class="fw-bolder">{{currentAcademic}}</span>
                         </a>
                         <ul class="dropdown-menu w-100" data-popper-placement="bottom-start">
