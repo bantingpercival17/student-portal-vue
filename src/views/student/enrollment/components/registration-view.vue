@@ -17,6 +17,8 @@
                         <p class="mb-3">
                             You can now Proceed to Enrollment Assessment
                         </p>
+                        <p>Kindly download this Parents Consent and Submit to the Registrar's Office.
+                            <a class="badge bg-primary" href="http://bma.edu.ph/assets/files/consent-files/BSMARE-Parents-Consent-Form-for-BMA-1st-Term-AY-2022-2023.pdf">Download the File </a>.</p>
                         <!--  <a href="{{ route('enrollment.registration-form') }}" target="_blank"
                             class="btn btn-sm btn-outline-primary rounded-pill">Registration Form Printable</a> -->
                     </div>

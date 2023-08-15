@@ -1,7 +1,7 @@
 <template>
     <div v-if="enrollment.application">
         <div v-if="enrollment.application.is_approved">
-            <div v-if="enrollment.application.payment_mode !== null">
+            <div v-if="enrollment.application.payment_mode !== null || tuitionDetails.tuition_assessment">
                 <div v-if="tuitionDetails.tuition_assessment">
                     <stepper :value="viewName" :isActive="true" :isFinish="true" />
                     <div class="d-inline-block mt-2 w-100">
@@ -22,7 +22,7 @@
                                     <small class="form-label">Tuition Fee Amount:</small>
                                     <br>
                                     <label class="h5 text-primary form-label">
-                                        {{ tuitionDetails.tuition_assessment.total_payment }}
+                                        {{ numberFormat(tuitionDetails.tuition_assessment.total_payment) }}
                                     </label>
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
                                     <small class="form-label">Upon Enrollment:</small>
                                     <br>
                                     <label class="h5 text-primary form-label">
-                                        {{ tuitionDetails.tuition_assessment.upon_enrollment }}
+                                        {{ numberFormat(tuitionDetails.tuition_assessment.upon_enrollment) }}
                                     </label>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                     <small class="form-label">Monthly Fees:</small>
                                     <br>
                                     <label class="h5 text-primary form-label">
-                                        {{ tuitionDetails.tuition_assessment.monthly_payment }}
+                                        {{ numberFormat(tuitionDetails.tuition_assessment.monthly_payment) }}
                                     </label>
                                 </div>
                             </div>
@@ -172,6 +172,9 @@ export default {
         ...mapMutations({
             showLoading: SHOW_LOADING_MUTATION
         }),
+        numberFormat(number) {
+            return Intl.NumberFormat('hi-IN', { style: 'currency', currency: 'PHP' }).format(number)
+        },
         onProcess() {
             this.showLoading(true)
             const mode = this.modeOfPayment === 'Installment' ? 1 : 0
