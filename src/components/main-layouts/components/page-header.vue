@@ -6,9 +6,8 @@
                     class="img-fluid rounded-circle avatar-70 me-2">
                 <h2 class="logo-title me-3">BALIWAG MARITIME ACADEMY</h2>
             </router-link>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon">
                     <span class="navbar-toggler-bar bar1 mt-2"></span>
                     <span class="navbar-toggler-bar bar2"></span>
@@ -26,12 +25,13 @@
                             <li><router-link
                                     :class="`dropdown-item ${checkActive('app-layout.student-login') ? 'active' : ''}`"
                                     :to="{ name: 'app-layout.student-login' }">Student Login </router-link></li>
-                            <li><router-link
+                            <li><!-- <router-link
                                     :class="`dropdown-item ${checkActive('app-layout.applicant-login') ? 'active' : ''}`"
-                                    :to="{ name: 'app-layout.applicant-login' }">Applicant Login</router-link></li>
+                                    :to="{ name: 'app-layout.applicant-login' }">Applicant Login</router-link> -->
+                                <a href="http://bma.edu.ph/bma/login" class="dropdown-item">Applicant Login</a>
+                            </li>
                         </ul>
                     </li>
-
                 </ul>
             </div>
         </div>

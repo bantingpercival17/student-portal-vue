@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div v-if='isLoading'>
     <h3 class='text-primary'>LOADING</h3>
   </div>
@@ -93,6 +94,73 @@
               </tr>
             </tbody>
           </table>
+=======
+    <div v-if="isLoading">
+        <h3 class="text-primary">LOADING</h3>
+    </div>
+    <div v-else>
+        <p class="display-6 fw-bolder text-primary">SEMESTRAL GRADE</p>
+        <nav class="nav nav-underline bg-soft-primary pb-0 text-center" aria-label="Secondary navigation">
+                    <div class="dropdown m-3 w-100">
+                        <a class=" dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="false" aria-expanded="false">
+                            <span class="text-muted">Academic Year :   </span>
+                            <span class="fw-bolder">{{currentAcademic}}</span>
+                        </a>
+                        <ul class="dropdown-menu w-100" data-popper-placement="bottom-start">
+                            <li v-for="item in enrollmentHistory" :key="item" :value="item.id">
+                                <router-link class="dropdown-item"
+                                            :to="{ name: 'student-layout.semestral-grade-view', query: { key: encrypt(item.id) } }">{{academicName(item.academic)}}</router-link>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+        <div class="card shadow mt-3">
+            <div class="card-header">
+                <span class="fw-bolder text-primary">LIST OF SUBJECTS</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                        <tr class="fw-bolder">
+                            <th>SUBJECT AND INSTRUCTOR</th>
+                            <th>UNITS</th>
+                            <th>GRADE</th>
+                            <th>REMARKS</th>
+                        </tr>
+                        </thead>
+                        <tbody v-if="subjectList">
+                            <tr  v-for="item in subjectList" :key="item" :value="item.id">
+                                <td>
+                                    <p class="fw-bolder text-primary m-0 p-0 h4"> {{item.curriculum_subjects.subject.subject_code}}</p>
+                                    <span class="fw-bolder text-secondary">{{teacherName(item.staff)}}</span><br>
+                                    <span class="text-secondary">{{item.curriculum_subjects.subject.subject_name}}</span>
+                                </td>
+                                <td><p class="fw-bolder text-secondary h5">{{item.curriculum_subjects.subject.units}}</p></td>
+                                <td>
+                                    <div v-if='isPublish'>
+                                        <span class="fw-bolder h4 text-primary">{{convertGrade(item.student_semestral_subject_grade)}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div v-if='isPublish'>
+                                        <span class="fw-bolder h4 text-primary">
+                                            {{gradeRemarks(convertGrade(item.student_semestral_subject_grade))}}
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
+                            <tr>
+                               <td>NO SUBJECT</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+>>>>>>> b29eb14114062b5d739c26df5e673975feaa1b79
         </div>
       </div>
     </div>
