@@ -34,13 +34,13 @@ export const studentRoute = (prop) => [
         name: prop + '.current-payment',
         meta: { auth: true, name: 'Payment Overview', user: 'student' },
         component: () => import('../views/student/payment/overview.vue')
-      },
-      {
+    },
+    {
         path: '/student/payment/payment-history',
         name: prop + '.payment-history',
         meta: { auth: true, name: 'Payment Assessment History', user: 'student' },
         component: () => import('../views/student/dashboard.vue')
-      },
+    },
     {
         path: '/student/payment/payment-history',
         name: prop + '.payment-history',
@@ -70,6 +70,18 @@ export const studentRoute = (prop) => [
         name: prop + '.onboard-mopm-view',
         meta: { auth: true, name: 'Performance Report View', user: 'student' },
         component: () => import('../views/student/onboard/mopm/performance-report-view.vue')
+    },
+    {
+        path: '/student/onboard/assessment/view',
+        name: prop + '.onboard-assessment-view',
+        meta: { auth: true, name: 'Assessment', user: 'student' },
+        component: () => import('../views/student/onboard/assessment/AssessmentView.vue')
+    },
+    {
+        path: '/student/onboard/assessment/questioner',
+        name: prop + '.onboard-questioner-view',
+        meta: { auth: true, name: 'Examination', user: 'student' },
+        component: () => import('../views/student/onboard/assessment/QuestionerView.vue')
     },
     {
         path: '/student/classroom',

@@ -3,6 +3,7 @@
         <h3 class="text-primary">LOADING</h3>
     </div>
     <div v-else>
+        <p class='display-6 fw-bolder text-primary'>SUBJECT LIST</p>
     </div>
 </template>
 <script>
@@ -11,7 +12,7 @@ import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, SHOW_LOADING_MUTATION } fr
 import { mapGetters, mapMutations } from 'vuex'
 import axios from 'axios'
 export default {
-    name: 'Semestral Grade',
+    name: 'SUBJECT LIST',
     data() {
         const formData = new FormData()
         return {
