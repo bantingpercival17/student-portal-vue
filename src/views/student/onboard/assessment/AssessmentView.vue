@@ -73,9 +73,11 @@
               </div>
               <div class="col-lg-6 col-md-12">
                 <label for="" class="fw-bolder text-secondary">PRACTICAL ASSESSMENT</label>
+                <p class="h4 fw-bolder text-primary">{{ examinationDetails.practical_score }} points</p>
               </div>
               <div class="col-lg-6 col-md-12">
                 <label for="" class="fw-bolder text-secondary">ORAL ASSESSMENT</label>
+                <p class="h4 fw-bolder text-primary">{{ examinationDetails.oral_score }} points</p>
               </div>
             </div>
             <div v-else class="row">
