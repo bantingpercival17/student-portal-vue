@@ -66,18 +66,18 @@
         <div class="card-body">
           <div class="row">
 
-            <div v-if="examinationDetails" class="row">
+            <div v-if="assessmentDetails" class="row">
               <div class="col-lg-6 col-md-12">
                 <label for="" class="fw-bolder text-secondary">ONLINE ASSESSMENT</label>
                 <p class="h4 fw-bolder text-primary">{{ examinationCode.result.length }} points</p>
               </div>
               <div class="col-lg-6 col-md-12">
                 <label for="" class="fw-bolder text-secondary">PRACTICAL ASSESSMENT</label>
-                <p class="h4 fw-bolder text-primary">{{ examinationDetails.practical_score }} points</p>
+                <p class="h4 fw-bolder text-primary">{{ assessmentDetails.practical_score }} points</p>
               </div>
               <div class="col-lg-6 col-md-12">
                 <label for="" class="fw-bolder text-secondary">ORAL ASSESSMENT</label>
-                <p class="h4 fw-bolder text-primary">{{ examinationDetails.oral_score }} points</p>
+                <p class="h4 fw-bolder text-primary">{{ assessmentDetails.oral_score }} points</p>
               </div>
             </div>
             <div v-else class="row">

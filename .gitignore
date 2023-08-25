@@ -24,4 +24,5 @@ pnpm-debug.log*
 
 .capacitor.json
 .package-lock.json
+.package-lock.json*
 /android/*
