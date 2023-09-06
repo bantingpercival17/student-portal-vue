@@ -1,5 +1,5 @@
 <template>
-    <div class="card shadow">
+    <!-- <div class="card shadow">
         <div class="card-body">
             <div class="row ">
                 <div class="col-lg-4 col-md-4">
@@ -15,6 +15,30 @@
                         :to="{ name: 'student-layout.enrollment-registration' }">
                         UPDATE PROFILE
                     </router-link>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="mt-6">
+        <div class="card shadow ">
+            <div class="row  mx-3 my-3">
+                <div class="col-lg-2 col-md-12">
+                    <div class="profile-img me-3 mb-3 mb-lg-0">
+                        <img :src="details.profile_picture" class="img-fluid avatar avatar-120 rounded-circle"
+                            alt="profile-image">
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12">
+                    <div class="row">
+                        <div class="col-md">
+                            <h4 class="me-2 text-primary fw-bolder">{{ displayName(details.account) }}</h4>
+                            <span>{{ details.account.account.email }}</span>
+                            <router-link class="btn btn-sm btn-primary rounded-pill float-end" aria-current="page"
+                                :to="{ name: 'student-layout.enrollment-registration' }">
+                                UPDATE PROFILE
+                            </router-link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

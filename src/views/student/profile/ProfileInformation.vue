@@ -6,7 +6,12 @@
             </div>
         </div>
         <div class="card-body">
-
+<div class="row">
+    <div class="col-md">
+        <small class="fw-bolder text-muted">FIRST NAME</small>
+        L
+    </div>
+</div>
         </div>
     </div>
 </template>

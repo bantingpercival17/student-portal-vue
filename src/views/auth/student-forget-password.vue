@@ -14,7 +14,7 @@
                 <form @submit.prevent="forgetPassword" method="POST">
                     <div class="row">
                         <div class="col-xl-12 col-md-12">
-                            <input-component-v2 label="PASSWORD" type="text" v-model:value="email" :error="errors.email" />
+                            <input-component-v2 label="email" type="text" v-model:value="email" :error="errors.email" />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-sm float-end">RESET</button>
