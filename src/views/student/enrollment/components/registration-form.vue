@@ -519,7 +519,7 @@ export default {
     },
     mounted() {
         console.log(this.$route)
-        this.link = this.$route.path == '/student/update-information' ? 'student/update-information' : 'student/enrollment/registration'
+        this.link = this.$route.path === '/student/update-information' ? 'student/update-information' : 'student/enrollment/registration'
         axios.get('student/information', {
             headers: {
                 Authorization: 'Bearer ' + this.token
@@ -616,7 +616,6 @@ export default {
         }),
         async updateDetails() {
             this.showLoading(true)
-            console.log(this.deviceSelected)
             const formData = {
                 course: this.course,
                 first_name: this.firstName,
@@ -690,7 +689,7 @@ export default {
                 }
             }).then((response) => {
                 this.showLoading(false)
-                this.$router.push('/student/enrollment/overview')
+                this.$router.push('/student/dashboard')
                 console.log(response)
             }).catch((error) => {
                 this.showLoading(false)
