@@ -1,0 +1,8 @@
+{
+  "appId": "com.example.app",
+  "appName": "student-portal-vue",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http"
+  }
+}

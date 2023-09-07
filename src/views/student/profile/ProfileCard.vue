@@ -34,7 +34,7 @@
                             <h4 class="me-2 text-primary fw-bolder">{{ displayName(details.account) }}</h4>
                             <span>{{ details.account.account.email }}</span>
                             <router-link class="btn btn-sm btn-primary rounded-pill float-end" aria-current="page"
-                                :to="{ name: 'student-layout.enrollment-registration' }">
+                                :to="{ name: 'student-layout.update-information' }">
                                 UPDATE PROFILE
                             </router-link>
                         </div>

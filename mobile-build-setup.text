@@ -1,0 +1,14 @@
+npx cap init
+
+npx cap add android
+
+npm run build
+
+npx cap copy
+
+# First option to build a Mobile Application
+cd android
+./gradlew assembleDebug
+
+#Second option is on android studio
+npx cap open android

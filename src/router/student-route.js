@@ -94,5 +94,11 @@ export const studentRoute = (prop) => [
         name: prop + '.semestral-grade-view',
         meta: { auth: true, name: 'Semestral Grade', user: 'student' },
         component: () => import('../views/student/classroom/SemestralGradeView.vue')
+    },
+    {
+        path: '/student/update-information',
+        name: prop + '.update-information',
+        meta: { auth: true, name: 'Student Update Information', user: 'student' },
+        component: () => import('../views/student/enrollment/components/registration-form.vue')
     }
 ]

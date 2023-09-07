@@ -375,7 +375,8 @@
                                             applies</small></small>
                                 </label>
                                 <div class="row me-3 ms-3">
-                                    <div v-for="(item, index2) in learningModalityList" :key="index2" class="form-check col-md-12">
+                                    <div v-for="(item, index2) in learningModalityList" :key="index2"
+                                        class="form-check col-md-12">
                                         <input class="form-check-input" type="checkbox" :id="`check_box_modality_` + index2"
                                             :value="item" v-model="learningModality">
                                         <label class="form-check-label" :for="`check_box_modality_` + index2">
@@ -390,8 +391,9 @@
                         <div class="col-xl-12 col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>What are the challenges that may affect your learning process through distance education?<span class="text-danger">*</span> <small
-                                            class="text-warning"> Check all that
+                                    <small>What are the challenges that may affect your learning process through distance
+                                        education?<span class="text-danger">*</span> <small class="text-warning"> Check all
+                                            that
                                             applies</small></small>
                                 </label>
                                 <div class="row me-3 ms-3">
@@ -440,7 +442,7 @@ export default {
             incomeList: ['Below 10,000', '10,000-20,000', '20,000-40,000', '40,000-60,000', '60,000 Above', 'N/A'],
             beneficiaryList: ['Yes', 'No'],
             homeOwnershipList: ['Owned', 'Mortgaged', 'Rented'],
-            carOwnershipList: ['1', '2', '3', 'up to 4'],
+            carOwnershipList: ['0', '1', '2', '3', 'up to 4'],
             deviceList: ['Cable TV', 'Non-Cable TV', 'Basic Cellphone', 'Smartphone', 'Tablet', 'Radio', 'Desktop Computer', 'Laptop', 'None'],
             providerList: ['own mobile data', 'own broadband (DSL, Wireless Fiber, Satellite)', 'computer shop', 'other places outside the home with internet connection (library, barangay, neighbor, relatives)', 'none'],
             learningModalityList: ['online learning', 'Blended', 'Face-to-Face'],
@@ -505,7 +507,8 @@ export default {
             internetConnection: '',
             providerAvailable: [],
             distanceLearning: [],
-            learningModality: []
+            learningModality: [],
+            link: ''
         }
         return inputValidation
     },
@@ -515,6 +518,8 @@ export default {
         })
     },
     mounted() {
+        console.log(this.$route)
+        this.link = this.$route.path == '/student/update-information' ? 'student/update-information' : 'student/enrollment/registration'
         axios.get('student/information', {
             headers: {
                 Authorization: 'Bearer ' + this.token
@@ -679,7 +684,7 @@ export default {
                 distance_learning_effect: this.distanceLearning
 
             }
-            axios.post('student/enrollment/registration', formData, {
+            axios.post(this.link, formData, {
                 headers: {
                     Authorization: 'Bearer ' + this.token
                 }

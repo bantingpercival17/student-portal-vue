@@ -6,12 +6,24 @@
             </div>
         </div>
         <div class="card-body">
-<div class="row">
-    <div class="col-md">
-        <small class="fw-bolder text-muted">FIRST NAME</small>
-        L
-    </div>
-</div>
+            <div class="row">
+                <div class="col-md">
+                    <small class="fw-bolder text-muted">FIRST NAME</small>
+                    <p class="fw-bolder text-primary">{{ details.account.first_name }}</p>
+                </div>
+                <div class="col-md">
+                    <small class="fw-bolder text-muted">LAST NAME</small>
+                    <p class="fw-bolder text-primary">{{ details.account.last_name }}</p>
+                </div>
+                <div class="col-md">
+                    <small class="fw-bolder text-muted">MIDDLE NAME</small>
+                    <p class="fw-bolder text-primary">{{ details.account.middle_name }}</p>
+                </div>
+                <div class="col-md">
+                    <small class="fw-bolder text-muted">EXTENSION NAME</small>
+                    <p class="fw-bolder text-primary">{{ details.account.extention_name }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
