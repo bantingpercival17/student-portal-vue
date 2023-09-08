@@ -90,9 +90,9 @@ export const studentRoute = (prop) => [
         component: () => import('../views/student/classroom/SubjectsView.vue')
     },
     {
-        path: '/student/classroom/subject/view',
+        path: '/student/classroom/view/:subject',
         name: prop + '.subject-view-lesson',
-        meta: { auth: true, name: 'Subject List', user: 'student' },
+        meta: { auth: true, name: 'Lesson View', user: 'student' },
         component: () => import('../views/student/classroom/LessonView.vue')
     },
     {

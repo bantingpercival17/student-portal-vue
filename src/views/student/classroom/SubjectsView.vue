@@ -6,7 +6,7 @@
         <p class='display-6 fw-bolder text-primary'>SUBJECT LIST</p>
         <div class="row">
             <div class="col-lg-4 col-md-6 col-xs-12" v-for="(data, index) in subjectLists" :key="index">
-                <router-link :to="{ name: 'student-layout.subject-view-lesson', query: { s: encrypt(data.id) } }">
+                <router-link :to="{ name: 'student-layout.subject-view-lesson', params: { subject: encrypt(data.id) } }">
                     <div class="card bg-primary">
                         <div class="card-header d-flex align-items-center justify-content-between pb-4">
                             <div class="header-title">
@@ -74,8 +74,10 @@ export default {
             console.log(this.subjectLists)
             this.isLoading = false
         }).catch((error) => {
-            if (error.response.status === 401) {
-                this.logout()
+            if (error.response) {
+                if (error.response.status === 401) {
+                    this.logout()
+                }
             }
             console.log(error.response)
         })
