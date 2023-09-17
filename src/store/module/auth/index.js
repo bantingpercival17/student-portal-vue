@@ -1,4 +1,8 @@
-import { APPLICANT_LOGIN_ACTION, AUTH_ACTION, AUTO_LOGIN_ACTION, GET_USER_IMAGE, GET_USER_TOKEN, GET_USER_NAME, IS_USER_AUTHENTICATE_GETTER, LOGIN_ACTION, LOGOUT_ACTION, SET_USER_TOKEN_MUTATION, TESTING_ACTION } from '@/store/storeConstants'
+import {
+    APPLICANT_LOGIN_ACTION, AUTH_ACTION, AUTO_LOGIN_ACTION,
+    GET_USER_IMAGE, GET_USER_TOKEN, GET_USER_NAME, IS_USER_AUTHENTICATE_GETTER,
+    LOGIN_ACTION, LOGOUT_ACTION, SET_USER_TOKEN_MUTATION, APPLICANT_REGISTRATION_ACTION
+} from '@/store/storeConstants'
 import axios from 'axios'
 import LoginValidation from '@/services/validation/LoginValidation.js'
 export default {
@@ -95,6 +99,21 @@ export default {
                 /* const errorMessage = 'Server Offline' */
                 console.log(errorMessage)
                 throw errorMessage
+            }
+        },
+        async [APPLICANT_REGISTRATION_ACTION](context, payload) {
+            let response = ''
+            try {
+                response = await axios.post('applicant/register', payload)
+                if (response.status === 200) {
+                    console.log('Registration Complete')
+                }
+            } catch (error) {
+                console.log('Auth Module ' + error)
+                /* const errorMessage = LoginValidation.serverError(error.response)
+                console.log(errorMessage)
+                throw errorMessage */
+                throw error
             }
         }
     }

@@ -15,3 +15,4 @@ export const IS_USER_AUTHENTICATE_GETTER = '[GETTERS] USER AUTHENTICATE'
 
 
 export const APPLICANT_LOGIN_ACTION = '[APPLICANT ACTION] Applicant Login'
+export const APPLICANT_REGISTRATION_ACTION = '[ACTION] Applicant Registration'

@@ -67,14 +67,6 @@
                                 <input-component label="email" v-model:value="formData.email" :error="errors.email" />
                             </div>
                             <div class="col-md-12">
-                                <input-component-v2 type="password" label="password" v-model:value="formData.password"
-                                    :error="errors.password" />
-                            </div>
-                            <div class="col-md-12">
-                                <input-component-v2 type="password" label="confirm password"
-                                    v-model:value="formData.password_confirmation" :error="errors.password_confirmation" />
-                            </div>
-                            <div class="col-md-12">
                                 <input-component-v2 type="date" label="birthday" v-model:value="formData.birthday"
                                     :error="errors.birthday" />
                             </div>
@@ -85,7 +77,7 @@
                             <div class="col-md-12 position-relative">
                                 <small for="validationTooltip04" class="form-label fw-bolder">COURSE <sup
                                         class="text-danger fw-bolder">*</sup></small>
-                                <select class="form-select border border-primary" v-model="formData.course">
+                                <select class="form-select form-select-sm border border-primary" v-model="formData.course">
                                     <option selected="" disabled="" value="">Choose...</option>
                                     <option value="1">BS MARINE ENGINEERING - COLLEGE</option>
                                     <option value="2">BS MARINE TRANSPORTATION - COLLEGE</option>
@@ -374,12 +366,12 @@
 </template>
 <script>
 /* import { VueRecaptcha } from 'vue-recaptcha'; */
-import axios from 'axios'
 import modal from '@/components/bootstrap/modal/modal.vue'
-import { SHOW_LOADING_MUTATION } from '@/store/storeConstants.js'
+import { SHOW_LOADING_MUTATION, APPLICANT_REGISTRATION_ACTION } from '@/store/storeConstants.js'
 import inputComponent from '@/components/main-layouts/components/widgets/input-component.vue'
 import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
+import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
 export default {
     name: 'AdmissionPage',
     components: { modal, inputComponent, inputComponentV2 },
@@ -388,12 +380,11 @@ export default {
             firstName: '',
             lastName: '',
             email: '',
-            password: '',
-            password_confirmation: '',
             course: '',
             contactNumber: '',
             birthday: '',
-            agreement: ''
+            agreement: '',
+            message: 'Check you Email for your Password'
         }
         return {
             errors: [],
@@ -406,12 +397,47 @@ export default {
         ...mapMutations({
             showLoading: SHOW_LOADING_MUTATION
         }),
+        ...mapActions('alert', {
+            successAlert: SUCCESS_ALERT,
+            infoAlert: INFO_ALERT,
+            errorAlert: ERROR_ALERT,
+            encrypt: ENCRYPT_DATA
+        }),
+        ...mapActions('auth', {
+            registration: APPLICANT_REGISTRATION_ACTION
+        }),
         async applicantRegister() {
+            this.showLoading(true)
+            this.networkError = []
+            this.errors = []
+            try {
+                await this.registration(this.formData).then(response => {
+                    console.log(response)
+                })
+                const message = btoa('Check you Email for your Password')
+                /* this.$router.push({ path: '/applicant/login', query: { _m: message } }) */
+            } catch (error) {
+                this.errorMessage = error
+                if (error.code === 'ERR_NETWORK') {
+                    this.networkError = error
+                    this.errorAlert(error)
+                } else {
+                    if (error.response) {
+                        if (error.response.status === 422) {
+                            this.errors = error.response.data.errors
+                        }
+                    }
+                }
+                this.showLoading(false)
+            }
+            this.showLoading(false)
+        }
+        /* async applicantRegister() {
             this.showLoading(true)
             axios.post('applicant/register', this.formData).then((response) => {
                 console.log(response)
                 this.showLoading(false)
-                this.$router.push('/applicant/login')
+                this.$router.push({ path: '/applicant/login', query: { message: 'Check you Email for your Passowrd' } })
             }).catch((error) => {
                 console.error(error)
                 if (error.code === 'ERR_NETWORK') {
@@ -425,7 +451,7 @@ export default {
 
                 this.showLoading(false)
             })
-        }
+        } */
     }
 }
 

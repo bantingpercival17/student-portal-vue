@@ -1,9 +1,10 @@
 import { createStore } from 'vuex'
 import auth from './module/auth'
+import alert from '@/store/module/alert'
 import { SHOW_LOADING_MUTATION } from './storeConstants'
 const store = createStore({
   modules: {
-    auth
+    auth, alert
   },
   state() {
     return {

@@ -15,6 +15,10 @@
                     </p>
                 </div>
                 <form @submit.prevent="onLogin" class="row g-3">
+                    <div class="passed message">
+                        <span class="badge bg-primary mt-2" v-if="passedMessage">{{
+                            passedMessage }}</span>
+                    </div>
                     <div class="">
                         <div class="col-lg-12">
                             <input-component-v2 type="email" label="email" v-model:value="formData.email"
@@ -46,6 +50,7 @@
 import axios from 'axios'
 import LoginValidation from '@/services/validation/LoginValidation'
 import { APPLICANT_LOGIN_ACTION, SHOW_LOADING_MUTATION } from '@/store/storeConstants.js'
+import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, DECRYPT_DATA } from '@/store/storeAlertConstants.js'
 import { mapActions, mapMutations } from 'vuex'
 import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 export default {
@@ -61,7 +66,15 @@ export default {
             rememberMe: '',
             errors: [],
             message: [],
-            networkError: []
+            networkError: [],
+            backMessage: null
+        }
+    },
+    mounted() {
+        if (this.$route.query._m) {
+            const dataMessage = atob(this.$route.query._m)
+            const data = { message: dataMessage }
+            this.infoAlert(data)
         }
     },
     methods: {
@@ -70,6 +83,12 @@ export default {
         }),
         ...mapActions('auth', {
             login: APPLICANT_LOGIN_ACTION
+        }),
+        ...mapActions('alert', {
+            successAlert: SUCCESS_ALERT,
+            infoAlert: INFO_ALERT,
+            errorAlert: ERROR_ALERT,
+            decrypt: DECRYPT_DATA
         }),
         async onLogin() {
             console.log(this.formData)
