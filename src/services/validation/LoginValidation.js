@@ -11,13 +11,13 @@ export default class LoginValidation {
             errors.email = 'Invalid Email'
         } */
         if (!validation.inputRequired(this.email)) {
-            errors.email = 'The email field is required.'
+            errors.email = ['The email field is required.']
         }
         if (!validation.inputRequired(this.email)) {
-            errors.email = 'The email field is required.'
+            errors.email = ['The email field is required.']
         }
         if (!validation.inputRequired(this.password)) {
-            errors.password = 'The password field is required.'
+            errors.password = ['The password field is required.']
         }
         return errors
     }

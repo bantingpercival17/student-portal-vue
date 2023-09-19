@@ -15,24 +15,11 @@
                 <form @submit.prevent="onLogin" class="row">
                     <div class="">
                         <div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>EMAIL<span class="text-danger">*</span></small>
-                                </label>
-                                <input type="email" class="form-control border-primary" id="validationCustomemail"
-                                    v-model.trim="username">
-                                <span class="badge bg-danger mt-2" v-if="errors.email">{{ errors.email }}</span>
-                            </div>
+                            <input-component-v2 type="email" label="email" v-model:value="username" :error="errors.email" />
                         </div>
                         <div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>PASSWORD<span class="text-danger">*</span></small>
-                                </label>
-                                <input type="password" class="form-control border-primary" id="validationCustompassword"
-                                    v-model.trim="password">
-                                <span class="badge bg-danger mt-2" v-if="errors.password">{{ errors.password }}</span>
-                            </div>
+                            <input-component-v2 type="password" label="password" v-model:value="password"
+                                :error="errors.password" />
                         </div>
                         <span class="badge bg-danger mt-2" v-if="errorMessage">{{ errorMessage }}</span>
 
@@ -60,9 +47,11 @@
 import LoginValidation from '@/services/validation/LoginValidation'
 import { LOGIN_ACTION, SHOW_LOADING_MUTATION, TESTING_ACTION } from '@/store/storeConstants.js'
 import { mapActions, mapMutations } from 'vuex'
+import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 import axios from 'axios'
 export default {
     name: 'StudentLoginPage',
+    components: { inputComponentV2 },
     data() {
         return {
             username: '',
