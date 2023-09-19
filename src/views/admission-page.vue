@@ -412,10 +412,9 @@ export default {
             this.errors = []
             try {
                 await this.registration(this.formData).then(response => {
-                    console.log(response)
+                    const message = btoa(response.data.message)
+                    this.$router.push({ path: '/applicant/login', query: { _m: message } })
                 })
-                const message = btoa('Check you Email for your Password')
-                /* this.$router.push({ path: '/applicant/login', query: { _m: message } }) */
             } catch (error) {
                 this.errorMessage = error
                 if (error.code === 'ERR_NETWORK') {

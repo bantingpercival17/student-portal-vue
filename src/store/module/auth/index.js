@@ -94,7 +94,6 @@ export default {
                 }
             } catch (error) {
                 console.log(error)
-                console.log(error.response)
                 const errorMessage = LoginValidation.serverError(error.response)
                 /* const errorMessage = 'Server Offline' */
                 console.log(errorMessage)
@@ -107,6 +106,7 @@ export default {
                 response = await axios.post('applicant/register', payload)
                 if (response.status === 200) {
                     console.log('Registration Complete')
+                    return response
                 }
             } catch (error) {
                 console.log('Auth Module ' + error)
