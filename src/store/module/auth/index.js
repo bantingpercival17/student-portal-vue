@@ -57,13 +57,15 @@ export default {
         async [LOGIN_ACTION](context, payload) {
             return context.dispatch(AUTH_ACTION, {
                 ...payload,
-                url: 'student/login'
+                url: 'student/login',
+                userType: 'student'
             })
         },
         async [APPLICANT_LOGIN_ACTION](context, payload) {
             return context.dispatch(AUTH_ACTION, {
                 ...payload,
-                url: 'applicant/login'
+                url: 'applicant/login',
+                userType: 'applicant'
             })
         },
         [AUTO_LOGIN_ACTION](context) {
@@ -81,10 +83,12 @@ export default {
                     password: payload.password
                 })
                 if (response.status === 200) {
+                    const name = payload.userType === 'student' ? response.data.student.account.student.first_name : response.data.student.account.name
                     const tokenData = {
                         userId: response.data.student.account.student_id,
                         email: response.data.student.account.email,
-                        name: response.data.student.account.student.first_name,
+                        name: name,
+                        userType: payload.userType,
                         token: response.data.token,
                         image: response.data.student.profile_picture
                     }

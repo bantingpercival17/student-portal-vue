@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import store from '../store/index'
 import { IS_USER_AUTHENTICATE_GETTER } from '@/store/storeConstants'
 import { studentRoute } from './student-route'
+import { applicantRoute } from './applicant-route'
 const defaultchildRoutes = (prop) => [
   {
     path: '/',
@@ -73,6 +74,12 @@ const routes = [
     name: 'student-layout',
     component: () => import('../components/main-layouts/student-layout.vue'),
     children: studentRoute('student-layout')
+  },
+  {
+    path: '/applicant',
+    name: 'applicant-layout',
+    component: () => import('../components/main-layouts/applicant-layout.vue'),
+    children: applicantRoute('applicant-layout')
   },
   {
     path: '/homev2',
