@@ -17,7 +17,7 @@
                 <h2 class="fw-bolder text-info">LOADING</h2>
             </div>
             <div v-else>
-                <form @submit.prevent="updateDetails" method="post">
+                <form @submit.prevent="storeDetails" method="post">
                     <label for="" class="text-primary fw-bolder h4">STUDENT DETAILS</label>
                     <div class="row">
                         <div class="col-xl col-md">
@@ -287,10 +287,6 @@
                                 <select-component label="Working Arrangement" v-model:value="guardianArrangement"
                                     :error="errors.guardian_arrangment" :data="arrangement" />
                             </div>
-                            <div class="col-xl-12 col-md-6 ">
-                                <input-component label="Guardian Address" v-model:value="guardianAddress"
-                                    :error="errors.guardian_address" />
-                            </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary mt-2 w-100">Submit Student Information</button>
@@ -301,11 +297,12 @@
 </template>
 <script>
 import { GET_USER_TOKEN, SHOW_LOADING_MUTATION } from '@/store/storeConstants'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import axios from 'axios'
 import inputComponent from '@/components/main-layouts/components/widgets/input-component.vue'
 import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
+import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
 export default {
     name: 'EnrollmentRegistrationForm',
     components: {
@@ -319,9 +316,9 @@ export default {
             errors: [],
             educationaldetails: [],
             genderi: ['Male', 'Female'],
-            educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/A'],
-            employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/A'],
-            arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/A'],
+            educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/a'],
+            employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/a'],
+            arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/a'],
             course: '',
             firstName: '',
             lastName: '',
@@ -330,7 +327,7 @@ export default {
             gender: '',
             birthDate: '',
             birthPlace: '',
-            hieght: '',
+            height: '',
             weight: '',
             contactNumber: '',
             personalEmail: '',
@@ -363,7 +360,6 @@ export default {
             guardianEducational: '',
             guardianEmployeeStatus: '',
             guardianArrangement: '',
-            guardianAddress: '',
             elementarySchoolName: '',
             elementarySchoolAddress: '',
             elementarySchoolYear: '',
@@ -388,29 +384,66 @@ export default {
                 Authorization: 'Bearer ' + this.token
             }
         }).then((response) => {
+            const account = response.data.data
             const data = response.data.data.applicant
-            console.log(response.data)
-            this.firstName = data.first_name
-            this.lastName = data.last_name
-            this.middleName = data.middle_name
-            this.middleInitial = data.middle_initial
-            this.extensionName = data.extention_name
-            this.birthDate = data.birthday
-            this.birthPlace = data.birth_place
-            this.gender = data.sex
-            this.weight = data.weight
-            this.height = data.height
-            this.civilStatus = data.civil_status
-            this.nationality = data.nationality
-            this.religion = data.religion
-            this.street = data.street
-            this.barangay = data.barangay
-            this.municipality = data.municipality
-            this.province = data.province
-           /*  this.zip_code = data.zip_code.toString()
-            this.contactNumber = data.contact_number
-            this.educationaldetails = data.educational_background */
-
+            console.log(account)
+            this.contactNumber = account.contact_number
+            this.personalEmail = account.email
+            if (data) {
+                this.firstName = data.first_name
+                this.lastName = data.last_name
+                this.middleName = data.middle_name
+                this.middleInitial = data.middle_initial
+                this.extensionName = data.extention_name
+                this.birthDate = data.birthday
+                this.birthPlace = data.birth_place
+                this.gender = data.sex
+                this.weight = data.weight
+                this.height = data.height
+                this.civilStatus = data.civil_status
+                this.nationality = data.nationality
+                this.religion = data.religion
+                this.street = data.street
+                this.barangay = data.barangay
+                this.municipality = data.municipality
+                this.province = data.province
+                this.zip_code = data.zip_code.toString()
+                /* Father */
+                this.fatherLastName = data.father_last_name
+                this.fatherFirstName = data.father_first_name
+                this.fatherMiddleName = data.father_middle_name
+                this.fatherContactNumber = data.father_contact_number
+                this.fatherEducational = data.father_educational_attainment
+                this.fatherEmployeeStatus = data.father_employment_status
+                this.fatherArrangement = data.father_working_arrangement
+                /* Mother Maiden */
+                this.motherLastName = data.mother_last_name
+                this.motherFirstName = data.mother_first_name
+                this.motherMiddleName = data.mother_middle_name
+                this.motherContactNumber = data.mother_contact_number
+                this.motherEducational = data.mother_educational_attainment
+                this.motherEmployeeStatus = data.mother_employment_status
+                this.motherArrangement = data.mother_working_arrangement
+                /* Guardian */
+                this.guardianLastName = data.guardian_last_name
+                this.guardianFirstName = data.guardian_first_name
+                this.guardianMiddleName = data.guardian_middle_name
+                this.guardianContactNumber = data.guardian_contact_number
+                this.guardianEducational = data.guardian_educational_attainment
+                this.guardianEmployeeStatus = data.guardian_employment_status
+                this.guardianArrangement = data.guardian_working_arrangement
+                this.guardianAddress = data.guardian_address
+                /* Education */
+                this.elementarySchoolName = data.elementary_school_name
+                this.elementarySchoolAddress = data.elementary_school_address
+                this.elementarySchoolYear = this.dateFormat(data.elementary_school_year)
+                this.juniorHighSchoolName = data.junior_high_school_name
+                this.juniorHighSchoolAddress = data.junior_high_school_address
+                this.juniorHighSchoolYear = this.dateFormat(data.junior_high_school_year)
+                this.seniorHighSchoolName = data.senior_high_school_name
+                this.seniorHighSchoolAddress = data.senior_high_school_address
+                this.seniorHighSchoolYear = this.dateFormat(data.senior_high_school_year)
+            }
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
@@ -418,10 +451,96 @@ export default {
         })
     },
     methods: {
+        ...mapActions('alert', {
+            successAlert: SUCCESS_ALERT,
+            infoAlert: INFO_ALERT,
+            errorAlert: ERROR_ALERT,
+            encrypt: ENCRYPT_DATA
+        }),
         ...mapMutations({
             showLoading: SHOW_LOADING_MUTATION
-        })
-
+        }),
+        dateFormat(data) {
+            const dateParts = data.split('-')
+            const date = dateParts[0] + '-' + dateParts[1]
+            return date
+        },
+        async storeDetails() {
+            this.errors = []
+            this.showLoading(true)
+            const formData = {
+                course: this.course,
+                first_name: this.firstName,
+                last_name: this.lastName,
+                middle_name: this.middleName,
+                extension_name: this.extensionName,
+                gender: this.gender,
+                height: this.height,
+                weight: this.weight,
+                birth_date: this.birthDate,
+                birth_place: this.birthPlace,
+                civil_status: this.civilStatus,
+                nationality: this.nationality,
+                religion: this.religion,
+                street: this.street,
+                barangay: this.barangay,
+                municipality: this.municipality,
+                province: this.province,
+                zip_code: this.zip_code,
+                personal_email: this.personalEmail,
+                contact_number: this.contactNumber,
+                /* Parents */
+                father_last_name: this.fatherLastName,
+                father_first_name: this.fatherFirstName,
+                father_middle_name: this.fatherMiddleName,
+                father_contact_number: this.fatherContactNumber,
+                father_educational_attainment: this.fatherEducational,
+                father_employment_status: this.fatherEmployeeStatus,
+                father_working_arrangement: this.fatherArrangement,
+                mother_last_name: this.motherLastName,
+                mother_first_name: this.motherFirstName,
+                mother_middle_name: this.motherMiddleName,
+                mother_contact_number: this.motherContactNumber,
+                mother_educational_attainment: this.motherEducational,
+                mother_employment_status: this.motherEmployeeStatus,
+                mother_working_arrangement: this.motherArrangement,
+                guardian_last_name: this.guardianLastName,
+                guardian_first_name: this.guardianFirstName,
+                guardian_middle_name: this.guardianMiddleName,
+                guardian_contact_number: this.guardianContactNumber,
+                guardian_educational_attainment: this.guardianEducational,
+                guardian_employment_status: this.guardianEmployeeStatus,
+                guardian_working_arrangement: this.guardianArrangement,
+                /* Educational Background */
+                elementary_school_name: this.elementarySchoolName,
+                elementary_school_address: this.elementarySchoolAddress,
+                elementary_school_year: this.elementarySchoolYear + '-01',
+                junior_high_school_name: this.juniorHighSchoolName,
+                junior_high_school_address: this.juniorHighSchoolAddress,
+                junior_high_school_year: this.juniorHighSchoolYear + '-01',
+                senior_high_school_name: this.seniorHighSchoolName,
+                senior_high_school_address: this.seniorHighSchoolAddress,
+                senior_high_school_year: this.seniorHighSchoolYear + '-01'
+            }
+            axios.post('applicant/store-information', formData, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then((response) => {
+                this.showLoading(false)
+                this.successAlert(response.data)
+                this.$router.push('/applicant/dashboard')
+                console.log(response)
+            }).catch((error) => {
+                this.showLoading(false)
+                this.errorAlert(error)
+                if (error.response.status === 422) {
+                    this.errors = error.response.data.errors
+                    console.log(this.errors)
+                }
+                console.error(error)
+            })
+        }
     }
 }
 </script>

@@ -48,7 +48,6 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
 import LoginValidation from '@/services/validation/LoginValidation'
 import { APPLICANT_LOGIN_ACTION, SHOW_LOADING_MUTATION } from '@/store/storeConstants.js'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, DECRYPT_DATA } from '@/store/storeAlertConstants.js'
