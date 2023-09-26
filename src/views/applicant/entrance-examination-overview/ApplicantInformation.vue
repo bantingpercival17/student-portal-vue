@@ -41,7 +41,7 @@
         </model-header>
         <model-body>
             <div v-if="pdfUrl">
-                <!--   <PdfViewer :pdfUrl="pdfUrl" /> -->
+                <PdfViewer :pdfUrl="pdfUrl" />
                 <!-- <pdf :src="pdfUrl"></pdf> -->
             </div>
         </model-body>
@@ -54,13 +54,13 @@
 <script>
 import modal from '@/components/bootstrap/modal/modal.vue'
 import stepper from '@/components/main-layouts/components/widgets/stepper-widget.vue'
-/* import PdfViewer from '@/components/main-layouts/components/PdfViewer.vue' */
+import PdfViewer from '@/components/main-layouts/components/PdfViewer.vue'
 /* import { pdf } from 'vue-pdf' */
 import axios from 'axios'
 export default {
     name: 'ApplicantInformation',
     components: {
-        stepper, modal/* , pdf */
+        stepper, modal, PdfViewer
     },
     data() {
         let className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentBody: true, contentShow: true }
