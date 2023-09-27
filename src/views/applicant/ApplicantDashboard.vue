@@ -10,13 +10,14 @@
             <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
                 <ul class="list-inline p-0 m-0 w-100">
                     <li>
-                        <PreRegistration :propsApplicantDetails="applicantDetails"  />
+                        <PreRegistration :propsApplicantDetails="applicantDetails" />
                     </li>
                     <li>
-                        <ApplicantInformation :propsApplicantDetails="applicantDetails" :token="token"/>
+                        <ApplicantInformation :propsApplicantDetails="applicantDetails" :token="token" />
                     </li>
                     <li>
-                        <DocumementsRequirements :propsApplicantDetails="applicantDetails" />
+                        <DocumementsRequirements :propsApplicantDetails="applicantDetails" :documents="documents"
+                            :token="token" />
                     </li>
                 </ul>
             </div>
@@ -66,7 +67,7 @@ export default {
             this.applicantName = this.data.name
             this.applicantNumber = this.data.applicant_number
             this.applicantDetails = this.data
-            console.log(this.data)
+            this.documents = response.data.documents
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
