@@ -12,9 +12,38 @@
                         {{ data.document_name }}
                     </h5>
                     <div class="check" v-if="checkFileUpload(data.id, index)">
-                        <label for="" class="text-info">This Documents is under Verification</label> <br>
-                        <span class="badge bg-primary">File Uploaded Date: {{ getFormatDate(form.documentDetails[index].created_at) }}</span>
-                        <!-- {{ form.documentDetails[index] }} -->
+                        <div v-if="form.documentDetails[index].is_approved === null">
+                            <label for="" class="text-info">This Documents is under Verification</label> <br>
+                            <span class="badge bg-primary">File Uploaded Date: {{
+                                getFormatDate(form.documentDetails[index].created_at) }}</span>
+                        </div>
+                        <div v-else>
+                            <div v-if="form.documentDetails[index].is_approved === 1">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span class="text-primary fw-bolder">APPROVED DOCUMENT</span>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <small for="" class="form-label">
+                                                VERIFIED BY:
+                                            </small>
+                                            <span class="text-muted fw-bolder">{{
+                                                form.documentDetails[index].staff_id }}</span><br>
+                                            <small for="" class="form-label">VERIFIED
+                                                DATE:</small>
+                                            <span class="text-muted fw-bolder">
+                                                {{ getFormatDate(form.documentDetails[index].updated_at)
+                                                }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else>
+
+                            </div>
+                        </div>
                     </div>
                     <div v-else class="file-content">
                         <div v-if="form.fileUploaded[index]" class="form-file">
