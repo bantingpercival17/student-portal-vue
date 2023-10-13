@@ -1,7 +1,7 @@
 import {
     APPLICANT_LOGIN_ACTION, AUTH_ACTION, AUTO_LOGIN_ACTION,
     GET_USER_IMAGE, GET_USER_TOKEN, GET_USER_NAME, IS_USER_AUTHENTICATE_GETTER,
-    LOGIN_ACTION, LOGOUT_ACTION, SET_USER_TOKEN_MUTATION, APPLICANT_REGISTRATION_ACTION
+    LOGIN_ACTION, LOGOUT_ACTION, SET_USER_TOKEN_MUTATION, APPLICANT_REGISTRATION_ACTION, GET_USER_TYPE
 } from '@/store/storeConstants'
 import axios from 'axios'
 import LoginValidation from '@/services/validation/LoginValidation.js'
@@ -13,6 +13,7 @@ export default {
             name: '',
             email: '',
             token: '',
+            userType: '',
             image: ''
         }
     },
@@ -23,6 +24,7 @@ export default {
             state.token = payload.token
             state.image = payload.image
             state.userId = payload.userId
+            state.userType = payload.userType
         }
     },
     getters: {
@@ -39,6 +41,12 @@ export default {
         },
         [GET_USER_NAME]: (state) => {
             return state.name
+        },
+        [GET_USER_NAME]: (state) => {
+            return state.name
+        },
+        [GET_USER_TYPE]: (state) => {
+            return state.userType
         }
     },
     actions: {
@@ -83,11 +91,11 @@ export default {
                     password: payload.password
                 })
                 if (response.status === 200) {
-                    const name = payload.userType === 'student' ? response.data.student.account.student.first_name : response.data.student.account.name
+                    const userName = payload.userType === 'student' ? response.data.student.account.student.first_name : response.data.student.account.name
                     const tokenData = {
                         userId: response.data.student.account.student_id,
                         email: response.data.student.account.email,
-                        name: name,
+                        name: userName,
                         userType: payload.userType,
                         token: response.data.token,
                         image: response.data.student.profile_picture

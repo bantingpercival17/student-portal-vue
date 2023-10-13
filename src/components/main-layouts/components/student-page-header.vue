@@ -55,7 +55,7 @@
                                                         <hr class="dropdown-divider">
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:viod(0)" class="dropdown-item"
+                                                        <a class="dropdown-item"
                                                             @click="logOut">Logout</a>
                                                     </li>
                                                 </ul>

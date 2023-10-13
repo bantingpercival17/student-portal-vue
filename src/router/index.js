@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import store from '../store/index'
-import { IS_USER_AUTHENTICATE_GETTER } from '@/store/storeConstants'
+import { IS_USER_AUTHENTICATE_GETTER, GET_USER_TYPE } from '@/store/storeConstants'
 import { studentRoute } from './student-route'
 import { applicantRoute } from './applicant-route'
 const defaultchildRoutes = (prop) => [
@@ -17,24 +17,24 @@ const defaultchildRoutes = (prop) => [
     meta: { auth: false, name: 'Admission', user: 'guest' },
     component: () => import('../views/admission-page.vue')
   },
-   {
-     path: '/student/login',
-     name: prop + '.student-login',
-     meta: { auth: false, name: 'Student Login', user: 'guest' },
-     component: () => import('../views/auth/student-login.vue')
-   },
-   {
+  {
+    path: '/student/login',
+    name: prop + '.student-login',
+    meta: { auth: false, name: 'Student Login', user: 'guest' },
+    component: () => import('../views/auth/student-login.vue')
+  },
+  {
     path: '/student/forget-password',
     name: prop + '.student-forget-password',
     meta: { auth: false, name: 'Student Forget Password', user: 'guest' },
     component: () => import('../views/auth/student-forget-password.vue')
   },
-   {
-     path: '/applicant/login',
-     name: prop + '.applicant-login',
-     meta: { auth: false, name: 'Applicant Login', user: 'guest' },
-     component: () => import('../views/auth/applicant-login.vue')
-   }
+  {
+    path: '/applicant/login',
+    name: prop + '.applicant-login',
+    meta: { auth: false, name: 'Applicant Login', user: 'guest' },
+    component: () => import('../views/auth/applicant-login.vue')
+  }
 ]
 const authRoute = (prop) => [
   {
@@ -103,9 +103,47 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isAuth = store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+  const isAuthType = store.getters[`auth/${GET_USER_TYPE}`]
   document.title = `${to.meta.name} - Baliwag Maritime Academy, Inc.`
   if ('auth' in to.meta && !to.meta.auth && isAuth) {
-    next('/student/dashboard')
+    console.log(isAuthType)
+    if (to.meta.user !== 'applicant') {
+      next('/student/dashboard')
+    }
+    if (to.meta.user !== 'student') {
+      next('/applicant/dashboard')
+    }
+    switch (isAuthType) {
+      case 'student':
+        switch (to.meta.user) {
+          case 'student':
+            next('/student/dashboard')
+            break
+          case 'applicant':
+            next('/applicant/dashboard')
+            break
+          default:
+            next()
+            break
+        }
+        break
+      case 'applicant':
+        switch (to.meta.user) {
+          case 'student':
+            next('/student/dashboard')
+            break
+          case 'applicant':
+            next('/applicant/dashboard')
+            break
+          default:
+            next()
+            break
+        }
+        break
+      default:
+        next()
+        break
+    }
   }
   else if ('auth' in to.meta && to.meta.auth && !isAuth) {
     next('/student/login')
