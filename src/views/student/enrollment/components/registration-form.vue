@@ -291,7 +291,7 @@
                                 <select-component label="Working Arrangement" v-model:value="guardianArrangement"
                                     :error="errors.guardian_arrangment" :data="arrangement" />
                             </div>
-                            <div class="col-xl-12 col-md-6 ">
+                            <div class="col-xl-12 col-md-12 ">
                                 <input-component label="Guardian Address" v-model:value="guardianAddress"
                                     :error="errors.guardian_address" />
                             </div>
@@ -418,11 +418,12 @@
 </template>
 <script>
 import { GET_USER_TOKEN, SHOW_LOADING_MUTATION } from '@/store/storeConstants'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import axios from 'axios'
 import inputComponent from '@/components/main-layouts/components/widgets/input-component.vue'
 import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
+import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
 export default {
     name: 'EnrollmentRegistrationForm',
     components: {
@@ -611,10 +612,17 @@ export default {
         })
     },
     methods: {
+        ...mapActions('alert', {
+            successAlert: SUCCESS_ALERT,
+            infoAlert: INFO_ALERT,
+            errorAlert: ERROR_ALERT,
+            encrypt: ENCRYPT_DATA
+        }),
         ...mapMutations({
             showLoading: SHOW_LOADING_MUTATION
         }),
         async updateDetails() {
+            this.errors = []
             this.showLoading(true)
             const formData = {
                 course: this.course,
@@ -664,7 +672,7 @@ export default {
                 /* Educational Background */
                 elementary_school_name: this.elementarySchoolName,
                 elementary_school_address: this.elementarySchoolAddress,
-                elementary_school_year: this.elementarySchoolName,
+                elementary_school_year: this.elementarySchoolYear,
                 junior_high_school_name: this.juniorHighSchoolName,
                 junior_high_school_address: this.juniorHighSchoolAddress,
                 junior_high_school_year: this.juniorHighSchoolYear,
@@ -689,7 +697,8 @@ export default {
                 }
             }).then((response) => {
                 this.showLoading(false)
-                this.$router.push('/student/dashboard')
+                this.successAlert(response.data)
+                 this.$router.push('/student/dashboard')
                 console.log(response)
             }).catch((error) => {
                 this.showLoading(false)
@@ -697,6 +706,7 @@ export default {
                     this.errors = error.response.data.errors
                     console.log(this.errors)
                 }
+                this.successAlert(error)
                 console.error(error)
             })
         }
