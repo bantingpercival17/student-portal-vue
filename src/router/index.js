@@ -100,55 +100,41 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+function studentUserMiddleware(to, from, next) {
+  // Regular user middleware logic
+  console.log('Student user middleware')
+  if (to.meta.user !== 'student') {
+    next('/student/dashboard')
+  } else {
+    next()
+  }
+}
 
+function applicantUserMiddleware(to, from, next) {
+  // Admin user middleware logic
+  console.log('Applicant user middleware')
+  if (to.meta.user !== 'applicant') {
+    next('/applicant/dashboard')
+  } else {
+    next()
+  }
+}
 router.beforeEach((to, from, next) => {
   const isAuth = store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
   const isAuthType = store.getters[`auth/${GET_USER_TYPE}`]
   document.title = `${to.meta.name} - Baliwag Maritime Academy, Inc.`
-  if ('auth' in to.meta && !to.meta.auth && isAuth) {
-    console.log(isAuthType)
-    if (to.meta.user !== 'applicant') {
-      next('/student/dashboard')
+  if (isAuth) {
+    if (isAuthType === 'student') {
+      studentUserMiddleware(to, from, next)
+    } else if (isAuthType === 'applicant') {
+      applicantUserMiddleware(to, from, next)
     }
-    if (to.meta.user !== 'student') {
-      next('/applicant/dashboard')
-    }
-    switch (isAuthType) {
-      case 'student':
-        switch (to.meta.user) {
-          case 'student':
-            next('/student/dashboard')
-            break
-          case 'applicant':
-            next('/applicant/dashboard')
-            break
-          default:
-            next()
-            break
-        }
-        break
-      case 'applicant':
-        switch (to.meta.user) {
-          case 'student':
-            next('/student/dashboard')
-            break
-          case 'applicant':
-            next('/applicant/dashboard')
-            break
-          default:
-            next()
-            break
-        }
-        break
-      default:
-        next()
-        break
-    }
-  }
-  else if ('auth' in to.meta && to.meta.auth && !isAuth) {
-    next('/student/login')
   } else {
-    next()
+    if (to.meta.user !== 'guest') {
+      next('/')
+    } else {
+      next()
+    }
   }
 })
 export default router

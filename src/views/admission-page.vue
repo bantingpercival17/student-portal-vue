@@ -87,8 +87,19 @@
                                 <span class="badge bg-danger mt-2" v-if="errors.course">{{
                                     errors.course[0] }}</span>
                             </div>
-
-                            <div class="col-12">
+                            <div class="col-md-12  mt-3">
+                                <input-component label="Captcha" v-model:value="formData.captcha" :error="errors.captcha" />
+                                <div class="form-group row">
+                                    <div class="col-md-8">
+                                        <span v-html="captchaValue" v-if="captchaValue"></span>
+                                        <span class="badge bg-info" v-else>Captcha Loading....</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span class="btn btn-outline-primary btn-sm" @click="recaptcha"> &#x21bb;</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
                                 <div class="form-check mt-2">
                                     <input class="form-check-input" type="checkbox" v-model="formData.agreement"
                                         id="invalidCheck">
@@ -372,6 +383,7 @@ import inputComponent from '@/components/main-layouts/components/widgets/input-c
 import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 import { mapMutations, mapActions } from 'vuex'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
+import axios from 'axios'
 export default {
     name: 'AdmissionPage',
     components: { modal, inputComponent, inputComponentV2 },
@@ -384,14 +396,20 @@ export default {
             contactNumber: '',
             birthday: '',
             agreement: '',
+            captcha: '',
             message: 'Check you Email for your Password'
+
         }
         return {
             errors: [],
             networkError: [],
             validateClass: '',
-            formData
+            formData,
+            captchaValue: ''
         }
+    },
+    mounted() {
+        this.recaptcha()
     },
     methods: {
         ...mapMutations({
@@ -428,29 +446,19 @@ export default {
                     }
                 }
                 this.showLoading(false)
+                this.formData.captcha = ''
+                this.recaptcha()
             }
             this.showLoading(false)
-        }
-        /* async applicantRegister() {
-            this.showLoading(true)
-            axios.post('applicant/register', this.formData).then((response) => {
-                console.log(response)
-                this.showLoading(false)
-                this.$router.push({ path: '/applicant/login', query: { message: 'Check you Email for your Passowrd' } })
+        },
+        async recaptcha() {
+            this.captchaValue = ''
+            axios.get('form-recaptcha').then((response) => {
+                this.captchaValue = response.data.captcha
             }).catch((error) => {
-                console.error(error)
-                if (error.code === 'ERR_NETWORK') {
-                    this.networkError = error
-                } else {
-                    if (error.response.status === 422) {
-                        this.errors = error.response.data.errors
-                        console.log(this.errors)
-                    }
-                }
-
-                this.showLoading(false)
+                console.log(error)
             })
-        } */
+        }
     }
 }
 

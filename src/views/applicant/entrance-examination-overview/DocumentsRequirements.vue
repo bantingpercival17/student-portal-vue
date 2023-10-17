@@ -6,7 +6,7 @@
             <small class="fw-bolder text-muted">{{ progressName }}</small>
             <h5 :class="`${className.textClass} fw-bolder mb-1`">{{ titleName }}</h5>
             <!-- Documents List -->
-            <div class="document-content p-3 row">
+            <div v-if="className.contentShow" class="document-content p-3 row">
                 <div class="col-lg-4 col-md-4 mb-4" v-for="(data, index) in documents.listOfDocuments" :key="index">
                     <h5 class="text-primary fw-bolder">
                         {{ data.document_name }}
@@ -78,7 +78,7 @@ export default {
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, badgeColor: 'bg-secondary', contentShow: false }
         if (this.propsApplicantDetails.applicant) {
-            className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, badgeColor: 'bg-info', contentShow: false }
+            className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, badgeColor: 'bg-info', contentShow: true }
         }
         return {
             titleName: 'DOCUMENTARY REQUIREMENTS',
@@ -101,7 +101,7 @@ export default {
         handleFileChange(event, documentValue, index) {
             this.form.uploadLoading[index] = true
             this.form.fileError[index] = null
-            const fileUpload = event.target.files[0] // Get the Files in Event
+            let fileUpload = event.target.files[0] // Get the Files in Event
             const formData = {
                 document: documentValue,
                 file: fileUpload
@@ -115,6 +115,7 @@ export default {
             }).then((response) => {
                 console.log(response)
                 this.form.fileUploaded[index] = true
+                fileUpload = ''
             }).catch((error) => {
                 console.log(error)
                 if (error.response.status === 422) {

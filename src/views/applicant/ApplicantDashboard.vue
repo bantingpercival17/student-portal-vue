@@ -19,10 +19,16 @@
                         <DocumementsRequirements :propsApplicantDetails="applicantDetails" :documents="documents"
                             :token="token" />
                     </li>
+                    <li>
+                        <ExaminationPayment :propsApplicantDetails="applicantDetails" :documents="documents"
+                            :token="token" />
+                    </li>
+                    <li>
+                        <EntranceExamination :propsApplicantDetails="applicantDetails" :documents="documents"
+                            :token="token" />
+                    </li>
                 </ul>
             </div>
-
-
         </div>
 
     </div>
@@ -34,7 +40,8 @@ import axios from 'axios'
 import PreRegistration from './entrance-examination-overview/PreRegistration.vue'
 import ApplicantInformation from './entrance-examination-overview/ApplicantInformation.vue'
 import DocumementsRequirements from './entrance-examination-overview/DocumentsRequirements.vue'
-
+import ExaminationPayment from './entrance-examination-overview/EntranceExaminationPayment.vue'
+import EntranceExamination from './entrance-examination-overview/EntranceExamination.vue'
 export default {
     name: 'ApplicantDasboard',
     data() {
@@ -49,7 +56,9 @@ export default {
     components: {
         PreRegistration,
         ApplicantInformation,
-        DocumementsRequirements
+        DocumementsRequirements,
+        ExaminationPayment,
+        EntranceExamination
     },
     computed: {
         ...mapGetters('auth', {
