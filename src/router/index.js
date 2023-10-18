@@ -102,7 +102,7 @@ const router = createRouter({
 })
 function studentUserMiddleware(to, from, next) {
   // Regular user middleware logic
-  console.log('Student user middleware')
+  // console.log('Student user middleware')
   if (to.meta.user !== 'student') {
     next('/student/dashboard')
   } else {
@@ -112,7 +112,7 @@ function studentUserMiddleware(to, from, next) {
 
 function applicantUserMiddleware(to, from, next) {
   // Admin user middleware logic
-  console.log('Applicant user middleware')
+  // console.log('Applicant user middleware')
   if (to.meta.user !== 'applicant') {
     next('/applicant/dashboard')
   } else {

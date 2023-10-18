@@ -21,11 +21,11 @@
                     </li>
                     <li>
                         <ExaminationPayment :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :token="token" />
+                            :examination="examination" :token="token" />
                     </li>
                     <li>
                         <EntranceExamination :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :token="token" />
+                            :examination="examination" :token="token" />
                     </li>
                 </ul>
             </div>
@@ -50,7 +50,8 @@ export default {
             applicantName: '',
             applicantNumber: '',
             applicantDetails: [],
-            documents: []
+            documents: [],
+            examination: []
         }
     },
     components: {
@@ -77,6 +78,7 @@ export default {
             this.applicantNumber = this.data.applicant_number
             this.applicantDetails = this.data
             this.documents = response.data.documents
+            this.examination = response.data.examination
             this.isLoading = false
         }).catch((error) => {
             console.log(error)

@@ -522,7 +522,7 @@ export default {
                 senior_high_school_address: this.seniorHighSchoolAddress,
                 senior_high_school_year: this.seniorHighSchoolYear + '-01'
             }
-            axios.post('applicant/store-information', formData, {
+            axios.post('applicant/information', formData, {
                 headers: {
                     Authorization: 'Bearer ' + this.token
                 }

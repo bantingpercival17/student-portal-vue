@@ -1,13 +1,13 @@
 <template>
-    <stepper value="" :isActive="className.stepperStatus" />
-    <div :class="`card ${className.cardClass}`">
+    <stepper value="" :isActive="className.stepperStatus" :isFinish="className.stepperFinish" />
+    <div :class="`card ${className.cardClass}`" @click="showContent">
         <div class="card-body m-2 p-2">
             <span :class="`${className.badgeColor} badge float-end`">{{ status }}</span>
             <small class="fw-bolder text-muted">{{ progressName }}</small>
             <h5 :class="`${className.textClass} fw-bolder mb-1`">{{ titleName }}</h5>
             <!-- Documents List -->
-            <div v-if="className.contentShow" class="document-content p-3 row">
-                <div class="col-lg-4 col-md-4 mb-4" v-for="(data, index) in documents.listOfDocuments" :key="index">
+            <div v-if="content" class="document-content p-3 row">
+                <div class="col-lg-6 col-md-6 mb-4" v-for="(data, index) in documents.listOfDocuments" :key="index">
                     <h5 class="text-primary fw-bolder">
                         {{ data.document_name }}
                     </h5>
@@ -21,27 +21,72 @@
                             <div v-if="form.documentDetails[index].is_approved === 1">
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <span class="text-muted">Status: </span>
                                         <span class="text-primary fw-bolder">APPROVED DOCUMENT</span>
                                     </div>
                                     <div class="col-md">
                                         <div class="form-group">
-                                            <small for="" class="form-label">
-                                                VERIFIED BY:
+                                            <small for="" class="badge bg-secondary me-3">
+                                                <span>Verified By: </span>
+                                                <span class="fw-bolder">
+                                                    {{ this.staffName(form.documentDetails[index].staff) }}
+                                                </span>
                                             </small>
-                                            <span class="text-muted fw-bolder">{{
-                                                form.documentDetails[index].staff_id }}</span><br>
-                                            <small for="" class="form-label">VERIFIED
-                                                DATE:</small>
-                                            <span class="text-muted fw-bolder">
-                                                {{ getFormatDate(form.documentDetails[index].updated_at)
-                                                }}
-                                            </span>
+                                            <small for="" class="badge bg-secondary">
+                                                <span>Verified Date: </span>
+                                                <span class="fw-bolder">
+                                                    {{ getFormatDate(form.documentDetails[index].updated_at) }}
+                                                </span>
+                                            </small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div v-else>
-
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span class="text-muted">Status: </span>
+                                        <span class="text-danger fw-bolder">DISAPPROVED DOCUMENT</span>
+                                        <p class="text-info">
+                                            <span>Remarks: </span>
+                                            <span class="fw-bolder">{{ form.documentDetails[index].feedback }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <small for="" class="badge bg-secondary me-3">
+                                                <span>Verified By: </span>
+                                                <span class="fw-bolder">
+                                                    {{ this.staffName(form.documentDetails[index].staff) }}
+                                                </span>
+                                            </small>
+                                            <small for="" class="badge bg-secondary">
+                                                <span>Verified Date: </span>
+                                                <span class="fw-bolder">
+                                                    {{ getFormatDate(form.documentDetails[index].updated_at) }}
+                                                </span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="file-content">
+                                    <div v-if="form.fileUploaded[index]" class="form-file">
+                                        <label for="" class="text-info">This Documents is under Verification</label>
+                                        <br>
+                                        <span class="text-primary fw-bolder" v-if="form.uploadLoading[index]">
+                                            FILE UPLOADED
+                                        </span>
+                                    </div>
+                                    <div v-else>
+                                        <input type="file" class="form-control form-control-sm border border-primary"
+                                            required v-on:change="handleFileChange($event, data.id, index)" />
+                                        <span class="text-info fw-bolder" v-if="form.uploadLoading[index]">Uploading
+                                            Files....</span>
+                                        <small v-if="form.fileError[index]" class="badge bg-danger">{{
+                                            form.fileError[index]
+                                        }}</small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -64,6 +109,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </template>
@@ -76,16 +122,19 @@ export default {
         stepper
     },
     data() {
-        let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, badgeColor: 'bg-secondary', contentShow: false }
+        let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, stepperFinish: false, badgeColor: 'bg-secondary', contentShow: false }
         if (this.propsApplicantDetails.applicant) {
-            className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, badgeColor: 'bg-info', contentShow: true }
+            className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
+            if (this.documents.approvedDocuments) {
+                className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
+            }
         }
         return {
             titleName: 'DOCUMENTARY REQUIREMENTS',
             progressName: 'STEP 2',
             status: className.status,
             className,
-            content: false,
+            content: className.contentShow,
             form: {
                 uploadLoading: [],
                 fileError: [],
@@ -155,6 +204,9 @@ export default {
             // format the date as 'dd/mm/yyyy'
             const formattedDate = month + ' ' + day + ', ' + year
             return formattedDate
+        },
+        staffName(data) {
+            return data.first_name + ' ' + data.last_name
         }
     },
     props: { propsApplicantDetails: Object, documents: Object, token: String }

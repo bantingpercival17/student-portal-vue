@@ -1,5 +1,5 @@
 <template>
-    <stepper value="" :isActive="className.stepperStatus" />
+    <stepper value="" :isActive="className.stepperStatus" :isFinish="className.stepperFinish" />
     <div :class="`card ${className.cardClass}`">
         <div class="card-body m-2 p-2">
             <span :class="`${className.badgeColor} badge float-end`">{{ status }}</span>
@@ -21,7 +21,7 @@ export default {
     },
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, badgeColor: 'bg-secondary', contentShow: false }
-        if (this.propsApplicantDetails.applicant) {
+        if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments && this.examination.payment.length > 0) {
             className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, badgeColor: 'bg-info', contentShow: false }
         }
         return {
@@ -37,6 +37,6 @@ export default {
             this.content = !this.content
         }
     },
-    props: { propsApplicantDetails: Object, documents: Object, token: String }
+    props: { propsApplicantDetails: Object, documents: Object, examination: Object, token: String }
 }
 </script>
