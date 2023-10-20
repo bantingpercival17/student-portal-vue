@@ -10,5 +10,11 @@ export const applicantRoute = (prop) => [
         name: prop + '.applicant-information',
         meta: { auth: true, name: 'Applicant Information Form', user: 'applicant' },
         component: () => import('../views/applicant/entrance-examination-overview/ApplicantFormInformation.vue')
+    },
+    {
+        path: '/applicant/examination',
+        name: prop + '.applicant-examination',
+        meta: { auth: true, name: 'Entrance Examination', user: 'applicant' },
+        component: () => import('../views/applicant/entrance-examination-overview/EntranceExaminationView.vue')
     }
 ]
