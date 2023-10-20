@@ -145,7 +145,15 @@ export default {
     },
     methods: {
         showContent() {
-            this.content = !this.content
+            if (this.className.status === 'Pending') {
+                this.content = false
+            }
+            else if (this.className.status === 'Progress') {
+                this.content = true
+            }
+            else {
+                this.content = !this.content
+            }
         },
         handleFileChange(event, documentValue, index) {
             this.form.uploadLoading[index] = true

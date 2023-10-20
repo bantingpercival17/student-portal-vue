@@ -1,6 +1,6 @@
 <template>
     <stepper value="" :isActive="className.stepperStatus" :isFinish="className.stepperFinish" />
-    <div :class="`card ${className.cardClass}`"  @click="showContent">
+    <div :class="`card ${className.cardClass}`" @click="showContent">
         <div class="card-body m-2 p-2">
             <span :class="`${className.badgeColor} badge float-end`">{{ status }}</span>
             <small class="fw-bolder text-muted">{{ progressName }}</small>
@@ -186,9 +186,11 @@ export default {
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, stepperFinish: false, badgeColor: 'bg-secondary', contentShow: false }
         if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments) {
-            className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: false }
-            if (this.examination.payment.is_approved) {
-                className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
+            className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
+            if (this.examination.payment) {
+                if (this.examination.payment.is_approved) {
+                    className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
+                }
             }
         }
         const formData = new FormData()
@@ -217,7 +219,13 @@ export default {
             showLoading: SHOW_LOADING_MUTATION
         }),
         showContent() {
-            this.content = !this.content
+            if (this.className.status === 'Pending') {
+                this.content = false
+            } else if (this.className.status === 'Progress') {
+                this.content = true
+            } else {
+                this.content = !this.content
+            }
         },
         fileAttachment(event) {
             const file = event.target.files[0] // Get the Files in Event

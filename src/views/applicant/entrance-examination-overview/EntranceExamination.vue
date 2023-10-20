@@ -37,7 +37,11 @@ export default {
     },
     methods: {
         showContent() {
-            this.content = !this.content
+            if (this.className.status === 'Pending') {
+                this.content = false
+            } else {
+                this.content = !this.content
+            }
         }
     },
     props: { propsApplicantDetails: Object, documents: Object, examination: Object, token: String }
