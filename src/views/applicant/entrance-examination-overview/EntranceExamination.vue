@@ -54,6 +54,13 @@
                         </div>
                     </div>
                     <div v-else>
+                        <div v-if="!examination.examinationSchedule">
+
+                        </div>
+                        <div v-else>
+
+                        </div>
+
                         <div class="card">
                             <div class="card-body">
                                 <p class="text-primary fw-bolder h5">Welcome Applicants</p>
