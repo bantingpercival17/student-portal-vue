@@ -27,6 +27,14 @@
                         <EntranceExamination :propsApplicantDetails="applicantDetails" :documents="documents"
                             :examination="examination" :token="token" />
                     </li>
+                    <li>
+                        <BriefingOrientation :propsApplicantDetails="applicantDetails" :documents="documents"
+                            :examination="examination" :token="token" />
+                    </li>
+                    <li>
+                        <MedicalExamination :propsApplicantDetails="applicantDetails" :documents="documents"
+                            :examination="examination" :token="token" />
+                    </li>
                 </ul>
             </div>
         </div>
@@ -42,6 +50,8 @@ import ApplicantInformation from './entrance-examination-overview/ApplicantInfor
 import DocumementsRequirements from './entrance-examination-overview/DocumentsRequirements.vue'
 import ExaminationPayment from './entrance-examination-overview/EntranceExaminationPayment.vue'
 import EntranceExamination from './entrance-examination-overview/EntranceExamination.vue'
+import BriefingOrientation from './entrance-examination-overview/BriefingOrientation.vue'
+import MedicalExamination from './entrance-examination-overview/MedicalExamination.vue'
 export default {
     name: 'ApplicantDasboard',
     data() {
@@ -59,7 +69,9 @@ export default {
         ApplicantInformation,
         DocumementsRequirements,
         ExaminationPayment,
-        EntranceExamination
+        EntranceExamination,
+        BriefingOrientation,
+        MedicalExamination
     },
     computed: {
         ...mapGetters('auth', {

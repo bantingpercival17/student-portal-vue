@@ -8,7 +8,7 @@
             <!-- Documents List -->
             <div v-if="content" class="document-content p-3 row">
                 <div v-if="examination.examinationDetails" class="examination-view">
-                    <div v-if="examination.examinationDetails.is_finish !== true" class="examination-form-and-instruction">
+                    <div v-if="examination.examinationDetails.is_finish === true" class="examination-form-and-instruction">
                         <p v-if="examination.finalResult[2]" class="mb-3">
                             Congratulation, you Passed the Entrance Examination, Kindly wait for the announcement in your
                             email account
@@ -113,7 +113,6 @@ export default {
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, badgeColor: 'bg-secondary', contentShow: false }
         if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments && this.examination.payment) {
-            className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, badgeColor: 'bg-info', contentShow: true }
             if (this.examination.payment.is_approved) {
                 className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
                 if (this.examination.examinationDetails) {
