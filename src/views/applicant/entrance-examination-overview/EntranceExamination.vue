@@ -55,51 +55,85 @@
                     </div>
                     <div v-else>
                         <div v-if="!examination.examinationSchedule">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form @submit.prevent="storeScheduleExam" method="post">
+                                        <label for="" class="fw-bolder h5 text-primary">Please select your preferred
+                                            examination schedule.</label>
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <selectComponent label="Select Schedule" v-model:value="schedule"
+                                                    :error="errors.schedule" :data="scheduledList" />
+                                            </div>
 
-                        </div>
-                        <div v-else>
-
-                        </div>
-
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="text-primary fw-bolder h5">Welcome Applicants</p>
-                                <p> <span class="fw-bolder">INSTRUCTION</span></p>
-                                <p class="m-0">1. Ensure that you have a strong internet connection.</p>
-                                <p class="m-0">2. Once you are logged in, read carefully and understand the guidelines
-                                    before
-                                    and
-                                    after Examination</p>
-                                <p class="m-0">3. Upon completion of the Examination, click the Submit or Back button at the
-                                    system.</p>
-                                <p class="m-0">4. When you enter the examination code, your examiantion will begin.</p>
-                                <p>5.We recommend using Laptop/Desktop running atleast Windows 7 or higher to take the
-                                    examination.
-                                    We also recommend to use Google Chrome as browser in taking the examination.</p>
-                                <br>
-                            </div>
-                        </div>
-                        <form @submit.prevent="submitExaminationCode" method="post">
-                            <div class="form-group">
-                                <small class="fw-bolder">EXAMINATION CODE</small> <br>
-                                <label for="" class="form-label text-primary fw-bolder">
-                                    {{ examination.examinationDetails ? examination.examinationDetails.examination_code : ''
-                                    }}
-                                </label>
-                                <div class="row">
-                                    <div class="col-md">
-                                        <input type="text" class="form-control border border-primary"
-                                            v-model="examinationCode" placeholder="Enter Examination Code">
-                                        <span class="badge bg-danger mt-2" v-if="errors.examination">{{
-                                            errors.examination[0] }}</span>
-                                    </div>
-                                    <div class="col-md">
-                                        <button type="submit" class="btn btn-primary ">Take Examination</button>
-                                    </div>
-
+                                            <div class="col-md">
+                                                <inputComponentV2 type='time' label="Select Time"
+                                                    v-model:value="scheduleTime" :error="errors.schedule_time" />
+                                            </div>
+                                            <div class="col-md">
+                                                <button type="submit" class="btn btn-primary ">Submit Schedule</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                        <div v-else>
+                            <div v-if="checkSchedule(examination.examinationSchedule)">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="text-primary fw-bolder h5">Welcome Applicants</p>
+                                        <p> <span class="fw-bolder">INSTRUCTION</span></p>
+                                        <p class="m-0">1. Ensure that you have a strong internet connection.</p>
+                                        <p class="m-0">2. Once you are logged in, read carefully and understand the
+                                            guidelines
+                                            before
+                                            and
+                                            after Examination</p>
+                                        <p class="m-0">3. Upon completion of the Examination, click the Submit or Back
+                                            button at
+                                            the
+                                            system.</p>
+                                        <p class="m-0">4. When you enter the examination code, your examiantion will begin.
+                                        </p>
+                                        <p>5.We recommend using Laptop/Desktop running atleast Windows 7 or higher to take
+                                            the
+                                            examination.
+                                            We also recommend to use Google Chrome as browser in taking the examination.</p>
+                                        <br>
+                                    </div>
+                                </div>
+                                <form @submit.prevent="submitExaminationCode" method="post">
+                                    <div class="form-group">
+                                        <small class="fw-bolder">EXAMINATION CODE</small> <br>
+                                        <label for="" class="form-label text-primary fw-bolder">
+                                            {{ examination.examinationDetails ?
+                                                examination.examinationDetails.examination_code
+                                                : ''
+                                            }}
+                                        </label>
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <input type="text" class="form-control border border-primary"
+                                                    v-model="examinationCode" placeholder="Enter Examination Code">
+                                                <span class="badge bg-danger mt-2" v-if="errors.examination">{{
+                                                    errors.examination[0] }}</span>
+                                            </div>
+                                            <div class="col-md">
+                                                <button type="submit" class="btn btn-primary ">Take Examination</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div v-else>
+                                <p class="text-primary">Your set Examination Scheduled is {{
+                                    scheduledFormat(examination.examinationSchedule.schedule_date) }}</p>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -110,17 +144,23 @@
 import { SHOW_LOADING_MUTATION } from '@/store/storeConstants'
 import { mapMutations, mapActions } from 'vuex'
 import stepper from '@/components/main-layouts/components/widgets/stepper-widget.vue'
+import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
+import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 import axios from 'axios'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
 export default {
     name: 'ExaminationPayment',
     components: {
-        stepper
+        stepper,
+        selectComponent,
+        inputComponentV2
     },
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, badgeColor: 'bg-secondary', contentShow: false }
+        let listScheduled = []
         if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments && this.examination.payment) {
             if (this.examination.payment.is_approved) {
+                listScheduled = this.scheduleListData(this.examination.payment.updated_at)
                 className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
                 if (this.examination.examinationDetails) {
                     if (this.examination.examinationDetails.is_finish) {
@@ -136,7 +176,10 @@ export default {
             status: className.status,
             className,
             content: className.contentShow,
-            examinationCode: ''
+            examinationCode: '',
+            schedule: '',
+            scheduleTime: '',
+            scheduledList: listScheduled
         }
     },
     methods: {
@@ -149,6 +192,33 @@ export default {
         ...mapMutations({
             showLoading: SHOW_LOADING_MUTATION
         }),
+        scheduleListData(date) {
+            const result = []
+            const currentDate = new Date(date)
+
+            for (let i = 0; i < 7; i++) {
+                result.push(this.formatDate(currentDate))
+                currentDate.setDate(currentDate.getDate() + 1) // Move to the next day
+
+                // Check if the current day is a weekend (0 for Sunday, 6 for Saturday)
+                if (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
+                    currentDate.setDate(currentDate.getDate() + 1) // Skip the weekend day
+                }
+            }
+
+            return result
+        },
+        formatDate(date) {
+            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+            const dayOfWeek = daysOfWeek[date.getDay()]
+            const month = months[date.getMonth()]
+            const day = date.getDate()
+            const year = date.getFullYear()
+
+            return `${dayOfWeek} ${month} ${day} ${year}`
+        },
         showContent() {
             if (this.className.status === 'Pending') {
                 this.content = false
@@ -157,6 +227,27 @@ export default {
             } else {
                 this.content = !this.content
             }
+        },
+        async storeScheduleExam() {
+            this.errors = []
+            this.showLoading(true)
+            axios.post('applicant/examination-scheduled', { schedule: this.schedule, schedule_time: this.scheduleTime }, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then((response) => {
+                this.showLoading(false)
+                this.successAlert(response.data)
+                window.location.reload()
+            }).catch((error) => {
+                this.showLoading(false)
+                this.errorAlert(error)
+                if (error.response.status === 422) {
+                    this.errors = error.response.data.errors
+                    console.log(this.errors)
+                }
+                console.error(error)
+            })
         },
         async submitExaminationCode() {
             this.errors = []
@@ -179,6 +270,35 @@ export default {
                 }
                 console.error(error)
             })
+        },
+        checkSchedule(scheduled) {
+            const currentDate = new Date() // This gives you the current date and time.
+            const examinationDate = new Date(scheduled.schedule_date) // Replace 'examinationDateFromDatabase' with your actual date.
+
+            if (currentDate < examinationDate) {
+                return false
+                /*  console.log("The examination is in the future."); */
+            } else if (currentDate > examinationDate) {
+                return true
+            } else {
+                return true
+            }
+        },
+        scheduledFormat(date) {
+            date = new Date(date)
+            console.log(date)
+            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+            const dayOfWeek = daysOfWeek[date.getDay()]
+            const month = months[date.getMonth()]
+            const day = date.getDate()
+            const year = date.getFullYear()
+            const hours = date.getHours()
+            const mins = date.getMinutes()
+            return date
+            /*  return `${dayOfWeek} ${month} ${day} ${year}  ${hours}: ${mins}` */
+            /* return this.formatDate(date) */
         }
     },
     props: { propsApplicantDetails: Object, documents: Object, examination: Object, token: String }

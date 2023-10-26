@@ -39,7 +39,7 @@
                                         height="100">
                                 </div>
                                 <div v-else>
-                                    <p class="text-primary fw-bolder h5">{{ questionList[data - 1].question }}</p>
+                                    <p class="text-primary fw-bolder h5" v-html="questionList[data - 1].question"></p>
                                     <img v-if="questionList[data - 1].image_path !== 'none'"
                                         :src="questionView(questionList[data - 1].image_path)" alt="" height="200">
                                 </div>
@@ -48,8 +48,7 @@
                                 <div class="col-lg-6 col-md-12"
                                     v-for="(choice, choiceIndex) in questionList[data - 1].choices_v2" :key="choiceIndex">
                                     <button :class="btnStyleV2(choice.id, (data - 1))"
-                                        @click="choiceAswer(choice.id, (data - 1))">
-                                        {{ choice.choice_name }}
+                                        @click="choiceAswer(choice.id, (data - 1))" v-html="choice.choice_name">
                                     </button>
                                 </div>
                             </div>
@@ -87,7 +86,7 @@
                                     height="100">
                             </div>
                             <div v-else>
-                                <p class="text-primary fw-bolder h5">{{ questionList[currentQuestion].question }}</p>
+                                <p class="text-primary fw-bolder h5" v-html="questionList[currentQuestion].question"></p>
                                 <img v-if="questionList[currentQuestion].image_path !== 'none'"
                                     :src="questionView(questionList[currentQuestion].image_path)" alt="" height="200">
                             </div>
@@ -95,8 +94,8 @@
                         <div class="question-choices row">
                             <div class="col-lg-6 col-md-12"
                                 v-for="(   item, index   ) in questionList[currentQuestion].choices_v2" :key="index">
-                                <button :class="btnStyle(item.id)" @click="choiceAswer(item.id, currentQuestion)">
-                                    {{ item.choice_name }}
+                                <button :class="btnStyle(item.id)" @click="choiceAswer(item.id, currentQuestion)"
+                                    v-html="item.choice_name">
                                 </button>
                             </div>
                         </div>
