@@ -25,10 +25,10 @@
                             <li><router-link
                                     :class="`dropdown-item ${checkActive('app-layout.student-login') ? 'active' : ''}`"
                                     :to="{ name: 'app-layout.student-login' }">Student Login </router-link></li>
-                            <li><!-- <router-link
+                            <li><router-link
                                     :class="`dropdown-item ${checkActive('app-layout.applicant-login') ? 'active' : ''}`"
-                                    :to="{ name: 'app-layout.applicant-login' }">Applicant Login</router-link> -->
-                                <a href="http://bma.edu.ph/bma/login" class="dropdown-item">Applicant Login</a>
+                                    :to="{ name: 'app-layout.applicant-login' }">Applicant Login</router-link>
+                               <!--  <a href="http://bma.edu.ph/bma/login" class="dropdown-item">Applicant Login</a> -->
                             </li>
                         </ul>
                     </li>
