@@ -11,14 +11,16 @@
                             ACADEMIC YEAR
                         </small> <br>
                         <label class="fw-bolder text-primary h4">
-                            {{item.academic.semester}} - {{item.academic.school_year}}
+                            {{ item.academic.semester }} - {{ item.academic.school_year }}
                         </label>
                     </div>
                     <div class="col-lg-6 col-md-12 col-xs-12">
                         <small class="fw-bolder text-secondary">
                             REPORTS
                         </small> <br>
-                        <a href="" class="badge bg-primary">CERTIFICATE OF ENROLLMENT</a>
+                        <label for="" class="badge bg-primary" @click="certificateOfEnrollment(item.id)">CERTIFICATE OF
+                            ENROLLMENT</label>
+                        <!-- <a href="" class="badge bg-primary">CERTIFICATE OF ENROLLMENT</a> -->
                     </div>
                 </div>
                 <div class="row">
@@ -27,7 +29,7 @@
                             COURSE / STRAND
                         </small> <br>
                         <label class="fw-bolder text-primary h4">
-                            {{item.course.course_name}}
+                            {{ item.course.course_name }}
                         </label>
                     </div>
                     <div class="col-lg-4 col-md-12 col-xs-12">
@@ -35,7 +37,7 @@
                             LEVEL
                         </small> <br>
                         <label class="fw-bolder text-primary h4">
-                            {{convert_year_level(item.year_level.toString())}}
+                            {{ convert_year_level(item.year_level.toString()) }}
                         </label>
                     </div>
                     <div class="col-lg-4 col-md-12 col-xs-12">
@@ -43,7 +45,7 @@
                             CURRICULUM
                         </small> <br>
                         <label class="fw-bolder text-primary h4">
-                            {{item.curriculum.curriculum_name}}
+                            {{ item.curriculum.curriculum_name }}
                         </label>
                     </div>
                 </div>
@@ -53,8 +55,9 @@
 </template>
 <script>
 import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER } from '@/store/storeConstants'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import axios from 'axios'
+import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
 export default {
     name: 'EnrollmentHistory',
     data() {
@@ -83,6 +86,12 @@ export default {
         })
     },
     methods: {
+        ...mapActions('alert', {
+            successAlert: SUCCESS_ALERT,
+            infoAlert: INFO_ALERT,
+            errorAlert: ERROR_ALERT,
+            encrypt: ENCRYPT_DATA
+        }),
         convert_year_level(data) {
             let level = ''
             if (data === '4') {
@@ -99,6 +108,23 @@ export default {
                 level = 'Grade 12'
             }
             return level
+        },
+        certificateOfEnrollment(data) {
+            axios.get('student/enrollment/cor/' + data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                },
+                responseType: 'blob'
+            })
+                .then(response => {
+                    const blob = new Blob([response.data], { type: 'application/pdf' })
+                    const url = window.URL.createObjectURL(blob)
+                    window.open(url, '_blank')
+                })
+                .catch(error => {
+                    this.errorAlert(error)
+                    console.error('Error fetching PDF:', error)
+                })
         }
     }
 }
