@@ -115,16 +115,14 @@ export default {
                     Authorization: 'Bearer ' + this.token
                 },
                 responseType: 'blob'
+            }).then(response => {
+                const blob = new Blob([response.data], { type: 'application/pdf' })
+                const url = window.URL.createObjectURL(blob)
+                window.open(url, '_blank')
+            }).catch(error => {
+                this.errorAlert(error)
+                console.error('Error fetching PDF:', error)
             })
-                .then(response => {
-                    const blob = new Blob([response.data], { type: 'application/pdf' })
-                    const url = window.URL.createObjectURL(blob)
-                    window.open(url, '_blank')
-                })
-                .catch(error => {
-                    this.errorAlert(error)
-                    console.error('Error fetching PDF:', error)
-                })
         }
     }
 }
