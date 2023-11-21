@@ -8,7 +8,7 @@
             <!-- Documents List -->
             <div v-if="content" class="document-content p-3 row">
                 <div v-if="examination.examinationDetails" class="examination-view">
-                    <div v-if="examination.examinationDetails.is_finish === true" class="examination-form-and-instruction">
+                    <div v-if="examination.examinationDetails.is_finish" class="examination-form-and-instruction">
                         <p v-if="examination.finalResult[2]" class="mb-3">
                             Congratulation, you Passed the Entrance Examination, Kindly wait for the announcement in your
                             email account
