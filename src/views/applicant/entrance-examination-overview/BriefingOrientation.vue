@@ -7,7 +7,30 @@
             <h5 :class="`${className.textClass} fw-bolder mb-1`">{{ titleName }}</h5>
             <!-- Documents List -->
             <div v-if="content" class="document-content p-3 row">
-
+                <div v-if="orientation.schedule">
+                    <div v-if="orientation.present.is_completed">
+                        <p>
+                            Thank you for attending the briefing/orientation. Please select a conveient date for your
+                            medical examination schedule.
+                        </p>
+                    </div>
+                    <div v-else>
+                        <p>Your Briefing/Orientation Program is scheduled on
+                            <b>{{ orientation.schedule.schedule_date }}</b> at
+                            <b> {{ orientation.schedule.schedule_time }}</b> at
+                            Baliwag Maritime Academy, Inc. 3rd Floor Audio Visual Room.
+                            <br>
+                            <small class="text-info fw-bolder p-0 m-0">
+                                We highly encourage your Parents/Guardians to attend the Briefing/Orientation. Please wear
+                                appropriate
+                                attire (sando, shorts, and slippers are not allowed)
+                            </small>
+                        </p>
+                    </div>
+                </div>
+                <div v-else>
+                    <p>Kindly expect to receive your Orientation Schedule soon; it will be sent to your email.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -30,6 +53,11 @@ export default {
                 if (this.examination.examinationDetails) {
                     if (this.examination.examinationDetails.is_finish && this.examination.finalResult[2]) {
                         className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
+                        if (this.orientation.present) {
+                            if (this.orientation.present.is_completed) {
+                                className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
+                            }
+                        }
                     }
                 }
             }
@@ -64,6 +92,6 @@ export default {
             }
         }
     },
-    props: { propsApplicantDetails: Object, documents: Object, examination: Object, token: String }
+    props: { propsApplicantDetails: Object, documents: Object, examination: Object, orientation: Object, token: String }
 }
 </script>

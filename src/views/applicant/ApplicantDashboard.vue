@@ -29,11 +29,11 @@
                     </li>
                     <li>
                         <BriefingOrientation :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :examination="examination" :token="token" />
+                            :examination="examination" :orientation="orientation" :token="token" />
                     </li>
                     <li>
                         <MedicalExamination :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :examination="examination" :token="token" />
+                            :examination="examination" :orientation="orientation" :medical="medical" :token="token" />
                     </li>
                 </ul>
             </div>
@@ -61,7 +61,9 @@ export default {
             applicantNumber: '',
             applicantDetails: [],
             documents: [],
-            examination: []
+            examination: [],
+            orientation: [],
+            medical: []
         }
     },
     components: {
@@ -91,6 +93,8 @@ export default {
             this.applicantDetails = this.data
             this.documents = response.data.documents
             this.examination = response.data.examination
+            this.orientation = response.data.orientation
+            this.medical = response.data.medical
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
