@@ -4,7 +4,7 @@
     </div>
     <div v-else>
         <div v-if="shipboardInformation">
-            <div v-for="(data, index) in shipboardInformation" :key="index" class="card ms-5 me-5" data-iq-gsap="onStart"
+            <div v-for="(data, index) in shipboardInformation" :key="index" class="card" data-iq-gsap="onStart"
                 data-iq-position-y="70" data-iq-rotate="0" data-iq-trigger="scroll" data-iq-ease="power.out"
                 data-iq-opacity="0">
                 <div class="card-header">
@@ -37,20 +37,32 @@
                         </div>
                     </div>
                     <br>
-                    <label for="" class="fw-bolder text-primary h4">MONTHLY OBT PERFORMANCE MONITORING</label>
                     <label class=" btn btn-sm btn-primary float-end" data-bs-toggle="modal" data-bs-target="#MOPM"
                         :data-id="data.id" @click="setData">
                         CREATE MOPM
                     </label>
+                    <label for="" class="fw-bolder text-primary h4">MONTHLY OBT PERFORMANCE MONITORING</label>
                     <div class="table-responsive mt-4">
                         <table id="basic-table" class="table table-striped mb-0" role="grid" data-toggle="data-table">
                             <thead>
                                 <tr>
                                     <th>Narrative Report</th>
                                     <th>Progress</th>
-                                    <th>Action</th>
+                                    <th>Action h</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr v-for="(data3, index3) in narrativeReport" :key="index3">
+                                    <td>{{ data3.month }}</td>
+                                    <td></td>
+                                    <td>
+                                        <router-link class="btn btn-sm btn-outline-primary"
+                                            :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(data3.month), report:'v2' } }">view</router-link>
+                                        <button class="btn btn-sm btn-outline-info"
+                                            @click="viewReport(data3.month, 'v1')">report</button>
+                                    </td>
+                                </tr>
+                            </tbody>
                             <tbody v-if="data.performance_report">
                                 <tr v-for="(data2, index2) in data.performance_report" :key="index2">
                                     <td>{{ data2.month }}</td>
@@ -58,7 +70,8 @@
                                     <td>
                                         <router-link class="btn btn-sm btn-outline-primary"
                                             :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(data2.id) } }">view</router-link>
-                                        <button class="btn btn-sm btn-outline-info">report</button>
+                                        <button class="btn btn-sm btn-outline-info"
+                                            @click="viewReport(data2.id, 'v2')">report</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -162,7 +175,8 @@ export default {
             inputDailyJournal: '',
             signed: '',
             remarks: '',
-            datePreferred: ''
+            datePreferred: '',
+            narrativeReport: []
         }
     },
     components: {
@@ -185,10 +199,11 @@ export default {
             }
         }).then(async (response) => {
             const data = response.data.data
-            console.log(data)
+            /*   console.log(data) */
             this.shipboardInformation = data.shipboard_information
+            this.narrativeReport = data.narative_report
+            console.log(this.narrativeReport)
             await putData('myKey', data.shipboard_information)
-            console.log(this.shipboardInformation)
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
@@ -204,6 +219,22 @@ export default {
         },
         encrypt(data) {
             return btoa(data)
+        },
+        viewReport(data, version) {
+            const link = '/student/onboard/performance/view-report/' + data + '/' + version
+            axios.get(link, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                },
+                responseType: 'blob'
+            }).then(response => {
+                const blob = new Blob([response.data], { type: 'application/pdf' })
+                const url = window.URL.createObjectURL(blob)
+                window.open(url, '_blank')
+            }).catch(error => {
+                this.errorAlert(error)
+                console.error('Error fetching PDF:', error)
+            })
         },
         async submitForm() {
             this.showLoading(true)

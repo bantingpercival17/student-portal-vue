@@ -19,8 +19,9 @@
                                     psychological Examination.
                                     You are now qualified to Enroll at
                                     Baliwag Maritime Academy, Inc </p>
-                                <a :to="{ name: 'applicant-layout.applicant-enrollment-overview' }" class="btn btn-outline-primary rounded-pill">Enroll
-                                    Now</a>
+                                <router-link class="btn btn-outline-primary rounded-pill"
+                                    :to="{ name: 'applicant-layout.applicant-enrollment-overview' }">Enroll
+                                    Now</router-link>
                             </div>
                             <div v-else>
                                 <div v-if="medical.medical_result.is_fit === 2">

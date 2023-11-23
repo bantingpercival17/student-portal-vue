@@ -12,12 +12,9 @@
             </div>
             <div class="card-body">
                 <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
-                    <!--   <ul class="list-inline p-0 m-0">
-                        <li v-if="semester.semester == 'First Semester'">
-                            <MedicalView :propsEnrollment="data.enrollment" />
-                        </li>
+                      <ul class="list-inline p-0 m-0">
                         <li>
-                            <RegistartionView :propsEnrollment="data.enrollment" :propsSemester="semester" />
+                            <EnrollmentRegistration :propsEnrollment="data.enrollment" :propsSemester="semester" />
                         </li>
                         <li>
                             <AssessmentView :propsEnrollment="data.enrollment" />
@@ -32,19 +29,14 @@
                             <EnrollmentCompleteView :enrollment="data.enrollment" :tuitionDetails="data.tuition"
                                 :token="token" />
                         </li>
-                    </ul> -->
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-/* import MedicalView from './components/medical-view.vue'
-import RegistartionView from '@/views/student/enrollment/components/registration-view.vue'
-import AssessmentView from './components/assessment-view.vue'
-import tuitionFeeView from './components/tuitionFee-view.vue'
-import paymentView from './components/payment-view.vue'
-import EnrollmentCompleteView from './components/enrollment-complete.vue' */
+import EnrollmentRegistration from './enrollment-overview/EnrollmentRegistration.vue'
 import LoadingView from './enrollment-overview/EnrollmentOverviewLoading.vue'
 import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER } from '@/store/storeConstants'
 import { mapGetters } from 'vuex'
@@ -52,12 +44,7 @@ import axios from 'axios'
 export default {
     name: 'EnrollmentOverview',
     components: {
-        /* MedicalView,
-        RegistartionView,
-        AssessmentView,
-        tuitionFeeView,
-        paymentView,
-        EnrollmentCompleteView, */
+        EnrollmentRegistration,
         LoadingView
     },
     data() {
@@ -76,7 +63,7 @@ export default {
         })
     },
     mounted() {
-        /*  axios.get('student/enrollment', {
+         axios.get('applicant/enrollment', {
              headers: {
                  Authorization: 'Bearer ' + this.token
              }
@@ -91,7 +78,7 @@ export default {
              this.isLoading = false
          }).catch((error) => {
              console.log(error)
-         }) */
+         })
     }
 }
 </script>
