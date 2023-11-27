@@ -12,22 +12,24 @@
             </div>
             <div class="card-body">
                 <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
-                      <ul class="list-inline p-0 m-0">
+                    <ul class="list-inline p-0 m-0">
                         <li>
-                            <EnrollmentRegistration :propsEnrollment="data.enrollment" :propsSemester="semester" />
+                            <EnrollmentRegistration :propsEnrollment="enrollmentDetails" :propsSemester="semester" />
                         </li>
                         <li>
-                            <AssessmentView :propsEnrollment="data.enrollment" />
+                            <EnrollmentAssessment :propsEnrollment="enrollmentDetails" :propsSemester="semester" />
                         </li>
                         <li>
-                            <tuitionFeeView :enrollment="data.enrollment" :tuitionDetails="data.tuition" :token="token" />
+                            <TuitionFee :propsEnrollment="enrollmentDetails" :propsSemester="semester"
+                                :tuitionDetails="tuitionFeeDetails" :token="token" />
                         </li>
                         <li>
-                            <paymentView :enrollment="data.enrollment" :tuitionDetails="data.tuition" :token="token" />
+                            <TuitionFeePayment :propsEnrollment="enrollmentDetails" :propsSemester="semester"
+                                :tuitionDetails="tuitionFeeDetails" :token="token" />
                         </li>
                         <li>
-                            <EnrollmentCompleteView :enrollment="data.enrollment" :tuitionDetails="data.tuition"
-                                :token="token" />
+                            <CompleteEnrollment :propsEnrollment="enrollmentDetails" :propsSemester="semester"
+                                :tuitionDetails="tuitionFeeDetails" />
                         </li>
                     </ul>
                 </div>
@@ -37,6 +39,10 @@
 </template>
 <script>
 import EnrollmentRegistration from './enrollment-overview/EnrollmentRegistration.vue'
+import EnrollmentAssessment from './enrollment-overview/EnrollmentAssessment.vue'
+import TuitionFee from './enrollment-overview/TuitionFee.vue'
+import TuitionFeePayment from './enrollment-overview/TuitionFeePayment.vue'
+import CompleteEnrollment from './enrollment-overview/CompleteEnrollment.vue'
 import LoadingView from './enrollment-overview/EnrollmentOverviewLoading.vue'
 import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER } from '@/store/storeConstants'
 import { mapGetters } from 'vuex'
@@ -45,15 +51,18 @@ export default {
     name: 'EnrollmentOverview',
     components: {
         EnrollmentRegistration,
+        EnrollmentAssessment,
+        TuitionFee,
+        TuitionFeePayment,
+        CompleteEnrollment,
         LoadingView
     },
     data() {
         return {
             isLoading: true,
-            data: [],
             semester: [],
-            tuition: [],
-            tuitionDetails: []
+            enrollmentDetails: [],
+            tuitionFeeDetails: []
         }
     },
     computed: {
@@ -63,22 +72,19 @@ export default {
         })
     },
     mounted() {
-         axios.get('applicant/enrollment', {
-             headers: {
-                 Authorization: 'Bearer ' + this.token
-             }
-         }).then((response) => {
-             this.data = response.data.data
-             this.semester = this.data.academic
-             console.log(this.data)
-             if (this.data.tuition) {
-                 this.tuition = this.data.tuition.tags
-                 this.tuitionDetails = this.data.tuition
-             }
-             this.isLoading = false
-         }).catch((error) => {
-             console.log(error)
-         })
+        axios.get('applicant/enrollment', {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then((response) => {
+            const data = response.data
+            this.enrollmentDetails = data.enrollmentDetails
+            this.semester = data.semester
+            this.tuitionFeeDetails = data.tuitionFeeDetails
+            this.isLoading = false
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 }
 </script>

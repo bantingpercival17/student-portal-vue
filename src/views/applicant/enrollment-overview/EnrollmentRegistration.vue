@@ -1,5 +1,5 @@
 <template>
-    <div class="" v-if="propsEnrollment.application">
+    <div class="" v-if="propsEnrollment.enrollment_application">
         <div class="timeline-dots1 border-primary text-primary">
             <svg width="20" viewBox="0 2 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -35,7 +35,7 @@
                 <b><i>{{ propsSemester.school_year }} {{ propsSemester.semester }}</i></b>
             </p>
             <router-link class="btn btn-sm btn-outline-primary rounded-pill" aria-current="page"
-                :to="{ name: 'student-layout.enrollment-registration' }">
+                :to="{ name: 'applicant-layout.applicant-enrollment-registration' }">
                 Student Registration
             </router-link>
         </div>

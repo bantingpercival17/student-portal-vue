@@ -316,9 +316,9 @@ export default {
             errors: [],
             educationaldetails: [],
             genderi: ['Male', 'Female'],
-            educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/a'],
-            employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/a'],
-            arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/a'],
+            educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/A'],
+            employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/A'],
+            arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/A'],
             course: '',
             firstName: '',
             lastName: '',
@@ -532,13 +532,12 @@ export default {
                 this.$router.push('/applicant/dashboard')
                 console.log(response)
             }).catch((error) => {
-                this.showLoading(false)
-                this.errorAlert(error)
                 if (error.response.status === 422) {
                     this.errors = error.response.data.errors
-                    console.log(this.errors)
+                    error = { message: 'Kindly Fill-up the Required Fields' }
                 }
-                console.error(error)
+                this.showLoading(false)
+                this.errorAlert(error)
             })
         }
     }

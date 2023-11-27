@@ -519,96 +519,75 @@ export default {
         })
     },
     mounted() {
-        console.log(this.$route)
-        this.link = this.$route.path === '/student/update-information' ? 'student/update-information' : 'student/enrollment/registration'
-        axios.get('student/information', {
+        this.link = 'applicant/enrollment-registration'
+        axios.get('applicant/enrollment-registration', {
             headers: {
                 Authorization: 'Bearer ' + this.token
             }
         }).then((response) => {
-            const data = response.data.student
-            this.firstName = data.first_name
-            this.lastName = data.last_name
-            this.middleName = data.middle_name
-            this.middleInitial = data.middle_initial
-            this.extensionName = data.extention_name
-            this.birthDate = data.birthday
-            this.birthPlace = data.birth_place
-            this.gender = data.sex
-            this.weight = data.weight
-            this.height = data.height
-            this.personalEmail = data.account.personal_email
-            this.civilStatus = data.civil_status
-            this.nationality = data.nationality
-            this.religion = data.religion
-            this.street = data.street
-            this.barangay = data.barangay
-            this.municipality = data.municipality
-            this.province = data.province
-            this.zip_code = data.zip_code.toString()
-            this.contactNumber = data.contact_number
-            this.educationaldetails = data.educational_background
-            this.educationaldetails.forEach(element => {
-                switch (element.school_level) {
-                    case 'Elementary School':
-                        this.elementarySchoolName = element.school_name
-                        this.elementarySchoolAddress = element.school_address
-                        this.elementarySchoolYear = element.graduated_year
-                        break
-                    case 'Junior High School':
-                        this.juniorHighSchoolName = element.school_name
-                        this.juniorHighSchoolAddress = element.school_address
-                        this.juniorHighSchoolYear = element.graduated_year
-                        break
-                    case 'Senior High School':
-                        this.seniorHighSchoolName = element.school_name
-                        this.seniorHighSchoolAddress = element.school_address
-                        this.seniorHighSchoolYear = element.graduated_year
-                        break
-                    default:
-                        break
-                }
-            })
-            if (data.enrollment_assessment) {
-                this.course = data.enrollment_assessment.course_id
-            }
-            if (data.parent_details) {
-                /* Father */
-                this.fatherLastName = data.parent_details.father_last_name
-                this.fatherFirstName = data.parent_details.father_first_name
-                this.fatherMiddleName = data.parent_details.father_middle_name
-                this.fatherContactNumber = data.parent_details.father_contact_number
-                this.fatherEducational = data.parent_details.father_educational_attainment
-                this.fatherEmployeeStatus = data.parent_details.father_employment_status
-                this.fatherArrangement = data.parent_details.father_working_arrangement
-                /* Mother Maiden */
-                this.motherLastName = data.parent_details.mother_last_name
-                this.motherFirstName = data.parent_details.mother_first_name
-                this.motherMiddleName = data.parent_details.mother_middle_name
-                this.motherContactNumber = data.parent_details.mother_contact_number
-                this.motherEducational = data.parent_details.mother_educational_attainment
-                this.motherEmployeeStatus = data.parent_details.mother_employment_status
-                this.motherArrangement = data.parent_details.mother_working_arrangement
-                /* Guardian */
-                this.guardianLastName = data.parent_details.guardian_last_name
-                this.guardianFirstName = data.parent_details.guardian_first_name
-                this.guardianMiddleName = data.parent_details.guardian_middle_name
-                this.guardianContactNumber = data.parent_details.guardian_contact_number
-                this.guardianEducational = data.parent_details.guardian_educational_attainment
-                this.guardianEmployeeStatus = data.parent_details.guardian_employment_status
-                this.guardianArrangement = data.parent_details.guardian_working_arrangement
-                this.guardianAddress = data.parent_details.guardian_address
-                /* Additional Details */
-                this.householdIncome = data.parent_details.household_income
-                this.beneficiary = data.parent_details.dswd_listahan
-                this.homeOwnership = data.parent_details.homeownership
-                this.carOwnership = data.parent_details.car_ownership
-                /* this.device = data.parent_details.available_devices */
-            }
+            const studentDetails = response.data.student
+            const account = response.data.user
+            console.log(response.data)
+            this.firstName = studentDetails.first_name
+            this.lastName = studentDetails.last_name
+            this.middleName = studentDetails.middle_name
+            this.middleInitial = studentDetails.middle_initial
+            this.extensionName = studentDetails.extention_name
+            this.birthDate = studentDetails.birthday
+            this.birthPlace = studentDetails.birth_place
+            this.gender = studentDetails.sex
+            this.weight = studentDetails.weight
+            this.height = studentDetails.height
+            this.personalEmail = account.email
+            this.civilStatus = studentDetails.civil_status
+            this.nationality = studentDetails.nationality
+            this.religion = studentDetails.religion
+            this.street = studentDetails.street
+            this.barangay = studentDetails.barangay
+            this.municipality = studentDetails.municipality
+            this.province = studentDetails.province
+            this.zip_code = studentDetails.zip_code.toString()
+            this.contactNumber = account.contact_number
+            /* Father */
+            this.fatherLastName = studentDetails.father_last_name
+            this.fatherFirstName = studentDetails.father_first_name
+            this.fatherMiddleName = studentDetails.father_middle_name
+            this.fatherContactNumber = studentDetails.father_contact_number
+            this.fatherEducational = studentDetails.father_educational_attainment
+            this.fatherEmployeeStatus = studentDetails.father_employment_status
+            this.fatherArrangement = studentDetails.father_working_arrangement
+            /* Mother Maiden */
+            this.motherLastName = studentDetails.mother_last_name
+            this.motherFirstName = studentDetails.mother_first_name
+            this.motherMiddleName = studentDetails.mother_middle_name
+            this.motherContactNumber = studentDetails.mother_contact_number
+            this.motherEducational = studentDetails.mother_educational_attainment
+            this.motherEmployeeStatus = studentDetails.mother_employment_status
+            this.motherArrangement = studentDetails.mother_working_arrangement
+            // Guardian
+            this.guardianLastName = studentDetails.guardian_last_name
+            this.guardianFirstName = studentDetails.guardian_first_name
+            this.guardianMiddleName = studentDetails.guardian_middle_name
+            this.guardianContactNumber = studentDetails.guardian_contact_number
+            this.guardianEducational = studentDetails.guardian_educational_attainment
+            this.guardianEmployeeStatus = studentDetails.guardian_employment_status
+            this.guardianArrangement = studentDetails.guardian_working_arrangement
+            this.guardianAddress = studentDetails.guardian_address
+            // Education
+            this.elementarySchoolName = studentDetails.elementary_school_name
+            this.elementarySchoolAddress = studentDetails.elementary_school_address
+            this.elementarySchoolYear = this.dateFormat(studentDetails.elementary_school_year)
+            this.juniorHighSchoolName = studentDetails.junior_high_school_name
+            this.juniorHighSchoolAddress = studentDetails.junior_high_school_address
+            this.juniorHighSchoolYear = this.dateFormat(studentDetails.junior_high_school_year)
+            this.seniorHighSchoolName = studentDetails.senior_high_school_name
+            this.seniorHighSchoolAddress = studentDetails.senior_high_school_address
+            this.seniorHighSchoolYear = this.dateFormat(studentDetails.senior_high_school_year)
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
-            console.log(error.response)
+            this.errorAlert(error)
+            this.isLoading = false
         })
     },
     methods: {
@@ -621,6 +600,11 @@ export default {
         ...mapMutations({
             showLoading: SHOW_LOADING_MUTATION
         }),
+        dateFormat(data) {
+            const dateParts = data.split('-')
+            const date = dateParts[0] + '-' + dateParts[1]
+            return date
+        },
         async updateDetails() {
             this.errors = []
             this.showLoading(true)
@@ -698,7 +682,7 @@ export default {
             }).then((response) => {
                 this.showLoading(false)
                 this.successAlert(response.data)
-                this.$router.push('/student/dashboard')
+                this.$router.push('/applicant/enrollment-overview')
                 console.log(response)
             }).catch((error) => {
                 this.errors = error
