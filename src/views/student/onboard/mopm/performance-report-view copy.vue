@@ -338,7 +338,7 @@
             </div>
         </div>
     </div>
-    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xlg" ariaLabelled="exampleModalLabel"
+    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-lg" ariaLabelled="exampleModalLabel"
         :ariaHidden="true" contentrole="document">
         <model-header :dismissable="true">
             <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">DOCUMENT VIEWER

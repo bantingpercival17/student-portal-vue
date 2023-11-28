@@ -4,7 +4,8 @@
             <small>{{ label.toUpperCase() }}<span class="text-danger">*</span></small>
         </label>
         <input :type="type" class="form-control form-control-sm border border-primary" :value="value"
-            @input="$emit('update:value', $event.target.value)" />
+            @input="$emit('update:value', $event.target.value)" :min="type == 'date' ? minYear() : ''"
+            :max="type == 'date' ? maxYear() : ''" />
         <span class="badge bg-danger mt-2" v-if="error">{{
             error[0] }}</span>
     </div>
@@ -27,6 +28,22 @@ export default {
         },
         error: Object
     },
-    emits: ['update:value']
+    emits: ['update:value'],
+    methods: {
+        minYear() {
+            const startAge = 22
+            const currentDate = new Date()
+            // Get the current year
+            const currentYear = currentDate.getFullYear()
+            return (currentYear - startAge) + '-01-01'
+        },
+        maxYear() {
+            const startAge = 17
+            const currentDate = new Date()
+            // Get the current year
+            const currentYear = currentDate.getFullYear()
+            return (currentYear - startAge) + '-12-31'
+        }
+    }
 }
 </script>

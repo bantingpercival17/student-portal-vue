@@ -66,7 +66,8 @@
                                     <td>
                                         <router-link class="btn btn-sm btn-outline-primary"
                                             :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(data3.month), report: 'v2' } }">view</router-link>
-                                        <button class="btn btn-sm btn-outline-info"
+                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal"
                                             @click="viewReport(data3.month, 'v1')">report</button>
                                     </td>
                                 </tr>
@@ -78,7 +79,8 @@
                                     <td>
                                         <router-link class="btn btn-sm btn-outline-primary"
                                             :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(data2.id) } }">view</router-link>
-                                        <button class="btn btn-sm btn-outline-info"
+                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal"
                                             @click="viewReport(data2.id, 'v2')">report</button>
                                     </td>
                                 </tr>
@@ -95,7 +97,7 @@
         </div>
         <div v-else>
         </div>
-        <modal id="MOPM" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xlg" dialogClass="modal-lg"
+        <modal id="MOPM" :tabindex="-1" role="dialog" mainClass="bd-example-modal-lg" dialogClass="modal-lg"
             ariaLabelled="MOPMLabel" :ariaHidden="true" contentrole="document">
             <model-header :dismissable="true">
                 <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">CREATE PERFORMANCE
@@ -153,6 +155,23 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </model-footer>
         </modal>
+        <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-lg" dialogClass="modal-lg"
+            ariaLabelled="exampleModalLabel" :ariaHidden="true" contentrole="document">
+            <model-header :dismissable="true">
+                <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">Narrative Report View
+                </h5>
+            </model-header>
+            <model-body>
+                <label>{{ reportViewLink }}</label>
+                <iframe v-if="reportViewLink" class="" width="100%" height="70%" :scr="reportViewLink">
+                </iframe>
+                <label v-else> No Data Link</label>
+            </model-body>
+            <model-footer>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </model-footer>
+
+        </modal>
     </div>
 </template>
 <script>
@@ -165,8 +184,6 @@ import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, SHOW_LOADING_MUTATION } fr
 import { mapGetters, mapMutations } from 'vuex'
 import Swal from 'sweetalert2'
 import axios from 'axios'
-import { getData, putData } from '@/store/database/model.js'
-
 export default {
     name: 'ShipboardMonitoringOverview',
     data() {
@@ -184,7 +201,8 @@ export default {
             signed: '',
             remarks: '',
             datePreferred: '',
-            narrativeReport: []
+            narrativeReport: [],
+            reportViewLink: null
         }
     },
     components: {
@@ -211,7 +229,7 @@ export default {
             this.shipboardInformation = data.shipboard_information
             this.narrativeReport = data.narative_report
             console.log(this.narrativeReport)
-            await putData('myKey', data.shipboard_information)
+            // await putData('myKey', data.shipboard_information)
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
@@ -230,15 +248,24 @@ export default {
         },
         viewReport(data, version) {
             const link = '/student/onboard/performance/view-report/' + data + '/' + version
+            console.log(link)
             axios.get(link, {
                 headers: {
                     Authorization: 'Bearer ' + this.token
                 },
                 responseType: 'blob'
             }).then(response => {
+                // Create a Blob from the PDF data
                 const blob = new Blob([response.data], { type: 'application/pdf' })
-                const url = window.URL.createObjectURL(blob)
-                window.open(url, '_blank')
+
+                // Convert Blob to a data URL
+                const dataUrl = URL.createObjectURL(blob)
+                /*  const blob = new Blob([response.data], { type: 'application/pdf' })
+                 const url = window.URL.createObjectURL(blob) */
+                console.log(dataUrl)
+                this.reportViewLink = dataUrl
+                console.log(this.reportViewLink)
+                // window.open(url, '_blank')
             }).catch(error => {
                 this.errorAlert(error)
                 console.error('Error fetching PDF:', error)
