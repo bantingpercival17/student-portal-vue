@@ -34,7 +34,7 @@
         </div>
     </div>
     <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl" ariaLabelled="exampleModalLabel"
-        :ariaHidden="true" contentrole="document">
+        dialogClass="modal-lg" :ariaHidden="true" contentrole="document">
         <model-header :dismissable="true">
             <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">APPLICATION FORM
             </h5>
@@ -42,7 +42,9 @@
         <model-body>
             <div v-if="pdfUrl">
                 <PdfViewer :pdfUrl="pdfUrl" />
-                <!-- <pdf :src="pdfUrl"></pdf> -->
+            </div>
+            <div v-else>
+                <label class="fw-bolder text-info h4">Kindly wait to load the Form</label>
             </div>
         </model-body>
         <model-footer>

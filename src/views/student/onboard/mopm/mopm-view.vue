@@ -163,8 +163,11 @@
             </model-header>
             <model-body>
                 <label>{{ reportViewLink }}</label>
-                <iframe v-if="reportViewLink" class="" width="100%" height="70%" :scr="reportViewLink">
-                </iframe>
+                <div v-if="reportViewLink">
+                    <PdfViewer :pdfUrl="reportViewLink" />
+                </div>
+                <!--   <iframe v-if="reportViewLink" class="" width="100%" height="70%" :scr="reportViewLink">
+                </iframe> -->
                 <label v-else> No Data Link</label>
             </model-body>
             <model-footer>
@@ -181,6 +184,7 @@ import inputComponentV2 from '@/components/main-layouts/components/widgets/input
 import textAreaComponent from '@/components/main-layouts/components/widgets/text-area-component.vue'
 import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
 import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, SHOW_LOADING_MUTATION } from '@/store/storeConstants'
+import PdfViewer from '@/components/main-layouts/components/PdfViewer.vue'
 import { mapGetters, mapMutations } from 'vuex'
 import Swal from 'sweetalert2'
 import axios from 'axios'
@@ -210,7 +214,8 @@ export default {
         inputComponentV2,
         textAreaComponent,
         loadingPage,
-        selectComponent
+        selectComponent,
+        PdfViewer
     },
     computed: {
         ...mapGetters('auth', {

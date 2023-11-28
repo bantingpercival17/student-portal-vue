@@ -65,15 +65,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xl col-md-4 mb-xl-0">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>BIRTH DATE <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control form-control-sm border border-primary" type="date"
-                                    v-model="birthDate">
-                                <span class="badge bg-danger mt-2" v-if="errors.birth_date">{{ errors.birth_date[0]
-                                }}</span>
-                            </div>
+                            <inputComponentV2 label="BIRTH DATE" type="date" v-model:value="birthDate" :error="errors.birth_date" />
                         </div>
                         <div class="col-xl-9 col-md-8 mb-xl-0">
                             <input-component label="BIRTH PLACE" v-model:value="birthPlace" :error="errors.birthPlace" />
