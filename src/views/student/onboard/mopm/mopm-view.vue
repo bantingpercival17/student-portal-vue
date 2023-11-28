@@ -48,16 +48,24 @@
                                 <tr>
                                     <th>Narrative Report</th>
                                     <th>Progress</th>
-                                    <th>Action h</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(data3, index3) in narrativeReport" :key="index3">
-                                    <td>{{ data3.month }}</td>
-                                    <td></td>
+                                    <td>{{ getFormatMonthYear(data3.month) }}</td>
+                                    <td>
+                                        <label v-if="data3.is_approved == data3.total" for=""
+                                            class="text-primary fw-bolder">
+                                            COMPLETE
+                                        </label>
+                                        <label v-else for="" class="text-info fw-bolder">
+                                            ONGOING CHECKING
+                                        </label>
+                                    </td>
                                     <td>
                                         <router-link class="btn btn-sm btn-outline-primary"
-                                            :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(data3.month), report:'v2' } }">view</router-link>
+                                            :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(data3.month), report: 'v2' } }">view</router-link>
                                         <button class="btn btn-sm btn-outline-info"
                                             @click="viewReport(data3.month, 'v1')">report</button>
                                     </td>
@@ -287,6 +295,20 @@ export default {
                 text: data.message,
                 confirmButtonText: 'OK'
             })
+        },
+        getFormatMonthYear(inputDate) {
+            // create a new Date object with the input date string
+            const date = new Date(inputDate)
+            // define an array of month names
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ]
+            const month = monthNames[date.getMonth()] // add 1 to adjust for 0-indexed months
+            const year = date.getFullYear()
+            // format the date as 'dd/mm/yyyy'
+            const formattedDate = month + ' ' + year
+            return formattedDate
         }
     }
 }
