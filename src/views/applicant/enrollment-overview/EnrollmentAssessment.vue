@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!propsEnrollment.enrollment_application">
+    <div v-if="propsEnrollment.enrollment_application !== null">
         <div class="" v-if="propsEnrollment.enrollment_application">
             <div v-if="propsEnrollment.enrollment_application.is_approved">
                 <div class="timeline-dots1 border-primary text-primary">

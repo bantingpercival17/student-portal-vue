@@ -1,5 +1,5 @@
 <template>
-    <div class="" v-if="!propsEnrollment.enrollment_application">
+    <div class="" v-if="propsEnrollment.enrollment_application !== null">
         <div class="timeline-dots1 border-primary text-primary">
             <svg width="20" viewBox="0 2 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -14,8 +14,6 @@
             <p class="mb-3">
                 You can now Proceed to Enrollment Assessment
             </p>
-            <a href="<!-- {{ route('enrollment.registration-form') }} -->" target="_blank"
-                class="btn btn-sm btn-outline-primary rounded-pill">Registration Form Printable</a>
         </div>
     </div>
     <div v-else>
