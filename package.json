@@ -21,6 +21,7 @@
     "idb": "^7.1.1",
     "jquery": "^3.6.3",
     "pdfvuer": "^2.0.1",
+    "php-serialize": "^4.1.1",
     "register-service-worker": "^1.7.2",
     "sass-loader": "^13.2.0",
     "smooth-scrollbar": "^8.8.1",

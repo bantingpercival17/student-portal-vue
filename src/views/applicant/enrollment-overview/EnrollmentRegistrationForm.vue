@@ -179,6 +179,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <select-component label="Senior High School Strand" v-model:value="strand"
+                                :error="errors.strand" :data="strandList" />
                         </div>
                     </div>
                     <br>
@@ -424,6 +426,7 @@ import inputComponent from '@/components/main-layouts/components/widgets/input-c
 import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
+import * as phpSerialize from 'php-serialize'
 export default {
     name: 'EnrollmentRegistrationForm',
     components: {
@@ -448,6 +451,7 @@ export default {
             providerList: ['own mobile data', 'own broadband (DSL, Wireless Fiber, Satellite)', 'computer shop', 'other places outside the home with internet connection (library, barangay, neighbor, relatives)', 'none'],
             learningModalityList: ['online learning', 'Blended', 'Face-to-Face'],
             inputsList: ['lack of available gadgets / equipment', 'insufficient load/data allowance', 'existing health condition/s', 'difficulty in independent learning', 'conflict with other activities (i.e. house chores)', 'none or lack of available space for studying', 'distractions (i.e. social media, noise from community/ neighbor)', 'none'],
+            strandList: ['General Academic Strand', 'Humanities and Social Sciences Strand', 'Science, Technology, Engineering and Mathematics', ' Accountancy, Business and Management', 'Technical Vocational Livelihood', 'Pre-Baccalaureate Maritime Strand'],
             course: '',
             firstName: '',
             lastName: '',
@@ -509,7 +513,8 @@ export default {
             providerAvailable: [],
             distanceLearning: [],
             learningModality: [],
-            link: ''
+            link: '',
+            strand: ''
         }
         return inputValidation
     },
@@ -528,61 +533,11 @@ export default {
             const studentDetails = response.data.student
             const account = response.data.user
             console.log(response.data)
-            this.firstName = studentDetails.first_name
-            this.lastName = studentDetails.last_name
-            this.middleName = studentDetails.middle_name
-            this.middleInitial = studentDetails.middle_initial
-            this.extensionName = studentDetails.extention_name
-            this.birthDate = studentDetails.birthday
-            this.birthPlace = studentDetails.birth_place
-            this.gender = studentDetails.sex
-            this.weight = studentDetails.weight
-            this.height = studentDetails.height
-            this.personalEmail = account.email
-            this.civilStatus = studentDetails.civil_status
-            this.nationality = studentDetails.nationality
-            this.religion = studentDetails.religion
-            this.street = studentDetails.street
-            this.barangay = studentDetails.barangay
-            this.municipality = studentDetails.municipality
-            this.province = studentDetails.province
-            this.zip_code = studentDetails.zip_code.toString()
-            this.contactNumber = account.contact_number
-            /* Father */
-            this.fatherLastName = studentDetails.father_last_name
-            this.fatherFirstName = studentDetails.father_first_name
-            this.fatherMiddleName = studentDetails.father_middle_name
-            this.fatherContactNumber = studentDetails.father_contact_number
-            this.fatherEducational = studentDetails.father_educational_attainment
-            this.fatherEmployeeStatus = studentDetails.father_employment_status
-            this.fatherArrangement = studentDetails.father_working_arrangement
-            /* Mother Maiden */
-            this.motherLastName = studentDetails.mother_last_name
-            this.motherFirstName = studentDetails.mother_first_name
-            this.motherMiddleName = studentDetails.mother_middle_name
-            this.motherContactNumber = studentDetails.mother_contact_number
-            this.motherEducational = studentDetails.mother_educational_attainment
-            this.motherEmployeeStatus = studentDetails.mother_employment_status
-            this.motherArrangement = studentDetails.mother_working_arrangement
-            // Guardian
-            this.guardianLastName = studentDetails.guardian_last_name
-            this.guardianFirstName = studentDetails.guardian_first_name
-            this.guardianMiddleName = studentDetails.guardian_middle_name
-            this.guardianContactNumber = studentDetails.guardian_contact_number
-            this.guardianEducational = studentDetails.guardian_educational_attainment
-            this.guardianEmployeeStatus = studentDetails.guardian_employment_status
-            this.guardianArrangement = studentDetails.guardian_working_arrangement
-            this.guardianAddress = studentDetails.guardian_address
-            // Education
-            this.elementarySchoolName = studentDetails.elementary_school_name
-            this.elementarySchoolAddress = studentDetails.elementary_school_address
-            this.elementarySchoolYear = this.dateFormat(studentDetails.elementary_school_year)
-            this.juniorHighSchoolName = studentDetails.junior_high_school_name
-            this.juniorHighSchoolAddress = studentDetails.junior_high_school_address
-            this.juniorHighSchoolYear = this.dateFormat(studentDetails.junior_high_school_year)
-            this.seniorHighSchoolName = studentDetails.senior_high_school_name
-            this.seniorHighSchoolAddress = studentDetails.senior_high_school_address
-            this.seniorHighSchoolYear = this.dateFormat(studentDetails.senior_high_school_year)
+            if (response.data.student_v2 !== null) {
+                this.retriveStudentDetails(account, response.data.student_v2)
+            } else {
+                this.retriveApplicantDetails(account, studentDetails)
+            }
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
@@ -663,6 +618,7 @@ export default {
                 senior_high_school_name: this.seniorHighSchoolName,
                 senior_high_school_address: this.seniorHighSchoolAddress,
                 senior_high_school_year: this.seniorHighSchoolYear + '-01',
+                strand: this.strand,
                 /* additional information */
                 household_income: this.householdIncome,
                 dswd_beneficiary: this.beneficiary,
@@ -693,7 +649,155 @@ export default {
                 this.showLoading(false)
                 this.errorAlert(error)
             })
+        },
+        retriveStudentDetails(account, studentDetails) {
+            this.firstName = studentDetails.first_name
+            this.lastName = studentDetails.last_name
+            this.middleName = studentDetails.middle_name
+            this.middleInitial = studentDetails.middle_initial
+            this.extensionName = studentDetails.extention_name
+            this.birthDate = studentDetails.birthday
+            this.birthPlace = studentDetails.birth_place
+            this.gender = studentDetails.sex
+            this.weight = studentDetails.weight
+            this.height = studentDetails.height
+            this.personalEmail = account.email
+            this.civilStatus = studentDetails.civil_status
+            this.nationality = studentDetails.nationality
+            this.religion = studentDetails.religion
+            this.street = studentDetails.street
+            this.barangay = studentDetails.barangay
+            this.municipality = studentDetails.municipality
+            this.province = studentDetails.province
+            this.zip_code = studentDetails.zip_code.toString()
+            this.contactNumber = account.contact_number
+            if (studentDetails.parent_details) {
+                const parents = studentDetails.parent_details
+                /* Father */
+                this.fatherLastName = parents.father_last_name
+                this.fatherFirstName = parents.father_first_name
+                this.fatherMiddleName = parents.father_middle_name
+                this.fatherContactNumber = parents.father_contact_number
+                this.fatherEducational = parents.father_educational_attainment
+                this.fatherEmployeeStatus = parents.father_employment_status
+                this.fatherArrangement = parents.father_working_arrangement
+                /* Mother Maiden */
+                this.motherLastName = parents.mother_last_name
+                this.motherFirstName = parents.mother_first_name
+                this.motherMiddleName = parents.mother_middle_name
+                this.motherContactNumber = parents.mother_contact_number
+                this.motherEducational = parents.mother_educational_attainment
+                this.motherEmployeeStatus = parents.mother_employment_status
+                this.motherArrangement = parents.mother_working_arrangement
+                // Guardian
+                this.guardianLastName = parents.guardian_last_name
+                this.guardianFirstName = parents.guardian_first_name
+                this.guardianMiddleName = parents.guardian_middle_name
+                this.guardianContactNumber = parents.guardian_contact_number
+                this.guardianEducational = parents.guardian_educational_attainment
+                this.guardianEmployeeStatus = parents.guardian_employment_status
+                this.guardianArrangement = parents.guardian_working_arrangement
+                this.guardianAddress = parents.guardian_address
+                this.householdIncome = parents.household_income
+                this.beneficiary = parents.dswd_listahan
+                this.homeOwnership = parents.homeownership
+                this.carOwnership = parents.car_ownership
+                this.internetConnection = parents.available_connection
+            }
+            studentDetails.educational_background.forEach(element => {
+                switch (element.school_level) {
+                    case 'Elementary School':
+                        this.elementarySchoolName = element.school_name
+                        this.elementarySchoolAddress = element.school_address
+                        this.elementarySchoolYear = this.dateFormat(element.graduated_year)
+                        break
+                    case 'Junior High School':
+                        this.juniorHighSchoolName = element.school_name
+                        this.juniorHighSchoolAddress = element.school_address
+                        this.juniorHighSchoolYear = this.dateFormat(element.graduated_year)
+                        break
+                    case 'Senior High School':
+                        this.seniorHighSchoolName = element.school_name
+                        this.seniorHighSchoolAddress = element.school_address
+                        this.seniorHighSchoolYear = this.dateFormat(element.graduated_year)
+                        break
+                    default:
+                        break
+                }
+            })
+            // Education
+            /*  this.elementarySchoolName = studentDetails.elementary_school_name
+             this.elementarySchoolAddress = studentDetails.elementary_school_address
+             this.elementarySchoolYear = this.dateFormat(studentDetails.elementary_school_year)
+             this.juniorHighSchoolName = studentDetails.junior_high_school_name
+             this.juniorHighSchoolAddress = studentDetails.junior_high_school_address
+             this.juniorHighSchoolYear = this.dateFormat(studentDetails.junior_high_school_year)
+             this.seniorHighSchoolName = studentDetails.senior_high_school_name
+             this.seniorHighSchoolAddress = studentDetails.senior_high_school_address
+             this.seniorHighSchoolYear = this.dateFormat(studentDetails.senior_high_school_year) */
+        },
+        retriveApplicantDetails(account, studentDetails) {
+            this.firstName = studentDetails.first_name
+            this.lastName = studentDetails.last_name
+            this.middleName = studentDetails.middle_name
+            this.middleInitial = studentDetails.middle_initial
+            this.extensionName = studentDetails.extention_name
+            this.birthDate = studentDetails.birthday
+            this.birthPlace = studentDetails.birth_place
+            this.gender = studentDetails.sex
+            this.weight = studentDetails.weight
+            this.height = studentDetails.height
+            this.personalEmail = account.email
+            this.civilStatus = studentDetails.civil_status
+            this.nationality = studentDetails.nationality
+            this.religion = studentDetails.religion
+            this.street = studentDetails.street
+            this.barangay = studentDetails.barangay
+            this.municipality = studentDetails.municipality
+            this.province = studentDetails.province
+            this.zip_code = studentDetails.zip_code.toString()
+            this.contactNumber = account.contact_number
+            /* Father */
+            this.fatherLastName = studentDetails.father_last_name
+            this.fatherFirstName = studentDetails.father_first_name
+            this.fatherMiddleName = studentDetails.father_middle_name
+            this.fatherContactNumber = studentDetails.father_contact_number
+            this.fatherEducational = studentDetails.father_educational_attainment
+            this.fatherEmployeeStatus = studentDetails.father_employment_status
+            this.fatherArrangement = studentDetails.father_working_arrangement
+            /* Mother Maiden */
+            this.motherLastName = studentDetails.mother_last_name
+            this.motherFirstName = studentDetails.mother_first_name
+            this.motherMiddleName = studentDetails.mother_middle_name
+            this.motherContactNumber = studentDetails.mother_contact_number
+            this.motherEducational = studentDetails.mother_educational_attainment
+            this.motherEmployeeStatus = studentDetails.mother_employment_status
+            this.motherArrangement = studentDetails.mother_working_arrangement
+            // Guardian
+            this.guardianLastName = studentDetails.guardian_last_name
+            this.guardianFirstName = studentDetails.guardian_first_name
+            this.guardianMiddleName = studentDetails.guardian_middle_name
+            this.guardianContactNumber = studentDetails.guardian_contact_number
+            this.guardianEducational = studentDetails.guardian_educational_attainment
+            this.guardianEmployeeStatus = studentDetails.guardian_employment_status
+            this.guardianArrangement = studentDetails.guardian_working_arrangement
+            this.guardianAddress = studentDetails.guardian_address
+            // Education
+            this.elementarySchoolName = studentDetails.elementary_school_name
+            this.elementarySchoolAddress = studentDetails.elementary_school_address
+            this.elementarySchoolYear = this.dateFormat(studentDetails.elementary_school_year)
+            this.juniorHighSchoolName = studentDetails.junior_high_school_name
+            this.juniorHighSchoolAddress = studentDetails.junior_high_school_address
+            this.juniorHighSchoolYear = this.dateFormat(studentDetails.junior_high_school_year)
+            this.seniorHighSchoolName = studentDetails.senior_high_school_name
+            this.seniorHighSchoolAddress = studentDetails.senior_high_school_address
+            this.seniorHighSchoolYear = this.dateFormat(studentDetails.senior_high_school_year)
+        },
+        convertDataSerialize(data) {
+            console.log('Converting Data: ' + phpSerialize.unserialize(data))
+            return phpSerialize.unserialize(data)
         }
     }
+
 }
 </script>

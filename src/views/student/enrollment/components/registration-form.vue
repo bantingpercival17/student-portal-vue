@@ -553,17 +553,17 @@ export default {
                     case 'Elementary School':
                         this.elementarySchoolName = element.school_name
                         this.elementarySchoolAddress = element.school_address
-                        this.elementarySchoolYear = element.graduated_year
+                        this.elementarySchoolYear = this.dateFormat(element.graduated_year)
                         break
                     case 'Junior High School':
                         this.juniorHighSchoolName = element.school_name
                         this.juniorHighSchoolAddress = element.school_address
-                        this.juniorHighSchoolYear = element.graduated_year
+                        this.juniorHighSchoolYear = this.dateFormat(element.graduated_year)
                         break
                     case 'Senior High School':
                         this.seniorHighSchoolName = element.school_name
                         this.seniorHighSchoolAddress = element.school_address
-                        this.seniorHighSchoolYear = element.graduated_year
+                        this.seniorHighSchoolYear = this.dateFormat(element.graduated_year)
                         break
                     default:
                         break
