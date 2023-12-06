@@ -5,12 +5,37 @@
             <span :class="`${className.badgeColor} badge float-end`">{{ status }}</span>
             <small class="fw-bolder text-muted">{{ progressName }}</small>
             <h5 :class="`${className.textClass} fw-bolder mb-1`">{{ titleName }}</h5>
-            <div v-if="content">
+            <div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 col-md-12">
+                        <small class="fw-bolder text-muted">APPLICANT'S NAME:</small>
+                        <br>
+                        <label for="" class="text-primary fw-bolder h5">{{ propsApplicantDetails.name }}</label>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <small class="fw-bolder text-muted">APPLICANT'S EMAIL:</small>
+                        <br>
+                        <label for="" class="text-primary fw-bolder h5">{{ propsApplicantDetails.email }}</label>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <small class="fw-bolder text-muted">COURSE:</small>
+                        <br>
+                        <label for="" class="text-primary fw-bolder h5">{{ propsApplicantDetails.course.course_name
+                        }}</label>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <small class="fw-bolder text-muted">ACADEMIC YEAR:</small>
+                        <br>
+                        <label for="" class="text-primary fw-bolder h5">FIRST SEMESTER - {{
+                            propsApplicantDetails.academic.school_year }}</label>
+                    </div>
+                </div>
+
                 <div v-if="className.contentBody" class="content-active">
                     <p class="mb-3">
                         Kindly Fill-up the Form for your Additional Information,
                         <router-link class="badge bg-primary" :to="{ name: 'applicant-layout.applicant-information' }">Go to
-                            Applicant Information Form</router-link>
+                            Applicant's Information Form</router-link>
                     </p>
                 </div>
                 <div v-else>

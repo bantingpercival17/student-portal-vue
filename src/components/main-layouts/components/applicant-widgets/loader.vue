@@ -1,7 +1,7 @@
 <template>
     <div class="loader ">
         <div class="loader-body word-spacing">
-            <h1 class="loader-title fw-bold">APPLICANT PORTAL</h1>
+            <h1 class="loader-title fw-bold">APPLICANT'S PORTAL</h1>
         </div>
     </div>
 </template>

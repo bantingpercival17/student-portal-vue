@@ -2,7 +2,7 @@
     <aside :class="`sidebar sidebar-default navs-rounded-all ${minisidebar ? 'sidebar-mini' : ''}`">
         <div class="sidebar-header d-flex align-items-center justify-content-center">
             <router-link :to="{ name: 'app-layout.home' }" class="navbar-brand ">
-                <span class="ms-1 font-weight-bold text-primary"><b>Applicant Portal</b></span>
+                <span class="ms-1 font-weight-bold text-primary"><b>Applicant's Portal</b></span>
             </router-link>
             <div class="sidebar-toggle d-xl-none" data-toggle="sidebar" data-active="true" @click="SidebarMini">
                 <i class="icon">

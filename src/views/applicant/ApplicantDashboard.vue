@@ -9,9 +9,9 @@
 
             <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
                 <ul class="list-inline p-0 m-0 w-100">
-                    <li>
+                   <!--  <li>
                         <PreRegistration :propsApplicantDetails="applicantDetails" />
-                    </li>
+                    </li> -->
                     <li>
                         <ApplicantInformation :propsApplicantDetails="applicantDetails" :token="token" />
                     </li>
@@ -67,7 +67,7 @@ export default {
         }
     },
     components: {
-        PreRegistration,
+        /* PreRegistration, */
         ApplicantInformation,
         DocumementsRequirements,
         ExaminationPayment,

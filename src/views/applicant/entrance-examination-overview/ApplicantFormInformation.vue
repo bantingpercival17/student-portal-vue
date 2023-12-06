@@ -3,11 +3,10 @@
         data-iq-ease="power.out" data-iq-opacity="0">
         <div class="card-header p-3">
             <div class="header-title">
-                <label for="" class="fw-bolder text-primary h4">STUDENT INFORMATION</label>
+                <label for="" class="fw-bolder text-primary h4">STUDENT'S INFORMATION</label>
                 <br>
                 <small for="" class="text-danger">
-                    Kindly double check you Student Details and update. <br>
-                    NOTE: All data field is required to fill in,
+                    NOTE: Double check - Please ensure that all information/details are correct and filled in,
                     type/choose N / A if not applicable
                 </small>
             </div>
@@ -18,7 +17,7 @@
             </div>
             <div v-else>
                 <form @submit.prevent="storeDetails" method="post">
-                    <label for="" class="text-primary fw-bolder h4">STUDENT DETAILS</label>
+                    <label for="" class="text-primary fw-bolder h4">STUDENT'S DETAILS</label>
                     <div class="row">
                         <div class="col-xl col-md">
                             <input-component label="LAST NAME" v-model:value="lastName" :error="errors.last_name" />
@@ -65,7 +64,8 @@
                     </div>
                     <div class="row">
                         <div class="col-xl col-md-4 mb-xl-0">
-                            <inputComponentV2 label="BIRTH DATE" type="date" v-model:value="birthDate" :error="errors.birth_date" />
+                            <inputComponentV2 label="BIRTH DATE" type="date" v-model:value="birthDate"
+                                :error="errors.birth_date" />
                         </div>
                         <div class="col-xl-9 col-md-8 mb-xl-0">
                             <input-component label="BIRTH PLACE" v-model:value="birthPlace" :error="errors.birthPlace" />
