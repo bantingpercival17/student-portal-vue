@@ -27,10 +27,10 @@
                         <EntranceExamination :propsApplicantDetails="applicantDetails" :documents="documents"
                             :examination="examination" :token="token" />
                     </li>
-                    <li>
+                   <!--  <li>
                         <BriefingOrientation :propsApplicantDetails="applicantDetails" :documents="documents"
                             :examination="examination" :orientation="orientation" :token="token" />
-                    </li>
+                    </li> -->
                     <li>
                         <MedicalExamination :propsApplicantDetails="applicantDetails" :documents="documents"
                             :examination="examination" :orientation="orientation" :medical="medical" :token="token" />
@@ -45,12 +45,12 @@
 import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER } from '@/store/storeConstants'
 import { mapGetters } from 'vuex'
 import axios from 'axios'
-import PreRegistration from './entrance-examination-overview/PreRegistration.vue'
+/* import PreRegistration from './entrance-examination-overview/PreRegistration.vue' */
 import ApplicantInformation from './entrance-examination-overview/ApplicantInformation.vue'
 import DocumementsRequirements from './entrance-examination-overview/DocumentsRequirements.vue'
 import ExaminationPayment from './entrance-examination-overview/EntranceExaminationPayment.vue'
 import EntranceExamination from './entrance-examination-overview/EntranceExamination.vue'
-import BriefingOrientation from './entrance-examination-overview/BriefingOrientation.vue'
+/* import BriefingOrientation from './entrance-examination-overview/BriefingOrientation.vue' */
 import MedicalExamination from './entrance-examination-overview/MedicalExamination.vue'
 export default {
     name: 'ApplicantDasboard',
@@ -72,7 +72,7 @@ export default {
         DocumementsRequirements,
         ExaminationPayment,
         EntranceExamination,
-        BriefingOrientation,
+        /* BriefingOrientation, */
         MedicalExamination
     },
     computed: {

@@ -378,7 +378,12 @@ export default {
         }).then((response) => {
             const account = response.data.data
             const data = response.data.data.applicant
-            console.log(account)
+            if (!data) {
+                const accountDetails = JSON.parse(account.json_details)
+                this.firstName = accountDetails.first_name
+                this.lastName = accountDetails.last_name
+                this.birthDate = accountDetails.birthday
+            }
             this.contactNumber = account.contact_number
             this.personalEmail = account.email
             if (data) {

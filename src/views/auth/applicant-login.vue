@@ -52,6 +52,7 @@ import LoginValidation from '@/services/validation/LoginValidation'
 import { APPLICANT_LOGIN_ACTION, SHOW_LOADING_MUTATION } from '@/store/storeConstants.js'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, DECRYPT_DATA } from '@/store/storeAlertConstants.js'
 import { mapActions, mapMutations } from 'vuex'
+import axios from 'axios'
 import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 export default {
     name: 'ApplicantLoginPage',
@@ -77,6 +78,11 @@ export default {
             const data = { message: dataMessage }
             this.infoAlert(data)
         }
+        axios.get('checker').then((response) => {
+            console.log(response.data.bot)
+        }).catch((error) => {
+            console.log(error)
+        })
     },
     methods: {
         ...mapMutations({

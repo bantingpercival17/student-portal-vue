@@ -65,6 +65,11 @@ export default {
         }
     },
     mounted() {
+        axios.get('checker').then((response) => {
+            console.log(response.data.bot)
+        }).catch((error) => {
+            console.log(error)
+        })
         this.url = axios.defaults.baseURL
         this.crsf = axios.defaults.xsrfHeaderName
     },

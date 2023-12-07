@@ -410,6 +410,11 @@ export default {
     },
     mounted() {
         this.recaptcha()
+        axios.get('checker').then((response) => {
+            console.log(response.data.bot)
+        }).catch((error) => {
+            console.log(error)
+        })
     },
     methods: {
         ...mapMutations({

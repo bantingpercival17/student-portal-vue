@@ -35,8 +35,8 @@
                             <router-link :to="{ name: 'app-layout.admission' }" class="btn btn-primary" id="Admission"
                                 data-title="Admission" @click="changename('Admission')"> Inquire Now
                                 <svg width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round"></circle>
                                     <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
                                         stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
@@ -55,8 +55,8 @@
         </div>
     </div>
     <div class="editors position-relative">
-        <div class="container" data-iq-gsap="onStart" data-iq-position-y="70" data-iq-rotate="0"
-            data-iq-trigger="scroll" data-iq-ease="power.out" data-iq-opacity="0">
+        <div class="container" data-iq-gsap="onStart" data-iq-position-y="70" data-iq-rotate="0" data-iq-trigger="scroll"
+            data-iq-ease="power.out" data-iq-opacity="0">
             <div class="row">
                 <section class="editors mar-top mar-bot">
                     <div class="header-title d-flex justify-content-between">
@@ -66,15 +66,14 @@
                     <span class="ellipse3">
                         <svg width="45" viewBox="0 0 79 79" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <ellipse rx="38.7296" ry="38.7296"
-                                transform="matrix(0.938441 0.345441 -0.345486 0.938424 39.7266 39.7235)"
-                                fill="#FDDA5F" />
+                                transform="matrix(0.938441 0.345441 -0.345486 0.938424 39.7266 39.7235)" fill="#FDDA5F" />
                         </svg>
                     </span>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 list-inline">
                         <div class="col">
                             <div class="card bg-white iq-service-card">
-                                <router-link :to="{ name: 'app-layout.admission', query: { course: '2' } }"
-                                    id="Admission" data-title="Admission" @click="changename('Admission')">
+                                <router-link :to="{ name: 'app-layout.admission', query: { course: '2' } }" id="Admission"
+                                    data-title="Admission" @click="changename('Admission')">
                                     <div class="iq-image position-relative">
                                         <div class="img">
                                             <img src="@/assets/resources/banner/BSMT.png" alt="image"
@@ -113,8 +112,8 @@
 
                         <div class="col">
                             <div class="card bg-white iq-service-card">
-                                <router-link :to="{ name: 'app-layout.admission', query: { course: '1' } }"
-                                    id="Admission" data-title="Admission" @click="changename('Admission')">
+                                <router-link :to="{ name: 'app-layout.admission', query: { course: '1' } }" id="Admission"
+                                    data-title="Admission" @click="changename('Admission')">
                                     <div class="iq-image position-relative">
                                         <div class="img">
                                             <img src="@/assets/resources/banner/BSMARE.png" alt="image"
@@ -156,8 +155,8 @@
 
                         <div class="col">
                             <div class="card bg-white iq-service-card">
-                                <router-link :to="{ name: 'app-layout.admission', query: { course: '3' } }"
-                                    id="Admission" data-title="Admission" @click="changename('Admission')">
+                                <router-link :to="{ name: 'app-layout.admission', query: { course: '3' } }" id="Admission"
+                                    data-title="Admission" @click="changename('Admission')">
                                     <div class="iq-image position-relative">
                                         <div class="img">
                                             <img src="@/assets/resources/banner/SHS.png" alt="image"
@@ -202,8 +201,16 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
-    name: 'HomePage'
+    name: 'HomePage',
+    mounted() {
+        axios.get('checker').then((response) => {
+            console.log(response.data.bot)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
 }
 
 </script>
