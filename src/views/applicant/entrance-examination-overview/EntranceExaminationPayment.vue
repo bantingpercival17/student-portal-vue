@@ -121,6 +121,10 @@
                             <form @submit.prevent="submitPaymentTransaction" method="post" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-xs-12">
+                                        <select-component label="payment mode" v-model:value="paymentMode"
+                                            :error="errors.payment_mode" :data="paymentModeList" />
+                                    </div>
+                                    <div v-if="paymentMode === 'E-wallets'" class="col-lg-12 col-md-12 col-xs-12">
                                         <inputComponentV2 type="text" label="Reference Number"
                                             v-model:value="reference_number" :error="errors.reference_number" />
                                     </div>
@@ -176,12 +180,14 @@ import { SHOW_LOADING_MUTATION } from '@/store/storeConstants'
 import { mapMutations, mapActions } from 'vuex'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT } from '@/store/storeAlertConstants.js'
 import axios from 'axios'
+import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
 export default {
     name: 'ExaminationPayment',
     components: {
         stepper,
         inputComponentV2,
-        labelComponent
+        labelComponent,
+        selectComponent
     },
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, stepperFinish: false, badgeColor: 'bg-secondary', contentShow: false }
@@ -203,10 +209,12 @@ export default {
             content: className.contentShow,
             tuitionDetails: false,
             errors: [],
+            paymentMode: '',
             transactionDate: '',
             amountPaid: '',
             reference_number: '',
-            formData
+            formData,
+            paymentModeList: ['Bank Transfer', 'E-wallets']
         }
     },
     methods: {
@@ -236,6 +244,7 @@ export default {
             this.formData.append('transaction_date', this.transactionDate)
             this.formData.append('amount_paid', this.amountPaid)
             this.formData.append('reference_number', this.reference_number)
+            this.formData.append('payment_mode', this.paymentMode)
             this.errors = []
             axios.post('/applicant/payment-transaction', this.formData, {
                 headers: {
@@ -250,7 +259,7 @@ export default {
                     window.location.reload()
                 }
             }).catch((error) => {
-                this.showLoading(false)
+                /* this.showLoading(false)
                 this.errorAlert(error)
                 console.log(error)
                 if (error.response.status === 422) {
@@ -258,7 +267,14 @@ export default {
                     this.errors = error.response.data.errors
                 } else {
                     this.errorAlert(error)
+                } */
+
+                if (error.response.status === 422) {
+                    this.errors = error.response.data.errors
+                    error = { message: 'Kindly Fill-up the Required Fields' }
                 }
+                this.showLoading(false)
+                this.errorAlert(error)
             })
         },
         currencyFormat(number) {

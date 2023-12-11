@@ -167,7 +167,11 @@
                     </div>
                 </div>
                 <div v-else>
-                    <p class="">For Scheduling of appointment, Kindly choose to available schedule.</p>
+                    <p>
+                        All students are advised to undergo a mandatory medical examination. Kindly report to the Baliwag Maritime Academy, Inc to receive your designated medical examination date and obtain any
+                        required medical referrals.
+                    </p>
+                    <!--  <p class="">For Scheduling of appointment, Kindly choose to available schedule.</p>
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12" v-for="(data, index) in  medical.medical_scheduled "
                             :key="index">
@@ -180,11 +184,8 @@
                                     <a class="badge bg-info" @click="setMedicalScheduled(data.date)">Available Schedule</a>
                                 </div>
                             </div>
-                            <!-- <h4><span class="text-info fw-bolder">{{ data.date }}</span><small class="text-secondary">/{{
-                                data.capacity }}</small>
-                            </h4> -->
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -207,14 +208,10 @@ export default {
             if (this.examination.payment.is_approved) {
                 if (this.examination.examinationDetails) {
                     if (this.examination.examinationDetails.is_finish && this.examination.finalResult[2]) {
-                        if (this.orientation.present) {
-                            if (this.orientation.present.is_completed) {
-                                className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
-                                if (this.medical.medical_result) {
-                                    if (this.medical.medical_result.is_fit !== 0) {
-                                        className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: true }
-                                    }
-                                }
+                        className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
+                        if (this.medical.medical_result) {
+                            if (this.medical.medical_result.is_fit !== 0) {
+                                className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: true }
                             }
                         }
                     }
@@ -224,7 +221,7 @@ export default {
         return {
             errors: [],
             titleName: 'MEDICAL EXAMINATION',
-            progressName: 'STEP 6',
+            progressName: 'STEP 5',
             status: className.status,
             className,
             content: className.contentShow,

@@ -103,18 +103,18 @@
                 </div>
                 <div v-else>
                     <div v-if="(categoryIndex + 1) == categoryList.length">
-                        <textarea v-model="essay" name="essay" id="" cols="30" rows="10"
+                        <!-- <textarea v-model="essay" name="essay" id="" cols="30" rows="10"
                             class="form-control border border-primary" placeholder="Write your Essay here....">
-                        </textarea>
+                        </textarea> -->
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-info mt-3 text-white me-3" @click="finishExamination()">SUBMIT
                                 EXAMINATION</button>
                         </div>
                     </div>
                     <div v-else-if="categoryIndex < categoryList.length">
-                        <div class="d-flex justify-content-center">
+                        <!-- <div class="d-flex justify-content-center">
                             <button class="btn btn-outline-info" @click="reviewAnswer">REVIEW ANSWER</button>
-                        </div>
+                        </div> -->
                         <div class="h4 text-secondary text-center fw-bolder">Do you want to submit your Answer to proceed to
                             the next Category?</div>
                         <div class="d-flex justify-content-center">

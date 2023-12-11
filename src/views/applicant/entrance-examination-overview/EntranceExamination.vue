@@ -14,9 +14,11 @@
                             email account
                         </p>
                         <p v-else>
-                            Thank you for trying here at Baliwag Maritime Academy sorry to tell you that you did not meet
-                            the
-                            Passing Score for the Entrance Examination.
+                            Thank you for your interest in applying at Baliwag Maritime Academy, Inc. However, we regret to
+                            inform you that you did not meet the required test score in the entrance examination.
+                            We hope you continue to pursue your education and career goals and we certainly wish for success
+                            in your future endeavors.
+                            BALIWAG MARITIME ACADEMY, INC.
                         </p>
                         <div class="card">
                             <div class="card-body">
@@ -82,7 +84,6 @@
                             <div v-if="checkSchedule(examination.examinationSchedule)">
                                 <div class="card">
                                     <div class="card-body">
-                                        <p class="text-primary fw-bolder h5">Welcome Applicants</p>
                                         <p> <span class="fw-bolder">INSTRUCTION</span></p>
                                         <p class="m-0">1. Ensure that you have a strong internet connection.</p>
                                         <p class="m-0">2. Once you are logged in, read carefully and understand the
@@ -120,7 +121,8 @@
                                                     errors.examination[0] }}</span>
                                             </div>
                                             <div class="col-md">
-                                                <button type="submit" class="btn btn-primary ">Take Examination</button>
+                                                <button type="submit" class="btn btn-primary ">Proceed to
+                                                    Examination</button>
                                             </div>
 
                                         </div>
@@ -128,8 +130,12 @@
                                 </form>
                             </div>
                             <div v-else>
-                                <p class="text-primary">Your set Examination Scheduled is {{
-                                    scheduledFormat(examination.examinationSchedule.schedule_date) }}</p>
+                                <p> Your entrance examination is scheduled on <b>{{
+                                    scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
+                                    Please ensure that you take the entrance examination on the specified date and time;
+                                    otherwise, your examination
+                                    slot will be forfeited.
+                                </p>
                             </div>
                         </div>
 
@@ -258,7 +264,8 @@ export default {
                 }
             }).then((response) => {
                 this.showLoading(false)
-                this.successAlert(response.data)
+                const message = { message: 'Examination Code Verified' }
+                this.successAlert(message)
                 this.$router.push('/applicant/examination/' + btoa(this.examinationCode))
                 console.log(response)
             }).catch((error) => {
@@ -274,7 +281,8 @@ export default {
         checkSchedule(scheduled) {
             const currentDate = new Date() // This gives you the current date and time.
             const examinationDate = new Date(scheduled.schedule_date) // Replace 'examinationDateFromDatabase' with your actual date.
-
+            console.log(currentDate)
+            console.log(scheduled.schedule_date)
             if (currentDate < examinationDate) {
                 return false
                 /*  console.log("The examination is in the future."); */
@@ -284,20 +292,20 @@ export default {
                 return true
             }
         },
-        scheduledFormat(date) {
-            date = new Date(date)
-            console.log(date)
-            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        scheduledFormat(date1) {
+            const date = new Date(date1)
 
-            const dayOfWeek = daysOfWeek[date.getDay()]
-            const month = months[date.getMonth()]
-            const day = date.getDate()
-            const year = date.getFullYear()
-            const hours = date.getHours()
-            const mins = date.getMinutes()
-            return date
-            /*  return `${dayOfWeek} ${month} ${day} ${year}  ${hours}: ${mins}` */
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            }
+
+            const formatter = new Intl.DateTimeFormat('en-US', options)
+            return formatter.format(date)
             /* return this.formatDate(date) */
         }
     },
