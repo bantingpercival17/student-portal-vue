@@ -36,7 +36,7 @@ export default {
     },
     data() {
         return {
-            viewName: 'STEP 5: ENROLLMENT COMPLETE',
+            viewName: 'STEP 5: ENROLLMENT SUCCESSFULLTY COMPLETED',
             errors: []
         }
     },

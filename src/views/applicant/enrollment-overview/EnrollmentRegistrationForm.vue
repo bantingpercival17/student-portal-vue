@@ -3,11 +3,10 @@
         data-iq-ease="power.out" data-iq-opacity="0">
         <div class="card-header p-3">
             <div class="header-title">
-                <label for="" class="fw-bolder text-primary h4">STUDENT INFORMATION</label>
+                <label for="" class="fw-bolder text-primary h4">STUDENT'S INFORMATION</label>
                 <br>
                 <small for="" class="text-danger">
-                    Kindly double check you Student Details and update. <br>
-                    NOTE: All data field is required to fill in,
+                    NOTE: Double check - Please ensure that all information/details are correct and filled in,
                     type/choose N / A if not applicable
                 </small>
             </div>
@@ -18,7 +17,7 @@
             </div>
             <div v-else>
                 <form @submit.prevent="updateDetails" method="post">
-                    <label for="" class="text-primary fw-bolder h4">STUDENT DETAILS</label>
+                    <label for="" class="text-primary fw-bolder h4">STUDENT'S DETAILS</label>
                     <div class="row">
                         <div class="col-xl col-md">
                             <input-component label="LAST NAME" v-model:value="lastName" :error="errors.last_name" />
@@ -184,7 +183,7 @@
                         </div>
                     </div>
                     <br>
-                    <label for="" class="text-primary fw-bolder h4">PARENT DETAILS</label>
+                    <label for="" class="text-primary fw-bolder h4">PARENT'S DETAILS</label>
                     <div class="father-information">
                         <label for="example-text-input" class="form-control-label text-info"><b>Father's
                                 Information</b></label>
@@ -296,10 +295,19 @@
                             <div class="col-xl-12 col-md-12 ">
                                 <input-component label="Guardian Address" v-model:value="guardianAddress"
                                     :error="errors.guardian_address" />
+
+                                <div class="form-check mt-0 mb-2">
+                                    <input class="form-check-input input-middle-name" type="checkbox" value="n/a"
+                                        v-model="checkBoxAddress" id="flexCheckDefault1" @click="sameAddress()">
+                                    <small class="form-check-label validate-checkbox" data-input="input-middle-name"
+                                        for="flexCheckDefault1">
+                                        Same as my address
+                                    </small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <label for="" class="text-primary fw-bolder h4">ADDITIONAL DETAILS</label>
+                    <label for="" class="text-primary fw-bolder h4">OTHER DETAILS</label>
                     <div class="additional">
                         <div class="row">
                             <div class="col-xl-4 col-md-12">
@@ -412,7 +420,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-2 w-100">Submit Student Information</button>
+                    <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
                 </form>
             </div>
         </div>
@@ -437,13 +445,14 @@ export default {
     data() {
         const inputValidation = {
             isLoading: true,
+            checkBoxAddress: '',
             errors: [],
             educationaldetails: [],
             genderi: ['Male', 'Female'],
-            educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/A'],
-            employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/A'],
-            arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/A'],
-            incomeList: ['Below 10,000', '10,000-20,000', '20,000-40,000', '40,000-60,000', '60,000 Above', 'N/A'],
+            educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/a'],
+            employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/a'],
+            arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/a'],
+            incomeList: ['Below 10,000', '10,000-20,000', '20,000-40,000', '40,000-60,000', '60,000 Above', 'N/a'],
             beneficiaryList: ['Yes', 'No'],
             homeOwnershipList: ['Owned', 'Mortgaged', 'Rented'],
             carOwnershipList: ['0', '1', '2', '3', 'up to 4'],
@@ -796,6 +805,9 @@ export default {
         convertDataSerialize(data) {
             console.log('Converting Data: ' + phpSerialize.unserialize(data))
             return phpSerialize.unserialize(data)
+        },
+        sameAddress() {
+            this.guardianAddress = this.street + ' ' + this.barangay + ' ' + this.municipality
         }
     }
 

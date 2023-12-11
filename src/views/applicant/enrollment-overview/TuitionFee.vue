@@ -117,10 +117,10 @@
                             </div>
                             <div class="col-lg-5 col-md-12">
                                 <form @submit.prevent="onProcess" method="post">
-                                    <label class="text-primary fw-bolder">CHOICE YOUR PAYMENT MODE</label>
+                                    <label class="text-primary fw-bolder">CHOOSE YOUR PAYMENT MODE</label>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <selectComponent label="Mode of Payment" :data="paymentMode"
+                                            <selectComponent label="Payment Terms" :data="paymentMode"
                                                 v-model:value="modeOfPayment" :error="errors.mode"
                                                 v-on:change="changeTerm" />
                                         </div>
