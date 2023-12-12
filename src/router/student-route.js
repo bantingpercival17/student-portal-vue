@@ -84,6 +84,12 @@ export const studentRoute = (prop) => [
         component: () => import('../views/student/onboard/assessment/QuestionerView.vue')
     },
     {
+        path: '/student/onboard/document-requerments',
+        name: prop + '.student-layout.onboard-document-requerments',
+        meta: { auth: true, name: 'Documentary Requirments', user: 'student' },
+        component: () => import('../views/student/onboard/assessment/QuestionerView.vue')
+    },
+    {
         path: '/student/classroom',
         name: prop + '.subjects-view',
         meta: { auth: true, name: 'Subject List', user: 'student' },
