@@ -90,6 +90,12 @@ export const studentRoute = (prop) => [
         component: () => import('../views/student/onboard/DocumentaryRequirements.vue')
     },
     {
+        path: '/student/onboard/profile',
+        name: prop + '.onboard-profile',
+        meta: { auth: true, name: 'Onboard Profile', user: 'student' },
+        component: () => import('../views/student/onboard/OnboardProfile.vue')
+    },
+    {
         path: '/student/classroom',
         name: prop + '.subjects-view',
         meta: { auth: true, name: 'Subject List', user: 'student' },

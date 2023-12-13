@@ -61,6 +61,7 @@ export default {
             { name: 'Student Card', url: 'student-layout.student-card' }
         ]
         const onboard = [
+            { name: 'Onboard Profile', url: 'student-layout.onboard-profile' },
             { name: 'Pre Onboard', url: 'student-layout.onboard-document-requerments' },
             { name: 'Enrollment', url: 'student-layout.onboard-enrollment' },
             { name: 'MOPM', url: 'student-layout.onboard-mopm' },

@@ -6,7 +6,7 @@
                 <label for="" class="fw-bolder text-primary h4">STUDENT'S INFORMATION</label>
                 <br>
                 <small for="" class="text-danger">
-                    NOTE: Double check - Please ensure that all information/details are correct and filled in,
+                    NOTE: Please ensure that all information/details are correct and filled in,
                     type/choose N / A if not applicable
                 </small>
             </div>
