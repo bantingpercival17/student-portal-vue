@@ -34,6 +34,17 @@
                         <inputComponentV2 label="contact number" type="text" v-model:value="fullName"
                             :error="errors.birth_date" />
                     </div>
+                    <div class="col-lg-6 col-md-12">
+                        <inputComponentV2 label="Facebook account link" type="text" v-model:value="fullName"
+                            :error="errors.birth_date" />
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <inputComponentV2 label="Mismo account" type="text" v-model:value="fullName"
+                            :error="errors.birth_date" />
+                            <small class="text-warning fw-bolder">
+                            If don't have a Mismo Account, Please register on this Link <a href="https://online-appointment.marina.gov.ph/register-new">Register Now</a>
+                            </small>
+                    </div>
                 </div>
             </div>
         </div>
