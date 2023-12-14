@@ -142,7 +142,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <selectComponent label="Shipping Company" :data="propsCompany" v-model:value="agency"
-                            :error="errors.agency" />
+                            :error="errors.agency" columName='agency_name'/>
                         <div class="form-check mt-0">
                             <input class="form-check-input" type="checkbox" value="0" v-model="otherShipping">
                             <small class="form-check-label validate-checkbox" for="flexCheckDefault1">
