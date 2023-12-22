@@ -6,8 +6,7 @@
                 <label for="" class="fw-bolder text-primary h4">STUDENT INFORMATION</label>
                 <br>
                 <small for="" class="text-danger">
-                    Kindly double check you Student Details and update. <br>
-                    NOTE: All data field is required to fill in,
+                    NOTE: Please ensure that all information/details are correct and filled in,
                     type/choose N / A if not applicable
                 </small>
             </div>
@@ -621,6 +620,11 @@ export default {
         ...mapMutations({
             showLoading: SHOW_LOADING_MUTATION
         }),
+        dateFormat(data) {
+            const dateParts = data.split('-')
+            const date = dateParts[0] + '-' + dateParts[1]
+            return date
+        },
         async updateDetails() {
             this.errors = []
             this.showLoading(true)

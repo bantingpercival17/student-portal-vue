@@ -6,12 +6,8 @@
         <p class="mt-3">
             • Applicants with Tattoos are not allowed.
             <br>
-            • All application documents submitted online that met the pre-qualifying requirements shall be allowed to
-            take
-            the entrance examination but will be subjected for further verification to prove its authenticity validity.
-            Application documents that are proven fraudulent after verification shall be invalidated and will not be
-            allowed
-            to enroll in the Academy.
+            • Documentary Requirements of the Applicants shall be validated at the Registrar's Office pror to the uploading
+            at BMA's Portal.
         </p>
     </div>
     <div class="card">
@@ -34,7 +30,8 @@
                         <li> Certificate of Good Moral Conduct</li>
                         <li> PSA Birth Certificate (not over 22 yrs. Old)</li>
                         <li> Barangay Clearance</li>
-                        <li> Height Requirements: at least 5'4"</li>
+                        <li> Height Requirements: at least 5'4 for Marine Transportation and 5'2 for Marine Engineering"
+                        </li>
                     </ul>
                 </div>
                 <div class="col-md-4">
@@ -79,9 +76,9 @@
                                         class="text-danger fw-bolder">*</sup></small>
                                 <select class="form-select form-select-sm border border-primary" v-model="formData.course">
                                     <option selected="" disabled="" value="">Choose...</option>
-                                    <option value="1">BS MARINE ENGINEERING - COLLEGE</option>
-                                    <option value="2">BS MARINE TRANSPORTATION - COLLEGE</option>
-                                    <option value="3">PRE-BACCALAUREATE - SENIOR HIGHSCHOOL</option>
+                                    <option value="1">BS MARINE ENGINEERING</option>
+                                    <option value="2">BS MARINE TRANSPORTATION </option>
+                                    <option value="3">SENIOR HIGHSCHOOL - PRE-BACCALAUREATE MARITIME</option>
 
                                 </select>
                                 <span class="badge bg-danger mt-2" v-if="errors.course">{{

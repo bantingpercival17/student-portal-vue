@@ -26,27 +26,12 @@
                             <input-component label="FIRST NAME" v-model:value="firstName" :error="errors.first_name" />
                         </div>
                         <div class="col-xl col-md">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>MIDDLE NAME <span class="text-danger">*</span></small>
-                                </label>
-                                <input class="form-control form-control-sm border border-primary" v-model="middleName">
-                                <div class="form-check">
-                                    <input class="form-check-input input-middle-name" type="checkbox" value="n/a"
-                                        v-model="middleName" id="flexCheckDefault1">
-                                    <small class="form-check-label validate-checkbox" data-input="input-middle-name"
-                                        for="flexCheckDefault1">
-                                        I don't have Middle name
-                                    </small>
-                                </div>
-                                <span class="badge bg-danger mt-2" v-if="errors.middle_name">{{ errors.middle_name[0]
-                                }}</span>
-
-                            </div>
+                            <input-component label="middle name" v-model:value="middleName" :error="errors.middle_name"
+                                :required="false" />
                         </div>
                         <div class="col-xl-2 col-md">
-                            <input-component label="EXTENSION" v-model:value="extensionName"
-                                :error="errors.extension_name" />
+                            <input-component label="EXTENSION" v-model:value="extensionName" :error="errors.extension_name"
+                                :required="false" />
                         </div>
                     </div>
                     <div class="row">
@@ -56,10 +41,12 @@
                         </div>
 
                         <div class="col-xl col-md-6 mb-xl-0">
-                            <input-component label="HEIGHT - CM" v-model:value="height" :error="errors.height" />
+                            <select-component label="HEIGHT - CM" v-model:value="height" :error="errors.height"
+                                :data="heightList" />
                         </div>
                         <div class="col-xl col-md-6 mb-xl-0">
-                            <input-component label="WEIGHT - LBS" v-model:value="weight" :error="errors.weight" />
+                            <select-component label="WEIGHT - LBS" v-model:value="weight" :error="errors.weight"
+                                :data="weightList" />
                         </div>
                     </div>
                     <div class="row">
@@ -303,6 +290,10 @@ export default {
         inputComponentV2
     },
     data() {
+        const element = []
+        for (let index = 100; index < 242; index++) {
+            element.push(index)
+        }
         const inputValidation = {
             isLoading: false,
             errors: [],
@@ -361,7 +352,11 @@ export default {
             seniorHighSchoolName: '',
             seniorHighSchoolAddress: '',
             seniorHighSchoolYear: '',
-            link: ''
+            link: '',
+            heightList: [
+                '157.5', '160', '162.5', '167.5', '170', '172.5', '175', '177.5', '180', '182.5', '185', '187.5', '190', '192.5'
+            ],
+            weightList: element
         }
         return inputValidation
     },

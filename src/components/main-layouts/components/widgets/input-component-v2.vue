@@ -1,7 +1,7 @@
 <template>
     <div class="form-group">
         <label for="example-text-input" class="form-control-label fw-bolder">
-            <small>{{ label.toUpperCase() }}<span class="text-danger">*</span></small>
+            <small>{{ label.toUpperCase() }}<span v-if="required" class="text-danger">*</span></small>
         </label>
         <input :type="type" class="form-control form-control-sm border border-primary" :value="value"
             @input="$emit('update:value', $event.target.value)" :min="type == 'date' ? minYear() : ''"
@@ -17,6 +17,10 @@ export default {
         type: {
             type: String,
             default: 'text'
+        },
+        required: {
+            type: Boolean,
+            default: true
         },
         label: {
             type: String,

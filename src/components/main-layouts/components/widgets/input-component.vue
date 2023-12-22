@@ -1,7 +1,7 @@
 <template>
     <div class="form-group">
         <label for="example-text-input" class="form-control-label fw-bolder">
-            <small>{{ label.toUpperCase() }}<span class="text-danger">*</span></small>
+            <small>{{ label.toUpperCase() }}<span v-if="required" class="text-danger">*</span></small>
         </label>
         <input type="text" class="form-control form-control-sm border border-primary" :value="value"
             @input="$emit('update:value', $event.target.value)" />
@@ -10,12 +10,15 @@
     </div>
 </template>
 <script>
-
 export default {
     props: {
         label: {
             type: String,
             required: true
+        },
+        required: {
+            type: Boolean,
+            default: true
         },
         value: {
             type: String,
