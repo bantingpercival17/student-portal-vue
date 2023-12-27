@@ -132,6 +132,16 @@
                             <div v-else>
                                 <p> Your entrance examination is scheduled on <b>{{
                                     scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
+                                    You may also an option to choose your examination date from the Schedule below </p>
+                                <div class="row">
+                                    <div class="col-md"
+                                        v-for="(data, index) in scheduleListData(examination.examinationSchedule.schedule_date)"
+                                        :key="index">
+                                        {{ data }}
+                                    </div>
+                                </div>
+
+                                <p>
                                     Please ensure that you take the entrance examination on the specified date and time;
                                     otherwise, your examination
                                     slot will be forfeited.
@@ -202,12 +212,15 @@ export default {
             const result = []
             const currentDate = new Date(date)
 
-            for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < 3; i++) {
                 result.push(this.formatDate(currentDate))
                 currentDate.setDate(currentDate.getDate() + 1) // Move to the next day
-
+                console.log(currentDate.getDay())
                 // Check if the current day is a weekend (0 for Sunday, 6 for Saturday)
-                if (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
+                if (currentDate.getDay() === 6) {
+                    currentDate.setDate(currentDate.getDate() + 1) // Skip the weekend day
+                }
+                if (currentDate.getDay() === 0) {
                     currentDate.setDate(currentDate.getDate() + 1) // Skip the weekend day
                 }
             }

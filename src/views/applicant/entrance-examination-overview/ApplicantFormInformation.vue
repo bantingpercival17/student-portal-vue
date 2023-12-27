@@ -60,8 +60,10 @@
                     </div>
                     <div class="row">
                         <div class="col-xl col-md-6 mb-xl-0">
-                            <input-component label="CIVIL STATUS" v-model:value="civilStatus"
-                                :error="errors.civil_status" />
+                            <select-component label="Civil Status" v-model:value="civilStatus" :error="errors.civil_status"
+                                :data="civilStatusList" />
+                            <!-- <input-component label="CIVIL STATUS" v-model:value="civilStatus"
+                                :error="errors.civil_status" /> -->
                         </div>
                         <div class="col-xl col-md-6 mb-xl-0">
                             <input-component label="NATIONALITY" v-model:value="nationality" :error="errors.nationality" />
@@ -232,7 +234,7 @@
                         </div>
                     </div>
                     <div class="guardian-informtion">
-                        <label for="example-text-input" class="form-control-label text-info"><b>Guardian
+                        <label for="example-text-input" class="form-control-label text-info"><b>Guardians
                                 Information</b></label>
                         <div class="row">
                             <div class="col-xl-4 col-md-6F">
@@ -299,6 +301,7 @@ export default {
             errors: [],
             educationaldetails: [],
             genderi: ['Male', 'Female'],
+            civilStatusList: ['Single', 'Married', 'Widowed', 'Divorced'],
             educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/a'],
             employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/a'],
             arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/a'],

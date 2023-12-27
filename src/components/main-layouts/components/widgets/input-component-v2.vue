@@ -4,8 +4,8 @@
             <small>{{ label.toUpperCase() }}<span v-if="required" class="text-danger">*</span></small>
         </label>
         <input :type="type" class="form-control form-control-sm border border-primary" :value="value"
-            @input="$emit('update:value', $event.target.value)" :min="type == 'date' ? minYear() : ''"
-            :max="type == 'date' ? maxYear() : ''" />
+            @input="$emit('update:value', $event.target.value)" :min="type == 'date' && $max ? minYear() : ''"
+            :max="type == 'date' && max ? maxYear() : ''" />
         <span class="badge bg-danger mt-2" v-if="error">{{
             error[0] }}</span>
     </div>
@@ -29,6 +29,10 @@ export default {
         value: {
             type: String,
             required: true
+        },
+        max: {
+            type: Boolean,
+            default: false
         },
         error: Object
     },
