@@ -45,12 +45,6 @@
                                     class="img-fluid rounded-circle avatar-45 me-2">
                             </i>BALIWAG MARITIME ACADEMY, INC.
                         </h6>
-                        <!-- <p>
-                            Disclaimer
-                            Baliwag Maritime Academy, INC. (BMA) is not responsible for, and expressly disclaims
-                            all liability for, damages of any kind arising out of use, reference to, or reliance on any
-                            information contained within the site.
-                        </p> -->
                         <h6 class="text-uppercase fw-bold mb-2">Follow Us ON</h6>
                         <a href="https://www.facebook.com/BaliwagMaritimeAcademyOfficial" target="_blank"
                             rel="noopener noreferrer">
