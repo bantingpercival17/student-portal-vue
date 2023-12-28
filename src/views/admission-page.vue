@@ -64,7 +64,6 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-<<<<<<< HEAD
                     <div class="alert alert-left alert-success alert-dismissible fade show" role="alert">
                         <h4 class="fw-bolder">APPLICATION FORM</h4>
                         <div v-if="errors.message" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
@@ -111,52 +110,6 @@
                                         <option value="1">BS MARINE ENGINEERING</option>
                                         <option value="2">BS MARINE TRANSPORTATION </option>
                                         <option value="3">SENIOR HIGHSCHOOL - PRE-BACCALAUREATE MARITIME</option>
-=======
-                    <h4 class="fw-bolder">APPLICATION FORM</h4>
-                    <div v-if="errors.message" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
-                        role="alert">
-                        <span class="fw-bolder">REGISTRATION FAILED:</span>
-                        <p class="mt-3">
-                            {{ errors.message }}
-                        </p>
-                    </div>
-                    <div v-if="networkError.code" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
-                        role="alert">
-                        <span class="fw-bolder">{{ networkError.code }}</span>
-                        <p class="mt-3">
-                            {{ networkError.message }}
-                        </p>
-                    </div>
-                    <div class="contact-form mt-3">
-                        <form @submit.prevent="applicantRegister" method="post">
-                            <div class="col-md-12">
-                                <input-component label="First Name" v-model:value="formData.firstName"
-                                    :error="errors.firstName" />
-                            </div>
-                            <div class="col-md-12">
-                                <input-component label="last Name" v-model:value="formData.lastName"
-                                    :error="errors.lastName" />
-                            </div>
-                            <div class="col-md-12">
-                                <input-component label="email" v-model:value="formData.email" :error="errors.email" />
-                            </div>
-                            <div class="col-md-12">
-                                <input-component-v2 type="date" label="birthday" v-model:value="formData.birthday"
-                                    :error="errors.birthday" max="true" />
-                            </div>
-                            <div class="col-md-12">
-                                <input-component label="Contact number" v-model:value="formData.contactNumber"
-                                    :error="errors.contactNumber" />
-                            </div>
-                            <div class="col-md-12 position-relative">
-                                <small for="validationTooltip04" class="form-label fw-bolder">COURSE <sup
-                                        class="text-danger fw-bolder">*</sup></small>
-                                <select class="form-select form-select-sm border border-primary" v-model="formData.course">
-                                    <option selected="" disabled="" value="">Choose...</option>
-                                    <option value="1">BS MARINE ENGINEERING</option>
-                                    <option value="2">BS MARINE TRANSPORTATION </option>
-                                    <option value="3">SENIOR HIGHSCHOOL - PRE-BACCALAUREATE MARITIME</option>
->>>>>>> 73ba062519242aa701c816e6b0f6d3f8259ceb33
 
                                     </select>
                                     <span class="badge bg-danger mt-2" v-if="errors.course">{{
