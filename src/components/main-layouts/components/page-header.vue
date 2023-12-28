@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar py-lg-0">
         <div class="container-fluid navbar-inner">
             <router-link :to="{ name: 'app-layout.home' }" class="navbar-brand">
@@ -28,7 +28,7 @@
                             <li><router-link
                                     :class="`dropdown-item ${checkActive('app-layout.applicant-login') ? 'active' : ''}`"
                                     :to="{ name: 'app-layout.applicant-login' }">Applicant Login</router-link>
-                               <!--  <a href="http://bma.edu.ph/bma/login" class="dropdown-item">Applicant Login</a> -->
+                               <a href="http://bma.edu.ph/bma/login" class="dropdown-item">Applicant Login</a>
                             </li>
                         </ul>
                     </li>
@@ -36,7 +36,7 @@
             </div>
         </div>
     </nav>
-    <div class="nav-scroller ">
+<div class="nav-scroller ">
         <nav class="nav nav-underline bg-soft-primary pb-0" aria-label="Secondary navigation">
             <div class="d-flex" id="head-check">
                 <router-link :to="{ name: 'app-layout.home' }" :class="name == 'Home' ? 'nav-link active' : 'nav-link'"
@@ -46,6 +46,82 @@
                     @click="changename('Admission')">Admission</router-link>
             </div>
         </nav>
+    </div>
+</template> -->
+<template>
+    <div class="sticky-top">
+        <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar py-lg-0 ">
+            <div class="container-fluid navbar-inner">
+                <router-link :to="{ name: 'app-layout.home' }" class="navbar-brand">
+                    <img src="@/assets/resources/image/bma-logo-1.png" alt="image"
+                        class="img-fluid rounded-circle avatar-70 me-2">
+                    <h2 class="logo-title me-3">BALIWAG MARITIME ACADEMY, INC.</h2>
+                </router-link>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedConten  t" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <span class="navbar-toggler-bar bar1 mt-2"></span>
+                        <span class="navbar-toggler-bar bar2"></span>
+                        <span class="navbar-toggler-bar bar3"></span>
+                    </span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto top-menu navbar-nav align-items-center navbar-list mb-3 mb-lg-0">
+                        <li class="dropdown nav-item mobile-menu">
+                            <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" href="#" role="button"
+                                aria-haspopup="false" aria-expanded="true">
+                                Login Account
+                            </a>
+                            <ul class="dropdown-menu " data-popper-placement="bottom-start">
+                                <li><router-link
+                                        :class="`dropdown-item ${checkActive('app-layout.student-login') ? 'active' : ''}`"
+                                        :to="{ name: 'app-layout.student-login' }">Student Login </router-link></li>
+                                <li><!-- <router-link
+                                    :class="`dropdown-item ${checkActive('app-layout.applicant-login') ? 'active' : ''}`"
+                                    :to="{ name: 'app-layout.applicant-login' }">Applicant Login</router-link> -->
+                                    <a href="http://bma.edu.ph/bma/login" class="dropdown-item">Applicant Login</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="nav-scroller ">
+            <nav class="nav nav-underline bg-soft-primary pb-0" aria-label="Secondary navigation">
+                <div class="d-flex" id="head-check">
+                    <router-link :to="{ name: 'app-layout.home' }" :class="name == 'Home' ? 'nav-link active' : 'nav-link'"
+                        id="Home" data-title="Home" @click="changename('Home')">About Us</router-link>
+                    <router-link :to="{ name: 'app-layout.home' }" :class="name == 'Home' ? 'nav-link active' : 'nav-link'"
+                        id="Home" data-title="Home" @click="changename('Home')">Achievement</router-link>
+                    <router-link :to="{ name: 'app-layout.home' }"
+                        :class="name == 'Home' ? 'nav-link active' : 'nav-link'" id="Home"
+                        data-title="Home" @click="changename('Home')">News and Events</router-link>
+                    <router-link :to="{ name: 'app-layout.admission' }"
+                        :class="name == 'admission' ? 'nav-link active' : 'nav-link'" id="admission" data-title="admission"
+                        @click="changename('admission')">Admission Scholarship</router-link>
+                    <router-link :to="{ name: 'app-layout.admission' }"
+                        :class="name == 'admission' ? 'nav-link active' : 'nav-link'" id="Home" data-title="Home"
+                        @click="changename('Home')">Onboard Training</router-link>
+                    <router-link :to="{ name: 'app-layout.home' }" :class="name == 'Home' ? 'nav-link active' : 'nav-link'"
+                        id="Home" data-title="Home" @click="changename('Home')">Discipline & Drills</router-link>
+                    <router-link :to="{ name: 'app-layout.home' }" :class="name == 'Home' ? 'nav-link active' : 'nav-link'"
+                        id="Home" data-title="Home" @click="changename('Home')">Research</router-link>
+                </div>
+                <!-- <ul class="dropdown-menu " data-popper-placement="bottom-start">
+                        <li> <router-link :to="{ name: 'app-layout.Facilities' }"
+                                :class="name == 'Facilities' ? 'nav-link active' : 'nav-link'" id="Facilities"
+                                data-title="Facilities" @click="changename('Facilities')">Facilities</router-link></li>
+                        <li><router-link :to="{ name: 'app-layout.admission' }"
+                                :class="name == 'Admission' ? 'nav-link active' : 'nav-link'" id="Admission"
+                                data-title="Admission" @click="changename('Admission')">Admission Scholarship</router-link></li>
+                    </ul>
+                    <router-link :to="{ name: 'app-layout.Contact' }"
+                        :class="name == 'Contact' ? 'nav-link active' : 'nav-link'" id="Contact" data-title="Contact"
+                        @click="changename('Contact')">Contact Us</router-link> -->
+            </nav>
+        </div>
     </div>
 </template>
 <script>
