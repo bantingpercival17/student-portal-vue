@@ -1,124 +1,158 @@
 <template>
-    <h2 class="text-primary text-center home-title fw-bolder">SCHOOL ADMISSION</h2>
-    <div class="alert alert-left alert-success alert-dismissible fade show mt-5" role="alert">
-        <span class="fw-bolder">REMINDERS TO ALL APPLICANTS:</span>
-
-        <p class="mt-3">
-            • Applicants with Tattoos are not allowed.
-            <br>
-            • Documentary Requirements of the Applicants shall be validated at the Registrar's Office pror to the uploading
-            at BMA's Portal.
-        </p>
+    <div class="position-relative">
+        <img src="@/assets/admission-banner.png" class="img-fluid" alt="#" width="100%">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-soft-primary"></div>
+        <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
+            <h1 class="mb-1 fw-bold text-white display-4" id="hero-title">
+                ADMISSION FOR SCHOLARSHIP
+            </h1>
+            <p class="text-lg mt-2 text-white">APPLY NOW!</p>
+            <!-- <button class="text-white bg-primary p-2 w-35 border border-primary rounded-start rounded-end">Inquire Now! <svg width="18" viewBox="0 0 24 24"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
+                      stroke-linecap="round" stroke-linejoin="round"></circle>
+                  <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+              </svg></button> -->
+        </div>
     </div>
     <div class="card">
         <div class="card-body">
             <div class="row mt-5 ">
                 <div class="col-md-8">
-                    <h4 class="fw-bolder">SENIOR HIGH SCHOOL ADMISSION REQUIREMENTS</h4>
-                    <ul class="contact-details">
-                        <li> Grade 10 Report Card with Grades in English, Math,
-                            Science and General Average of 80%</li>
-                        <li>Certificate of Good Moral Conduct</li>
-                        <li>PSA Birth Certificate (not over 19 yrs. Old)</li>
-                        <li>Height Requirements: at least 5'2"</li>
-                    </ul>
-                    <h4 class="fw-bolder">COLLEGE ADMISSION REQUIREMENTS</h4>
-                    <ul class="contact-details">
-                        <li> Grade 11 & 12 Card with Grades in English, Math,
-                            Science and General Average of 80%
-                        </li>
-                        <li> Certificate of Good Moral Conduct</li>
-                        <li> PSA Birth Certificate (not over 22 yrs. Old)</li>
-                        <li> Barangay Clearance</li>
-                        <li> Height Requirements: at least 5'4 for Marine Transportation and 5'2 for Marine Engineering"
-                        </li>
-                    </ul>
+                    <!-- <div class="card card-body mt-3 bg-soft-primary alert alert-left alert-success alert-dismissible">
+                      <h2 class="fw-bolder fs-1">Academics</h2>
+                      <h2 class="fw-bolder fs-2 mt-1">School Admission</h2>
+                  </div> -->
+                    <div class="alert alert-left alert-danger alert-dismissible fade show mt-5" role="alert">
+                        <span class="fw-bolder">REMINDERS TO ALL APPLICANTS:</span>
+                        <p class="mt-3">
+                            • Applicants with Tattoos are not allowed.
+                            <br>
+                            • All application documents submitted online that met the pre-qualifying requirements shall be
+                            allowed to
+                            take
+                            the entrance examination but will be subjected for further verification to prove its
+                            authenticity validity.
+                            Application documents that are proven fraudulent after verification shall be invalidated and
+                            will not be
+                            allowed
+                            to enroll in the Academy.
+                        </p>
+                    </div>
+                    <div class="alert alert-left alert-info alert-dismissible fade show" role="alert">
+                        <h4 class="fw-bolder">SENIOR HIGH SCHOOL ADMISSION REQUIREMENTS</h4>
+                        <ul class="contact-details">
+                            <li> Grade 10 Report Card with Grades in English, Math,
+                                Science and General Average of 80%</li>
+                            <li>Certificate of Good Moral Conduct</li>
+                            <li>PSA Birth Certificate (not over 19 yrs. Old)</li>
+                            <li>Height Requirements: at least 5'2"</li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-left alert-info alert-dismissible fade show" role="alert">
+                        <h4 class="fw-bolder">COLLEGE ADMISSION REQUIREMENTS</h4>
+                        <ul class="contact-details">
+                            <li> Grade 11 & 12 Card with Grades in English, Math,
+                                Science and General Average of 80%
+                            </li>
+                            <li> Certificate of Good Moral Conduct</li>
+                            <li> PSA Birth Certificate (not over 22 yrs. Old)</li>
+                            <li> Barangay Clearance</li>
+                            <li> Height Requirements: at least 5'4"</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <h4 class="fw-bolder">APPLICATION FORM</h4>
-                    <div v-if="errors.message" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
-                        role="alert">
-                        <span class="fw-bolder">REGISTRATION FAILED:</span>
-                        <p class="mt-3">
-                            {{ errors.message }}
-                        </p>
-                    </div>
-                    <div v-if="networkError.code" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
-                        role="alert">
-                        <span class="fw-bolder">{{ networkError.code }}</span>
-                        <p class="mt-3">
-                            {{ networkError.message }}
-                        </p>
-                    </div>
-                    <div class="contact-form mt-3">
-                        <form @submit.prevent="applicantRegister" method="post">
-                            <div class="col-md-12">
-                                <input-component label="First Name" v-model:value="formData.firstName"
-                                    :error="errors.firstName" />
-                            </div>
-                            <div class="col-md-12">
-                                <input-component label="last Name" v-model:value="formData.lastName"
-                                    :error="errors.lastName" />
-                            </div>
-                            <div class="col-md-12">
-                                <input-component label="email" v-model:value="formData.email" :error="errors.email" />
-                            </div>
-                            <div class="col-md-12">
-                                <input-component-v2 type="date" label="birthday" v-model:value="formData.birthday"
-                                    :error="errors.birthday" />
-                            </div>
-                            <div class="col-md-12">
-                                <input-component label="Contact number" v-model:value="formData.contactNumber"
-                                    :error="errors.contactNumber" />
-                            </div>
-                            <div class="col-md-12 position-relative">
-                                <small for="validationTooltip04" class="form-label fw-bolder">COURSE <sup
-                                        class="text-danger fw-bolder">*</sup></small>
-                                <select class="form-select form-select-sm border border-primary" v-model="formData.course">
-                                    <option selected="" disabled="" value="">Choose...</option>
-                                    <option value="1">BS MARINE ENGINEERING</option>
-                                    <option value="2">BS MARINE TRANSPORTATION </option>
-                                    <option value="3">SENIOR HIGHSCHOOL - PRE-BACCALAUREATE MARITIME</option>
+                    <div class="alert alert-left alert-success alert-dismissible fade show" role="alert">
+                        <h4 class="fw-bolder">APPLICATION FORM</h4>
+                        <div v-if="errors.message" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
+                            role="alert">
+                            <span class="fw-bolder">REGISTRATION FAILED:</span>
+                            <p class="mt-3">
+                                {{ errors.message }}
+                            </p>
+                        </div>
+                        <div v-if="networkError.code" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
+                            role="alert">
+                            <span class="fw-bolder">{{ networkError.code }}</span>
+                            <p class="mt-3">
+                                {{ networkError.message }}
+                            </p>
+                        </div>
+                        <div class="contact-form mt-3">
+                            <form @submit.prevent="applicantRegister" method="post">
+                                <div class="col-md-12">
+                                    <input-component label="First Name" v-model:value="formData.firstName"
+                                        :error="errors.firstName" />
+                                </div>
+                                <div class="col-md-12">
+                                    <input-component label="last Name" v-model:value="formData.lastName"
+                                        :error="errors.lastName" />
+                                </div>
+                                <div class="col-md-12">
+                                    <input-component label="email" v-model:value="formData.email" :error="errors.email" />
+                                </div>
+                                <div class="col-md-12">
+                                    <input-component-v2 type="date" label="birthday" v-model:value="formData.birthday"
+                                        :error="errors.birthday" max="true" />
+                                </div>
+                                <div class="col-md-12">
+                                    <input-component label="Contact number" v-model:value="formData.contactNumber"
+                                        :error="errors.contactNumber" />
+                                </div>
+                                <div class="col-md-12 position-relative">
+                                    <small for="validationTooltip04" class="form-label fw-bolder">COURSE <sup
+                                            class="text-danger fw-bolder">*</sup></small>
+                                    <select class="form-select form-select-sm border border-primary"
+                                        v-model="formData.course">
+                                        <option selected="" disabled="" value="">Choose...</option>
+                                        <option value="1">BS MARINE ENGINEERING</option>
+                                        <option value="2">BS MARINE TRANSPORTATION </option>
+                                        <option value="3">SENIOR HIGHSCHOOL - PRE-BACCALAUREATE MARITIME</option>
 
-                                </select>
-                                <span class="badge bg-danger mt-2" v-if="errors.course">{{
-                                    errors.course[0] }}</span>
-                            </div>
-                            <div class="col-md-12  mt-3">
-                                <input-component label="Captcha" v-model:value="formData.captcha" :error="errors.captcha" />
-                                <div class="form-group row">
-                                    <div class="col-md-8">
-                                        <span v-html="captchaValue" v-if="captchaValue"></span>
-                                        <span class="badge bg-info" v-else>Captcha Loading....</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span class="btn btn-outline-primary btn-sm" @click="recaptcha"> &#x21bb;</span>
+                                    </select>
+                                    <span class="badge bg-danger mt-2" v-if="errors.course">{{
+                                        errors.course[0] }}</span>
+                                </div>
+                                <div class="col-md-12  mt-3">
+                                    <input-component label="Captcha" v-model:value="formData.captcha"
+                                        :error="errors.captcha" />
+                                    <div class="form-group row">
+                                        <div class="col-md-8">
+                                            <span v-html="captchaValue" v-if="captchaValue"></span>
+                                            <span class="badge bg-info" v-else>Captcha Loading....</span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="btn btn-outline-primary btn-sm" @click="recaptcha"> &#x21bb;</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-check mt-2">
-                                    <input class="form-check-input" type="checkbox" v-model="formData.agreement"
-                                        id="invalidCheck">
-                                    <label class="form-check-label" for="invalidCheck">
-                                        Agree to terms and conditions
-                                    </label>
-                                    <span class="badge bg-danger mt-2" v-if="errors.agreement">{{
-                                        errors.agreement[0] }}</span>
-                                    <label class="text-primary mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Read terms and conditions
-                                    </label>
+                                <div class="col-md-12">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" v-model="formData.agreement"
+                                            id="invalidCheck">
+                                        <label class="form-check-label" for="invalidCheck">
+                                            Agree to terms and conditions
+                                        </label>
+                                        <span class="badge bg-danger mt-2" v-if="errors.agreement">{{
+                                            errors.agreement[0] }}</span>
+                                        <label class="text-primary mt-1" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">
+                                            Read terms and conditions
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
-                            <!--    <vue-recaptcha ref="recaptcha" sitekey="6Lch4wckAAAAAIv3KzDuN0M82UOeWJLWa7L_2Zva" /> -->
-                            <div class="col-12">
-                                <button class="btn btn-primary rounded w-100 mb-5" type="submit">APPLY
-                                    NOW</button>
-                                <router-link :to="{ name: 'app-layout.applicant-login' }"
-                                    class="btn btn-info text-white w-100">ALREADY
-                                    REGISTERED</router-link>
-                            </div>
-                        </form>
+                                <!--    <vue-recaptcha ref="recaptcha" sitekey="6Lch4wckAAAAAIv3KzDuN0M82UOeWJLWa7L_2Zva" /> -->
+                                <div class="col-12">
+                                    <button class="btn btn-primary rounded w-100 mb-5" type="submit">APPLY
+                                        NOW</button>
+                                    <router-link :to="{ name: 'app-layout.applicant-login' }"
+                                        class="btn btn-info text-white w-100">ALREADY
+                                        REGISTERED</router-link>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -463,5 +497,4 @@ export default {
         }
     }
 }
-
 </script>
