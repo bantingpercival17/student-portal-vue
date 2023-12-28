@@ -10,15 +10,11 @@
                 <div v-if="examination.examinationDetails" class="examination-view">
                     <div v-if="examination.examinationDetails.is_finish" class="examination-form-and-instruction">
                         <p v-if="examination.finalResult[2]" class="mb-3">
-                            Congratulation, you Passed the Entrance Examination, Kindly wait for the announcement in your
-                            email account
+                            Congratulation, you have Passed the qualifing Examination
                         </p>
                         <p v-else>
-                            Thank you for your interest in applying at Baliwag Maritime Academy, Inc. However, we regret to
+                            We regret to
                             inform you that you did not meet the required test score in the entrance examination.
-                            We hope you continue to pursue your education and career goals and we certainly wish for success
-                            in your future endeavors.
-                            BALIWAG MARITIME ACADEMY, INC.
                         </p>
                         <div class="card">
                             <div class="card-body">
@@ -130,22 +126,36 @@
                                 </form>
                             </div>
                             <div v-else>
-                                <p> Your entrance examination is scheduled on <b>{{
-                                    scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
-                                    You may also an option to choose your examination date from the Schedule below </p>
-                                <div class="row">
-                                    <div class="col-md"
-                                        v-for="(data, index) in scheduleListData(examination.examinationSchedule.schedule_date)"
-                                        :key="index">
-                                        {{ data }}
-                                    </div>
+                                <div v-if="examination.examinationScheduleHistory > 1">
+                                    <p> Your entrance examination is scheduled on <b>{{
+                                        scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
+                                    </p>
+                                    <p>
+                                        Please ensure that you take the entrance examination on the specified date and time;
+                                        otherwise, your examination
+                                        slot will be forfeited.
+                                    </p>
                                 </div>
+                                <div v-else>
+                                    <p> Your entrance examination is scheduled on <b>{{
+                                        scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
+                                        You may also an option to choose your examination date from the Schedule below </p>
+                                    <div class="row">
+                                        <div class="col-md"
+                                            v-for="(data, index) in scheduleListData(examination.examinationSchedule.schedule_date)"
+                                            :key="index">
+                                            <button class="btn btn-primary btn-sm w-100" @click="storeScheduleExamv2(data)">
+                                                {{ data }} at 9:00 AM
+                                            </button>
+                                        </div>
+                                    </div>
 
-                                <p>
-                                    Please ensure that you take the entrance examination on the specified date and time;
-                                    otherwise, your examination
-                                    slot will be forfeited.
-                                </p>
+                                    <p>
+                                        Please ensure that you take the entrance examination on the specified date and time;
+                                        otherwise, your examination
+                                        slot will be forfeited.
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
@@ -257,7 +267,28 @@ export default {
             }).then((response) => {
                 this.showLoading(false)
                 this.successAlert(response.data)
-                window.location.reload()
+                // window.location.reload()
+            }).catch((error) => {
+                this.showLoading(false)
+                this.errorAlert(error)
+                if (error.response.status === 422) {
+                    this.errors = error.response.data.errors
+                    console.log(this.errors)
+                }
+                console.error(error)
+            })
+        },
+        storeScheduleExamv2(date) {
+            this.errors = []
+            this.showLoading(true)
+            axios.post('applicant/examination-scheduled', { schedule: date, schedule_time: '09:00' }, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then((response) => {
+                this.showLoading(false)
+                this.successAlert(response.data)
+                // window.location.reload()
             }).catch((error) => {
                 this.showLoading(false)
                 this.errorAlert(error)

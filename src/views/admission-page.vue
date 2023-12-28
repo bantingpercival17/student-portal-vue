@@ -65,7 +65,7 @@
                             </div>
                             <div class="col-md-12">
                                 <input-component-v2 type="date" label="birthday" v-model:value="formData.birthday"
-                                    :error="errors.birthday" />
+                                    :error="errors.birthday" max="true" />
                             </div>
                             <div class="col-md-12">
                                 <input-component label="Contact number" v-model:value="formData.contactNumber"
