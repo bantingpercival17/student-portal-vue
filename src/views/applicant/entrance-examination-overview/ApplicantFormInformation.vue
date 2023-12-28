@@ -156,6 +156,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <select-component label="Senior High School Strand" v-model:value="strand"
+                                :error="errors.strand" :data="strandList" />
                         </div>
                     </div>
                     <br>
@@ -304,6 +306,7 @@ export default {
             civilStatusList: ['Single', 'Married', 'Widowed', 'Divorced'],
             educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/a'],
             employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/a'],
+            strandList: ['General Academic Strand', 'Humanities and Social Sciences Strand', 'Science, Technology, Engineering and Mathematics', ' Accountancy, Business and Management', 'Technical Vocational Livelihood', 'Pre-Baccalaureate Maritime Strand', 'N/a'],
             arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/a'],
             course: '',
             firstName: '',
@@ -355,6 +358,7 @@ export default {
             seniorHighSchoolName: '',
             seniorHighSchoolAddress: '',
             seniorHighSchoolYear: '',
+            strand: '',
             link: '',
             heightList: [
                 '157.5', '160', '162.5', '167.5', '170', '172.5', '175', '177.5', '180', '182.5', '185', '187.5', '190', '192.5'
@@ -384,6 +388,7 @@ export default {
             }
             this.contactNumber = account.contact_number
             this.personalEmail = account.email
+            this.strand = account.strand
             if (data) {
                 this.firstName = data.first_name
                 this.lastName = data.last_name
@@ -515,7 +520,8 @@ export default {
                 junior_high_school_year: this.juniorHighSchoolYear + '-01',
                 senior_high_school_name: this.seniorHighSchoolName,
                 senior_high_school_address: this.seniorHighSchoolAddress,
-                senior_high_school_year: this.seniorHighSchoolYear + '-01'
+                senior_high_school_year: this.seniorHighSchoolYear + '-01',
+                strand: this.strand
             }
             axios.post('applicant/information', formData, {
                 headers: {
