@@ -10,7 +10,7 @@
     <!--Nav Start-->
     <PageHeader />
     <!--Nav End-->
-    <div class="container">
+    <div class="fluid-container">
       <router-view />
     </div>
     <PageFooter />

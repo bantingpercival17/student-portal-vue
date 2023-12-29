@@ -1,46 +1,29 @@
 <template>
-    <div class="position-relative">
+    <div class="position-relative  w-100 h-100">
         <img src="@/assets/admission-banner.png" class="img-fluid" alt="#" width="100%">
         <div class="position-absolute top-0 start-0 w-100 h-100 bg-soft-primary"></div>
         <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
             <h1 class="mb-1 fw-bold text-white display-4" id="hero-title">
-                ADMISSION FOR SCHOLARSHIP
+                SCHOOL ADMISSION
             </h1>
-            <p class="text-lg mt-2 text-white">APPLY NOW!</p>
-            <!-- <button class="text-white bg-primary p-2 w-35 border border-primary rounded-start rounded-end">Inquire Now! <svg width="18" viewBox="0 0 24 24"
-                  fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                      stroke-linecap="round" stroke-linejoin="round"></circle>
-                  <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-              </svg></button> -->
         </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <div class="row mt-5 ">
-                <div class="col-md-8">
-                    <!-- <div class="card card-body mt-3 bg-soft-primary alert alert-left alert-success alert-dismissible">
-                      <h2 class="fw-bolder fs-1">Academics</h2>
-                      <h2 class="fw-bolder fs-2 mt-1">School Admission</h2>
-                  </div> -->
-                    <div class="alert alert-left alert-danger alert-dismissible fade show mt-5" role="alert">
-                        <span class="fw-bolder">REMINDERS TO ALL APPLICANTS:</span>
-                        <p class="mt-3">
-                            • Applicants with Tattoos are not allowed.
-                            <br>
-                            • All application documents submitted online that met the pre-qualifying requirements shall be
-                            allowed to
-                            take
-                            the entrance examination but will be subjected for further verification to prove its
-                            authenticity validity.
-                            Application documents that are proven fraudulent after verification shall be invalidated and
-                            will not be
-                            allowed
-                            to enroll in the Academy.
-                        </p>
-                    </div>
-                    <div class="alert alert-left alert-info alert-dismissible fade show" role="alert">
+    <div class="container">
+        <div class="alert alert-left alert-success alert-dismissible fade show mt-5" role="alert">
+            <span class="fw-bolder">REMINDERS TO ALL APPLICANTS:</span>
+
+            <p class="mt-3">
+                • Applicants with Tattoos are not allowed.
+                <br>
+                • Documentary Requirements of the Applicants shall be validated at the Registrar's Office pror to the
+                uploading
+                at BMA's Portal.
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row mt-5 ">
+                    <div class="col-md-8">
                         <h4 class="fw-bolder">SENIOR HIGH SCHOOL ADMISSION REQUIREMENTS</h4>
                         <ul class="contact-details">
                             <li> Grade 10 Report Card with Grades in English, Math,
@@ -49,8 +32,6 @@
                             <li>PSA Birth Certificate (not over 19 yrs. Old)</li>
                             <li>Height Requirements: at least 5'2"</li>
                         </ul>
-                    </div>
-                    <div class="alert alert-left alert-info alert-dismissible fade show" role="alert">
                         <h4 class="fw-bolder">COLLEGE ADMISSION REQUIREMENTS</h4>
                         <ul class="contact-details">
                             <li> Grade 11 & 12 Card with Grades in English, Math,
@@ -59,12 +40,11 @@
                             <li> Certificate of Good Moral Conduct</li>
                             <li> PSA Birth Certificate (not over 22 yrs. Old)</li>
                             <li> Barangay Clearance</li>
-                            <li> Height Requirements: at least 5'4"</li>
+                            <li> Height Requirements: at least 5'4 for Marine Transportation and 5'2 for Marine Engineering"
+                            </li>
                         </ul>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="alert alert-left alert-success alert-dismissible fade show" role="alert">
+                    <div class="col-md-4">
                         <h4 class="fw-bolder">APPLICATION FORM</h4>
                         <div v-if="errors.message" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
                             role="alert">
@@ -498,3 +478,13 @@ export default {
     }
 }
 </script>
+<style scope>
+.admission-banner {
+    background-image: url('~@/assets/admission-banner.png');
+    background-repeat: no-repeat;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(44, 203, 23, 0.5);
+    height: 40vh;
+}
+</style>
