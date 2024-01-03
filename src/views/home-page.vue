@@ -222,7 +222,7 @@
         <div class="position-absolute top-0 start-0 w-100 h-100 bg-soft-primary"></div>
         <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
             <h1 class="mb-1 fw-bold text-white display-4" id="hero-title">
-                CHARTING SUCCESS SHAPING MARITIME PROFESSIONAL TO EXCELLENCE
+                CHARTING SUCCESS,  SHAPING MARITIME PROFESSIONAL TO SUCCESS
             </h1>
             <p class="text-lg mt-2 text-white">Reach your maritime dream right now. 🚢</p>
             <button class="text-white bg-primary p-2 w-35 border border-primary rounded-start rounded-end">Inquire Now! <svg
