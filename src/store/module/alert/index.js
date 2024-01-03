@@ -13,7 +13,7 @@ export default {
             // Use sweetalert2
             Swal.fire({
                 icon: 'success',
-                title: 'Completed!',
+                title: '',
                 text: data.message,
                 confirmButtonText: 'OK'
             })

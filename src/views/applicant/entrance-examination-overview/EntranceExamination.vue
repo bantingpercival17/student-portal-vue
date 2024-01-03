@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <div v-else>
-                            <div v-if="checkSchedule(examination.examinationSchedule)">
+                            <div v-if="checkSchedule(examination.examinationSchedule) == true">
                                 <div class="card">
                                     <div class="card-body">
                                         <p> <span class="fw-bolder">INSTRUCTION</span></p>
@@ -125,6 +125,11 @@
                                     </div>
                                 </form>
                             </div>
+                            <div v-else-if="checkSchedule(examination.examinationSchedule) == false">
+                                <p>
+                                    You Examination was forfeited.
+                                </p>
+                            </div>
                             <div v-else>
                                 <div v-if="examination.examinationScheduleHistory > 1">
                                     <p> Your entrance examination is scheduled on <b>{{
@@ -138,8 +143,8 @@
                                 </div>
                                 <div v-else>
                                     <p> Your entrance examination is scheduled on <b>{{
-                                        scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
-                                        You may also an option to choose your examination date from the Schedule below </p>
+                                        scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>
+                                        or you may opt to choose from the date scheduled below: </p>
                                     <div class="row">
                                         <div class="col-md"
                                             v-for="(data, index) in scheduleListData(examination.examinationSchedule.schedule_date)"
@@ -151,9 +156,8 @@
                                     </div>
 
                                     <p>
-                                        Please ensure that you take the entrance examination on the specified date and time;
-                                        otherwise, your examination
-                                        slot will be forfeited.
+                                        Please ensure to that you take the examination on the specified date and time,
+                                        otherwise, your examination slot will be forfeited.
                                     </p>
                                 </div>
                             </div>
@@ -328,12 +332,12 @@ export default {
             console.log(currentDate)
             console.log(scheduled.schedule_date)
             if (currentDate < examinationDate) {
-                return false
+                return null
                 /*  console.log("The examination is in the future."); */
-            } else if (currentDate > examinationDate) {
+            } else if (currentDate === examinationDate) {
                 return true
             } else {
-                return true
+                return false
             }
         },
         scheduledFormat(date1) {

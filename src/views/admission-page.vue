@@ -46,19 +46,15 @@
                     </div>
                     <div class="col-md-4">
                         <h4 class="fw-bolder">APPLICATION FORM</h4>
-                        <div v-if="errors.message" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
-                            role="alert">
-                            <span class="fw-bolder">REGISTRATION FAILED:</span>
-                            <p class="mt-3">
-                                {{ errors.message }}
-                            </p>
+                        <div v-if="errors.message"
+                            class="m-0 p-2 alert alert-left alert-info alert-dismissible fade show mt-5" role="alert">
+                            <span class="fw-bolder text-danger">REGISTRATION FAILED:</span>
+                            <p class="mt-2" v-html="errors.message"></p>
                         </div>
                         <div v-if="networkError.code" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
                             role="alert">
                             <span class="fw-bolder">{{ networkError.code }}</span>
-                            <p class="mt-3">
-                                {{ networkError.message }}
-                            </p>
+                            <p class="mt-3" v-html="networkError.message"> </p>
                         </div>
                         <div class="contact-form mt-3">
                             <form @submit.prevent="applicantRegister" method="post">

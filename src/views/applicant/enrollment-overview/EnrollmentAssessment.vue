@@ -14,7 +14,7 @@
                 </h5>
                 <div class="d-inline-block w-100">
                     <p class="mb-3">
-                        Enrollment Assessment Details, You can proceed to the Payment Assessment.
+                        Enrollment Assessment Details, You can proceed to the Payment Assessment / Fees.
                     </p>
                     <div class="row mt-2">
                         <div class="col-md">

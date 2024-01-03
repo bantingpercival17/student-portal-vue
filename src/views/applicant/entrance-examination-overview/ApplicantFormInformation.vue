@@ -163,8 +163,7 @@
                     <br>
                     <label for="" class="text-primary fw-bolder h4">PARENT DETAILS</label>
                     <div class="father-information">
-                        <label for="example-text-input" class="form-control-label text-info"><b>Father's
-                                Information</b></label>
+                        <label for="example-text-input" class="form-control-label text-info"><b>Father's Name</b></label>
                         <div class="row">
                             <div class="col-xl-4 col-md-6 ">
                                 <input-component label="LAST NAME" v-model:value="fatherLastName"
@@ -199,8 +198,7 @@
                         </div>
                     </div>
                     <div class="mother-maiden">
-                        <label for="example-text-input" class="form-control-label text-info"><b>Mother Maiden's
-                                Information</b></label>
+                        <label for="example-text-input" class="form-control-label text-info"><b>Mother's Maiden Name</b></label>
                         <div class="row">
                             <div class="col-xl-4 col-md-6F">
                                 <input-component label="LAST  NAME" v-model:value="motherLastName"
@@ -236,8 +234,7 @@
                         </div>
                     </div>
                     <div class="guardian-informtion">
-                        <label for="example-text-input" class="form-control-label text-info"><b>Guardians
-                                Information</b></label>
+                        <label for="example-text-input" class="form-control-label text-info"><b>Guardian's Name</b></label>
                         <div class="row">
                             <div class="col-xl-4 col-md-6F">
                                 <input-component label="LAST  NAME" v-model:value="guardianLastName"
@@ -361,7 +358,7 @@ export default {
             strand: '',
             link: '',
             heightList: [
-                '157.5', '160', '162.5', '167.5', '170', '172.5', '175', '177.5', '180', '182.5', '185', '187.5', '190', '192.5'
+                '157.48', '160.02', '162.56', '165.1', '167.64', '170.18', '172.72', '175.26', '177.8', '180.34', '182.88', '185.42', '187.96', '190.5', '193.4', '195.58', '198.12', '200.66', '203.2', '205.74', '208.28', '210.82'
             ],
             weightList: element
         }

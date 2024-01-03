@@ -5,7 +5,7 @@
                 <div v-if="tuitionDetails.payment_transaction" class="complete">
                     <stepper :value="viewName" :isActive="true" :isFinish="true" />
                     <div class="d-inline-block w-100">
-                        <h5 class=" mb-1">Congratulations! You are now Officially Enrolled.</h5>
+                        <h5 class=" mb-1">Congratulations, you are now officially enrolled.</h5>
                     </div>
                 </div>
                 <div v-else>
@@ -36,7 +36,7 @@ export default {
     },
     data() {
         return {
-            viewName: 'STEP 5: ENROLLMENT SUCCESSFULLTY COMPLETED',
+            viewName: 'STEP 5: ENROLLMENT SUCCESSFULLY COMPLETED',
             errors: []
         }
     },

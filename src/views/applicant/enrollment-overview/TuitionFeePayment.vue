@@ -6,7 +6,7 @@
                     <stepper :value="viewName" :isActive="true" :isFinish="true" />
                     <div class="d-inline-block w-100">
                         <p class="mb-3">
-                            Your payment transaction complete.
+                            Payment Transaction Completed.
                         </p>
                     </div>
                 </div>
