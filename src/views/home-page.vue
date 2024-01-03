@@ -242,11 +242,10 @@
                     <section class="editors  mar-bot">
                         <div class="card text-center mt-5 ">
                             <h4 class="fw-bolder fs-1 text-primary mb-2 mt-1">WELCOME TO THE BALIWAG MARITIME ACADEMY</h4>
-                            <p class="m-3 text-black">At Baliwag Maritime Academy. we are dedicated to nurturing the next
-                                generation of maritime proffessionals through comprehensive education and practical
+                            <p class="m-3 text-black">At Baliwag Maritime Academy, we are dedicated to nurturing the next
+                                generation of maritime professionals through comprehensive education and practical
                                 training. As one of the leading institution in the maritime industry, we take pride in
-                                offering
-                                world-clas programs designed to equip our students with the skills,knowledge, and expertise
+                                offering world-class programs designed to equip our students with the skills, knowledge, and expertise
                                 required for a successful career at sea.
                             </p>
                         </div>
@@ -337,11 +336,11 @@
                                                 <img src="@/assets/resources/banner/SHS.png" alt="image"
                                                     class="img-fluid height1 radius-our w-100">
                                             </div>
-                                            <div class="app badge-1 btn btn-sm btn-primary ">SENIOR HIGHSCHOOL</div>
+                                            <div class="app badge-1 btn btn-sm btn-primary ">SENIOR HIGH SCHOOL</div>
                                         </div>
                                         <div class="card-body pb-3">
                                             <div class="border-bottom mt-3">
-                                                <h5 class="mb-3 fw-bolder">Senior High School: Pre-Baccaureate Maritime
+                                                <h5 class="mb-3 fw-bolder">Senior High School: Pre-Baccalaureate Maritime
                                                     Specialization</h5>
                                             </div>
                                             <div class="d-flex justify-content-between flex-wrap mt-3">
@@ -428,7 +427,7 @@
         <h2 class="fw-bolder fs-1">STATE OF THE ART FACILITIES</h2>
         <p class="text-black">We provide access to modern facilities and cutting-edge resources that
             facilitate effective
-            learning and practicaltraining. Our campus offer advanced simulation labs. full-equipped
+            learning and practical training. Our campus offer advanced simulation laboratories. full-equipped
             workshops, and comprehensive libraries to support our students' academic endeavors.</p>
         <hr>
         <h4 class="fw-bolder fs-1 ">EXPERIENCED FACULTY</h4>
@@ -440,7 +439,7 @@
         </p>
         <hr>
         <h4 class="fw-bolder fs-1 ">CAREER OPPORTUNITIES</h4>
-        <p class="text-black">Upon Graduation, our students are wel-positioned to embark on
+        <p class="text-black">Upon graduation, our students are well-positioned to embark on
             rewarding careers in the maritime industry.
             We provide career guidance and support, connecting our graduates with promising
             employment opportunities worldwide.

@@ -15,7 +15,7 @@
             <p class="mt-3">
                 • Applicants with Tattoos are not allowed.
                 <br>
-                • Documentary Requirements of the Applicants shall be validated at the Registrar's Office pror to the
+                • Documentary Requirements of the Applicants shall be validated at the Registrar's Office prior to the
                 uploading
                 at BMA's Portal.
             </p>
@@ -125,11 +125,7 @@
                                 </div>
                                 <!--    <vue-recaptcha ref="recaptcha" sitekey="6Lch4wckAAAAAIv3KzDuN0M82UOeWJLWa7L_2Zva" /> -->
                                 <div class="col-12">
-                                    <button class="btn btn-primary rounded w-100 mb-5" type="submit">APPLY
-                                        NOW</button>
-                                    <router-link :to="{ name: 'app-layout.applicant-login' }"
-                                        class="btn btn-info text-white w-100">ALREADY
-                                        REGISTERED</router-link>
+                                    <button class="btn btn-primary rounded w-100 mb-5" type="submit">REGISTER NOW</button>
                                 </div>
                             </form>
                         </div>
