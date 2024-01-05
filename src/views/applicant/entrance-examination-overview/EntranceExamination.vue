@@ -53,7 +53,7 @@
                     </div>
                     <div v-else>
                         <div v-if="!examination.examinationSchedule">
-                            <div class="card">
+                            <!-- <div class="card">
                                 <div class="card-body">
                                     <form @submit.prevent="storeScheduleExam" method="post">
                                         <label for="" class="fw-bolder h5 text-primary">Please select your preferred
@@ -74,7 +74,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div v-else>
                             <div v-if="checkSchedule(examination.examinationSchedule) == true">
@@ -174,16 +174,16 @@
 import { SHOW_LOADING_MUTATION } from '@/store/storeConstants'
 import { mapMutations, mapActions } from 'vuex'
 import stepper from '@/components/main-layouts/components/widgets/stepper-widget.vue'
-import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
-import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
+/* import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
+import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue' */
 import axios from 'axios'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
 export default {
     name: 'ExaminationPayment',
     components: {
-        stepper,
+        stepper/* ,
         selectComponent,
-        inputComponentV2
+        inputComponentV2 */
     },
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, badgeColor: 'bg-secondary', contentShow: false }

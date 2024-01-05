@@ -9,7 +9,7 @@
             <div v-if="content" class="document-content p-3 row">
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
-                        <h6 class="text-info mb-1 fw-bolder">PAYMENT INSTRUCTION</h6>
+                        <h6 class="text-info mb-1 fw-bolder">PAYMENT INSTRUCTIONS</h6>
                         <p>For bank deposit or online fund transfer, please use the bank details
                             below:
                         </p>
@@ -79,7 +79,7 @@
                                     </span>
                                 </div>
                                 <div v-else>
-                                    <span class="text-info">This payment was Verified</span>
+                                    <span class="text-info">Payment Verified</span>
                                 </div>
                             </div>
                             <div v-if="examination.payment.is_approved === 0" class="form-payment">
@@ -202,7 +202,7 @@ export default {
         const formData = new FormData()
         return {
             isLoading: false,
-            titleName: 'ENTRANCE EXAMINATION PAYMENT',
+            titleName: "ENTRANCE'S EXAMINATION PAYMENT",
             progressName: 'STEP 3',
             status: className.status,
             className,
