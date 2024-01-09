@@ -221,17 +221,18 @@
         <img src="@/assets/homepage-banner.png" class="img-fluid" alt="#" width="100%">
         <div class="position-absolute top-0 start-0 w-100 h-100 bg-soft-primary"></div>
         <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
-            <h1 class="mb-1 fw-bold text-white display-4" id="hero-title">
-                CHARTING SUCCESS,  SHAPING MARITIME PROFESSIONAL TO SUCCESS
+            <h1 class="mb-1 fw-bold text-white display-5">
+                "CHARTING SUCCESS, TRANSFORMING DREAMS INTO REALITIES"
             </h1>
             <p class="text-lg mt-2 text-white">Reach your maritime dream right now. 🚢</p>
-            <button class="text-white bg-primary p-2 w-35 border border-primary rounded-start rounded-end">Inquire Now! <svg
+            <a href="/#/admission"
+                class="text-white bg-primary p-2 w-35 border border-primary rounded-start rounded-end">Inquire Now! <svg
                     width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
                         stroke-linecap="round" stroke-linejoin="round"></circle>
                     <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                         stroke-linejoin="round"></path>
-                </svg></button>
+                </svg></a>
         </div>
     </div>
     <div class="container">
@@ -242,11 +243,18 @@
                     <section class="editors  mar-bot">
                         <div class="card text-center mt-5 ">
                             <h4 class="fw-bolder fs-1 text-primary mb-2 mt-1">WELCOME TO THE BALIWAG MARITIME ACADEMY</h4>
+                            <h6 class="fw-bolder text-primary mb-2">WHERE YOUR DREAMS BECOME A REALITY OF SUCCESS</h6>
                             <p class="m-3 text-black">At Baliwag Maritime Academy, we are dedicated to nurturing the next
-                                generation of maritime professionals through comprehensive education and practical
-                                training. As one of the leading institution in the maritime industry, we take pride in
-                                offering world-class programs designed to equip our students with the skills, knowledge, and expertise
-                                required for a successful career at sea.
+                                generation of maritime professionals through comprehensive education and practical training.
+                                Our goal is to equip our students with the skills, knowledge, and competence required for a
+                                successful career at sea. We are more than just a school; we are a community of
+                                professionals with a shared vision: to chart success and transform dreams into realities.
+                                Whether you aspire to be a marine Deck or Enginner Office, or a seafarer, we have the right
+                                program for you. Our course are accredited by CHED and MARINA, and our curriculum is aligned
+                                with the latest industry standards and best practices. Additionally, we provide scholarship
+                                opportunities for deserving students. Join us today and discover how we can help you achieve
+                                your goals and reach your full potential in the maritime industry. Baliwag Maritime Academy:
+                                Charting Success, Transforming Dreams into Realities
                             </p>
                         </div>
                         <div class="container">
@@ -297,28 +305,28 @@
                                     <div class="col-sm">
                                         <h3 class="text-info fw-bolder">KNOWLEDGE</h3><br>
                                         <p class="text-black">
-                                            being consistently honest and trustworthy in work even without supervision thus
-                                            gaining
-                                            trust and respect of clients and stakeholders with open and transparent decision
-                                            making
-                                            processes.</p>
+                                            Knowledge refers to the acquisitio of information and practical skills that are
+                                            necessary for a successful career in the maritime industry.
+                                        </p>
                                     </div>
                                     <div class="col-sm">
                                         <h3 class="text-danger fw-bolder">DISCIPLINE</h3><br>
                                         <p class="text-black">
-                                            ability to motivate oneself regardless emotional state leading towards hard work
-                                            and
-                                            persistence to get ones' job done.</p>
+                                            Discipline refers to the ability to follow rules and regulations, as well as to
+                                            maintain a high level of professionalism earned through regimented training.
+                                        </p>
                                     </div>
                                     <div class="col-sm">
                                         <h3 class="text-warning fw-bolder">EXCELLENCE</h3><br>
                                         <p class="text-black">
-                                            Striving for the highest personal and institutional achievement in all aspects
-                                            of
-                                            work,
-                                            individual and community action and life-long learning.</p>
+                                            Excellence refers to the pursuit of the highest standards of performance in all
+                                            aspects of shipboard work. Commitment to lifelong learning, service to community
+                                            and care of environment.
+                                        </p>
                                     </div>
                                 </div>
+                                <p>These values are important for student to learn and embody in order to succeed in their
+                                    future careers at sea.</p>
                             </div>
                             <hr>
                             <div class="header-title d-flex justify-content-between">
