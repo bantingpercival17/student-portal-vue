@@ -18,6 +18,30 @@ const defaultchildRoutes = (prop) => [
     component: () => import('../views/admission-page.vue')
   },
   {
+    path: '/achievements',
+    name: prop + '.achievements',
+    meta: { auth: false, name: 'Achievements', user: 'guest' },
+    component: () => import('@/views/guest/Achievements.vue')
+  },
+  {
+    path: '/news-and-events',
+    name: prop + '.newsAndEvents',
+    meta: { auth: false, name: 'News and Events', user: 'guest' },
+    component: () => import('@/views/guest/NewsAndEvents.vue')
+  },
+  {
+    path: '/onboard-training',
+    name: prop + '.onboardTraining',
+    meta: { auth: false, name: 'Onboard Training', user: 'guest' },
+    component: () => import('@/views/guest/OnboardTraining.vue')
+  },
+  {
+    path: '/disciple-and-drills',
+    name: prop + '.disciplineAndDrills',
+    meta: { auth: false, name: 'Discipline & Drills', user: 'guest' },
+    component: () => import('@/views/guest/DisciplineAndDrills.vue')
+  },
+  {
     path: '/student/login',
     name: prop + '.student-login',
     meta: { auth: false, name: 'Student Login', user: 'guest' },

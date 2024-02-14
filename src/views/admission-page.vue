@@ -1,13 +1,6 @@
 <template>
-    <div class="position-relative  w-100 h-100">
-        <img src="@/assets/admission-banner.png" class="img-fluid" alt="#" width="100%">
-        <div class="position-absolute top-0 start-0 w-100 h-100 bg-soft-primary"></div>
-        <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
-            <h1 class="mb-1 fw-bold text-white display-4" id="hero-title">
-                SCHOOL ADMISSION
-            </h1>
-        </div>
-    </div>
+    <ImageTitleHeader titleHeader="SCHOOL ADMISSION" :banner="require('@/assets/resources/banner/banner-1.jpg')"
+        topValue="80%" />
     <div class="container">
         <div class="alert alert-left alert-success alert-dismissible fade show mt-5" role="alert">
             <span class="fw-bolder">REMINDERS TO ALL APPLICANTS:</span>
@@ -40,7 +33,8 @@
                             <li> Certificate of Good Moral Conduct</li>
                             <li> PSA Birth Certificate (not over 22 yrs. Old)</li>
                             <li> Barangay Clearance</li>
-                            <li> Height Requirements: at least 5'4 for Marine Transportation and 5'2 for Marine Engineering"
+                            <li> Height Requirements: at least 5'4 for Marine Transportation and 5'2 for Marine
+                                Engineering"
                             </li>
                         </ul>
                     </div>
@@ -100,7 +94,8 @@
                                             <span class="badge bg-info" v-else>Captcha Loading....</span>
                                         </div>
                                         <div class="col-md-4">
-                                            <span class="btn btn-outline-primary btn-sm" @click="recaptcha"> &#x21bb;</span>
+                                            <span class="btn btn-outline-primary btn-sm" @click="recaptcha">
+                                                &#x21bb;</span>
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +116,8 @@
                                 </div>
                                 <!--    <vue-recaptcha ref="recaptcha" sitekey="6Lch4wckAAAAAIv3KzDuN0M82UOeWJLWa7L_2Zva" /> -->
                                 <div class="col-12">
-                                    <button class="btn btn-primary rounded w-100 mb-5" type="submit">REGISTER NOW</button>
+                                    <button class="btn btn-primary rounded w-100 mb-5" type="submit">REGISTER
+                                        NOW</button>
                                 </div>
                             </form>
                         </div>
@@ -387,9 +383,10 @@ import inputComponentV2 from '@/components/main-layouts/components/widgets/input
 import { mapMutations, mapActions } from 'vuex'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
 import axios from 'axios'
+import ImageTitleHeader from '@/components/main-layouts/components/widgets/ImageTitleHeader.vue'
 export default {
     name: 'AdmissionPage',
-    components: { modal, inputComponent, inputComponentV2 },
+    components: { modal, inputComponent, inputComponentV2, ImageTitleHeader },
     data() {
         const formData = {
             firstName: '',

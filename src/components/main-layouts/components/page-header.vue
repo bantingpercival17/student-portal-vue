@@ -8,7 +8,7 @@
                     <h2 class="logo-title me-3">BALIWAG MARITIME ACADEMY, INC.</h2>
                 </router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedConten  t" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
                         <span class="navbar-toggler-bar bar1 mt-2"></span>
@@ -38,7 +38,8 @@
             </div>
         </nav>
         <div class="nav-scroller ">
-            <nav class="nav nav-underline bg-white pb-0 text-white border border-soft-primary" aria-label="Secondary navigation">
+            <nav class="nav nav-underline bg-white pb-0 text-white border border-soft-primary"
+                aria-label="Secondary navigation">
                 <div class="d-flex" id="head-check">
                     <div v-for="(data, index) in headerLists" :key="index">
                         <router-link :to="{ name: data['route'] }"
@@ -49,16 +50,16 @@
                     </div>
                 </div>
                 <!-- <ul class="dropdown-menu " data-popper-placement="bottom-start">
-                        <li> <router-link :to="{ name: 'app-layout.Facilities' }"
-                                :class="name == 'Facilities' ? 'nav-link active' : 'nav-link'" id="Facilities"
-                                data-title="Facilities" @click="changename('Facilities')">Facilities</router-link></li>
-                        <li><router-link :to="{ name: 'app-layout.admission' }"
-                                :class="name == 'Admission' ? 'nav-link active' : 'nav-link'" id="Admission"
-                                data-title="Admission" @click="changename('Admission')">Admission Scholarship</router-link></li>
-                    </ul>
-                    <router-link :to="{ name: 'app-layout.Contact' }"
-                        :class="name == 'Contact' ? 'nav-link active' : 'nav-link'" id="Contact" data-title="Contact"
-                        @click="changename('Contact')">Contact Us</router-link> -->
+                    <li> <router-link :to="{ name: 'app-layout.Facilities' }"
+                            :class="name == 'Facilities' ? 'nav-link active' : 'nav-link'" id="Facilities"
+                            data-title="Facilities" @click="changename('Facilities')">Facilities</router-link></li>
+                    <li><router-link :to="{ name: 'app-layout.admission' }"
+                            :class="name == 'Admission' ? 'nav-link active' : 'nav-link'" id="Admission"
+                            data-title="Admission" @click="changename('Admission')">Admission Scholarship</router-link></li>
+                </ul>
+                <router-link :to="{ name: 'app-layout.Contact' }"
+                    :class="name == 'Contact' ? 'nav-link active' : 'nav-link'" id="Contact" data-title="Contact"
+                    @click="changename('Contact')">Contact Us</router-link> -->
             </nav>
         </div>
     </div>
@@ -67,26 +68,24 @@
 import { mapActions/* , mapGetters */ } from 'vuex'
 export default {
     name: 'PageHeader',
-    /* computed: {
-        ...mapGetters({
-            name: 'name'
-        })
-    }, */
     data() {
         // Update the Headers Name into Array Data
         const headerLists = [
             { name: 'Home', route: 'app-layout.home' },
-            { name: 'Achievement', route: 'app-layout.home' },
-            { name: 'News and Events', route: 'app-layout.home' },
+            { name: 'Achievements', route: 'app-layout.achievements' },
+            { name: 'News and Events', route: 'app-layout.newsAndEvents' },
             { name: 'Admission', route: 'app-layout.admission' },
-            { name: 'Onboard Training', route: 'app-layout.home' },
-            { name: 'Discipline & Drills', route: 'app-layout.home' },
+            { name: 'Onboard Training', route: 'app-layout.onboardTraining' },
+            { name: 'Discipline & Drills', route: 'app-layout.disciplineAndDrills' },
             { name: 'Research', route: 'app-layout.home' }
         ]
         return {
-            name: 'Home',
+            name: '',
             headerLists
         }
+    },
+    mounted() {
+        this.name = this.$route.meta.name
     },
     methods: {
         ...mapActions({

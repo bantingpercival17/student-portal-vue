@@ -337,7 +337,7 @@ export default {
             } else if (currentDate === examinationDate) {
                 return true
             } else {
-                return false
+                return true
             }
         },
         scheduledFormat(date1) {
