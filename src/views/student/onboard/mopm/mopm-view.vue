@@ -1,38 +1,37 @@
 <template>
+    <div class="float-end" v-if="shipboardInformation.length > 0">
+        <button data-bs-toggle="modal" data-bs-target="#add-shipboard" class="btn btn-sm btn-primary">ADD SHIPBOARD</button>
+    </div>
+    <p class="display-6 fw-bolder text-primary">SHIPBOARD INFORMATION</p>
     <div v-if="isLoading">
         <loadingPage />
     </div>
     <div v-else>
         <div v-if="shipboardInformation">
-            <div v-for="(data, index) in shipboardInformation" :key="index" class="card" data-iq-gsap="onStart"
-                data-iq-position-y="70" data-iq-rotate="0" data-iq-trigger="scroll" data-iq-ease="power.out"
-                data-iq-opacity="0">
-                <div class="card-header">
+            <div v-for="(data, index) in shipboardInformation" :key="index" class="card">
+                <div class="card-header m-2 p-2">
                     <div class="header-title">
-                        <h4 class="card-title fw-bold text-primary">SHIPBOARD INFORMATION</h4>
+                        <h4 class="card-title fw-bold text-primary">{{ data.company_name }}</h4>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-lg-8 col-md-12">
-                            <label-component label="COMPANY NAME" :value="data.company_name" />
-                        </div>
-                        <div class="col-lg-4 col-md-12">
-                            <label-component label="SBT BATCH" :value="data.sbt_batch" />
-                        </div>
                         <div class="col-lg-6 col-md-12">
                             <label-component label="VESSEL NAME" :value="data.vessel_name" />
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <label-component label="VESSEL TYPE" :value="data.vessel_type" />
                         </div>
-                        <div class="col-lg-4 col-md-12">
+                        <div class="col-lg-3 col-md-12">
                             <label-component label="SEA EXPERIENCE" :value="data.shipping_company" />
                         </div>
-                        <div class="col-lg-4 col-md-12">
+                        <div class="col-lg-3 col-md-12">
+                            <label-component label="SBT BATCH" :value="data.sbt_batch" />
+                        </div>
+                        <div class="col-lg-3 col-md-12">
                             <label-component label="STATUS" :value="data.shipboard_status" />
                         </div>
-                        <div class="col-lg-4 col-md-12">
+                        <div class="col-lg-3 col-md-12">
                             <label-component label="DATE OF EMBARKING" :value="data.embarked" />
                         </div>
                     </div>
@@ -51,7 +50,27 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+
+
+                            <tbody v-if="data.performance_report.length > 0">
+                                <tr v-for="(data2, index2) in data.performance_report" :key="index2">
+                                    <td>{{ data2.month }}</td>
+                                    <td></td>
+                                    <td>
+                                        <router-link class="btn btn-sm btn-outline-primary"
+                                            :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(data2.id) } }">view</router-link>
+                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal"
+                                            @click="viewReport(data2.id, 'v2')">report</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody v-else>
+                                <tr>
+                                    <th colspan="3">No Data</th>
+                                </tr>
+                            </tbody>
+                            <tbody v-if="data.performance_report.length < 0">
                                 <tr v-for="(data3, index3) in narrativeReport" :key="index3">
                                     <td>{{ getFormatMonthYear(data3.month) }}</td>
                                     <td>
@@ -72,30 +91,18 @@
                                     </td>
                                 </tr>
                             </tbody>
-                            <tbody v-if="data.performance_report">
-                                <tr v-for="(data2, index2) in data.performance_report" :key="index2">
-                                    <td>{{ data2.month }}</td>
-                                    <td></td>
-                                    <td>
-                                        <router-link class="btn btn-sm btn-outline-primary"
-                                            :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(data2.id) } }">view</router-link>
-                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal"
-                                            @click="viewReport(data2.id, 'v2')">report</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr>
-                                    <th colspan="3">No Data</th>
-                                </tr>
-                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
         <div v-else>
+            <div class="card">
+                <div class="card-header m-2">
+                    <p class="fw-bolder text-info">SHIPBOARD INFORMATION EMPTY</p>
+                </div>
+            </div>
+
         </div>
         <modal id="MOPM" :tabindex="-1" role="dialog" mainClass="bd-example-modal-lg" dialogClass="modal-lg"
             ariaLabelled="MOPMLabel" :ariaHidden="true" contentrole="document">
@@ -176,18 +183,34 @@
 
         </modal>
     </div>
+    <modal id="add-shipboard" :tabindex="-1" role="dialog" mainClass="bd-example-modal-lg" dialogClass="modal-lg"
+        ariaLabelled="MOPMLabel" :ariaHidden="true" contentrole="document">
+        <model-header :dismissable="true">
+            <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">
+                ADD SHIPBOARD INFORMATION
+            </h5>
+        </model-header>
+        <model-body>
+            <ShipboardApplicationForm :propsCompany="company" :propsDocuments="documents" :deployment="deployment"
+                :vesselType="vesselType" :token="token" />
+        </model-body>
+        <model-footer>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </model-footer>
+    </modal>
 </template>
 <script>
 import loadingPage from './mopm-loading-view.vue'
-import labelComponent from '@/components/main-layouts/components/widgets/label-component.vue'
 import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 import textAreaComponent from '@/components/main-layouts/components/widgets/text-area-component.vue'
 import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
+import labelComponent from '@/components/main-layouts/components/widgets/label-component.vue'
 import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, SHOW_LOADING_MUTATION } from '@/store/storeConstants'
 import PdfViewer from '@/components/main-layouts/components/PdfViewer.vue'
 import { mapGetters, mapMutations } from 'vuex'
 import Swal from 'sweetalert2'
 import axios from 'axios'
+import ShipboardApplicationForm from '@/components/main-layouts/components/widgets/ShipboardApplicationForm.vue'
 export default {
     name: 'ShipboardMonitoringOverview',
     data() {
@@ -206,16 +229,20 @@ export default {
             remarks: '',
             datePreferred: '',
             narrativeReport: [],
-            reportViewLink: null
+            reportViewLink: null,
+            company: [],
+            documents: [],
+            vesselType: []
         }
     },
     components: {
-        labelComponent,
         inputComponentV2,
         textAreaComponent,
         loadingPage,
         selectComponent,
-        PdfViewer
+        PdfViewer,
+        ShipboardApplicationForm,
+        labelComponent
     },
     computed: {
         ...mapGetters('auth', {
@@ -230,11 +257,11 @@ export default {
             }
         }).then(async (response) => {
             const data = response.data.data
-            /*   console.log(data) */
-            this.shipboardInformation = data.shipboard_information
             this.narrativeReport = data.narative_report
-            console.log(this.narrativeReport)
-            // await putData('myKey', data.shipboard_information)
+            this.company = data.shipping_company
+            this.documents = data.document_requirements
+            this.vesselType = data.vessel_type
+            this.shipboardInformation = data.shipboard_information
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
