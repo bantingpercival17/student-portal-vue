@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="res-hide col-lg-7 col-md-0 d-md-block d-none p-0">
-            <img src="@/assets/resources/banner/bma-building.png" class="img-fluid gradient-main vh-100" alt="images">
+            <img src="@/assets/resources/banner/banner-login-2.jpg" class="img-fluid gradient-main vh-100" alt="images">
         </div>
     </div>
 </template>
