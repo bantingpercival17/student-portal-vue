@@ -1,5 +1,5 @@
 {
-  "appId": "com.example.app",
+  "appId": "app.student.bma.edu.ph",
   "appName": "BMA Student Portal",
   "webDir": "dist",
   "server": {

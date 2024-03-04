@@ -1,55 +1,60 @@
 <template>
     <div v-if="isLoading">
-        <SubjectLoading />
+        <LessonLoading />
     </div>
     <div v-else>
-        <p class='display-6 fw-bolder text-primary'>SUBJECT LIST</p>
+        <p class='display-6 fw-bolder text-primary'>{{ subject.subject_code }}</p>
+        <span class="fw-bolder text-muted">{{ subject.subject_name }}</span>
         <div class="row">
-            <div class="col-lg-4 col-md-6 col-xs-12" v-for="(data, index) in subjectLists" :key="index">
-                <router-link :to="{ name: 'student-layout.subject-view-lesson', params: { subject: encrypt(data.id) } }">
-                    <div class="card bg-primary">
-                        <div class="card-header d-flex align-items-center justify-content-between pb-4">
-                            <div class="header-title">
-                                <div class="d-flex flex-wrap">
-                                    <div class="media-support-user-img me-3">
-                                        <img :src="teacherImage(data.staff)" alt="teacher-image"
-                                            class="img-fluid avatar avatar-70 rounded-circle">
-                                    </div>
-                                    <div class="media-support-info mt-2">
-                                        <h5 class="mb-0 fw-bolder text-white">{{
-                                            data.curriculum_subjects.subject.subject_code
-                                        }}</h5>
-                                        <p class="mb-0 text-white">{{ data.staff.first_name + " " + data.staff.last_name }}
-                                        </p>
+            <div class="col-md-8">
+                <div v-if="topic">
+                    <div class="card border mt-3 shadow">
+                        <div class="card-header p-3">
+                            <div class="h5 fw-bolder text-primary">LIST OF TOPICS</div>
+                        </div>
+                        <div class="card-body p-3">
+                            <div class="form-group" v-for="(data, index) in topic" :key="index">
+                                <div class="row">
+                                    <div class="col-md">
+                                        <router-link
+                                            :to="{ name: 'student-layout.subject-view-lesson', params: { subject: this.$route.params.subject, lesson: encrypt(data.id) } }">
+                                            <small class="fw-bolder text-muted">LESSON {{ index + 1 }}</small> <br>
+                                            <label for="" class="fw-bolder">{{ data.learning_outcomes }}</label>
+                                        </router-link>
+                                        <!--  <a href="http://127.0.0.1:7000/teacher/course-syllabus/preview/topic?topic=NjI=">
+
+                                        </a> -->
                                     </div>
                                 </div>
+                                <hr>
                             </div>
                         </div>
-                        <div class="card-body p-0">
-                        </div>
                     </div>
-                </router-link>
-
+                </div>
+                <div v-else>
+                    <p class="h4 fw-bolder text-primary">NO CONTENT</p>
+                </div>
             </div>
         </div>
+
     </div>
 </template>
+
 <script>
-import Swal from 'sweetalert2'
+import axios from 'axios'
 import { LOGOUT_ACTION, GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, SHOW_LOADING_MUTATION } from '@/store/storeConstants'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
-import SubjectLoading from './loading-view/SubjectsLoading.vue'
-import axios from 'axios'
+import LessonLoading from './loading-view/LessonLoading.vue'
 export default {
-    name: 'SUBJECT LIST',
+    name: 'Subject View',
     components: {
-        SubjectLoading
+        LessonLoading
     },
     data() {
-        const formData = new FormData()
         return {
             isLoading: true,
-            subjectLists: []
+            subject: [],
+            topic: []
         }
     },
     computed: {
@@ -59,19 +64,25 @@ export default {
         })
     },
     mounted() {
-        axios.get('student/subject-lists', {
+        const dynamicValue = this.$route.params.subject
+        axios.get(`student/subject-lists/view?subject=${dynamicValue}`, {
             headers: {
                 Authorization: 'Bearer ' + this.token
             }
         }).then((response) => {
-            this.data = response.data.data
-            console.log(this.data)
+            this.data = response.data
             if (this.data) {
-                if (this.data.student_section) {
-                    this.subjectLists = this.data.student_section.subject_details
+                this.subject = this.data.subject.curriculum_subjects.subject
+                if (this.data.subject.course_syllabus) {
+                    this.course_syllabus = this.data.subject.course_syllabus
+                    if (this.course_syllabus.syllabus_details) {
+                        if (this.course_syllabus.syllabus_details.learning_outcomes) {
+                            this.topic = this.course_syllabus.syllabus_details.learning_outcomes
+                        }
+                    }
                 }
             }
-            console.log(this.subjectLists)
+            console.log(this.topic)
             this.isLoading = false
         }).catch((error) => {
             if (error.response) {
@@ -79,7 +90,7 @@ export default {
                     this.logout()
                 }
             }
-            console.log(error.response)
+            console.log(error)
         })
     },
     methods: {
@@ -89,16 +100,6 @@ export default {
         ...mapActions('auth', {
             logout: LOGOUT_ACTION
         }),
-        teacherImage(staff) {
-            /* const teacherImage = 'http://one.bma.edu.ph/assets/img/staff/percival_banting.jpg' */
-            let teacherImage = 'http://one.bma.edu.ph/assets/img/staff/'
-            let name = staff.user.name
-            name = name.toLowerCase()
-            name = name.replace(/\s+/g, '_')
-            console.log(name)
-            teacherImage = teacherImage + name + '.jpg'
-            return teacherImage
-        },
         encrypt(data) {
             return btoa(data)
         }

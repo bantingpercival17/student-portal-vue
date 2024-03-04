@@ -64,7 +64,7 @@ export default {
             crsf: ''
         }
     },
-    mounted() {
+    async mounted() {
         axios.get('checker').then((response) => {
             console.log(response.data.bot)
         }).catch((error) => {
@@ -80,6 +80,9 @@ export default {
         ...mapMutations({
             showLoading: SHOW_LOADING_MUTATION
         }),
+        async getToken() {
+            return await axios.get('/token')
+        },
         async onLogin() {
             const validation = new LoginValidation(this.username, this.password)
             this.errors = validation.checkValidations()
