@@ -59,7 +59,8 @@
                                     <!--  <labelComponent label="SBT BATCH" :value="deployment.sbt_batch" /> -->
                                 </div>
                                 <div class="col-lg-8 col-md-12">
-                                    <labelComponent label="reference no." :value="examination.payment.reference_number" />
+                                    <labelComponent label="reference no."
+                                        :value="examination.payment.reference_number" />
                                 </div>
                                 <div class="col-lg-4 col-md-12">
                                     <labelComponent label="paid amount"
@@ -88,6 +89,10 @@
                                     enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-xs-12">
+                                            <select-component label="payment mode" v-model:value="paymentMode"
+                                                :error="errors.payment_mode" :data="paymentModeList" />
+                                        </div>
+                                        <div v-if="paymentMode === 'E-wallets'" class="col-lg-12 col-md-12 col-xs-12">
                                             <inputComponentV2 type="text" label="Reference Number"
                                                 v-model:value="reference_number" :error="errors.reference_number" />
                                         </div>
@@ -96,8 +101,8 @@
                                                 v-model:value="transactionDate" :error="errors.transaction_date" />
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-xs-12">
-                                            <inputComponentV2 type="text" label="Payment Amount" v-model:value="amountPaid"
-                                                :error="errors.amount_paid" />
+                                            <inputComponentV2 type="text" label="Payment Amount"
+                                                v-model:value="amountPaid" :error="errors.amount_paid" />
                                         </div>
                                     </div>
                                     <a class="badge bg-primary float-end" data-bs-toggle="modal"
@@ -110,7 +115,7 @@
                                         <input type="file" v-on:change="fileAttachment"
                                             class="form-control form-control-sm border border-primary" />
                                         <span class="badge bg-danger mt-2" v-if="errors.file">{{
-                                            errors.file[0] }}</span>
+        errors.file[0] }}</span>
                                     </div>
                                     <button class="btn btn-primary btn-sm w-100" type="submit">SUBMIT</button>
                                 </form>
@@ -118,7 +123,8 @@
                         </div>
                         <div v-else>
                             <h6 class="text-info mb-1 fw-bolder">FILL-UP PAYMENT TRANSACTION</h6>
-                            <form @submit.prevent="submitPaymentTransaction" method="post" enctype="multipart/form-data">
+                            <form @submit.prevent="submitPaymentTransaction" method="post"
+                                enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-xs-12">
                                         <select-component label="payment mode" v-model:value="paymentMode"
@@ -165,7 +171,8 @@
             </h5>
         </model-header>
         <model-body>
-            <img src="@/assets/resources/accounting/Instruction.png" class="img-fluid gradient-main vh-100" alt="images">
+            <img src="@/assets/resources/accounting/Instruction.png" class="img-fluid gradient-main vh-100"
+                alt="images">
         </model-body>
         <model-footer>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

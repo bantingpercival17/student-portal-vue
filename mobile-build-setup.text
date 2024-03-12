@@ -1,5 +1,8 @@
+#SET UP CAPACITOR
+npm install @capacitor/cli@latest
 npx cap init
 
+# ADD PLATFORMS
 npx cap add android
 
 npm run build

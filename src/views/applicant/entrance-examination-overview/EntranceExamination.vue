@@ -9,45 +9,55 @@
             <div v-if="content" class="document-content p-3 row">
                 <div v-if="examination.examinationDetails" class="examination-view">
                     <div v-if="examination.examinationDetails.is_finish" class="examination-form-and-instruction">
-                        <p v-if="examination.finalResult[2]" class="mb-3">
-                            Congratulation, you have Passed the qualifing Examination
-                        </p>
-                        <p v-else>
-                            We regret to
-                            inform you that you did not meet the required test score in the entrance examination.
-                        </p>
-                        <div class="card">
-                            <div class="card-body">
-                                <label for="" class="fw-bolder text-info h5">EXAMINATION RESULT</label>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>CATEGORY</th>
-                                            <th>SCORE</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(data, index) in examination.examinationResult" :key="index">
-                                            <td v-if="data.examinationCategory !== 'Essay'">{{ data.examinationCategory }}
-                                            </td>
-                                            <td v-if="data.examinationCategory !== 'Essay'"><span
-                                                    class="fw-bolder text-primary h5">{{ data.score }}</span> <span
-                                                    class="text-muted fw-bolder">/{{ data.totalItems }}</span></td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>TOTAL SCORE: </th>
-                                            <td><span class="fw-bolder text-primary h5">{{ examination.finalResult[0]
-                                            }}</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th>EXAMINATION PERCENTAGE:</th>
-                                            <td> <span class="fw-bolder text-primary h5">{{ examination.finalResult[1]
-                                            }}</span></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                        <div v-if="propsApplicantDetails.course_id === 3">
+                            Wait for the Examination Result
+                        </div>
+                        <div v-else>
+
+                            <p v-if="examination.finalResult[2]" class="mb-3">
+                                Congratulation, you have Passed the qualifing Examination
+                            </p>
+                            <p v-else>
+                                We regret to
+                                inform you that you did not meet the required test score in the entrance examination.
+                            </p>
+                            <div class="card">
+                                <div class="card-body">
+                                    <label for="" class="fw-bolder text-info h5">EXAMINATION RESULT</label>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>CATEGORY</th>
+                                                <th>SCORE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(data, index) in examination.examinationResult" :key="index">
+                                                <td v-if="data.examinationCategory !== 'Essay'">{{
+        data.examinationCategory
+    }}
+                                                </td>
+                                                <td v-if="data.examinationCategory !== 'Essay'"><span
+                                                        class="fw-bolder text-primary h5">{{ data.score }}</span> <span
+                                                        class="text-muted fw-bolder">/{{ data.totalItems }}</span></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>TOTAL SCORE: </th>
+                                                <td><span class="fw-bolder text-primary h5">{{
+        examination.finalResult[0]
+    }}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>EXAMINATION PERCENTAGE:</th>
+                                                <td> <span class="fw-bolder text-primary h5">{{
+            examination.finalResult[1]
+        }}</span></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -91,12 +101,15 @@
                                             button at
                                             the
                                             system.</p>
-                                        <p class="m-0">4. When you enter the examination code, your examiantion will begin.
+                                        <p class="m-0">4. When you enter the examination code, your examiantion will
+                                            begin.
                                         </p>
-                                        <p>5.We recommend using Laptop/Desktop running atleast Windows 7 or higher to take
+                                        <p>5.We recommend using Laptop/Desktop running atleast Windows 7 or higher to
+                                            take
                                             the
                                             examination.
-                                            We also recommend to use Google Chrome as browser in taking the examination.</p>
+                                            We also recommend to use Google Chrome as browser in taking the examination.
+                                        </p>
                                         <br>
                                     </div>
                                 </div>
@@ -105,8 +118,8 @@
                                         <small class="fw-bolder">EXAMINATION CODE</small> <br>
                                         <label for="" class="form-label text-primary fw-bolder">
                                             {{ examination.examinationDetails ?
-                                                examination.examinationDetails.examination_code
-                                                : ''
+        examination.examinationDetails.examination_code
+        : ''
                                             }}
                                         </label>
                                         <div class="row">
@@ -114,7 +127,7 @@
                                                 <input type="text" class="form-control border border-primary"
                                                     v-model="examinationCode" placeholder="Enter Examination Code">
                                                 <span class="badge bg-danger mt-2" v-if="errors.examination">{{
-                                                    errors.examination[0] }}</span>
+        errors.examination[0] }}</span>
                                             </div>
                                             <div class="col-md">
                                                 <button type="submit" class="btn btn-primary ">Proceed to
@@ -133,23 +146,25 @@
                             <div v-else>
                                 <div v-if="examination.examinationScheduleHistory > 1">
                                     <p> Your entrance examination is scheduled on <b>{{
-                                        scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
+                                            scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
                                     </p>
                                     <p>
-                                        Please ensure that you take the entrance examination on the specified date and time;
+                                        Please ensure that you take the entrance examination on the specified date and
+                                        time;
                                         otherwise, your examination
                                         slot will be forfeited.
                                     </p>
                                 </div>
                                 <div v-else>
                                     <p> Your entrance examination is scheduled on <b>{{
-                                        scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>
+                                            scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>
                                         or you may opt to choose from the date scheduled below: </p>
                                     <div class="row">
                                         <div class="col-md"
                                             v-for="(data, index) in scheduleListData(examination.examinationSchedule.schedule_date)"
                                             :key="index">
-                                            <button class="btn btn-primary btn-sm w-100" @click="storeScheduleExamv2(data)">
+                                            <button class="btn btn-primary btn-sm w-100"
+                                                @click="storeScheduleExamv2(data)">
                                                 {{ data }} at 9:00 AM
                                             </button>
                                         </div>

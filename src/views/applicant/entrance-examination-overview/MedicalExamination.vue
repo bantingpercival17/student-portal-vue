@@ -47,7 +47,8 @@
                                     11</label>
                                 <br>
                                 <div>
-                                    <span class="fw-bolder"> A. Physical Exam with Weight, Height, BMI, Pulse Rate, Blood
+                                    <span class="fw-bolder"> A. Physical Exam with Weight, Height, BMI, Pulse Rate,
+                                        Blood
                                         Pressure, Respiration,
                                         Body Temperature
                                     </span> <br>
@@ -168,7 +169,8 @@
                 </div>
                 <div v-else>
                     <p>
-                        All students are advised to undergo a mandatory medical examination. Kindly report to the Baliwag Maritime Academy, Inc to receive your designated medical examination date and obtain any
+                        All students are advised to undergo a mandatory medical examination. Kindly report to the
+                        Baliwag Maritime Academy, Inc to receive your designated medical examination date and obtain any
                         required medical referrals.
                     </p>
                     <!--  <p class="">For Scheduling of appointment, Kindly choose to available schedule.</p>
@@ -207,11 +209,13 @@ export default {
         if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments && this.examination.payment) {
             if (this.examination.payment.is_approved) {
                 if (this.examination.examinationDetails) {
-                    if (this.examination.examinationDetails.is_finish && this.examination.finalResult[2]) {
-                        className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
-                        if (this.medical.medical_result) {
-                            if (this.medical.medical_result.is_fit !== 0) {
-                                className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: true }
+                    if (this.propsApplicantDetails.course_id !== 3) {
+                        if (this.examination.examinationDetails.is_finish && this.examination.finalResult[2]) {
+                            className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
+                            if (this.medical.medical_result) {
+                                if (this.medical.medical_result.is_fit !== 0) {
+                                    className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: true }
+                                }
                             }
                         }
                     }
