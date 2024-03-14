@@ -77,7 +77,7 @@ export default {
             { name: 'Admission', route: 'app-layout.admission' },
             { name: 'Onboard Training', route: 'app-layout.onboardTraining' },
             { name: 'Discipline & Drills', route: 'app-layout.disciplineAndDrills' },
-            { name: 'Research', route: 'app-layout.home' }
+            { name: 'Research', route: 'app-layout.research' }
         ]
         return {
             name: '',
