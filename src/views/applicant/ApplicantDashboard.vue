@@ -9,7 +9,7 @@
 
             <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
                 <ul class="list-inline p-0 m-0 w-100">
-                   <!--  <li>
+                    <!--  <li>
                         <PreRegistration :propsApplicantDetails="applicantDetails" />
                     </li> -->
                     <li>
@@ -21,19 +21,20 @@
                     </li>
                     <li>
                         <ExaminationPayment :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :examination="examination" :token="token" />
+                            :examination="examination" :alumnia="alumnia" :token="token" />
                     </li>
                     <li>
                         <EntranceExamination :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :examination="examination" :token="token" />
+                            :examination="examination" :alumnia="alumnia" :token="token" />
                     </li>
-                   <!--  <li>
+                    <!--  <li>
                         <BriefingOrientation :propsApplicantDetails="applicantDetails" :documents="documents"
                             :examination="examination" :orientation="orientation" :token="token" />
                     </li> -->
                     <li>
                         <MedicalExamination :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :examination="examination" :orientation="orientation" :medical="medical" :token="token" />
+                            :examination="examination" :alumnia="alumnia" :orientation="orientation" :medical="medical"
+                            :token="token" />
                     </li>
                 </ul>
             </div>
@@ -63,6 +64,7 @@ export default {
             documents: [],
             examination: [],
             orientation: [],
+            alumnia: [],
             medical: []
         }
     },
@@ -94,6 +96,7 @@ export default {
             this.documents = response.data.documents
             this.examination = response.data.examination
             this.orientation = response.data.orientation
+            this.alumnia = response.data.alumnia
             this.medical = response.data.medical
             this.isLoading = false
         }).catch((error) => {

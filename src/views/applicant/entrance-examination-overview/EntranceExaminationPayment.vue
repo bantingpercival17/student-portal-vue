@@ -7,7 +7,10 @@
             <h5 :class="`${className.textClass} fw-bolder mb-1`">{{ titleName }}</h5>
             <!-- Documents List -->
             <div v-if="content" class="document-content p-3 row">
-                <div class="row">
+                <div v-if="alumnia">
+                    <label for="" class="fw-bolder">Senior Highschool Alumnia</label>
+                </div>
+                <div v-else class="row">
                     <div class="col-lg-6 col-md-12">
                         <h6 class="text-info mb-1 fw-bolder">PAYMENT INSTRUCTIONS</h6>
                         <p>For bank deposit or online fund transfer, please use the bank details
@@ -153,7 +156,7 @@
                                     <input type="file" v-on:change="fileAttachment"
                                         class="form-control form-control-sm border border-primary" />
                                     <span class="badge bg-danger mt-2" v-if="errors.file">{{
-                                        errors.file[0] }}</span>
+        errors.file[0] }}</span>
                                 </div>
                                 <button class="btn btn-primary btn-sm w-100" type="submit">SUBMIT</button>
                             </form>
@@ -200,9 +203,13 @@ export default {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, stepperFinish: false, badgeColor: 'bg-secondary', contentShow: false }
         if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments) {
             className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
-            if (this.examination.payment) {
-                if (this.examination.payment.is_approved) {
-                    className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
+            if (this.alumnia) {
+                className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
+            } else {
+                if (this.examination.payment) {
+                    if (this.examination.payment.is_approved) {
+                        className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
+                    }
                 }
             }
         }
@@ -304,6 +311,6 @@ export default {
             return formattedDate
         }
     },
-    props: { propsApplicantDetails: Object, documents: Object, examination: Object, token: String }
+    props: { propsApplicantDetails: Object, documents: Object, alumnia: Object, examination: Object, token: String }
 }
 </script>

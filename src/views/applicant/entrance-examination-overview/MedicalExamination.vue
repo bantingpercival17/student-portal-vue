@@ -206,15 +206,31 @@ export default {
     },
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, badgeColor: 'bg-secondary', contentShow: false }
-        if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments && this.examination.payment) {
-            if (this.examination.payment.is_approved) {
-                if (this.examination.examinationDetails) {
-                    if (this.propsApplicantDetails.course_id !== 3) {
-                        if (this.examination.examinationDetails.is_finish && this.examination.finalResult[2]) {
-                            className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
-                            if (this.medical.medical_result) {
-                                if (this.medical.medical_result.is_fit !== 0) {
-                                    className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: true }
+        if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments) {
+            if (this.alumnia) {
+                className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
+
+                if (this.examination.examinationDetails.is_finish && this.examination.finalResult[2]) {
+                    className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
+                    if (this.medical.medical_result) {
+                        if (this.medical.medical_result.is_fit !== 0) {
+                            className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: true }
+                        }
+                    }
+                }
+            }
+            else {
+                if (this.examination.payment) {
+                    if (this.examination.payment.is_approved) {
+                        if (this.examination.examinationDetails) {
+                            if (this.propsApplicantDetails.course_id !== 3) {
+                                if (this.examination.examinationDetails.is_finish && this.examination.finalResult[2]) {
+                                    className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
+                                    if (this.medical.medical_result) {
+                                        if (this.medical.medical_result.is_fit !== 0) {
+                                            className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: true }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -292,6 +308,6 @@ export default {
             return formattedDate
         }
     },
-    props: { propsApplicantDetails: Object, documents: Object, examination: Object, orientation: Object, medical: Object, token: String }
+    props: { propsApplicantDetails: Object, documents: Object, alumnia: Object, examination: Object, orientation: Object, medical: Object, token: String }
 }
 </script>
