@@ -4,8 +4,8 @@
     </div>
     <div v-else>
         <ul id="top-tab-list" class="p-0 row list-inline category-list">
-            <li :class="'col-lg col-md mb-2 text-center ' + activeCategory(index)" v-for="(data, index) in categoryList  "
-                :key="index">
+            <li :class="'col-lg col-md mb-2 text-center ' + activeCategory(index)"
+                v-for="(data, index) in categoryList  " :key="index">
                 <a class="category">
                     <small class="mt-4">{{ data.category_name }}</small>
                 </a>
@@ -46,7 +46,8 @@
                             </div>
                             <div class="question-choices row">
                                 <div class="col-lg-6 col-md-12"
-                                    v-for="(choice, choiceIndex) in questionList[data - 1].choices_v2" :key="choiceIndex">
+                                    v-for="(choice, choiceIndex) in questionList[data - 1].choices_v2"
+                                    :key="choiceIndex">
                                     <button :class="btnStyleV2(choice.id, (data - 1))"
                                         @click="choiceAswer(choice.id, (data - 1))" v-html="choice.choice_name">
                                     </button>
@@ -82,11 +83,12 @@
                         </div>
                         <div class="question-view">
                             <div v-if="questionList[currentQuestion].question === 'none'">
-                                <img class="img-fluid" :src="questionView(questionList[currentQuestion].image_path)" alt=""
-                                    height="100">
+                                <img class="img-fluid" :src="questionView(questionList[currentQuestion].image_path)"
+                                    alt="" height="100">
                             </div>
                             <div v-else>
-                                <p class="text-primary fw-bolder h5" v-html="questionList[currentQuestion].question"></p>
+                                <p class="text-primary fw-bolder h5" v-html="questionList[currentQuestion].question">
+                                </p>
                                 <img v-if="questionList[currentQuestion].image_path !== 'none'"
                                     :src="questionView(questionList[currentQuestion].image_path)" alt="" height="200">
                             </div>
@@ -115,7 +117,8 @@
                         <!-- <div class="d-flex justify-content-center">
                             <button class="btn btn-outline-info" @click="reviewAnswer">REVIEW ANSWER</button>
                         </div> -->
-                        <div class="h4 text-secondary text-center fw-bolder">Do you want to submit your Answer to proceed to
+                        <div class="h4 text-secondary text-center fw-bolder">Do you want to submit your Answer to
+                            proceed to
                             the next Category?</div>
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-info mt-3 text-white me-3" @click="nextCategory()"
@@ -123,7 +126,8 @@
                         </div>
                     </div>
                     <div v-else>
-                        <div class="h4 text-secondary text-center fw-bolder">Do you want to Submit your Examination?</div>
+                        <div class="h4 text-secondary text-center fw-bolder">Do you want to Submit your Examination?
+                        </div>
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-info mt-3 text-white me-3" @click="finishExamination()"
                                 v-if="currentQuestion > 1">YES
@@ -340,7 +344,8 @@ export default {
             return this.categoryIndex === index ? 'active' : ''
         },
         questionView(data) {
-            return 'http://bma.edu.ph/assets/image/questions/' + data
+            return require(`@/assets/resources/test-question/${data}`)
+            // return 'http://bma.edu.ph/assets/image/questions/'
         },
         range(start, end) {
             return Array.from({ length: end - start + 1 }, (_, index) => start + index)
