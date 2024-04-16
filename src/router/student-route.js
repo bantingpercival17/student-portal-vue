@@ -226,5 +226,14 @@ export const studentRoute = (prop) => [{
       user: 'student'
     },
     component: () => import('@/views/student/comprehensive-examination/ExaminationView.vue')
+  }, {
+    path: '/student/bma-applications',
+    name: prop + '.mobile-applications',
+    meta: {
+      auth: true,
+      name: 'BMA App',
+      user: 'student'
+    },
+    component: () => import('@/views/student/MobileApplicationView.vue')
   }
 ]

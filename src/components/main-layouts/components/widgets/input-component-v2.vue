@@ -46,7 +46,7 @@ export default {
             return (currentYear - startAge) + '-01-01'
         },
         maxYear() {
-            const startAge = 17
+            const startAge = 15
             const currentDate = new Date()
             // Get the current year
             const currentYear = currentDate.getFullYear()

@@ -19,6 +19,7 @@
     "bootstrap": "^5.2.3",
     "core-js": "^3.8.3",
     "eslint-plugin-promise": "^6.1.1",
+    "html2canvas": "^1.4.1",
     "idb": "^7.1.1",
     "jquery": "^3.6.3",
     "jszip": "^3.10.1",
