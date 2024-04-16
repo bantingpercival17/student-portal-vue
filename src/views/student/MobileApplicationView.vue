@@ -75,12 +75,11 @@ export default {
             })
         },
         downloadApp(data, link) {
-            /* axios.post('student/bma-application/downloads', { data: data }, {
+            axios.post('student/bma-application/downloads', { data: data }, {
                 headers: {
                     Authorization: 'Bearer ' + this.token
                 }
-            }) */
-            console.log(link)
+            })
             const link2 = document.createElement('a')
             link2.href = link
             link2.setAttribute('download', '') // This attribute ensures that the file is downloaded instead of opened
@@ -88,7 +87,6 @@ export default {
 
             // Programmatically click the link2 to trigger the download
             link2.click()
-
             // Clean up - remove the temporary anchor element from the DOM
             document.body.removeChild(link2)
         }
