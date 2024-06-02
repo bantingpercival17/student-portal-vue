@@ -18,7 +18,7 @@
                             </div>
                             <div v-else>
 
-                                <p v-if="examination.finalResult[2]" class="mb-3 fw-bolder text-primary h4">
+                                <p v-if="examination.finalResult.result" class="mb-3 fw-bolder text-primary h4">
                                     Congratulation, you have Passed the qualifing Examination
                                 </p>
                                 <p v-else class="mb-3 fw-bolder text-info h4">
@@ -51,15 +51,17 @@
                                             <tfoot>
                                                 <tr>
                                                     <th>TOTAL SCORE: </th>
-                                                    <td><span class="fw-bolder text-primary h5">{{
-        examination.finalResult[0]
-    }}</span></td>
+                                                    <td>
+                                                        <span class="fw-bolder text-primary h5">
+                                                            {{ examination.finalResult.score }}
+                                                        </span>
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>EXAMINATION PERCENTAGE:</th>
+                                                    <!-- <th>EXAMINATION PERCENTAGE:</th>
                                                     <td> <span class="fw-bolder text-primary h5">{{
             examination.finalResult[1]
-        }}</span></td>
+        }}</span></td> -->
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -168,8 +170,8 @@
                                     <div v-else>
                                         <p> Your entrance examination is scheduled on <b>{{
                                                 scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>
-                                            or you may opt to choose from the date scheduled below: </p>
-                                        <div class="row">
+                                            <!--   or you may opt to choose from the date scheduled below:  --></p>
+                                        <!--  <div class="row">
                                             <div class="col-md"
                                                 v-for="(data, index) in scheduleListData(examination.examinationSchedule.schedule_date)"
                                                 :key="index">
@@ -178,7 +180,7 @@
                                                     {{ data }} at 9:00 AM
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <p>
                                             Please ensure to that you take the examination on the specified date and

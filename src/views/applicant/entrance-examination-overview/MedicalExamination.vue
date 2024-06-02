@@ -210,7 +210,7 @@ export default {
             if (this.alumnia) {
                 className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
 
-                if (this.examination.examinationDetails.is_finish && this.examination.finalResult[2]) {
+                if (this.examination.examinationDetails.is_finish && this.examination.finalResult.result) {
                     className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
                     if (this.medical.medical_result) {
                         if (this.medical.medical_result.is_fit !== 0) {
@@ -224,7 +224,7 @@ export default {
                     if (this.examination.payment.is_approved) {
                         if (this.examination.examinationDetails) {
                             if (this.propsApplicantDetails.course_id !== 3) {
-                                if (this.examination.examinationDetails.is_finish && this.examination.finalResult[2]) {
+                                if (this.examination.examinationDetails.is_finish && this.examination.finalResult.result) {
                                     className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
                                     if (this.medical.medical_result) {
                                         if (this.medical.medical_result.is_fit !== 0) {

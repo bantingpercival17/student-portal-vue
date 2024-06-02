@@ -21,7 +21,8 @@
                             Baliwag Maritime Academy, Inc. 3rd Floor Audio Visual Room.
                             <br>
                             <small class="text-info fw-bolder p-0 m-0">
-                                We highly encourage your Parents/Guardians to attend the Briefing/Orientation. Please wear
+                                We highly encourage your Parents/Guardians to attend the Briefing/Orientation. Please
+                                wear
                                 appropriate
                                 attire (sando, shorts, and slippers are not allowed)
                             </small>
@@ -51,7 +52,7 @@ export default {
         if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments && this.examination.payment) {
             if (this.examination.payment.is_approved) {
                 if (this.examination.examinationDetails) {
-                    if (this.examination.examinationDetails.is_finish && this.examination.finalResult[2]) {
+                    if (this.examination.examinationDetails.is_finish && this.examination.finalResult.result) {
                         className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
                         if (this.orientation.present) {
                             if (this.orientation.present.is_completed) {
