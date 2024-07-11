@@ -84,7 +84,7 @@ import Swal from 'sweetalert2'
 export default {
     name: 'EnrolllmentApplication',
     data() {
-        var schoolYear = []
+        let schoolYear = []
         schoolYear = this.enrollment.academic
         return {
             viewName: 'STEP 2: ENROLLMENT APPLICATION',

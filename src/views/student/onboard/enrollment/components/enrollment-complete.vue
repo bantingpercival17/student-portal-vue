@@ -47,7 +47,6 @@ export default {
         stepper
     },
     data() {
-        const formData = new FormData()
         return {
             viewName: 'STEP 5: ENROLLMENT COMPLETE',
             errors: []

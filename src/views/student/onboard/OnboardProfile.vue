@@ -40,8 +40,8 @@
                             :error="errors.birth_date" />
                     </div>
                     <div class="col-lg-6 col-md-12">
-                        <selectComponentV2 label="Batch" :data="batchList" v-model:value="batchNo" :error="errors.agency"
-                            columName="batch_number" />
+                        <selectComponentV2 label="Batch" :data="batchList" v-model:value="batchNo"
+                            :error="errors.agency" columName="batch_number" />
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <inputComponentV2 label="Mismo account" type="text" v-model:value="mismoAccount"
@@ -163,9 +163,9 @@ export default {
                 this.showLoading(false)
                 console.log(error)
                 if (error.response.status === 422) {
-                    const err = error.response.data
+                    this.error = error.response.data
                 } else {
-                    const err = error.response.data
+                    this.error = error.response.data
                 }
             })
         },

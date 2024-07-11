@@ -20,8 +20,9 @@
                     </ol>
                 </nav>
             </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon">
                     <span class="navbar-toggler-bar bar1 mt-2"></span>
                     <span class="navbar-toggler-bar bar2"></span>
@@ -36,7 +37,8 @@
                                 <ul
                                     class="navbar-nav ms-auto top-menu navbar-nav align-items-center navbar-list mb-3 mb-lg-0">
                                     <li>
-                                        <ul class="m-0 d-flex align-items-center navbar-list list-unstyled px-3 px-md-0">
+                                        <ul
+                                            class="m-0 d-flex align-items-center navbar-list list-unstyled px-3 px-md-0">
                                             <li class="dropdown">
                                                 <a class="nav-link py-0 d-flex align-items-center" href="#"
                                                     id="navbarDropdown3" role="button" data-bs-toggle="dropdown"
@@ -55,8 +57,7 @@
                                                         <hr class="dropdown-divider">
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item"
-                                                            @click="logOut">Logout</a>
+                                                        <a class="dropdown-item" @click="logOut">Logout</a>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -97,7 +98,7 @@ export default {
         }),
         logOut() {
             this.logout()
-            this.$router.replace('/')
+            this.$router.replace('/student/login')
         },
         opensidebar() {
             this.$emit('makefullsidebar', !this.fullsidebar)

@@ -13,7 +13,12 @@
         <div class="d-inline-block w-100">
             <p class="mb-3">
                 You can now Proceed to Enrollment Assessment
+                <router-link class="btn btn-sm btn-outline-primary rounded-pill" aria-current="page"
+                :to="{ name: 'applicant-layout.applicant-enrollment-registration' }">
+                UPDATE INFORMATION
+            </router-link>
             </p>
+
         </div>
     </div>
     <div v-else>

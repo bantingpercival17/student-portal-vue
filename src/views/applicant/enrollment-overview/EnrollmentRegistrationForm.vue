@@ -1,6 +1,6 @@
 <template>
-    <div class="card ms-5 me-5" data-iq-gsap="onStart" data-iq-position-y="70" data-iq-rotate="0" data-iq-trigger="scroll"
-        data-iq-ease="power.out" data-iq-opacity="0">
+    <div class="card ms-5 me-5" data-iq-gsap="onStart" data-iq-position-y="70" data-iq-rotate="0"
+        data-iq-trigger="scroll" data-iq-ease="power.out" data-iq-opacity="0">
         <div class="card-header p-3">
             <div class="header-title">
                 <label for="" class="fw-bolder text-primary h4">STUDENT'S INFORMATION</label>
@@ -28,7 +28,7 @@
                         <div class="col-xl col-md">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>MIDDLE NAME <span class="text-danger">*</span></small>
+                                    <small>MIDDLE NAME</small>
                                 </label>
                                 <input class="form-control form-control-sm border border-primary" v-model="middleName">
                                 <div class="form-check">
@@ -40,17 +40,17 @@
                                     </small>
                                 </div>
                                 <span class="badge bg-danger mt-2" v-if="errors.middle_name">{{ errors.middle_name[0]
-                                }}</span>
+                                    }}</span>
 
                             </div>
                         </div>
                         <div class="col-xl-2 col-md">
                             <input-component label="MIDDLE INITIAL" v-model:value="middleInitial"
-                                :error="errors.middle_initial" />
+                                :error="errors.middle_initial" :required="false" />
                         </div>
                         <div class="col-xl-2 col-md">
                             <input-component label="EXTENSION" v-model:value="extensionName"
-                                :error="errors.extension_name" />
+                                :error="errors.extension_name" :required="false" />
                         </div>
                     </div>
                     <div class="row">
@@ -75,11 +75,12 @@
                                 <input class="form-control form-control-sm border border-primary" type="date"
                                     v-model="birthDate">
                                 <span class="badge bg-danger mt-2" v-if="errors.birth_date">{{ errors.birth_date[0]
-                                }}</span>
+                                    }}</span>
                             </div>
                         </div>
                         <div class="col-xl-9 col-md-8 mb-xl-0">
-                            <input-component label="BIRTH PLACE" v-model:value="birthPlace" :error="errors.birthPlace" />
+                            <input-component label="BIRTH PLACE" v-model:value="birthPlace"
+                                :error="errors.birthPlace" />
                         </div>
                     </div>
                     <div class="row">
@@ -88,7 +89,8 @@
                                 :error="errors.civil_status" />
                         </div>
                         <div class="col-xl col-md-6 mb-xl-0">
-                            <input-component label="NATIONALITY" v-model:value="nationality" :error="errors.nationality" />
+                            <input-component label="NATIONALITY" v-model:value="nationality"
+                                :error="errors.nationality" />
                         </div>
                         <div class="col-xl col-md-6 mb-xl-0">
                             <input-component label="RELIGION" v-model:value="religion" :error="errors.religion" />
@@ -100,7 +102,8 @@
                                 :error="errors.contact_number" />
                         </div>
                         <div class="col-xl-6 col-md-6 mb-xl-0">
-                            <input-component label="EMAIL" v-model:value="personalEmail" :error="errors.personal_email" />
+                            <input-component label="EMAIL" v-model:value="personalEmail"
+                                :error="errors.personal_email" />
 
                         </div>
                     </div>
@@ -174,7 +177,8 @@
                                     </div>
                                     <div class="col-xl-4 col-md-6 ">
                                         <input-component-v2 label="YEAR GRADUATED" type="month"
-                                            v-model:value="seniorHighSchoolYear" :error="errors.junior_high_school_year" />
+                                            v-model:value="seniorHighSchoolYear"
+                                            :error="errors.junior_high_school_year" />
                                     </div>
                                 </div>
                             </div>
@@ -207,8 +211,9 @@
                                     :error="errors.father_contact_number" />
                             </div>
                             <div class="col-xl-9 col-md-6">
-                                <select-component label="Highest Educational Attainment" v-model:value="fatherEducational"
-                                    :error="errors.father_educational_attainment" :data="educationalAttainment" />
+                                <select-component label="Highest Educational Attainment"
+                                    v-model:value="fatherEducational" :error="errors.father_educational_attainment"
+                                    :data="educationalAttainment" />
                             </div>
                             <div class="col-md">
                                 <select-component label="Employment Status" v-model:value="fatherEmployeeStatus"
@@ -244,8 +249,9 @@
 
                             </div>
                             <div class="col-xl-9 col-md-6">
-                                <select-component label="Highest Educational Attainment" v-model:value="motherEducational"
-                                    :error="errors.mother_educational_attainment" :data="educationalAttainment" />
+                                <select-component label="Highest Educational Attainment"
+                                    v-model:value="motherEducational" :error="errors.mother_educational_attainment"
+                                    :data="educationalAttainment" />
                             </div>
                             <div class="col-md">
                                 <select-component label="Employment Status" v-model:value="motherEmployeeStatus"
@@ -281,8 +287,9 @@
 
                             </div>
                             <div class="col-xl-9 col-md-6">
-                                <select-component label="Highest Educational Attainment" v-model:value="guardianEducational"
-                                    :error="errors.guardian_educational_attainment" :data="educationalAttainment" />
+                                <select-component label="Highest Educational Attainment"
+                                    v-model:value="guardianEducational" :error="errors.guardian_educational_attainment"
+                                    :data="educationalAttainment" />
                             </div>
                             <div class="col-md">
                                 <select-component label="Employment Status" v-model:value="guardianEmployeeStatus"
@@ -316,7 +323,8 @@
                             </div>
                             <div class="col-xl-8 col-md-12">
                                 <select-component label="Is your family Beneficiary of DSWD Listahan / 4P's ? "
-                                    v-model:value="beneficiary" :error="errors.dswd_beneficiary" :data="beneficiaryList" />
+                                    v-model:value="beneficiary" :error="errors.dswd_beneficiary"
+                                    :data="beneficiaryList" />
                             </div>
                             <div class="col-xl-6 col-md-12">
                                 <select-component label="HOMEOWNERSHIP" v-model:value="homeOwnership"
@@ -335,8 +343,9 @@
                         <div class="col-xl-12 col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>What devices are available at home that the student can use for learning?<span
-                                            class="text-danger">*</span> <small class="text-warning"> Check all that
+                                    <small>What devices are available at home that the student can use for
+                                        learning?<span class="text-danger">*</span> <small class="text-warning"> Check
+                                            all that
                                             applies</small></small>
                                 </label>
                                 <div class="row me-3 ms-3">
@@ -349,7 +358,7 @@
                                     </div>
                                 </div>
                                 <span class="badge bg-danger mt-2" v-if="errors.available_device">{{
-                                    errors.available_device[0] }}</span>
+                errors.available_device[0] }}</span>
                             </div>
                         </div>
                         <div class="col-xl-12 col-md-12">
@@ -365,51 +374,58 @@
                                             applies</small></small>
                                 </label>
                                 <div class="row me-3 ms-3">
-                                    <div v-for="(item, index1) in providerList" :key="index1" class="form-check col-md-12">
-                                        <input class="form-check-input" type="checkbox" :id="`check_box_provider_` + index1"
-                                            :value="item" v-model="providerAvailable">
+                                    <div v-for="(item, index1) in providerList" :key="index1"
+                                        class="form-check col-md-12">
+                                        <input class="form-check-input" type="checkbox"
+                                            :id="`check_box_provider_` + index1" :value="item"
+                                            v-model="providerAvailable">
                                         <label class="form-check-label" :for="`check_box_provider_` + index1">
                                             {{ item }}
                                         </label>
                                     </div>
                                 </div>
                                 <span class="badge bg-danger mt-2" v-if="errors.available_provider">{{
-                                    errors.available_provider[0] }}</span>
+                errors.available_provider[0] }}</span>
                             </div>
                         </div>
                         <div class="col-xl-12 col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>What Learning Modality do you prefer?<span class="text-danger">*</span> <small
-                                            class="text-warning"> Check all that
+                                    <small>What Learning Modality do you prefer?<span class="text-danger">*</span>
+                                        <small class="text-warning"> Check all that
                                             applies</small></small>
                                 </label>
                                 <div class="row me-3 ms-3">
                                     <div v-for="(item, index2) in learningModalityList" :key="index2"
                                         class="form-check col-md-12">
-                                        <input class="form-check-input" type="checkbox" :id="`check_box_modality_` + index2"
-                                            :value="item" v-model="learningModality">
+                                        <input class="form-check-input" type="checkbox"
+                                            :id="`check_box_modality_` + index2" :value="item"
+                                            v-model="learningModality">
                                         <label class="form-check-label" :for="`check_box_modality_` + index2">
                                             {{ item }}
                                         </label>
                                     </div>
                                 </div>
                                 <span class="badge bg-danger mt-2" v-if="errors.learning_modality">{{
-                                    errors.learning_modality[0] }}</span>
+                errors.learning_modality[0] }}</span>
                             </div>
                         </div>
                         <div class="col-xl-12 col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
-                                    <small>What are the challenges that may affect your learning process through distance
-                                        education?<span class="text-danger">*</span> <small class="text-warning"> Check all
+                                    <small>What are the challenges that may affect your learning process through
+                                        distance
+                                        education?<span class="text-danger">*</span> <small class="text-warning"> Check
+                                            all
                                             that
                                             applies</small></small>
                                 </label>
                                 <div class="row me-3 ms-3">
-                                    <div v-for="(item, index3) in inputsList" :key="index3" class="form-check col-md-12">
-                                        <input class="form-check-input" type="checkbox" :id="`check_box_learning_` + index3"
-                                            :value="item" v-model="distanceLearning">
+                                    <div v-for="(item, index3) in inputsList" :key="index3"
+                                        class="form-check col-md-12">
+                                        <input class="form-check-input" type="checkbox"
+                                            :id="`check_box_learning_` + index3" :value="item"
+                                            v-model="distanceLearning">
                                         <label class="form-check-label" :for="`check_box_learning_` + index3">
                                             {{ item }}
                                         </label>
@@ -464,9 +480,9 @@ export default {
             course: '',
             firstName: '',
             lastName: '',
-            middleName: '',
-            middleInitial: '',
-            extensionName: '',
+            middleName: 'N/A',
+            middleInitial: 'N/A',
+            extensionName: 'N/A',
             gender: '',
             birthDate: '',
             birthPlace: '',

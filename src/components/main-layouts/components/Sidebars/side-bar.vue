@@ -17,7 +17,7 @@
         </div>
         <div class="sidebar-body pt-0 data-scrollbar">
             <div class="sidebar-list">
-                <verticalnav />
+                <verticalnav :compreItem="navItem" />
 
             </div>
             <div class="p-2 "></div>
@@ -27,6 +27,8 @@
 <script>
 import Scrollbar from 'smooth-scrollbar'
 import verticalnav from '@/components/main-layouts/components/Sidebars/vertical-nav.vue'
+import { GET_NAV_ITEM } from '@/store/storeConstants'
+import { mapGetters } from 'vuex'
 export default {
     name: 'Sidebar',
     components: {
@@ -34,6 +36,11 @@ export default {
     },
     props: {
         minisidebar: { type: Boolean, default: false }
+    },
+    computed: {
+        ...mapGetters('auth', {
+            navItem: GET_NAV_ITEM
+        })
     },
     mounted() {
         this.SmoothScrollbar()

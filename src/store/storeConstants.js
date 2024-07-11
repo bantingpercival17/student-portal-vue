@@ -7,6 +7,7 @@ export const LOGOUT_ACTION = '[ACTION] LOGOUT USER'
 export const SET_USER_TOKEN_MUTATION = '[actions] set user token'
 export const TESTING_ACTION = '[ACTION] TESTING'
 export const SHOW_LOADING_MUTATION = '[MUTATION] SHOW LOADING SPINNER'
+export const GET_NAV_ITEM = '[GETTERS] NAV ITEM'
 
 export const GET_USER_IMAGE = '[GETTERS] STUDENT IMAGE'
 export const GET_USER_TOKEN = '[GETTERS] STUDENT TOKEN'

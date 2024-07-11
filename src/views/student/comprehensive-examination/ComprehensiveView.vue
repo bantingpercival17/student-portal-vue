@@ -18,7 +18,6 @@
     </div>
 </template>
 <script>
-import Swal from 'sweetalert2'
 import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, SHOW_LOADING_MUTATION } from '@/store/storeConstants'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'

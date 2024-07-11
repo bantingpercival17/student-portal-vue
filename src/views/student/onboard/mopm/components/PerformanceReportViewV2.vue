@@ -511,16 +511,16 @@ export default {
         },
         getFormatDate(inputDate) {
             // create a new Date object with the input date string
-            var date = new Date(inputDate)
+            const date = new Date(inputDate)
             // define an array of month names
             const monthNames = [
                 'January', 'February', 'March', 'April', 'May', 'June',
                 'July', 'August', 'September', 'October', 'November', 'December'
             ]
             // get the day, month, and year values from the date object
-            var day = date.getDate()
-            var month = monthNames[date.getMonth()] // add 1 to adjust for 0-indexed months
-            var year = date.getFullYear()
+            const day = date.getDate()
+            const month = monthNames[date.getMonth()] // add 1 to adjust for 0-indexed months
+            const year = date.getFullYear()
             // format the date as 'dd/mm/yyyy'
             const formattedDate = month + ' ' + day + ', ' + year
             return formattedDate
