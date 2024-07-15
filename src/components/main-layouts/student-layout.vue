@@ -11,7 +11,7 @@
             <PageHeader :fullsidebar="sidebarmini" @makefullsidebar="onfullsidebar" :pageTitle="headerTitle" />
             <!--Nav End-->
         </div>
-        <div class="conatiner-fluid content-inner mt-6 py-0">
+        <div class="conatiner-fluid p-2 mt-4">
             <router-view />
         </div>
         <PageFooter />

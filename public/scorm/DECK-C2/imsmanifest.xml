@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest identifier="flb6hq5PVuawu" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lom="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+	<metadata>
+		<schema>ADL SCORM</schema>
+		<schemaversion>1.2</schemaversion>
+		<lom:lom>
+			<lom:general>
+				<lom:title>
+					<lom:langstring>C2 - Maintain safe navigational watch</lom:langstring>
+				</lom:title>
+			</lom:general>
+			<lom:educational>
+				<lom:typicallearningtime>
+				<lom:datetime>01:00:00</lom:datetime>
+				</lom:typicallearningtime>
+			</lom:educational>
+		</lom:lom>
+	</metadata>
+	<organizations default="c2_-_maintain_safe_navigational_watch_organization">
+		<organization identifier="c2_-_maintain_safe_navigational_watch_organization">
+
+			<title>C2 - Maintain safe navigational watch</title>
+			<item identifier="5A451FB9-46EC-4623-BBE2-09D39A265FCD" identifierref="resource">
+				<title>C2 - Maintain safe navigational watch</title>
+			</item>
+		</organization>
+	</organizations>
+	<resources>
+		<resource identifier="resource" type="webcontent" adlcp:scormtype="sco" href="res/index.html">
+			<file href="res/data/apple-touch-icon.png"/>
+<file href="res/data/browsersupport.js"/>
+<file href="res/data/favicon.ico"/>
+<file href="res/data/fonts/fnt0.woff"/>
+<file href="res/data/fonts/fnt1.woff"/>
+<file href="res/data/fonts/fnt2.woff"/>
+<file href="res/data/fonts/fnt3.woff"/>
+<file href="res/data/fonts/fnt4.woff"/>
+<file href="res/data/goodbye.html"/>
+<file href="res/data/html5-unsupported.html"/>
+<file href="res/data/html5.png"/>
+<file href="res/data/images/55c6-2fd0-46af-a51b.png"/>
+<file href="res/data/images/img-016e-85b1-73a3-6d77.jpg"/>
+<file href="res/data/images/img-09c3-7c20-85e5-5670.jpg"/>
+<file href="res/data/images/img-10ce-bb0b-86c6-130e.jpg"/>
+<file href="res/data/images/img-4541-a9f0-39f7-d773.jpg"/>
+<file href="res/data/images/img-584b-6085-9d6c-bf72.jpg"/>
+<file href="res/data/images/img-8116-83e3-8550-c115.jpg"/>
+<file href="res/data/images/img-912a-790d-1149-4440.jpg"/>
+<file href="res/data/images/img-a05f-f4ba-d832-e37a.jpg"/>
+<file href="res/data/images/img-a7b1-c332-cf0b-1862.jpg"/>
+<file href="res/data/images/img-ade2-6824-f924-a1a3.jpg"/>
+<file href="res/data/images/img-b225-6485-3351-8c0c.jpg"/>
+<file href="res/data/images/img-c2a1-c70c-8e64-3f2d.jpg"/>
+<file href="res/data/images/img-e84d-5c8a-2033-eee2.jpg"/>
+<file href="res/data/images/img-f10d-b1b4-6f32-33fd.png"/>
+<file href="res/data/lms.js"/>
+<file href="res/data/player.js"/>
+<file href="res/data/videos/video-efbe-3000-7cef-8b59.mp4"/>
+<file href="res/index.html"/>
+
+		</resource>
+	</resources>
+</manifest>

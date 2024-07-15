@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest identifier="VrWBJOVit2QLt" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lom="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+	<metadata>
+		<schema>ADL SCORM</schema>
+		<schemaversion>1.2</schemaversion>
+		<lom:lom>
+			<lom:general>
+				<lom:title>
+					<lom:langstring>C5 - Respond to emergencies</lom:langstring>
+				</lom:title>
+			</lom:general>
+			<lom:educational>
+				<lom:typicallearningtime>
+				<lom:datetime>01:00:00</lom:datetime>
+				</lom:typicallearningtime>
+			</lom:educational>
+		</lom:lom>
+	</metadata>
+	<organizations default="c5_-_respond_to_emergencies_organization">
+		<organization identifier="c5_-_respond_to_emergencies_organization">
+
+			<title>C5 - Respond to emergencies</title>
+			<item identifier="5A451FB9-46EC-4623-BBE2-09D39A265FCD" identifierref="resource">
+				<title>C5 - Respond to emergencies</title>
+			</item>
+		</organization>
+	</organizations>
+	<resources>
+		<resource identifier="resource" type="webcontent" adlcp:scormtype="sco" href="res/index.html">
+			<file href="res/data/apple-touch-icon.png"/>
+<file href="res/data/browsersupport.js"/>
+<file href="res/data/favicon.ico"/>
+<file href="res/data/fonts/fnt0.woff"/>
+<file href="res/data/fonts/fnt1.woff"/>
+<file href="res/data/fonts/fnt2.woff"/>
+<file href="res/data/fonts/fnt3.woff"/>
+<file href="res/data/goodbye.html"/>
+<file href="res/data/html5-unsupported.html"/>
+<file href="res/data/html5.png"/>
+<file href="res/data/images/15fb-4836-4feb-c419.png"/>
+<file href="res/data/images/186e-c616-d871-95c9.png"/>
+<file href="res/data/images/img-09c3-7c20-85e5-5670.jpg"/>
+<file href="res/data/images/img-40b1894452cde29798ecd8841a7176e280db69de.jpg"/>
+<file href="res/data/images/img-5f7d-cf32-5d69-dc10.jpg"/>
+<file href="res/data/images/img-7be1dfdc5f8a0eb60ad3660b8eb9020380553b90.jpg"/>
+<file href="res/data/images/img-9205-fe45-34fe-6853.jpg"/>
+<file href="res/data/images/img-a2df-ee9a-da78-b898.png"/>
+<file href="res/data/images/img-ae8ce26ef465c3dcf5dc30699b152a57fdde608c.jpg"/>
+<file href="res/data/images/img-c2a1-c70c-8e64-3f2d.jpg"/>
+<file href="res/data/lms.js"/>
+<file href="res/data/player.js"/>
+<file href="res/index.html"/>
+
+		</resource>
+	</resources>
+</manifest>
