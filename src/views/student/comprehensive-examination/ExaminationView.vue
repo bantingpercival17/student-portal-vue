@@ -11,11 +11,11 @@
         </p>
 
         <div class="scorm-content-page">
-            <div class="content-button mt-2 mb-2">
+            <iframe id="captureIframe" :src="scormPackageUrl" class="scorm-container" ref="scormIframe"></iframe>
+             <div class="content-button mt-2 mb-2">
                 <button class="btn btn-primary btn-sm" @click="storeResult" :disabled="!isEnabled">NEXT
                     QUESTION</button>
             </div>
-            <iframe id="captureIframe" :src="scormPackageUrl" class="scorm-container" ref="scormIframe"></iframe>
         </div>
     </div>
 </template>
@@ -67,15 +67,18 @@ export default {
         },
         storeResult() {
             const htmlDocuments = this.$refs.scormIframe.contentWindow.document
+           /*  const score = htmlDocuments.getElementsByClassName('published-rich-text')
+            console.log(score) */
             const score = htmlDocuments.getElementsByClassName('published-rich-text')[4].outerText
-            const passingScore = htmlDocuments.getElementsByClassName('published-rich-text')[2].outerText
             const parts = score.split(' ')
-            const finalScore = parts[0]
+            const finalScore1 = parts[0]
+            console.log(finalScore1)
+            const finalScore = finalScore1
             const form = {
                 result: finalScore,
                 competence: this.scormPackage.id
             }
-            axios.post('/student/comprehensive-examination/', form, {
+            axios.post('/student/comprehensive-examination/store-result', form, {
                 headers: {
                     Authorization: 'Bearer ' + this.token
                 }
@@ -91,7 +94,7 @@ export default {
                 }
             }).then((response) => {
                 this.scormPackage = response.data.examination
-                this.scormPackageUrl = '' + this.scormPackage.file_name + '/res/index.html'
+                this.scormPackageUrl = 'http://bma.edu.ph/' + this.scormPackage.file_name + '/res/index.html'
                 // this.scormPackageUrl = "/COMPRE DECK/C3 - Use of radar and ARPA to maintain safety of navigation/res/index.html"
                 this.isLoading = false
             }).catch((error) => {

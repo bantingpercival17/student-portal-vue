@@ -65,7 +65,7 @@
           <div class="card-body">
             <p class="fw-bolder text-primary">EXAMINATION SCHEDULED</p>
             <p>
-              Your entrance examination is scheduled on
+              Your comprehensive examination is scheduled on
               <b>{{ scheduledFormat(examinationData) }}</b
               >.
             </p>
