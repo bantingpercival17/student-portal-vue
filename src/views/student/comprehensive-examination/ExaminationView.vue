@@ -5,16 +5,35 @@
     <div v-else>
         <p class=" text-primary">
             <span class="display-6 fw-bolder"> {{ scormPackage.competence_code }}: {{ scormPackage ?
-        scormPackage.competence_name : '' }}</span>
+                scormPackage.competence_name : '' }}</span>
             <br>
             <span class="fw-bolder text-muted h6">{{ scormPackage.function }}</span>
         </p>
 
-        <div class="scorm-content-page">
+        <div v-if="maxAttemps > attemps.length" class="scorm-content-page">
             <iframe id="captureIframe" :src="scormPackageUrl" class="scorm-container" ref="scormIframe"></iframe>
-             <div class="content-button mt-2 mb-2">
+            <div class="content-button mt-2 mb-2">
                 <button class="btn btn-primary btn-sm" @click="storeResult" :disabled="!isEnabled">NEXT
                     QUESTION</button>
+            </div>
+        </div>
+        <div v-else class="no-more-attemps">
+            <div class="card">
+                <div class="card-body">
+                    <label for="" class="text-info h4 fw-bolder">All attempts for this exam have been exhausted.</label>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>SCORE</th>
+                            </tr>
+                        </thead>
+                        <tbody v-if="attemps.length > 0">
+                            <tr v-for="attemp in attemps" :key="attemp.id">
+                                <th>{{ attemp.result }}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -34,7 +53,9 @@ export default {
             scormScore: null,
             scorm: null,
             isEnabled: false,
-            tokenItem: null
+            tokenItem: null,
+            maxAttemps: 3,
+            attemps: null
         }
     },
     computed: {
@@ -67,8 +88,8 @@ export default {
         },
         storeResult() {
             const htmlDocuments = this.$refs.scormIframe.contentWindow.document
-           /*  const score = htmlDocuments.getElementsByClassName('published-rich-text')
-            console.log(score) */
+            /*  const score = htmlDocuments.getElementsByClassName('published-rich-text')
+             console.log(score) */
             const score = htmlDocuments.getElementsByClassName('published-rich-text')[4].outerText
             const parts = score.split(' ')
             const finalScore1 = parts[0]
@@ -94,6 +115,7 @@ export default {
                 }
             }).then((response) => {
                 this.scormPackage = response.data.examination
+                this.attemps = response.data.student_attemps
                 this.scormPackageUrl = 'http://bma.edu.ph/' + this.scormPackage.file_name + '/res/index.html'
                 // this.scormPackageUrl = "/COMPRE DECK/C3 - Use of radar and ARPA to maintain safety of navigation/res/index.html"
                 this.isLoading = false
@@ -130,6 +152,7 @@ export default {
                 if (data) {
                     const valueOfM = data.S.m
                     if (valueOfM === 'completed') {
+                        this.storeResult()
                         this.isEnabled = true
                     }
                 }
