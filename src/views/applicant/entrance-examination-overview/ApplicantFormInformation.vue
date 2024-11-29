@@ -1,6 +1,6 @@
 <template>
-    <div class="card ms-5 me-5" data-iq-gsap="onStart" data-iq-position-y="70" data-iq-rotate="0" data-iq-trigger="scroll"
-        data-iq-ease="power.out" data-iq-opacity="0">
+    <div class="card ms-5 me-5" data-iq-gsap="onStart" data-iq-position-y="70" data-iq-rotate="0"
+        data-iq-trigger="scroll" data-iq-ease="power.out" data-iq-opacity="0">
         <div class="card-header p-3">
             <div class="header-title">
                 <label for="" class="fw-bolder text-primary h4">STUDENT'S INFORMATION</label>
@@ -26,12 +26,44 @@
                             <input-component label="FIRST NAME" v-model:value="firstName" :error="errors.first_name" />
                         </div>
                         <div class="col-xl col-md">
-                            <input-component label="middle name" v-model:value="middleName" :error="errors.middle_name"
-                                :required="false" />
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>MIDDLE NAME</small>
+                                </label>
+                                <input class="form-control form-control-sm border border-primary" v-model="middleName"
+                                    :disabled="noMiddleName">
+                                <div class="form-check">
+                                    <input class="form-check-input input-middle-name" type="checkbox"
+                                        v-model="noMiddleName" id="flexCheckDefault1">
+                                    <small class="form-check-label validate-checkbox" data-input="input-middle-name"
+                                        for="flexCheckDefault1">
+                                        I don't have Middle name
+                                    </small>
+                                </div>
+                                <span class="badge bg-danger mt-2" v-if="errors.middle_name">
+                                    {{ errors.middle_name[0] }}
+                                </span>
+                            </div>
                         </div>
                         <div class="col-xl-2 col-md">
-                            <input-component label="EXTENSION" v-model:value="extensionName" :error="errors.extension_name"
-                                :required="false" />
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>EXTENSION NAME</small>
+                                </label>
+                                <input class="form-control form-control-sm border border-primary"
+                                    v-model="extensionName" :disabled="noExtensionName">
+                                <div class="form-check">
+                                    <input class="form-check-input input-middle-name" type="checkbox"
+                                        v-model="noExtensionName" id="flexCheckDefault1">
+                                    <small class="form-check-label validate-checkbox" data-input="input-middle-name"
+                                        for="flexCheckDefault1">
+                                        I don't have Extension Name
+                                    </small>
+                                </div>
+                                <span class="badge bg-danger mt-2" v-if="errors.extension_name">
+                                    {{ errors.extension_name[0] }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -55,18 +87,20 @@
                                 :error="errors.birth_date" />
                         </div>
                         <div class="col-xl-9 col-md-8 mb-xl-0">
-                            <input-component label="BIRTH PLACE" v-model:value="birthPlace" :error="errors.birthPlace" />
+                            <input-component label="BIRTH PLACE" v-model:value="birthPlace"
+                                :error="errors.birthPlace" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xl col-md-6 mb-xl-0">
-                            <select-component label="Civil Status" v-model:value="civilStatus" :error="errors.civil_status"
-                                :data="civilStatusList" />
+                            <select-component label="Civil Status" v-model:value="civilStatus"
+                                :error="errors.civil_status" :data="civilStatusList" />
                             <!-- <input-component label="CIVIL STATUS" v-model:value="civilStatus"
                                 :error="errors.civil_status" /> -->
                         </div>
                         <div class="col-xl col-md-6 mb-xl-0">
-                            <input-component label="NATIONALITY" v-model:value="nationality" :error="errors.nationality" />
+                            <input-component label="NATIONALITY" v-model:value="nationality"
+                                :error="errors.nationality" />
                         </div>
                         <div class="col-xl col-md-6 mb-xl-0">
                             <input-component label="RELIGION" v-model:value="religion" :error="errors.religion" />
@@ -78,11 +112,38 @@
                                 :error="errors.contact_number" />
                         </div>
                         <div class="col-xl-6 col-md-6 mb-xl-0">
-                            <input-component label="EMAIL" v-model:value="personalEmail" :error="errors.personal_email" />
+                            <input-component label="EMAIL" v-model:value="personalEmail"
+                                :error="errors.personal_email" />
 
                         </div>
                     </div>
                     <label for="" class="text-primary fw-bolder h4">ADDRESS</label>
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>PROVINCE <span class="text-danger">*</span></small>
+                                </label>
+                                <select v-model="province" class="form-select form-select-sm border border-primary">
+                                    <option value="">Select PROVINCE</option>
+                                    <option v-for="item in provinceList" :key="item" :value="item.code">
+                                        {{ item.name }}</option>
+                                </select>
+                                <span class="badge bg-danger mt-2" v-if="errors.province">{{ errors.province[0]
+                                    }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <input-component label="MUNICIPALITY" v-model:value="municipality"
+                                :error="errors.municipality" />
+                        </div>
+                        <div class="col-xl-6 col-md-6 mb-xl-0">
+                            <input-component label="BARANGAY" v-model:value="barangay" :error="errors.barangay" />
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <input-component label="ZIP CODE" v-model:value="zip_code" :error="errors.zip_code" />
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-xl-6 col-md-6 mb-xl-0">
                             <input-component label="HOUSE NO. / STREET / BLDG NO" v-model:value="street"
@@ -152,7 +213,8 @@
                                     </div>
                                     <div class="col-xl-4 col-md-6 ">
                                         <input-component-v2 label="YEAR GRADUATED" type="month"
-                                            v-model:value="seniorHighSchoolYear" :error="errors.junior_high_school_year" />
+                                            v-model:value="seniorHighSchoolYear"
+                                            :error="errors.junior_high_school_year" />
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +225,8 @@
                     <br>
                     <label for="" class="text-primary fw-bolder h4">PARENT DETAILS</label>
                     <div class="father-information">
-                        <label for="example-text-input" class="form-control-label text-info"><b>Father's Name</b></label>
+                        <label for="example-text-input" class="form-control-label text-info"><b>Father's
+                                Name</b></label>
                         <div class="row">
                             <div class="col-xl-4 col-md-6 ">
                                 <input-component label="LAST NAME" v-model:value="fatherLastName"
@@ -184,8 +247,9 @@
                                     :error="errors.father_contact_number" />
                             </div>
                             <div class="col-xl-9 col-md-6">
-                                <select-component label="Highest Educational Attainment" v-model:value="fatherEducational"
-                                    :error="errors.father_educational_attainment" :data="educationalAttainment" />
+                                <select-component label="Highest Educational Attainment"
+                                    v-model:value="fatherEducational" :error="errors.father_educational_attainment"
+                                    :data="educationalAttainment" />
                             </div>
                             <div class="col-md">
                                 <select-component label="Employment Status" v-model:value="fatherEmployeeStatus"
@@ -198,7 +262,8 @@
                         </div>
                     </div>
                     <div class="mother-maiden">
-                        <label for="example-text-input" class="form-control-label text-info"><b>Mother's Maiden Name</b></label>
+                        <label for="example-text-input" class="form-control-label text-info"><b>Mother's Maiden
+                                Name</b></label>
                         <div class="row">
                             <div class="col-xl-4 col-md-6F">
                                 <input-component label="LAST  NAME" v-model:value="motherLastName"
@@ -220,8 +285,9 @@
 
                             </div>
                             <div class="col-xl-9 col-md-6">
-                                <select-component label="Highest Educational Attainment" v-model:value="motherEducational"
-                                    :error="errors.mother_educational_attainment" :data="educationalAttainment" />
+                                <select-component label="Highest Educational Attainment"
+                                    v-model:value="motherEducational" :error="errors.mother_educational_attainment"
+                                    :data="educationalAttainment" />
                             </div>
                             <div class="col-md">
                                 <select-component label="Employment Status" v-model:value="motherEmployeeStatus"
@@ -234,7 +300,8 @@
                         </div>
                     </div>
                     <div class="guardian-informtion">
-                        <label for="example-text-input" class="form-control-label text-info"><b>Guardian's Name</b></label>
+                        <label for="example-text-input" class="form-control-label text-info"><b>Guardian's
+                                Name</b></label>
                         <div class="row">
                             <div class="col-xl-4 col-md-6F">
                                 <input-component label="LAST  NAME" v-model:value="guardianLastName"
@@ -256,8 +323,9 @@
 
                             </div>
                             <div class="col-xl-9 col-md-6">
-                                <select-component label="Highest Educational Attainment" v-model:value="guardianEducational"
-                                    :error="errors.guardian_educational_attainment" :data="educationalAttainment" />
+                                <select-component label="Highest Educational Attainment"
+                                    v-model:value="guardianEducational" :error="errors.guardian_educational_attainment"
+                                    :data="educationalAttainment" />
                             </div>
                             <div class="col-md">
                                 <select-component label="Employment Status" v-model:value="guardianEmployeeStatus"
@@ -290,12 +358,26 @@ export default {
         selectComponent,
         inputComponentV2
     },
+    watch: {
+        noMiddleName(newValue) {
+            if (newValue) {
+                this.middleName = '' // Clear middleName if checkbox is checked
+            }
+        },
+        noExtensionName(newValue) {
+            if (newValue) {
+                this.extensionName = '' // Clear middleName if checkbox is checked
+            }
+        }
+    },
     data() {
         const element = []
         for (let index = 100; index < 242; index++) {
             element.push(index)
         }
         const inputValidation = {
+            noMiddleName: false,
+            noExtensionName: false,
             isLoading: false,
             errors: [],
             educationaldetails: [],
@@ -360,7 +442,10 @@ export default {
             heightList: [
                 '157.48', '160.02', '162.56', '165.1', '167.64', '170.18', '172.72', '175.26', '177.8', '180.34', '182.88', '185.42', '187.96', '190.5', '193.4', '195.58', '198.12', '200.66', '203.2', '205.74', '208.28', '210.82'
             ],
-            weightList: element
+            weightList: element,
+            provinceList: [],
+            municipalityList: [],
+            barangayList: []
         }
         return inputValidation
     },
@@ -369,7 +454,7 @@ export default {
             token: GET_USER_TOKEN
         })
     },
-    mounted() {
+    async mounted() {
         axios.get('applicant/information', {
             headers: {
                 Authorization: 'Bearer ' + this.token
@@ -446,6 +531,8 @@ export default {
             console.log(error)
             console.log(error.response)
         })
+        this.provinceList = await this.getProvince()
+        console.log(this.provinceList)
     },
     methods: {
         ...mapActions('alert', {
@@ -537,6 +624,17 @@ export default {
                 this.showLoading(false)
                 this.errorAlert(error)
             })
+        },
+        async getProvince() {
+            const link = 'https://psgc.gitlab.io/api/provinces/'
+            const province = await axios.get(link)
+                .then(response => {
+                    console.log(response.data)
+                })
+                .catch(error => {
+                    console.error('Error:', error)
+                })
+            return province
         }
     }
 }
