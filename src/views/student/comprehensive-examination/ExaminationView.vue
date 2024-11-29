@@ -10,30 +10,11 @@
             <span class="fw-bolder text-muted h6">{{ scormPackage.function }}</span>
         </p>
 
-        <div v-if="maxAttemps > attemps.length" class="scorm-content-page">
+        <div class="scorm-content-page">
             <iframe id="captureIframe" :src="scormPackageUrl" class="scorm-container" ref="scormIframe"></iframe>
             <div class="content-button mt-2 mb-2">
                 <button class="btn btn-primary btn-sm" @click="storeResult" :disabled="!isEnabled">NEXT
                     QUESTION</button>
-            </div>
-        </div>
-        <div v-else class="no-more-attemps">
-            <div class="card">
-                <div class="card-body">
-                    <label for="" class="text-info h4 fw-bolder">All attempts for this exam have been exhausted.</label>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>SCORE</th>
-                            </tr>
-                        </thead>
-                        <tbody v-if="attemps.length > 0">
-                            <tr v-for="attemp in attemps" :key="attemp.id">
-                                <th>{{ attemp.result }}</th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>
@@ -152,8 +133,8 @@ export default {
                 if (data) {
                     const valueOfM = data.S.m
                     if (valueOfM === 'completed') {
-                        this.storeResult()
                         this.isEnabled = true
+                        // this.storeResult()
                     }
                 }
             }, 1000)
