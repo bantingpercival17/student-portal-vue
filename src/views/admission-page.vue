@@ -45,8 +45,8 @@
                             <span class="fw-bolder text-danger">REGISTRATION FAILED:</span>
                             <p class="mt-2" v-html="errors.message"></p>
                         </div>
-                        <div v-if="networkError.code" class="alert alert-left alert-danger alert-dismissible fade show mt-5"
-                            role="alert">
+                        <div v-if="networkError.code"
+                            class="alert alert-left alert-danger alert-dismissible fade show mt-5" role="alert">
                             <span class="fw-bolder">{{ networkError.code }}</span>
                             <p class="mt-3" v-html="networkError.message"> </p>
                         </div>
@@ -61,7 +61,8 @@
                                         :error="errors.lastName" />
                                 </div>
                                 <div class="col-md-12">
-                                    <input-component label="email" v-model:value="formData.email" :error="errors.email" />
+                                    <input-component label="email" v-model:value="formData.email"
+                                        :error="errors.email" />
                                 </div>
                                 <div class="col-md-12">
                                     <input-component-v2 type="date" label="birthday" v-model:value="formData.birthday"
@@ -126,8 +127,8 @@
             </div>
         </div>
     </div>
-    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl" ariaLabelled="exampleModalLabel"
-        :ariaHidden="true" contentrole="document">
+    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl"
+        ariaLabelled="exampleModalLabel" :ariaHidden="true" contentrole="document">
         <model-header :dismissable="true">
             <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">TERMS & AGREEMENT
             </h5>
@@ -442,11 +443,15 @@ export default {
                 this.errorMessage = error
                 if (error.code === 'ERR_NETWORK') {
                     this.networkError = error
-                    this.errorAlert(error)
+                    this.infoAlert(error)
                 } else {
                     if (error.response) {
                         if (error.response.status === 422) {
                             this.errors = error.response.data.errors
+                            const message = { title: 'The given data was invalid', message: 'Please fill-up the Fields' }
+                            this.infoAlert(message)
+                        } else {
+                            this.infoAlert(error.message)
                         }
                     }
                 }

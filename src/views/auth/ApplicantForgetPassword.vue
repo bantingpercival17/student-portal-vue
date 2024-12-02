@@ -89,7 +89,7 @@ export default {
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
-                text: data.message,
+                text: "We've sent you an email with instructions to reset your password",
                 confirmButtonText: 'OK'
             })
         }
