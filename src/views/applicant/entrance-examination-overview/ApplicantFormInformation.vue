@@ -124,21 +124,47 @@
                                 <label for="example-text-input" class="form-control-label fw-bolder">
                                     <small>PROVINCE <span class="text-danger">*</span></small>
                                 </label>
-                                <select v-model="province" class="form-select form-select-sm border border-primary">
+                                <select v-model="province" class="form-select form-select-sm border border-primary"
+                                    @change="setMunicipality" id='provinceSelect'>
                                     <option value="">Select PROVINCE</option>
-                                    <option v-for="item in provinceList" :key="item" :value="item.code">
-                                        {{ item.name }}</option>
+                                    <option v-for="item in provinceList" :key="item.code" :value="item.name"
+                                        :selected="item.name === province" :data-value="item.code">
+                                        {{ item.name }}
+                                    </option>
                                 </select>
-                                <span class="badge bg-danger mt-2" v-if="errors.province">{{ errors.province[0]
-                                    }}</span>
+                                <span class="badge bg-danger mt-2" v-if="errors.province">
+                                    {{ errors.province[0] }}
+                                </span>
                             </div>
                         </div>
                         <div class="col-xl-4 col-md-6 mb-xl-0">
-                            <input-component label="MUNICIPALITY" v-model:value="municipality"
-                                :error="errors.municipality" />
+                            <label for="example-text-input" class="form-control-label fw-bolder">
+                                <small>MUNICIPALITY <span class="text-danger">*</span></small>
+                            </label>
+                            <select v-model="municipality" class="form-select form-select-sm border border-primary"
+                                @change="setBarangay">
+                                <option value="">Select MUNICIPALITY</option>
+                                <option v-for="item in municipalityList" :key="item" :value="item.name"
+                                    :data-value="item.code">
+                                    {{ item.name }}</option>
+                            </select>
+                            <span class="badge bg-danger mt-2" v-if="errors.municipality">
+                                {{ errors.municipality[0] }}
+                            </span>
                         </div>
-                        <div class="col-xl-6 col-md-6 mb-xl-0">
-                            <input-component label="BARANGAY" v-model:value="barangay" :error="errors.barangay" />
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <label for="example-text-input" class="form-control-label fw-bolder">
+                                <small>BARANGAY <span class="text-danger">*</span></small>
+                            </label>
+                            <select v-model="barangay" class="form-select form-select-sm border border-primary">
+                                <option value="">Select BARANGAY</option>
+                                <option v-for="item in barangayList" :key="item" :value="item.name"
+                                    :data-value="item.code">
+                                    {{ item.name }}</option>
+                            </select>
+                            <span class="badge bg-danger mt-2" v-if="errors.barangay">
+                                {{ errors.barangay[0] }}
+                            </span>
                         </div>
                         <div class="col-xl-4 col-md-6 mb-xl-0">
                             <input-component label="ZIP CODE" v-model:value="zip_code" :error="errors.zip_code" />
@@ -344,6 +370,7 @@
     </div>
 </template>
 <script>
+/* eslint-disable no-unused-expressions, no-undef */
 import { GET_USER_TOKEN, SHOW_LOADING_MUTATION } from '@/store/storeConstants'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import axios from 'axios'
@@ -531,8 +558,7 @@ export default {
             console.log(error)
             console.log(error.response)
         })
-        this.provinceList = await this.getProvince()
-        console.log(this.provinceList)
+        this.fetchAddress()
     },
     methods: {
         ...mapActions('alert', {
@@ -625,16 +651,50 @@ export default {
                 this.errorAlert(error)
             })
         },
-        async getProvince() {
-            const link = 'https://psgc.gitlab.io/api/provinces/'
-            const province = await axios.get(link)
+        async fetchAddress() {
+            if (this.province !== '') {
+                console.log('Working')
+                this.setProvince()
+            } else {
+                this.setProvince()
+                const selectElement = document.getElementById('provinceSelect')
+                console.log('Select Element:', selectElement)
+                console.log('Options:', selectElement.value)
+                console.log(selectElement.selectedIndex)
+                /*    const selectedValue = selectElement.value
+                   const selectedCode =
+                       selectElement.options[selectElement.selectedIndex]?.dataset?.value
+                   console.log('Selected Value:', selectedValue)
+                   console.log('Selected Code (data-value):', selectedCode) */
+            }
+        },
+        async setProvince() {
+            const link = '/provinces/'
+            this.provinceList = await this.fetchApi(link)
+        },
+        async setMunicipality(event) {
+            const provinceCode = event.target.options[event.target.selectedIndex].dataset.value
+            const link = '/provinces/' + provinceCode.trim() + '/cities-municipalities/'
+            console.log(link)
+            this.municipalityList = await this.fetchApi(link)
+            console.log(this.municipalityList)
+        },
+        async setBarangay(event) {
+            const data = event.target.options[event.target.selectedIndex].dataset.value
+            const link = '/municipalities/' + data.trim() + '/barangays/'
+            console.log(link)
+            this.barangayList = await this.fetchApi(link)
+        },
+        async fetchApi(link) {
+            let value = []
+            await axios.get('https://psgc.gitlab.io/api' + link.trim())
                 .then(response => {
-                    console.log(response.data)
+                    value = response.data
                 })
                 .catch(error => {
                     console.error('Error:', error)
                 })
-            return province
+            return value
         }
     }
 }
