@@ -166,11 +166,16 @@
                                 {{ errors.barangay[0] }}
                             </span>
                         </div>
+                        <div class="col-xl-8 col-md-6 mb-xl-0">
+                            <input-component label="HOUSE NO. / STREET / BLDG NO" v-model:value="street"
+                                :error="errors.street" />
+                        </div>
                         <div class="col-xl-4 col-md-6 mb-xl-0">
-                            <input-component label="ZIP CODE" v-model:value="zip_code" :error="errors.zip_code" />
+                            <input-component label="ZIP CODE" v-model:value="zip_code" :error="errors.zip_code"
+                                disable="true"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <!--  <div class="row">
                         <div class="col-xl-6 col-md-6 mb-xl-0">
                             <input-component label="HOUSE NO. / STREET / BLDG NO" v-model:value="street"
                                 :error="errors.street" />
@@ -188,7 +193,7 @@
                         <div class="col-xl-4 col-md-6 mb-xl-0">
                             <input-component label="ZIP CODE" v-model:value="zip_code" :error="errors.zip_code" />
                         </div>
-                    </div>
+                    </div> -->
                     <label for="" class="text-primary fw-bolder h4">EDUCATIONAL DETAILS</label>
                     <div v-if="educationaldetails" class="educational-details">
                         <div class="Elementary School">
@@ -490,10 +495,14 @@ export default {
             const account = response.data.data
             const data = response.data.data.applicant
             if (!data) {
-                const accountDetails = JSON.parse(account.json_details)
-                this.firstName = accountDetails.first_name
-                this.lastName = accountDetails.last_name
-                this.birthDate = accountDetails.birthday
+                if (account.json_details) {
+                    const accountDetails = JSON.parse(account.json_details)
+                    this.firstName = accountDetails.first_name
+                    this.lastName = accountDetails.last_name
+                    this.birthDate = accountDetails.birthday
+                }
+
+                this.setProvince()
             }
             this.contactNumber = account.contact_number
             this.personalEmail = account.email
@@ -552,13 +561,14 @@ export default {
                 this.seniorHighSchoolName = data.senior_high_school_name
                 this.seniorHighSchoolAddress = data.senior_high_school_address
                 this.seniorHighSchoolYear = this.dateFormat(data.senior_high_school_year)
+                this.fetchAddress()
             }
+
             this.isLoading = false
         }).catch((error) => {
             console.log(error)
             console.log(error.response)
         })
-        this.fetchAddress()
     },
     methods: {
         ...mapActions('alert', {
@@ -652,49 +662,58 @@ export default {
             })
         },
         async fetchAddress() {
-            if (this.province !== '') {
-                console.log('Working')
-                this.setProvince()
-            } else {
-                this.setProvince()
-                const selectElement = document.getElementById('provinceSelect')
-                console.log('Select Element:', selectElement)
-                console.log('Options:', selectElement.value)
-                console.log(selectElement.selectedIndex)
-                /*    const selectedValue = selectElement.value
-                   const selectedCode =
-                       selectElement.options[selectElement.selectedIndex]?.dataset?.value
-                   console.log('Selected Value:', selectedValue)
-                   console.log('Selected Code (data-value):', selectedCode) */
+            await this.setProvince()
+            let value = await this.getCode('/provinces/', this.province)
+            this.municipalityList = await this.fetchApi(`/provinces/${value}/cities-municipalities/`)
+            value = await this.getCode(`/provinces/${value}/cities-municipalities/`, this.municipality)
+            this.barangayList = await this.fetchApi(`/municipalities/${value}/barangays/`)
+        },
+
+        async setProvince() {
+            this.provinceList = await this.fetchApi('/provinces/')
+        },
+
+        async setMunicipality(event) {
+            const provinceCode = this.getSelectedValue(event)
+            this.municipalityList = await this.fetchApi(`/provinces/${provinceCode}/cities-municipalities/`)
+        },
+
+        async setBarangay(event) {
+            // Set Zip code
+            try {
+                const link = `https://nominatim.openstreetmap.org/search?q=${this.municipality},+${this.province},+Philippines&format=json&addressdetails=1`
+                const response = await axios.get(link)
+                if (response.data) {
+                    const address = response.data[0].address
+                    this.zip_code = address.postcode
+                    console.log(address)
+                }
+            } catch (error) {
+                console.error('Error:', error)
+                return []
+            }
+            const municipalityCode = this.getSelectedValue(event)
+            this.barangayList = await this.fetchApi(`/municipalities/${municipalityCode}/barangays/`)
+        },
+
+        async fetchApi(link) {
+            try {
+                const response = await axios.get(`https://psgc.gitlab.io/api${link.trim()}`)
+                return response.data
+            } catch (error) {
+                console.error('Error:', error)
+                return []
             }
         },
-        async setProvince() {
-            const link = '/provinces/'
-            this.provinceList = await this.fetchApi(link)
+
+        async getCode(link, name) {
+            const list = await this.fetchApi(link)
+            const match = list.find(item => item.name === name)
+            return match ? match.code : null
         },
-        async setMunicipality(event) {
-            const provinceCode = event.target.options[event.target.selectedIndex].dataset.value
-            const link = '/provinces/' + provinceCode.trim() + '/cities-municipalities/'
-            console.log(link)
-            this.municipalityList = await this.fetchApi(link)
-            console.log(this.municipalityList)
-        },
-        async setBarangay(event) {
-            const data = event.target.options[event.target.selectedIndex].dataset.value
-            const link = '/municipalities/' + data.trim() + '/barangays/'
-            console.log(link)
-            this.barangayList = await this.fetchApi(link)
-        },
-        async fetchApi(link) {
-            let value = []
-            await axios.get('https://psgc.gitlab.io/api' + link.trim())
-                .then(response => {
-                    value = response.data
-                })
-                .catch(error => {
-                    console.error('Error:', error)
-                })
-            return value
+
+        getSelectedValue(event) {
+            return event.target.options[event.target.selectedIndex].dataset.value.trim()
         }
     }
 }
