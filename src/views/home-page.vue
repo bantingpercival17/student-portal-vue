@@ -230,8 +230,8 @@
                     width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
                         stroke-linecap="round" stroke-linejoin="round"></circle>
-                    <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round"></path>
+                    <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg></a>
         </div>
     </div>
@@ -242,18 +242,28 @@
                 <div class="row">
                     <section class="editors  mar-bot">
                         <div class="card text-center mt-5 ">
-                            <h4 class="fw-bolder fs-1 text-primary mb-2 mt-1">WELCOME TO THE BALIWAG MARITIME ACADEMY</h4>
+                            <h4 class="fw-bolder fs-1 text-primary mb-2 mt-1">WELCOME TO THE BALIWAG MARITIME ACADEMY
+                            </h4>
                             <h6 class="fw-bolder text-primary mb-2">WHERE YOUR DREAMS BECOME A REALITY OF SUCCESS</h6>
-                            <p class="m-3 text-black">At Baliwag Maritime Academy, we are dedicated to nurturing the next
-                                generation of maritime professionals through comprehensive education and practical training.
-                                Our goal is to equip our students with the skills, knowledge, and competence required for a
+                            <p class="m-3 text-black">At Baliwag Maritime Academy, we are dedicated to nurturing the
+                                next
+                                generation of maritime professionals through comprehensive education and practical
+                                training.
+                                Our goal is to equip our students with the skills, knowledge, and competence required
+                                for a
                                 successful career at sea. We are more than just a school; we are a community of
-                                professionals with a shared vision: to chart success and transform dreams into realities.
-                                Whether you aspire to be a marine Deck or Enginner Office, or a seafarer, we have the right
-                                program for you. Our course are accredited by CHED and MARINA, and our curriculum is aligned
-                                with the latest industry standards and best practices. Additionally, we provide scholarship
-                                opportunities for deserving students. Join us today and discover how we can help you achieve
-                                your goals and reach your full potential in the maritime industry. Baliwag Maritime Academy:
+                                professionals with a shared vision: to chart success and transform dreams into
+                                realities.
+                                Whether you aspire to be a marine Deck or Enginner Office, or a seafarer, we have the
+                                right
+                                program for you. Our course are accredited by CHED and MARINA, and our curriculum is
+                                aligned
+                                with the latest industry standards and best practices. Additionally, we provide
+                                scholarship
+                                opportunities for deserving students. Join us today and discover how we can help you
+                                achieve
+                                your goals and reach your full potential in the maritime industry. Baliwag Maritime
+                                Academy:
                                 Charting Success, Transforming Dreams into Realities
                             </p>
                         </div>
@@ -305,27 +315,32 @@
                                     <div class="col-sm">
                                         <h3 class="text-info fw-bolder">KNOWLEDGE</h3><br>
                                         <p class="text-black">
-                                            Knowledge refers to the acquisitio of information and practical skills that are
+                                            Knowledge refers to the acquisitio of information and practical skills that
+                                            are
                                             necessary for a successful career in the maritime industry.
                                         </p>
                                     </div>
                                     <div class="col-sm">
                                         <h3 class="text-danger fw-bolder">DISCIPLINE</h3><br>
                                         <p class="text-black">
-                                            Discipline refers to the ability to follow rules and regulations, as well as to
+                                            Discipline refers to the ability to follow rules and regulations, as well as
+                                            to
                                             maintain a high level of professionalism earned through regimented training.
                                         </p>
                                     </div>
                                     <div class="col-sm">
                                         <h3 class="text-warning fw-bolder">EXCELLENCE</h3><br>
                                         <p class="text-black">
-                                            Excellence refers to the pursuit of the highest standards of performance in all
-                                            aspects of shipboard work. Commitment to lifelong learning, service to community
+                                            Excellence refers to the pursuit of the highest standards of performance in
+                                            all
+                                            aspects of shipboard work. Commitment to lifelong learning, service to
+                                            community
                                             and care of environment.
                                         </p>
                                     </div>
                                 </div>
-                                <p>These values are important for student to learn and embody in order to succeed in their
+                                <p>These values are important for student to learn and embody in order to succeed in
+                                    their
                                     future careers at sea.</p>
                             </div>
                             <hr>
@@ -333,37 +348,11 @@
                                 <h4 class="fw-bolder fs-1 ">OUR PROGRAMS</h4>
                             </div>
                             <div class="text-start text-black">
-                                <p>Explore our range of specialize programs tailored to meet the diverse needs of aspiring
+                                <p>Explore our range of specialize programs tailored to meet the diverse needs of
+                                    aspiring
                                     maritime professionals:</p>
                             </div>
-                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 list-inline">
-                                <div class="col">
-                                    <div class="card bg-white iq-service-card">
-                                        <div class="iq-image position-relative">
-                                            <div class="img">
-                                                <img src="@/assets/resources/banner/SHS.png" alt="image"
-                                                    class="img-fluid height1 radius-our w-100">
-                                            </div>
-                                            <div class="app badge-1 btn btn-sm btn-primary ">SENIOR HIGH SCHOOL</div>
-                                        </div>
-                                        <div class="card-body pb-3">
-                                            <div class="border-bottom mt-3">
-                                                <h5 class="mb-3 fw-bolder">Senior High School: Pre-Baccalaureate Maritime
-                                                    Specialization</h5>
-                                            </div>
-                                            <div class="d-flex justify-content-between flex-wrap mt-3">
-                                                <div>
-                                                    <span class="text-dark ms-2">Senior High School - covers the
-                                                        mandatory education for the last two years of the K to 12
-                                                        Program and includes Grade 11 and 12 required by the Department
-                                                        of Education and Marina.
-                                                    </span>
-                                                    <a href="#/shs" class="text-primary-emphasis">Read More.</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="row  list-inline">
                                 <div class="col">
                                     <div class="card bg-white iq-service-card">
                                         <div class="iq-image position-relative">
@@ -419,7 +408,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-black">Our curriculum is thoughtfully crafted to blend theoretical learning with
+                            <p class="text-black">Our curriculum is thoughtfully crafted to blend theoretical learning
+                                with
                                 hands-on
                                 experience, ensuring that our
                                 graduates are well-prepared to excel in the dynamic maritime sector.

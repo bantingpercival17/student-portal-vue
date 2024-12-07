@@ -15,16 +15,8 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="row mt-5 ">
+                <div class="row mt-3 ">
                     <div class="col-md-8">
-                        <h4 class="fw-bolder">SENIOR HIGH SCHOOL ADMISSION REQUIREMENTS</h4>
-                        <ul class="contact-details">
-                            <li> Grade 10 Report Card with Grades in English, Math,
-                                Science and General Average of 80%</li>
-                            <li>Certificate of Good Moral Conduct</li>
-                            <li>PSA Birth Certificate (not over 19 yrs. Old)</li>
-                            <li>Height Requirements: at least 5'2"</li>
-                        </ul>
                         <h4 class="fw-bolder">COLLEGE ADMISSION REQUIREMENTS</h4>
                         <ul class="contact-details">
                             <li> Grade 11 & 12 Card with Grades in English, Math,
@@ -80,8 +72,7 @@
                                         <option selected="" disabled="" value="">Choose...</option>
                                         <option value="1">BS MARINE ENGINEERING</option>
                                         <option value="2">BS MARINE TRANSPORTATION </option>
-                                        <option value="3">SENIOR HIGHSCHOOL - PRE-BACCALAUREATE MARITIME</option>
-
+                                        <!-- <option value="3">SENIOR HIGHSCHOOL - PRE-BACCALAUREATE MARITIME</option> -->
                                     </select>
                                     <span class="badge bg-danger mt-2" v-if="errors.course">{{
                                         errors.course[0] }}</span>
