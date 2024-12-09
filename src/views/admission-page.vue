@@ -439,7 +439,11 @@ export default {
                     if (error.response) {
                         if (error.response.status === 422) {
                             this.errors = error.response.data.errors
-                            const message = { title: 'The given data was invalid', message: 'Please fill-up the Fields' }
+                            let message = { message: 'Please complete all the required fields.' }
+                            if (error.response.data.errors.errorData) {
+                                console.log(error.response.data.errors)
+                                message = { htmlTag: true, message: error.response.data.errors.message }
+                            }
                             this.infoAlert(message)
                         } else {
                             this.infoAlert(error.message)

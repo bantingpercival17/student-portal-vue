@@ -134,7 +134,7 @@ export default {
                     const valueOfM = data.S.m
                     if (valueOfM === 'completed') {
                         this.isEnabled = true
-                        // this.storeResult()
+                        this.storeResult()
                     }
                 }
             }, 1000)

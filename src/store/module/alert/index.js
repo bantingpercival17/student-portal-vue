@@ -20,12 +20,24 @@ export default {
         },
         [INFO_ALERT](context, data) {
             // Use sweetalert2
-            Swal.fire({
+            let content = {
                 icon: 'info',
                 title: 'Info!',
                 text: data.message,
                 confirmButtonText: 'OK'
-            })
+            }
+
+            if (data.htmlTag) {
+                if (data.htmlTag === true) {
+                    content = {
+                        icon: 'info',
+                        title: 'Info!',
+                        html: data.message,
+                        confirmButtonText: 'OK'
+                    }
+                }
+            }
+            Swal.fire(content)
         },
         [WARNING_ALERT](context, data) {
             // Use sweetalert2
