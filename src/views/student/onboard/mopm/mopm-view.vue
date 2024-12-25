@@ -1,12 +1,52 @@
 <template>
     <div class="float-end" v-if="shipboardInformation.length > 0">
-        <button data-bs-toggle="modal" data-bs-target="#add-shipboard" class="btn btn-sm btn-primary">ADD SHIPBOARD</button>
+        <button data-bs-toggle="modal" data-bs-target="#add-shipboard" class="btn btn-sm btn-primary">ADD
+            VESSEL</button>
     </div>
-    <p class="display-6 fw-bolder text-primary">SHIPBOARD INFORMATION</p>
+    <p class="display-6 fw-bolder text-primary">SEA SERVICE RECORD</p>
     <div v-if="isLoading">
         <loadingPage />
     </div>
     <div v-else>
+        <div class="card">
+            <div class="nav-scroller ">
+                <nav class=" nav nav-underline bg-soft-primary pb-0 text-center " aria-label="Secondary navigation">
+                    <div v-if="shipboardInformation.length > 0" class="d-flex" id="head-check">
+                        <a class="nav-link" v-for="(data, index) in shipboardInformation" :key="index">
+                            {{ data.vessel_name }}
+                        </a>
+                    </div>
+                    <div v-else>
+                        <a class="nav-link">
+                            NO VESSEL
+                        </a>
+                    </div>
+                </nav>
+            </div>
+            <div v-if="selectedVessel" class="card-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <label-component label="VESSEL NAME" :value="selectedVessel.vessel_name" />
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <label-component label="VESSEL TYPE" :value="selectedVessel.vessel_type" />
+                    </div>
+                    <div class="col-lg-3 col-md-12">
+                        <label-component label="SEA EXPERIENCE" :value="selectedVessel.shipping_company" />
+                    </div>
+                    <div class="col-lg-3 col-md-12">
+                        <label-component label="SBT BATCH" :value="selectedVessel.sbt_batch" />
+                    </div>
+                    <div class="col-lg-3 col-md-12">
+                        <label-component label="STATUS" :value="selectedVessel.shipboard_status" />
+                    </div>
+                    <div class="col-lg-3 col-md-12">
+                        <label-component label="DATE OF EMBARKING" :value="selectedVessel.embarked" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div v-if="shipboardInformation">
             <div v-for="(data, index) in shipboardInformation" :key="index" class="card">
                 <div class="card-header m-2 p-2">
@@ -232,7 +272,8 @@ export default {
             reportViewLink: null,
             company: [],
             documents: [],
-            vesselType: []
+            vesselType: [],
+            selectedVessel: []
         }
     },
     components: {

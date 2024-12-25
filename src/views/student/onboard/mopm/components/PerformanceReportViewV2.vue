@@ -1,4 +1,16 @@
 <template>
+    <div class="card">
+        <div class="nav-scroller ">
+            <nav class=" nav nav-underline bg-soft-primary pb-0 text-center " aria-label="Secondary navigation">
+                <a class="nav-link">
+                    VESSEL INFORMATION
+                </a>
+                <a class="nav-link">
+                    MONTHLY REPORT VIEW
+                </a>
+            </nav>
+        </div>
+    </div>
     <div class="card mt-2">
         <div class="card-header">
             <label for="" class="h4 text-primary fw-bolder">PERFORMANCE REPORT DETAILS</label>
@@ -105,11 +117,13 @@
                                     <label for="" class="form-control">{{ report.remark }}</label>
                                 </div>
                                 <div class="form-group">
-                                    <small class="form-label"> <b> ATTACH FILES <sup class="text-danger">*</sup></b></small>
+                                    <small class="form-label"> <b> ATTACH FILES <sup
+                                                class="text-danger">*</sup></b></small>
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td v-for="(document, index) in JSON.parse(report.file_links)" :key="index">
+                                                <td v-for="(document, index) in JSON.parse(report.file_links)"
+                                                    :key="index">
                                                     <label for="" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                                         @click="documentViewer(document)">
                                                         <iconComponent :fileType="getFileType(document)" />
@@ -140,7 +154,7 @@
                                                 <div class="col-lg-4 col-md-12">
                                                     <small class="fw-bolder text-muted">DATE VERIFIED:</small><br>
                                                     <p class="badge bg-info h5">{{ getFormatDate(report.updated_at)
-                                                    }}
+                                                        }}
                                                     </p>
                                                 </div>
                                                 <div v-if="report.feedback != null" class="col-lg-12 col-md-12">
@@ -161,8 +175,8 @@
                                                                 <small class="form-label"><b>ATTACH FILES<sup
                                                                             class="text-danger">*</sup></b></small>
                                                                 <div class="form-group">
-                                                                    <input type="file" class="form-control" ref="fileInput"
-                                                                        multiple
+                                                                    <input type="file" class="form-control"
+                                                                        ref="fileInput" multiple
                                                                         v-on:change="handleFileUpload($event, item)">
                                                                     <div v-if="forms.errors[item]">
                                                                         <span class="badge bg-danger mt-2"
@@ -219,7 +233,8 @@
                                 </p>
 
                                 <div class="form-group">
-                                    <small class="form-label"><b>ATTACH FILES<sup class="text-danger">*</sup></b></small>
+                                    <small class="form-label"><b>ATTACH FILES<sup
+                                                class="text-danger">*</sup></b></small>
                                     <div class="form-group">
                                         <input type="file" class="form-control" ref="fileInput" multiple
                                             v-on:change="handleFileUpload($event, item)">
@@ -299,8 +314,8 @@
         </div>
     </div>
 
-    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl" ariaLabelled="exampleModalLabel"
-        :ariaHidden="true" contentrole="document">
+    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl"
+        ariaLabelled="exampleModalLabel" :ariaHidden="true" contentrole="document">
         <model-header :dismissable="true">
             <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">DOCUMENT VIEWER
             </h5>

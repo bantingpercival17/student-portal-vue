@@ -2,8 +2,8 @@
     <form @submit.prevent="submitForm" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-lg-12">
-                <selectComponent label="Shipping Company" :data="propsCompany" v-model:value="agency" :error="errors.agency"
-                    columName='agency_name' />
+                <selectComponent label="Shipping Company" :data="propsCompany" v-model:value="agency"
+                    :error="errors.agency" columName='agency_name' />
                 <div class="form-check mt-0">
                     <input class="form-check-input" type="checkbox" value="0" v-model="otherShipping">
                     <small class="form-check-label validate-checkbox" for="flexCheckDefault1">
@@ -16,7 +16,8 @@
                     :error="errors.shipping_company" />
             </div>
             <div v-if="otherShipping" class="col-lg-6 col-md-12">
-                <inputComponentV2 label="Company Address" v-model:value="companyAddress" :error="errors.company_address" />
+                <inputComponentV2 label="Company Address" v-model:value="companyAddress"
+                    :error="errors.company_address" />
             </div>
             <div class="col-lg-12">
                 <inputComponentV2 label="Vessel Name" v-model:value="vessleName" :error="errors.vessel_name" />
@@ -26,7 +27,7 @@
                     :error="errors.vessel_type" />
             </div>
             <div class="col-lg-12">
-                <selectComponentV2 label="Sea Experience" :data="ship" v-model:value="seaExperience"
+                <selectComponentV2 label="Area of Deployment" :data="ship" v-model:value="seaExperience"
                     :error="errors.sea_experience" />
             </div>
             <div class="col-lg-12">
@@ -81,7 +82,7 @@ export default {
         }
         return {
             viewName: 'STEP 1 : DOCUMENT REQUIREMENTS',
-            ship: ['Foreign Ship', 'Domestic Ship'],
+            ship: ['International Shipping', 'Domestic Shipping'],
             files: [],
             errors: [],
             error: '',
@@ -138,7 +139,7 @@ export default {
                 }
             }).then((response) => {
                 this.showLoading(false)
-                 this.successAlert(response.data)
+                this.successAlert(response.data)
                 window.location.reload()
                 console.log(response)
             }).catch((error) => {
