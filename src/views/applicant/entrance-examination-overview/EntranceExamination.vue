@@ -19,7 +19,7 @@
                             <div v-else>
 
                                 <p v-if="examination.finalResult.result" class="mb-3 fw-bolder text-primary h4">
-                                    Congratulation, you have Passed the qualifing Examination
+                                    Congratulations! You have passed the qualifying examination.
                                 </p>
                                 <p v-else class="mb-3 fw-bolder text-info h4">
                                     We regret to

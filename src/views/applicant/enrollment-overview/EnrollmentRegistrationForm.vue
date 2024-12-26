@@ -36,7 +36,7 @@
                                         v-model="middleName" id="flexCheckDefault1">
                                     <small class="form-check-label validate-checkbox" data-input="input-middle-name"
                                         for="flexCheckDefault1">
-                                        I don't have Middle name
+                                        I don't have a Middle name
                                     </small>
                                 </div>
                                 <span class="badge bg-danger mt-2" v-if="errors.middle_name">{{ errors.middle_name[0]

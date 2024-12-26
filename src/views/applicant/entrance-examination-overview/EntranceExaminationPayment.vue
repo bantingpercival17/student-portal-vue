@@ -216,7 +216,7 @@ export default {
         const formData = new FormData()
         return {
             isLoading: false,
-            titleName: "ENTRANCE'S EXAMINATION PAYMENT",
+            titleName: 'ENTRANCE EXAMINATION PAYMENT',
             progressName: 'STEP 3',
             status: className.status,
             className,

@@ -37,7 +37,7 @@
                                         v-model="noMiddleName" id="flexCheckDefault1">
                                     <small class="form-check-label validate-checkbox" data-input="input-middle-name"
                                         for="flexCheckDefault1">
-                                        I don't have Middle name
+                                        I don't have a Middle Name
                                     </small>
                                 </div>
                                 <span class="badge bg-danger mt-2" v-if="errors.middle_name">
@@ -57,7 +57,7 @@
                                         v-model="noExtensionName" id="flexCheckDefault1">
                                     <small class="form-check-label validate-checkbox" data-input="input-middle-name"
                                         for="flexCheckDefault1">
-                                        I don't have Extension Name
+                                        I don't have an Extension Name
                                     </small>
                                 </div>
                                 <span class="badge bg-danger mt-2" v-if="errors.extension_name">
@@ -171,8 +171,7 @@
                                 :error="errors.street" />
                         </div>
                         <div class="col-xl-4 col-md-6 mb-xl-0">
-                            <input-component label="ZIP CODE" v-model:value="zip_code" :error="errors.zip_code"
-                                disable="true"/>
+                            <input-component label="ZIP CODE" v-model:value="zip_code" :error="errors.zip_code" />
                         </div>
                     </div>
                     <!--  <div class="row">
@@ -666,7 +665,7 @@ export default {
             let value = await this.getCode('/provinces/', this.province)
             this.municipalityList = await this.fetchApi(`/provinces/${value}/cities-municipalities/`)
             value = await this.getCode(`/provinces/${value}/cities-municipalities/`, this.municipality)
-            this.barangayList = await this.fetchApi(`/municipalities/${value}/barangays/`)
+            this.barangayList = await this.fetchApi(`/cities-municipalities/${value}/barangays/`)
         },
 
         async setProvince() {
@@ -693,11 +692,12 @@ export default {
                 return []
             }
             const municipalityCode = this.getSelectedValue(event)
-            this.barangayList = await this.fetchApi(`/municipalities/${municipalityCode}/barangays/`)
+            this.barangayList = await this.fetchApi(`/cities-municipalities/${municipalityCode}/barangays/`)
         },
 
         async fetchApi(link) {
             try {
+                //
                 const response = await axios.get(`https://psgc.gitlab.io/api${link.trim()}`)
                 return response.data
             } catch (error) {
