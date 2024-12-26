@@ -68,7 +68,7 @@ export default {
             { name: 'Onboard Profile', url: 'student-layout.onboard-profile' },
             { name: 'Pre Onboard', url: 'student-layout.onboard-document-requerments' },
             { name: 'Enrollment', url: 'student-layout.onboard-enrollment' },
-            { name: 'MOPM', url: 'student-layout.onboard-mopm' },
+            { name: 'MOPM', url: 'student-layout.onboard-mopm-v2' },
             { name: 'Assessment', url: 'student-layout.onboard-assessment-view' }
         ]
         const compre = [

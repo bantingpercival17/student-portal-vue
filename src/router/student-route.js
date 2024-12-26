@@ -129,6 +129,16 @@ export const studentRoute = (prop) => [{
   component: () => import('../views/student/onboard/mopm/MonthlyMonitoringReportView.vue')
 },
 {
+  path: '/student/onboard/mopm/v2/view',
+  name: prop + '.onboard-mopm-view-v2',
+  meta: {
+    auth: true,
+    name: 'Monthly Monitoring Report',
+    user: 'student'
+  },
+  component: () => import('../views/student/onboard/mopm/MonthlyReportView.vue')
+},
+{
   path: '/student/onboard/assessment/view',
   name: prop + '.onboard-assessment-view',
   meta: {

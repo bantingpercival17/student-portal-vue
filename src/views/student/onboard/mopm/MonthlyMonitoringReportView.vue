@@ -68,7 +68,7 @@
                                     <!-- <td></td> -->
                                     <td>
                                         <router-link class="btn btn-sm btn-outline-primary me-2"
-                                            :to="{ name: 'student-layout.onboard-mopm-view', query: { v: encrypt(vessel.id) } }">view</router-link>
+                                            :to="{ name: 'student-layout.onboard-mopm-view-v2', query: { v: encrypt(vessel.id) } }">view</router-link>
                                         <button class="btn btn-sm btn-outline-info me-2" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal"
                                             @click="viewReport(vessel.id, 'v2')">report</button>
