@@ -22,8 +22,8 @@
                 <input type="file" class="form-control border border-primary" multiple accept="image/*,application/pdf"
                     v-on:change="handleFileUpload($event)">
                 <div v-if="errors">
-                    <span class="badge bg-danger mt-2" v-if="errors.files">
-                        {{ errors.files }}
+                    <span class="badge bg-danger mt-2" v-if="errors">
+                        {{ errors.message }}
                     </span>
                 </div>
             </div>
@@ -32,9 +32,9 @@
             <div class="form-group">
                 <small class="form-label"><b>REMARKS<sup class="text-danger">*</sup></b></small>
                 <textarea class="form-control border border-primary" v-model="remarks" cols="30" rows="3"></textarea>
-                <div v-if="errors">
-                    <span class="badge bg-danger mt-2" v-if="errors.remarks">
-                        {{ errors.remarks }}
+                <div v-if="errors.errors">
+                    <span class="badge bg-danger mt-2" v-if="errors.errors.remarks">
+                        {{ errors.errors.remarks[0] }}
                     </span>
                 </div>
             </div>
@@ -85,20 +85,21 @@
 </style>
 <script>
 import axios from 'axios'
-
+import Swal from 'sweetalert2'
 export default {
     name: 'FileAttachmentForm',
     data() {
         return {
             isLoading: false,
-            remarks: null,
+            remarks: '',
             files: [],
             errors: []
         }
     },
     props: {
         token: { type: String, required: true },
-        attribure: { type: Object, required: true }
+        attribure: { type: Object, required: true },
+        fileID: { type: Number, required: false }
     },
     methods: {
         handleFileUpload(event) {
@@ -108,7 +109,7 @@ export default {
             )
 
             if (validFiles.length !== files.length) {
-                this.errors.files = 'Only image and PDF files are allowed.'
+                this.errors.files[0] = 'Only image and PDF files are allowed.'
                 this.files = ''
             }
 
@@ -120,13 +121,14 @@ export default {
             // Set the input Data
             formData.append('journalType', this.attribure.name)
             formData.append('input', this.attribure.input)
+            formData.append('journalId', this.fileID)
             // Append the files
-            if (this.forms) {
-                this.forms.forEach(file => {
+            if (this.files.length > 0) {
+                this.files.forEach(file => {
                     formData.append('files[]', file)
                 })
             } else {
-                formData.append('files', null)
+                formData.append('files[]', [])
             }
             formData.append('remarks', this.remarks)
             formData.append('shipboard', this.$route.query.v)
@@ -143,36 +145,17 @@ export default {
                 }
             }).then((response) => {
                 this.isLoading = false
+                Swal.fire('Uploaded!', response.data.message, 'success')
+                window.location.reload()
             }).catch((error) => {
                 if (error.response.status === 422) {
                     console.log(error.response.data)
-                    this.errors = error.response.data.errors
+                    this.errors = error.response.data
+                } else {
+                    alert(error)
                 }
-                alert(error)
                 this.isLoading = false
             })
-            /* axios.post('/student/onboard/performance/view', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: 'Bearer ' + this.token
-                }
-            }).then((response) => {
-                this.isLoading = false
-                console.log(response.data)
-                if (response.status === 200) {
-                    this.showAlert(response.data.data)
-                    window.location.reload()
-                }
-            }).catch((error) => {
-                this.isLoading = false
-                console.log(error)
-                if (error.response.status === 422) {
-                    console.log(error.response.data)
-                    this.forms.errors[form] = error.response.data.errors
-                } else {
-                    this.showAlertError(error)
-                }
-            }) */
         }
     }
 }
