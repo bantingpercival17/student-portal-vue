@@ -16,7 +16,7 @@
             <router-link @click='changeGrade(encrypt(item.id))' class='dropdown-item' :to="{
               name: 'student-layout.semestral-grade-view',
               query: { key: encrypt(item.id) },
-            }">{{ academicName(item.academic) }}</router-link>
+            }">{{ academicName(item) }}</router-link>
           </li>
         </ul>
       </div>
@@ -40,32 +40,32 @@
               <tr v-for='item in subjectList' :key='item' :value='item.id'>
                 <td>
                   <p class='fw-bolder text-primary m-0 p-0 h4'>
-                    {{ item.curriculum_subjects.subject.subject_code }}
+                    {{ item.subjectCode }}
                   </p>
                   <span class='fw-bolder text-secondary'>{{
-                    teacherName(item.staff)
+                    item.subjectTeacher
                   }}</span><br />
                   <span class='text-secondary'>{{
-                    item.curriculum_subjects.subject.subject_name
+                    item.subjectName
                   }}</span>
                 </td>
                 <td>
                   <p class='fw-bolder text-secondary h5'>
-                    {{ item.curriculum_subjects.subject.units }}
+                    {{ item.subjectUnit }}
                   </p>
                 </td>
                 <td>
-                  <div v-if='isPublish'>
+                  <div>
                     <span class='fw-bolder h4 text-primary'>{{
-                      convertGrade(item.student_semestral_subject_grade)
+                      item.subjectGrade
                     }}</span>
                   </div>
                 </td>
                 <td>
-                  <div v-if='isPublish'>
+                  <div v-if='item.subjectGrade !== "-"'>
                     <span class='fw-bolder h4 text-primary'>
                       {{
-                        gradeRemarks(convertGrade(item.student_semestral_subject_grade))
+                        gradeRemarks(item.subjectGrade)
                       }}
                     </span>
                   </div>
@@ -96,8 +96,6 @@ export default {
       subjectList: [],
       currentAcademic: '',
       enrollmentHistory: [],
-      isPublish: false,
-      gradePercent: []
     }
   },
   computed: {
@@ -107,63 +105,19 @@ export default {
     })
   },
   mounted() {
-    const parameter = this.$route.query.key // Get the Parameter Value in Link
-    console.log(parameter)
-    let link = 'student/semestral-grade'
-    link = parameter != null ? link + '?key=' + parameter : link
-    axios
-      .get(link, {
-        headers: {
-          Authorization: 'Bearer ' + this.token
-        }
-      })
-      .then((response) => {
-        this.data = response.data.data
-        this.enrollmentHistory = response.data.enrollmentHistory
-        this.gradePercent = response.data.percent
-        this.currentAcademic = this.academicName(response.data.enrollment.academic)
-        if (this.data) {
-          if (this.data.student_section) {
-            this.section = this.data.student_section
-            if (this.section.subject_details) {
-              this.subjectList = this.section.subject_details
-            }
-          }
-        }
-        if (response.data.gradePublish) {
-          this.isPublish = true
-        }
-        this.isLoading = false
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    const parameter = this.$route.query.key
+    this.mountedData(parameter)
   },
   methods: {
     ...mapMutations({
       showLoading: SHOW_LOADING_MUTATION
     }),
-    teacherName(data) {
-      const name = data.first_name + ' ' + data.last_name
-      return name.toUpperCase()
-    },
     academicName(data) {
       const name = data.semester + ' | ' + data.school_year
       return name.toUpperCase()
     },
     encrypt(data) {
       return btoa(data)
-    },
-    convertGrade(data) {
-      let grade = 0
-      if (this.isPublish) {
-        grade = atob(data.final_grade)
-      }
-      let percent = 0
-      this.gradePercent.forEach(function (index) {
-        percent = grade >= index[0] && grade <= index[1] ? index[2] : percent
-      })
-      return percent
     },
     gradeRemarks(data) {
       return data >= 5 ? 'FAILED' : 'PASSED'
@@ -200,6 +154,30 @@ export default {
         .catch((error) => {
           console.log(error)
         })
+    },
+    async mountedData(parameter) {
+      try {
+        const link = parameter ? `student/subject-lists?key=${parameter}` : 'student/subject-lists'
+        const response = await axios.get(link, {
+          headers: {
+            Authorization: 'Bearer ' + this.token
+          }
+        })
+        const data = response.data.classroom
+        this.enrollmentHistory = data.enrollmentHistory
+        const currentEnrollment = data.currentEnrollment
+        this.currentAcademic = this.academicName(currentEnrollment.academic)
+        if (currentEnrollment.student_section_v2) {
+          this.subjectList = data.subjectLists
+        }
+        this.isLoading = false
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.logout()
+        }
+        console.error('Error fetching data:', error)
+        // Handle error or display error message
+      }
     }
   }
 }

@@ -16,27 +16,28 @@
                         <router-link @click='mountedData(encrypt(item.id))' class='dropdown-item' :to="{
                             name: 'student-layout.subjects-view',
                             query: { key: encrypt(item.id) },
-                        }">{{ academicName(item.academic) }}</router-link>
+                        }">{{ academicName(item) }}</router-link>
                     </li>
                 </ul>
             </div>
         </nav>
         <div class="row">
             <div class="col-lg-4 col-md-6 col-xs-12" v-for="(data, index) in subjectLists" :key="index">
-                <router-link :to="{ name: 'student-layout.subject-view-subject', params: { subject: encrypt(data.id) } }">
+                <router-link
+                    :to="{ name: 'student-layout.subject-view-subject', params: { subject: encrypt(data.id) } }">
                     <div class="card bg-primary">
                         <div class="card-header d-flex align-items-center justify-content-between pb-4">
                             <div class="header-title">
                                 <div class="d-flex flex-wrap">
                                     <div class="media-support-user-img me-3">
-                                        <img :src="teacherImage(data.staff)" alt="teacher-image"
+                                        <img :src="data.subjectTeacherImage" alt="teacher-image"
                                             class="img-fluid avatar avatar-70 rounded-circle">
                                     </div>
                                     <div class="media-support-info mt-2">
                                         <h5 class="mb-0 fw-bolder text-white">{{
-                                            data.curriculum_subjects.subject.subject_code
+                                            data.subjectCode
                                         }}</h5>
-                                        <p class="mb-0 text-white">{{ data.staff.first_name + " " + data.staff.last_name }}
+                                        <p class="mb-0 text-white">{{ data.subjectTeacher }}
                                         </p>
                                     </div>
                                 </div>
@@ -117,10 +118,12 @@ export default {
                         Authorization: 'Bearer ' + this.token
                     }
                 })
-                this.enrollmentHistory = response.data.enrollmentHistory
-                this.currentAcademic = this.academicName(response.data.enrollment.academic)
-                if (response.data.section.student_section) {
-                    this.subjectLists = response.data.section.student_section.subject_details
+                const data = response.data.classroom
+                this.enrollmentHistory = data.enrollmentHistory
+                const currentEnrollment = data.currentEnrollment
+                this.currentAcademic = this.academicName(currentEnrollment.academic)
+                if (currentEnrollment.student_section_v2) {
+                    this.subjectLists = data.subjectLists
                 }
                 this.isLoading = false
             } catch (error) {
