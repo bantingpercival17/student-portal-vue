@@ -95,7 +95,7 @@ export default {
       section: [],
       subjectList: [],
       currentAcademic: '',
-      enrollmentHistory: [],
+      enrollmentHistory: []
     }
   },
   computed: {
@@ -122,38 +122,10 @@ export default {
     gradeRemarks(data) {
       return data >= 5 ? 'FAILED' : 'PASSED'
     },
-    changeGrade(data) {
+    changeGrade(parameter) {
       this.isLoading = true
-      this.isPublish = false
       this.subjectList = []
-      const link = 'student/semestral-grade?key=' + data
-      axios
-        .get(link, {
-          headers: {
-            Authorization: 'Bearer ' + this.token
-          }
-        })
-        .then((response) => {
-          this.data = response.data.data
-          this.enrollmentHistory = response.data.enrollmentHistory
-          this.gradePercent = response.data.percent
-          this.currentAcademic = this.academicName(response.data.enrollment.academic)
-          if (this.data) {
-            if (this.data.student_section) {
-              this.section = this.data.student_section
-              if (this.section.subject_details) {
-                this.subjectList = this.section.subject_details
-              }
-            }
-          }
-          if (response.data.gradePublish) {
-            this.isPublish = true
-          }
-          this.isLoading = false
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      this.mountedData(parameter)
     },
     async mountedData(parameter) {
       try {
