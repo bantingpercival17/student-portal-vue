@@ -1,10 +1,12 @@
 import axios from 'axios'
 
-if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = 'http://one.bma.edu.ph/api/'
-  // axios.defaults.baseURL = 'http://127.0.0.1:7000/api/'
-} else {
-  axios.defaults.baseURL = 'http://127.0.0.1:7000/api/'
-   axios.defaults.baseURL = 'http://one.bma.edu.ph/api/'
-  // axios.defaults.baseURL = 'http://20.0.0.80:7000/api/'
-}
+
+const links = [
+  'http://127.0.0.1:7000/api/',
+  'http://one.bma.edu.ph/api/',
+  'http://beta.one.bma.edu.ph/api/'
+
+]
+const production = links[1]
+const testing = links[0]
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? production : testing

@@ -17,11 +17,12 @@
                                 Wait for the Examination Result
                             </div>
                             <div v-else>
-
-                                <p v-if="examination.finalResult.result" class="mb-3 fw-bolder text-primary h4">
+                                Wait for the announcement of the entrance examination results.
+                                <!-- <p v-if="examination.finalResult.result" class="mb-3 fw-bolder text-primary h4">
                                     Congratulations! You have passed the qualifying examination.
                                 </p>
                                 <p v-else class="mb-3 fw-bolder text-info h4">
+                                    Wiat for the annoument
                                     We regret to
                                     inform you that you did not meet the required test score in the entrance
                                     examination.
@@ -58,15 +59,15 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <!-- <th>EXAMINATION PERCENTAGE:</th>
+                                                    <th>EXAMINATION PERCENTAGE:</th>
                                                     <td> <span class="fw-bolder text-primary h5">{{
             examination.finalResult[1]
-        }}</span></td> -->
+        }}</span></td>
                                                 </tr>
                                             </tfoot>
                                         </table>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div v-else>
