@@ -121,6 +121,32 @@
                     <div class="row">
                         <div class="col-xl-4 col-md-6 mb-xl-0">
                             <div class="form-group">
+                                <label for="provinceSelect" class="form-control-label fw-bolder">
+                                    <small>PROVINCE <span class="text-danger">*</span></small>
+                                </label>
+
+                                <select v-model="province" class="form-select form-select-sm border border-primary"
+                                    @change="handleProvinceChange" id="provinceSelect">
+                                    <option value="">Select Province</option>
+                                    <option v-for="item in provinceList" :key="item.code" :value="item.name"
+                                        :data-value="item.code">
+                                        {{ item.name }}
+                                    </option>
+                                    <option value="other">Other (Input your province)</option>
+                                </select>
+
+                                <input v-if="isCustomProvince" v-model="customProvince"
+                                    class="form-control form-control-sm border border-primary mt-2"
+                                    placeholder="Enter your province" @input="setCustomProvince" />
+
+                                <span class="badge bg-danger mt-2" v-if="errors.province">
+                                    {{ errors.province[0] }}
+                                </span>
+                            </div>
+
+                        </div>
+                        <!--  <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <div class="form-group">
                                 <label for="example-text-input" class="form-control-label fw-bolder">
                                     <small>PROVINCE <span class="text-danger">*</span></small>
                                 </label>
@@ -136,7 +162,7 @@
                                     {{ errors.province[0] }}
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-xl-4 col-md-6 mb-xl-0">
                             <label for="example-text-input" class="form-control-label fw-bolder">
                                 <small>MUNICIPALITY <span class="text-danger">*</span></small>
@@ -474,9 +500,18 @@ export default {
                 '157.48', '160.02', '162.56', '165.1', '167.64', '170.18', '172.72', '175.26', '177.8', '180.34', '182.88', '185.42', '187.96', '190.5', '193.4', '195.58', '198.12', '200.66', '203.2', '205.74', '208.28', '210.82'
             ],
             weightList: element,
+            region: '',
+            regionList: [],
             provinceList: [],
             municipalityList: [],
-            barangayList: []
+            barangayList: [],
+            customProvince: '',
+            isCustomProvince: false,
+            customMunicipality: '',
+            isCustomMunicipality: false,
+            customBarangay: '',
+            isCustomBarangay: false
+
         }
         return inputValidation
     },
@@ -502,6 +537,7 @@ export default {
                 }
 
                 this.setProvince()
+                this.setRegion()
             }
             this.contactNumber = account.contact_number
             this.personalEmail = account.email
@@ -661,17 +697,25 @@ export default {
             })
         },
         async fetchAddress() {
+            await this.setRegion()
             await this.setProvince()
             let value = await this.getCode('/provinces/', this.province)
             this.municipalityList = await this.fetchApi(`/provinces/${value}/cities-municipalities/`)
             value = await this.getCode(`/provinces/${value}/cities-municipalities/`, this.municipality)
             this.barangayList = await this.fetchApi(`/cities-municipalities/${value}/barangays/`)
         },
-
-        async setProvince() {
-            this.provinceList = await this.fetchApi('/provinces/')
+        async setRegion() {
+            this.regionList = await this.fetchApi('/regions/')
+            console.log(this.regionList)
         },
-
+        async setProvince() {
+            if (this.region !== '') {
+                this.provinceList = await this.fetchApi(`/regions/${this.region}/provinces/`)
+                console.log(this.provinceList)
+            } else {
+                this.provinceList = await this.fetchApi('/provinces/')
+            }
+        },
         async setMunicipality(event) {
             const provinceCode = this.getSelectedValue(event)
             this.municipalityList = await this.fetchApi(`/provinces/${provinceCode}/cities-municipalities/`)
@@ -714,6 +758,44 @@ export default {
 
         getSelectedValue(event) {
             return event.target.options[event.target.selectedIndex].dataset.value.trim()
+        },
+        async handleProvinceChange(event) {
+            if (this.province === 'other') {
+                this.isCustomProvince = true
+            } else {
+                this.isCustomProvince = false
+                const provinceCode = this.getSelectedValue(event)
+                this.municipalityList = await this.fetchApi(`/provinces/${provinceCode}/cities-municipalities/`)
+            }
+        },
+        setCustomProvince() {
+            this.province = this.customProvince // Bind custom input to province
+        },
+        handleMunicipalityChange() {
+            // Check if 'Other' is selected
+            if (this.municipality === 'other') {
+                this.isCustomMunicipality = true
+                this.municipality = ''
+            } else {
+                this.isCustomMunicipality = false
+                this.customMunicipality = ''
+            }
+        },
+        setCustomMunicipality() {
+            this.municipality = this.customMunicipality
+        },
+        handleBarangayChange() {
+            // Check if 'Other' is selected
+            if (this.barangay === 'other') {
+                this.isCustomBarangay = true
+                this.barangay = ''
+            } else {
+                this.isCustomBarangay = false
+                this.customBarangay = ''
+            }
+        },
+        setCustomBarangay() {
+            this.barangay = this.customBarangay
         }
     }
 }
