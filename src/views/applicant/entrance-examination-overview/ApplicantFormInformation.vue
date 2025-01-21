@@ -168,12 +168,16 @@
                                 <small>MUNICIPALITY <span class="text-danger">*</span></small>
                             </label>
                             <select v-model="municipality" class="form-select form-select-sm border border-primary"
-                                @change="setBarangay">
+                                @change="handleMunicipalityChange">
                                 <option value="">Select MUNICIPALITY</option>
                                 <option v-for="item in municipalityList" :key="item" :value="item.name"
                                     :data-value="item.code">
                                     {{ item.name }}</option>
+                                <option value="other">Other (Input your municipality)</option>
                             </select>
+                            <input v-if="isCustomMunicipality" v-model="customMunicipality"
+                                class="form-control form-control-sm border border-primary mt-2"
+                                placeholder="Enter your Municipality" @input="setCustomMunicipality" />
                             <span class="badge bg-danger mt-2" v-if="errors.municipality">
                                 {{ errors.municipality[0] }}
                             </span>
@@ -182,12 +186,17 @@
                             <label for="example-text-input" class="form-control-label fw-bolder">
                                 <small>BARANGAY <span class="text-danger">*</span></small>
                             </label>
-                            <select v-model="barangay" class="form-select form-select-sm border border-primary">
+                            <select v-model="barangay" class="form-select form-select-sm border border-primary"
+                                @change="handleBarangayChange">
                                 <option value="">Select BARANGAY</option>
                                 <option v-for="item in barangayList" :key="item" :value="item.name"
                                     :data-value="item.code">
                                     {{ item.name }}</option>
+                                <option value="other">Other (Input your Barangay)</option>
                             </select>
+                            <input v-if="isCustomBarangay" v-model="customBarangay"
+                                class="form-control form-control-sm border border-primary mt-2"
+                                placeholder="Enter your Barangay" @input="setCustomBarangay" />
                             <span class="badge bg-danger mt-2" v-if="errors.barangay">
                                 {{ errors.barangay[0] }}
                             </span>
@@ -771,14 +780,26 @@ export default {
         setCustomProvince() {
             this.province = this.customProvince // Bind custom input to province
         },
-        handleMunicipalityChange() {
+        async handleMunicipalityChange(event) {
             // Check if 'Other' is selected
             if (this.municipality === 'other') {
                 this.isCustomMunicipality = true
-                this.municipality = ''
             } else {
                 this.isCustomMunicipality = false
-                this.customMunicipality = ''
+                try {
+                    const link = `https://nominatim.openstreetmap.org/search?q=${this.municipality},+${this.province},+Philippines&format=json&addressdetails=1`
+                    const response = await axios.get(link)
+                    if (response.data) {
+                        const address = response.data[0].address
+                        this.zip_code = address.postcode
+                        console.log(address)
+                    }
+                } catch (error) {
+                    console.error('Error:', error)
+                    return []
+                }
+                const municipalityCode = this.getSelectedValue(event)
+                this.barangayList = await this.fetchApi(`/cities-municipalities/${municipalityCode}/barangays/`)
             }
         },
         setCustomMunicipality() {
@@ -788,10 +809,8 @@ export default {
             // Check if 'Other' is selected
             if (this.barangay === 'other') {
                 this.isCustomBarangay = true
-                this.barangay = ''
             } else {
                 this.isCustomBarangay = false
-                this.customBarangay = ''
             }
         },
         setCustomBarangay() {
