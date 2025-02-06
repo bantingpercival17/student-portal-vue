@@ -12,6 +12,10 @@
                         <h5 class="text-primary fw-bolder">
                             {{ data.document_name }}
                         </h5>
+
+                        <FileAttachment :token="token" :DocumentFile="data" />
+                        <hr>
+                        <br>
                         <div class="check" v-if="checkFileUpload(data.id, index)">
                             <div v-if="form.documentDetails[index].is_approved === null">
                                 <label for="" class="text-info">This Documents is under Verification</label> <br>
@@ -50,7 +54,8 @@
                                             <span class="text-danger fw-bolder">DISAPPROVED DOCUMENT</span>
                                             <p class="text-info">
                                                 <span>Remarks: </span>
-                                                <span class="fw-bolder">{{ form.documentDetails[index].feedback }}</span>
+                                                <span class="fw-bolder">{{ form.documentDetails[index].feedback
+                                                    }}</span>
                                             </p>
                                         </div>
                                         <div class="col-md">
@@ -79,8 +84,9 @@
                                             </span>
                                         </div>
                                         <div v-else>
-                                            <input type="file" class="form-control form-control-sm border border-primary"
-                                                required v-on:change="handleFileChange($event, data.id, index)" />
+                                            <input type="file"
+                                                class="form-control form-control-sm border border-primary" required
+                                                v-on:change="handleFileChange($event, data.id, index)" />
                                             <span class="text-info fw-bolder" v-if="form.uploadLoading[index]">Uploading
                                                 Files....</span>
                                             <small v-if="form.fileError[index]" class="badge bg-danger">{{
@@ -105,17 +111,19 @@
                                 <span class="text-info fw-bolder" v-if="form.uploadLoading[index]">Uploading
                                     Files....</span>
                                 <small v-if="form.fileError[index]" class="badge bg-danger">{{ form.fileError[index]
-                                }}</small>
+                                    }}</small>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div v-else>
                     <p>
-                        I regret to inform you that your application has been disqualified due to the following reason: "{{
+                        I regret to inform you that your application has been disqualified due to the following reason:
+                        "{{
                             documents.disqualification.remarks }}".
                     </p>
-                    <p> We appreciate your interest and effort in applying, and we encourage you to consider reapplying in
+                    <p> We appreciate your interest and effort in applying, and we encourage you to consider reapplying
+                        in
                         the future.
                         <br>
                         Thank you for your understanding.
@@ -128,12 +136,13 @@
     </div>
 </template>
 <script>
+import FileAttachment from '@/components/main-layouts/components/FileAttachment.vue'
 import stepper from '@/components/main-layouts/components/widgets/stepper-widget.vue'
 import axios from 'axios'
 export default {
     name: 'DocumentsRequirements',
     components: {
-        stepper
+        stepper, FileAttachment
     },
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, stepperFinish: false, badgeColor: 'bg-secondary', contentShow: false }

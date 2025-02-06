@@ -105,12 +105,12 @@ const authRoute = (prop) => [
   }
 ]
 const routes = [
-  /*  {
-     path: '/',
-     name: 'auth-layout',
-     component: () => import('../components/main-layouts/auth-layout.vue'),
-     children: authRoute('auth-layout')
-   }, */
+  /* {
+    path: '/',
+    name: 'auth-layout',
+    component: () => import('../components/main-layouts/auth-layout.vue'),
+    children: authRoute('auth-layout')
+  }, */
   {
     path: '/',
     name: 'app-layout',
