@@ -14,7 +14,7 @@
                         </h5>
 
                         <FileAttachment :token="token" :DocumentFile="data" />
-                        <hr>
+                        <!-- <hr>
                         <br>
                         <div class="check" v-if="checkFileUpload(data.id, index)">
                             <div v-if="form.documentDetails[index].is_approved === null">
@@ -113,7 +113,7 @@
                                 <small v-if="form.fileError[index]" class="badge bg-danger">{{ form.fileError[index]
                                     }}</small>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div v-else>
