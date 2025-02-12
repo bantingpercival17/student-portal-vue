@@ -6,15 +6,18 @@
     </div>
     <div v-else class="attachment-section">
         <FileStatus v-if="DocumentFile?.applicant_requirements_v2" :fileData="DocumentFile.applicant_requirements_v2"
-            @reupload="changeUpload()" @viewFile="setImage(DocumentFile.applicant_requirements_v2)"
-            :status="isReupload"  @closeUpload="closeUpload()"/>
+            @reupload="changeUpload()" @viewFile="setImage(DocumentFile.applicant_requirements_v2)" :status="isReupload"
+            @closeUpload="closeUpload()" />
 
         <FileStatus v-else-if="uploadedDocuments" :fileData="uploadedDocuments" @reupload="changeUpload()"
-            :status="isReupload" @viewFile="setImage(uploadedDocuments)" @closeUpload="closeUpload()"/>
+            :status="isReupload" @viewFile="setImage(uploadedDocuments)" @closeUpload="closeUpload()" />
 
         <FileUpload v-else @upload="attachFileUpload" :errors="errors" />
 
         <FileUpload v-if="isReupload" @upload="attachFileUpload" :errors="errors" />
+        <FileUpload v-if="DocumentFile?.applicant_requirements_v2?.is_approved === 2" @upload="attachFileUpload"
+            :errors="errors" />
+
 
     </div>
     <modal id="viewFile" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl" ariaLabelled="viewFileLabel"
@@ -24,7 +27,7 @@
             </h5>
         </model-header>
         <model-body>
-            <iframe :src="imageFile" width="100%" h frameborder="0"></iframe>
+            <iframe :src="imageFile" width="100%" height="700px" frameborder="0"></iframe>
         </model-body>
         <model-footer>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -68,6 +71,7 @@ export default {
                 console.log(response)
                 this.isLoading = false
                 this.uploadedDocuments = response.data
+                window.location.reload()
                 // this.documentUploaded = true
             }).catch((error) => {
                 console.log(error)

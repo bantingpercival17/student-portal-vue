@@ -1,38 +1,55 @@
 <template>
-    <div class="file-status">
-        <label class="text-info">
-            {{ fileData.is_approved === null ? "This Document is under Verification" :
-                fileData.is_approved === 1 ? "Approved Document" : "Disapproved Document" }}
-        </label>
-        <div class="float-end">
-            <button class="btn btn-primary btn-sm w-100 mb-2" @click="$emit('viewFile')" data-bs-toggle="modal"
-                data-bs-target="#viewFile">
-                VIEW FILE
-            </button>
-            <button v-if="!status" class="btn btn-info btn-sm text-white mb-2 w-100" @click="$emit('reupload')">
-                CHANGE UPLOAD
-            </button>
-            <button v-else class="btn btn-danger btn-sm text-white w-100" @click="$emit('closeUpload')">
-                CANCEL RE-UPLOAD
-            </button>
-        </div>
-        <br>
-        <small class="badge bg-primary">
-            File Uploaded Date: {{ getFormatDate(fileData.created_at) }}
-        </small>
-        <div v-if="fileData.is_approved === 0" class="mt-3">
-            <span class="text-danger fw-bolder">DISAPPROVED DOCUMENT</span>
-            <p class="text-info"><b>Remarks:</b> {{ fileData.feedback }}</p>
+    <div class="file-status row">
+        <div class="col-lg col-md-12 mb-2">
+            <div v-if="fileData.is_approved === 2" class="mt-3">
+                <span class="text-danger fw-bolder">DISAPPROVED DOCUMENT</span>
+                <p class="text-info"><b>Remarks:</b> {{ fileData.feedback }}</p>
 
-            <div class="form-group">
-                <small class="badge bg-secondary me-3">
-                    <b>Verified By:</b> {{ staffName(fileData.staff) }}
-                </small>
-                <small class="badge bg-secondary">
-                    <b>Verified Date:</b> {{ getFormatDate(fileData.updated_at) }}
+                <div class="form-group">
+                    <small class="badge bg-secondary me-3">
+                        <b>Verified By:</b> {{ staffName(fileData.staff) }}
+                    </small>
+                    <small class="badge bg-secondary">
+                        <b>Verified Date:</b> {{ getFormatDate(fileData.updated_at) }}
+                    </small>
+                </div>
+
+            </div>
+            <div v-else>
+                <label class="fw-bolder text-info">
+                    {{ fileData.is_approved === null ? "This Document is under Verification" :
+                        fileData.is_approved === 1 ? "APPROVED DOCUMENT" : "Disapproved Document" }}
+                </label>
+                <div v-if="fileData.is_approved === 1">
+                    <div class="form-group">
+                        <small class="badge bg-secondary me-3">
+                            <b>Verified By:</b> {{ staffName(fileData.staff) }}
+                        </small>
+                        <small class="badge bg-secondary">
+                            <b>Verified Date:</b> {{ getFormatDate(fileData.updated_at) }}
+                        </small>
+                    </div>
+                </div>
+                <small class="badge bg-primary">
+                    File Uploaded Date: {{ getFormatDate(fileData.created_at) }}
                 </small>
             </div>
         </div>
+        <div class="col-lg-4 col-md-12">
+            <a class="badge bg-primary w-100 mb-2" @click="$emit('viewFile')" data-bs-toggle="modal"
+                data-bs-target="#viewFile">
+                VIEW FILE
+            </a>
+            <div v-if="fileData.is_approved !== 2 && fileData.is_approved !== 1">
+                <a v-if="!status" class="badge bg-info mb-2 w-100" @click="$emit('reupload')">
+                    CHANGE UPLOAD
+                </a>
+                <a v-else class="badge bg-danger text-white w-100" @click="$emit('closeUpload')">
+                    CANCEL RE-UPLOAD
+                </a>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -59,8 +76,8 @@ export default {
             const formattedDate = month + ' ' + day + ', ' + year
             return formattedDate
         },
-        staffName(staff) {
-            return staff ? staff.name : 'Unknown'
+        staffName(data) {
+            return data ? data.first_name + ' ' + data.last_name : 'n.a'
         }
     }
 }
