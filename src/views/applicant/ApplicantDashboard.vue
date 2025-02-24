@@ -39,7 +39,7 @@
                 </ul>
             </div>
         </div>
-
+        <SurveyAlert />
     </div>
 </template>
 <script>
@@ -53,6 +53,7 @@ import ExaminationPayment from './entrance-examination-overview/EntranceExaminat
 import EntranceExamination from './entrance-examination-overview/EntranceExamination.vue'
 /* import BriefingOrientation from './entrance-examination-overview/BriefingOrientation.vue' */
 import MedicalExamination from './entrance-examination-overview/MedicalExamination.vue'
+import SurveyAlert from './entrance-examination-overview/component/SurveyAlert.vue'
 export default {
     name: 'ApplicantDasboard',
     data() {
@@ -75,7 +76,8 @@ export default {
         ExaminationPayment,
         EntranceExamination,
         /* BriefingOrientation, */
-        MedicalExamination
+        MedicalExamination,
+        SurveyAlert
     },
     computed: {
         ...mapGetters('auth', {

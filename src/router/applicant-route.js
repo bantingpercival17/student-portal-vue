@@ -28,5 +28,11 @@ export const applicantRoute = (prop) => [
         name: prop + '.applicant-enrollment-registration',
         meta: { auth: true, name: 'Enrollment Registration Form', user: 'applicant' },
         component: () => import('../views/applicant/enrollment-overview/EnrollmentRegistrationForm.vue')
+    },
+    {
+        path: '/applicant/survey',
+        name: prop + '.applicant-survey',
+        meta: { auth: true, name: 'Online Admission Registration System Survey', user: 'applicant' },
+        component: () => import('../views/applicant/entrance-examination-overview/ApplicantSurveyForm.vue')
     }
 ]
