@@ -361,7 +361,7 @@ export default {
         },
         questionView(data) {
             return data
-            //return require(`@/assets/resources/test-question/${data}`)
+            // return require(`@/assets/resources/test-question/${data}`)
             // return 'http://bma.edu.ph/assets/image/questions/'
         },
         range(start, end) {
