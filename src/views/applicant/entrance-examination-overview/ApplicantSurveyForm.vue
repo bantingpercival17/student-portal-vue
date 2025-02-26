@@ -1,13 +1,13 @@
 <template>
-  <div class="google-form-container">
-    <iframe ref="googleForm" :src="googleFormUrl" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <!--  <div class="google-form-container">
-    <iframe ref="googleForm" src="" width="100%" height="500" frameborder="0" allowfullscreen>Loading…</iframe>
-  </div> -->
+  <button class="btn btn-primary text-center" @click="doneSurvey">DONE SUBMISSION</button>
+  <iframe ref="googleForm" :src="googleFormUrl" width="100%" height="600px" frameborder="0"
+    @load="detectFormSubmission"></iframe>
 </template>
 
 <script>
+import axios from 'axios'
+import { GET_USER_TOKEN } from '@/store/storeConstants'
+import { mapGetters } from 'vuex'
 export default {
   name: 'ApplicantSurveyForm',
   data() {
@@ -15,41 +15,40 @@ export default {
       googleFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSf9_xdaFjKxnGyVsCD7id6aSdrpcNPsFjgE2yNASjvimeG8Og/viewform?embedded=true'
     }
   },
-  mounted() {
-    this.checkFormSubmission()
-    // this.detectFormSubmission()
+  computed: {
+    ...mapGetters('auth', {
+      token: GET_USER_TOKEN
+    })
   },
   methods: {
-    checkFormSubmission() {
-      console.log('Form Submit')
-      const iframe = this.$refs.googleForm
-      setInterval(() => {
-        try {
-          const currentUrl = iframe.contentWindow.location.href
-          console.log(currentUrl.includes('formResponse'))
-          if (currentUrl.includes('formResponse')) {
-            // Redirect to another page after submission
-            window.location.href = '/#/applicant/dashboard'
-          }
-        } catch (error) {
-          console.log(error)
-          // Cross-origin restrictions may block access to iframe URL
-        }
-      }, 1000)
-    },
     detectFormSubmission() {
       const iframe = this.$refs.googleForm
-      setInterval(() => {
+      console.log(iframe.contentWindow)
+      setTimeout(() => {
         try {
-          const currentUrl = iframe.contentWindow.location.href
-          if (currentUrl.includes('formResponse')) {
-            // Redirect after form submission
-            window.location.href = '/#/applicant/dashboard'
+          if (iframe.contentWindow.location.href.includes('formResponse')) {
+            this.$router.push('/') // Redirect to homepage
           }
         } catch (error) {
-          // Cross-origin access may be restricted
+          console.warn('Cross-origin restriction prevents checking form response.')
         }
-      }, 1000)
+      }, 2000)
+    },
+    doneSurvey() {
+      const data = {
+        survey: 'admission-survey'
+      }
+      axios.post('/applicant/survey', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: 'Bearer ' + this.token
+        }
+      }).then((response) => {
+        this.$router.push('/')
+      }).catch((error) => {
+        console.log(error)
+        alert(error)
+      })
     }
   }
 }

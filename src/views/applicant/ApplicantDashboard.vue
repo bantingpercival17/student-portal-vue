@@ -21,7 +21,7 @@
                     </li>
                     <li>
                         <ExaminationPayment :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :examination="examination" :alumnia="alumnia" :token="token" />
+                            :examination="examination" :alumnia="alumnia" :token="token" :survey="survey" />
                     </li>
                     <li>
                         <EntranceExamination :propsApplicantDetails="applicantDetails" :documents="documents"
@@ -39,7 +39,6 @@
                 </ul>
             </div>
         </div>
-        <SurveyAlert />
     </div>
 </template>
 <script>
@@ -53,7 +52,6 @@ import ExaminationPayment from './entrance-examination-overview/EntranceExaminat
 import EntranceExamination from './entrance-examination-overview/EntranceExamination.vue'
 /* import BriefingOrientation from './entrance-examination-overview/BriefingOrientation.vue' */
 import MedicalExamination from './entrance-examination-overview/MedicalExamination.vue'
-import SurveyAlert from './entrance-examination-overview/component/SurveyAlert.vue'
 export default {
     name: 'ApplicantDasboard',
     data() {
@@ -66,7 +64,8 @@ export default {
             examination: [],
             orientation: [],
             alumnia: [],
-            medical: []
+            medical: [],
+            survey: []
         }
     },
     components: {
@@ -75,9 +74,7 @@ export default {
         DocumementsRequirements,
         ExaminationPayment,
         EntranceExamination,
-        /* BriefingOrientation, */
-        MedicalExamination,
-        SurveyAlert
+        MedicalExamination
     },
     computed: {
         ...mapGetters('auth', {
@@ -100,6 +97,7 @@ export default {
             this.orientation = response.data.orientation
             this.alumnia = response.data.alumnia
             this.medical = response.data.medical
+            this.survey = response.data.survey
             this.isLoading = false
         }).catch((error) => {
             console.log(error)

@@ -1,6 +1,8 @@
 <template>
     <stepper value="" :isActive="className.stepperStatus" :isFinish="className.stepperFinish" />
     <div :class="`card ${className.cardClass}`" @click="showContent">
+
+        <SurveyAlert v-if="!survey" :userToken="token" />
         <div class="card-body m-2 p-2">
             <span :class="`${className.badgeColor} badge float-end`">{{ status }}</span>
             <small class="fw-bolder text-muted">{{ progressName }}</small>
@@ -118,7 +120,7 @@
                                         <input type="file" v-on:change="fileAttachment"
                                             class="form-control form-control-sm border border-primary" />
                                         <span class="badge bg-danger mt-2" v-if="errors.file">{{
-        errors.file[0] }}</span>
+                                            errors.file[0] }}</span>
                                     </div>
                                     <button class="btn btn-primary btn-sm w-100" type="submit">SUBMIT</button>
                                 </form>
@@ -156,7 +158,7 @@
                                     <input type="file" v-on:change="fileAttachment"
                                         class="form-control form-control-sm border border-primary" />
                                     <span class="badge bg-danger mt-2" v-if="errors.file">{{
-        errors.file[0] }}</span>
+                                        errors.file[0] }}</span>
                                 </div>
                                 <button class="btn btn-primary btn-sm w-100" type="submit">SUBMIT</button>
                             </form>
@@ -191,13 +193,15 @@ import { mapMutations, mapActions } from 'vuex'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT } from '@/store/storeAlertConstants.js'
 import axios from 'axios'
 import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
+import SurveyAlert from './component/SurveyAlert.vue'
 export default {
     name: 'ExaminationPayment',
     components: {
         stepper,
         inputComponentV2,
         labelComponent,
-        selectComponent
+        selectComponent,
+        SurveyAlert
     },
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, stepperFinish: false, badgeColor: 'bg-secondary', contentShow: false }
@@ -311,6 +315,6 @@ export default {
             return formattedDate
         }
     },
-    props: { propsApplicantDetails: Object, documents: Object, alumnia: Object, examination: Object, token: String }
+    props: { propsApplicantDetails: Object, documents: Object, alumnia: Object, examination: Object, token: String, survey: Object }
 }
 </script>
