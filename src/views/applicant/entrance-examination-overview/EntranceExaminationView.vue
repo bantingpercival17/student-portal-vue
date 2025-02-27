@@ -4,8 +4,8 @@
     </div>
     <div v-else>
         <ul id="top-tab-list" class="p-0 row list-inline category-list">
-            <li :class="'col-lg col-md mb-2 text-center ' + activeCategory(index)"
-                v-for="(data, index) in categoryList  " :key="index">
+            <li :class="'col-lg col-md mb-2 text-center ' + activeCategory(index)" v-for="(data, index) in categoryList"
+                :key="index">
                 <a class="category">
                     <small class="mt-4">{{ data.category_name }}</small>
                 </a>
@@ -22,9 +22,9 @@
             </div>
             <div class="card-body">
                 <div v-if="reviewModal" class="review">
-                    <div class="d-flex justify-content-center">
+                    <!--  <div class="d-flex justify-content-center">
                         <label for="" class="h4 text-primary fw-bolder">REVIEW ANSWER</label>
-                    </div>
+                    </div> -->
                     <div class="question-review">
                         <div class="question mb-4" v-for="data in range(questionIndexReview, questionIndexReviewRange)"
                             :key="data">
@@ -33,15 +33,17 @@
                                     <span class="badge bg-primary">QUESTION {{ data }}</span>
                                 </div>
                             </div>
+                            <br>
                             <div class="question-view">
-                                <div v-if="questionList[data - 1].question === 'none'">
+                                <div v-if="!questionList[data - 1].question">
                                     <img class="img-fluid" :src="questionView(questionList[data - 1].image_path)" alt=""
-                                        height="100">
+                                        style="width: 80%;height:50%;">
                                 </div>
                                 <div v-else>
-                                    <p class="text-primary fw-bolder h5" v-html="questionList[data - 1].question"></p>
-                                    <img v-if="questionList[data - 1].image_path !== 'none'"
-                                        :src="questionView(questionList[data - 1].image_path)" alt="" height="200">
+                                    <p class="text-primary fw-bolder h3" v-html="questionList[data - 1].question"></p>
+                                    <img v-if="questionList[data - 1].image_path"
+                                        :src="questionView(questionList[data - 1].image_path)"
+                                        style="width: fit-content;height:max-content;" alt="">
                                 </div>
                             </div>
                             <div class="question-choices row">
@@ -95,7 +97,7 @@
                         </div>
                         <div class="question-choices row">
                             <div class="col-lg-6 col-md-12"
-                                v-for="(   item, index   ) in questionList[currentQuestion].choices_v2" :key="index">
+                                v-for="(item, index) in questionList[currentQuestion].choices_v2" :key="index">
                                 <button :class="btnStyle(item.id)" @click="choiceAswer(item.id, currentQuestion)"
                                     v-html="item.choice_name">
                                 </button>
@@ -114,9 +116,9 @@
                         </div>
                     </div>
                     <div v-else-if="categoryIndex < categoryList.length">
-                        <!-- <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center">
                             <button class="btn btn-outline-info" @click="reviewAnswer">REVIEW ANSWER</button>
-                        </div> -->
+                        </div>
                         <div class="h4 text-secondary text-center fw-bolder">Do you want to submit your Answer to
                             proceed to
                             the next Category?</div>
@@ -168,8 +170,8 @@ export default {
             selectedChoices: [],
             examinationDetails: [],
             questionIndexReview: 1,
-            questionIndexReviewRange: 5,
-            reviewModal: false,
+            questionIndexReviewRange: 50,
+            reviewModal: true,
             essay: ''
         }
     },
@@ -306,14 +308,19 @@ export default {
             this.questionNumber = this.questionList.length
         },
         nextCategoryReview() {
-            this.reviewModal = false
-            this.categoryIndex += 1
-            this.currentQuestion = 0
-            this.questionIndexReview = 1
-            this.questionIndexReviewRange = 5
-            this.categoryDetails = this.categoryList[this.categoryIndex]
-            this.questionList = this.categoryList[this.categoryIndex].question_lists
-            this.questionNumber = this.questionList.length
+            if (this.categoryIndex <= this.categoryList.length) {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+                this.reviewModal = true
+                this.categoryIndex += 1
+                this.currentQuestion = 0
+                this.questionIndexReview = 1
+                this.categoryDetails = this.categoryList[this.categoryIndex]
+                this.questionList = this.categoryList[this.categoryIndex].question_lists
+                this.questionNumber = this.questionList.length
+                this.questionIndexReviewRange = this.questionList.length
+            } else {
+                this.finishExamination()
+            }
         },
         finishExamination() {
             this.showLoading(false)
@@ -344,7 +351,8 @@ export default {
             return this.categoryIndex === index ? 'active' : ''
         },
         questionView(data) {
-            return require(`@/assets/resources/test-question/${data}`)
+            return data
+            //return require(`@/assets/resources/test-question/${data}`)
             // return 'http://bma.edu.ph/assets/image/questions/'
         },
         range(start, end) {
