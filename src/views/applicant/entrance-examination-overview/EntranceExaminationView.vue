@@ -37,7 +37,7 @@
                             <div class="question-view">
                                 <div v-if="!questionList[data - 1].question">
                                     <img class="img-fluid" :src="questionView(questionList[data - 1].image_path)" alt=""
-                                        style="width: 80%;height:50%;">
+                                        style="width: fit-content;height:max-content;">
                                 </div>
                                 <div v-else>
                                     <p class="text-primary fw-bolder h3" v-html="questionList[data - 1].question"></p>
@@ -64,8 +64,17 @@
                                 v-if="questionIndexReview > 5">PREVIOUS</button>
                             <button v-if="questionIndexReviewRange < questionList.length"
                                 class="btn btn-info text-white btn-sm" @click="nextReviewQuestion()">NEXT</button>
-                            <button v-else class="btn btn-info text-white btn-sm" @click="nextCategoryReview()">
-                                SUBMIT</button>
+
+                            <div v-if="(categoryIndex + 1) == categoryList.length">
+                                <div class="d-flex justify-content-center">
+                                    <button class="btn btn-info mt-3 text-white me-3"
+                                        @click="finishExamination()">SUBMIT
+                                        EXAMINATION</button>
+                                </div>
+                            </div>
+                            <button v-else class="btn btn-info text-white  float-end"
+                                @click="nextCategoryReview()">
+                                NEXT CATEGORY</button>
                         </div>
                     </div>
                 </div>
