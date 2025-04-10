@@ -13,28 +13,31 @@
                         <PreRegistration :propsApplicantDetails="applicantDetails" />
                     </li> -->
                     <li>
-                        <ApplicantInformation :propsApplicantDetails="applicantDetails" :token="token" />
+                        <ApplicantInformation :application="application" :applicantInformation="applicantDetails"
+                            :applicationStatus="status" :token="token" />
                     </li>
                     <li>
-                        <DocumementsRequirements :propsApplicantDetails="applicantDetails" :documents="documents"
+                        <DocumementsRequirements :applicantInformation="applicantDetails" :documents="documents"
                             :token="token" />
                     </li>
                     <li>
-                        <ExaminationPayment :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :examination="examination" :alumnia="alumnia" :token="token" :survey="survey" />
+                        <ExaminationPayment :application="application" :applicantInformation="applicantDetails"
+                            :documents="documents" :payment="payment" :alumnia="alumnia" :token="token"
+                            :survey="survey" />
                     </li>
                     <li>
-                        <EntranceExamination :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :examination="examination" :alumnia="alumnia" :token="token" />
+                        <EntranceExamination :application="application" :applicantInformation="applicantDetails"
+                            :documents="documents" :payment="payment" :examination="examination" :alumnia="alumnia"
+                            :token="token" />
                     </li>
                     <!--  <li>
                         <BriefingOrientation :propsApplicantDetails="applicantDetails" :documents="documents"
                             :examination="examination" :orientation="orientation" :token="token" />
                     </li> -->
                     <li>
-                        <MedicalExamination :propsApplicantDetails="applicantDetails" :documents="documents"
-                            :examination="examination" :alumnia="alumnia" :orientation="orientation" :medical="medical"
-                            :token="token" />
+                        <MedicalExamination :application="application" :applicantInformation="applicantDetails"
+                            :documents="documents" :examination="examination" :alumnia="alumnia" :payment="payment"
+                            :medical="medical" :token="token" />
                     </li>
                 </ul>
             </div>
@@ -83,21 +86,24 @@ export default {
         })
     },
     mounted() {
-        axios.get('applicant/information', {
+        axios.get('applicant/information-v2', {
             headers: {
                 Authorization: 'Bearer ' + this.token
             }
         }).then((response) => {
-            this.data = response.data.data
-            this.applicantName = this.data.name
-            this.applicantNumber = this.data.applicant_number
-            this.applicantDetails = this.data
-            this.documents = response.data.documents
-            this.examination = response.data.examination
-            this.orientation = response.data.orientation
-            this.alumnia = response.data.alumnia
-            this.medical = response.data.medical
-            this.survey = response.data.survey
+            console.log(response.data)
+            const applicant = response.data.applicantDetails
+            this.application = applicant.application
+            this.status = applicant.applicationExpired
+            this.applicantName = applicant.application.name
+            this.applicantNumber = applicant.applicant_number
+            this.applicantDetails = applicant.applicantInfo
+            this.documents = applicant.documents
+            this.survey = applicant.survey
+            this.payment = applicant.payment
+            this.alumnia = applicant.alumnia
+            this.examination = applicant.examination
+            this.medical = applicant.medical
             this.isLoading = false
         }).catch((error) => {
             console.log(error)

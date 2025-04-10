@@ -13,7 +13,7 @@
                 <div v-else>
                     <div v-if="examination.examinationDetails" class="examination-view">
                         <div v-if="examination.examinationDetails.is_finish" class="examination-form-and-instruction">
-                            <div v-if="propsApplicantDetails.course_id === 3">
+                            <div v-if="application.course_id === 3">
                                 Wait for the Examination Result
                             </div>
                             <div v-else>
@@ -130,8 +130,8 @@
                                             <small class="fw-bolder">EXAMINATION CODE</small> <br>
                                             <label for="" class="form-label text-primary fw-bolder">
                                                 {{ examination.examinationDetails ?
-        examination.examinationDetails.examination_code
-        : ''
+                                                    examination.examinationDetails.examination_code
+                                                    : ''
                                                 }}
                                             </label>
                                             <div class="row">
@@ -139,7 +139,7 @@
                                                     <input type="text" class="form-control border border-primary"
                                                         v-model="examinationCode" placeholder="Enter Examination Code">
                                                     <span class="badge bg-danger mt-2" v-if="errors.examination">{{
-        errors.examination[0] }}</span>
+                                                        errors.examination[0] }}</span>
                                                 </div>
                                                 <div class="col-md">
                                                     <button type="submit" class="btn btn-primary ">Proceed to
@@ -158,7 +158,7 @@
                                 <div v-else>
                                     <div v-if="examination.examinationScheduleHistory > 1">
                                         <p> Your entrance examination is scheduled on <b>{{
-                                                scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
+                                            scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
                                         </p>
                                         <p>
                                             Please ensure that you take the entrance examination on the specified date
@@ -170,7 +170,7 @@
                                     </div>
                                     <div v-else>
                                         <p> Your entrance examination is scheduled on <b>{{
-                                                scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>
+                                            scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>
                                             <!--   or you may opt to choose from the date scheduled below:  --></p>
                                         <!--  <div class="row">
                                             <div class="col-md"
@@ -215,13 +215,13 @@ export default {
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, badgeColor: 'bg-secondary', contentShow: false }
         let listScheduled = []
-        if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments) {
+        if (this.applicantInformation && this.documents.approvedDocuments) {
             if (this.alumnia) {
                 className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
             } else {
-                if (this.examination.payment) {
-                    if (this.examination.payment.is_approved) {
-                        listScheduled = this.scheduleListData(this.examination.payment.updated_at)
+                if (this.payment) {
+                    if (this.payment.is_approved) {
+                        // listScheduled = this.scheduleListData(this.payment.updated_at)
                         className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
                         if (this.examination.examinationDetails) {
                             if (this.examination.examinationDetails.is_finish) {
@@ -390,6 +390,6 @@ export default {
             /* return this.formatDate(date) */
         }
     },
-    props: { propsApplicantDetails: Object, documents: Object, alumnia: Object, examination: Object, token: String }
+    props: { application: Object, applicantInformation: Object, documents: Object, alumnia: Object, payment: Object, examination: Object, token: String }
 }
 </script>

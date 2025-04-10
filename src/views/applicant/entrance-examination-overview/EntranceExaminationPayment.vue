@@ -18,7 +18,7 @@
                         <p>For bank deposit or online fund transfer, please use the bank details
                             below:
                         </p>
-                        <div v-if="propsApplicantDetails.course_id === 3">
+                        <div v-if="application.course_id === 3">
                             <p class="fw-bolder text-info h5 mb-1">SENIOR HIGH SCHOOL</p>
                             <p class="mb-1">
                                 <small class="text-muted">BANK:</small> <br>
@@ -53,42 +53,40 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12">
-                        <div v-if="examination.payment">
+                        <div v-if="payment">
                             <h6 class="text-info mb-1 fw-bolder">PAYMENT TRANSACTION DETAILS</h6>
                             <div class="row">
                                 <div class="col-lg-8 col-md-12">
                                     <labelComponent label="transaciton date"
-                                        :value="getFormatDate(examination.payment.updated_at)" />
+                                        :value="getFormatDate(payment.updated_at)" />
                                 </div>
                                 <div class="col-lg-4 col-md-12">
                                     <!--  <labelComponent label="SBT BATCH" :value="deployment.sbt_batch" /> -->
                                 </div>
                                 <div class="col-lg-8 col-md-12">
-                                    <labelComponent label="reference no."
-                                        :value="examination.payment.reference_number" />
+                                    <labelComponent label="reference no." :value="payment.reference_number" />
                                 </div>
                                 <div class="col-lg-4 col-md-12">
-                                    <labelComponent label="paid amount"
-                                        :value="currencyFormat(examination.payment.amount_paid)" />
+                                    <labelComponent label="paid amount" :value="currencyFormat(payment.amount_paid)" />
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between mt-2">
-                                <div v-if="examination.payment.is_approved === null">
+                                <div v-if="payment.is_approved === null">
                                     <span class="text-info">This payment is under verification of Accounting
                                         Office's</span>
                                 </div>
-                                <div v-else-if="examination.payment.is_approved === 0">
+                                <div v-else-if="payment.is_approved === 0">
                                     <span class="text-info">This payment was
                                         disapproved because of this Remarks: </span>
                                     <span class="text-danger">
-                                        {{ examination.payment.comment_remarks }}
+                                        {{ payment.comment_remarks }}
                                     </span>
                                 </div>
                                 <div v-else>
                                     <span class="text-info">Payment Verified</span>
                                 </div>
                             </div>
-                            <div v-if="examination.payment.is_approved === 0" class="form-payment">
+                            <div v-if="payment.is_approved === 0" class="form-payment">
                                 <h6 class="text-info mb-1 fw-bolder">RE-UPLOAD PAYMENT TRANSACTION</h6>
                                 <form @submit.prevent="submitPaymentTransaction" method="post"
                                     enctype="multipart/form-data">
@@ -205,13 +203,13 @@ export default {
     },
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, stepperFinish: false, badgeColor: 'bg-secondary', contentShow: false }
-        if (this.propsApplicantDetails.applicant && this.documents.approvedDocuments) {
+        if (this.applicantInformation && this.documents.approvedDocuments) {
             className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
             if (this.alumnia) {
                 className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
             } else {
-                if (this.examination.payment) {
-                    if (this.examination.payment.is_approved) {
+                if (this.payment) {
+                    if (this.payment.is_approved) {
                         className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
                     }
                 }
@@ -315,6 +313,6 @@ export default {
             return formattedDate
         }
     },
-    props: { propsApplicantDetails: Object, documents: Object, alumnia: Object, examination: Object, token: String, survey: Object }
+    props: { application: Object, applicantInformation: Object, documents: Object, alumnia: Object, payment: Object, token: String, survey: Object }
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
     <stepper value="" :isActive="className.stepperStatus" :isFinish="className.stepperFinish" />
     <div :class="`card ${className.cardClass}`" @click="showContent">
+        <ReApplicationAlert v-if="applicationStatus" :userToken="token" />
         <div class="card-body m-2 p-2">
             <span :class="`${className.badgeColor} badge float-end`">{{ status }}</span>
             <small class="fw-bolder text-muted">{{ progressName }}</small>
@@ -10,31 +11,32 @@
                     <div class="col-lg-6 col-md-12">
                         <small class="fw-bolder text-muted">APPLICANT'S NAME:</small>
                         <br>
-                        <label for="" class="text-primary fw-bolder h5">{{ propsApplicantDetails.name }}</label>
+                        <label for="" class="text-primary fw-bolder h5">{{ application.name }}</label>
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <small class="fw-bolder text-muted">APPLICANT'S EMAIL:</small>
                         <br>
-                        <label for="" class="text-primary fw-bolder h5">{{ propsApplicantDetails.email }}</label>
+                        <label for="" class="text-primary fw-bolder h5">{{ application.email }}</label>
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <small class="fw-bolder text-muted">COURSE:</small>
                         <br>
-                        <label for="" class="text-primary fw-bolder h5">{{ propsApplicantDetails.course.course_name
-                        }}</label>
+                        <label for="" class="text-primary fw-bolder h5">{{ application.course
+                            }}</label>
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <small class="fw-bolder text-muted">ACADEMIC YEAR:</small>
                         <br>
-                        <label for="" class="text-primary fw-bolder h5">FIRST SEMESTER - {{
-                            propsApplicantDetails.academic.school_year }}</label>
+                        <label for="" class="text-primary fw-bolder h5">{{
+                            application.academic }}</label>
                     </div>
                 </div>
 
                 <div v-if="className.contentBody" class="content-active">
                     <p class="mb-3">
                         Kindly Fill-up the Form for your Additional Information,
-                        <router-link class="badge bg-primary" :to="{ name: 'applicant-layout.applicant-information' }">Go to
+                        <router-link class="badge bg-primary"
+                            :to="{ name: 'applicant-layout.applicant-information' }">Go to
                             Applicant's Information Form</router-link>
                     </p>
                 </div>
@@ -58,8 +60,8 @@
 
         </div>
     </div>
-    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl" ariaLabelled="exampleModalLabel"
-        dialogClass="modal-lg" :ariaHidden="true" contentrole="document">
+    <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl"
+        ariaLabelled="exampleModalLabel" dialogClass="modal-lg" :ariaHidden="true" contentrole="document">
         <model-header :dismissable="true">
             <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">APPLICATION FORM
             </h5>
@@ -82,16 +84,18 @@
 import modal from '@/components/bootstrap/modal/modal.vue'
 import stepper from '@/components/main-layouts/components/widgets/stepper-widget.vue'
 import PdfViewer from '@/components/main-layouts/components/PdfViewer.vue'
+
 /* import { pdf } from 'vue-pdf' */
 import axios from 'axios'
+import ReApplicationAlert from './component/ReApplicationAlert.vue'
 export default {
     name: 'ApplicantInformation',
     components: {
-        stepper, modal, PdfViewer
+        stepper, modal, PdfViewer, ReApplicationAlert
     },
     data() {
         let className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentBody: true, contentShow: true }
-        if (this.propsApplicantDetails.applicant) {
+        if (this.applicantInformation) {
             className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
         }
         return {
@@ -125,6 +129,6 @@ export default {
                 })
         }
     },
-    props: { propsApplicantDetails: Object, token: String }
+    props: { application: Object, token: String, applicationStatus: Boolean, applicantInformation: Object }
 }
 </script>

@@ -146,7 +146,7 @@ export default {
     },
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, stepperFinish: false, badgeColor: 'bg-secondary', contentShow: false }
-        if (this.propsApplicantDetails.applicant) {
+        if (this.applicantInformation) {
             className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
             if (this.documents.disqualification) {
                 className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
@@ -243,6 +243,6 @@ export default {
             return data.first_name + ' ' + data.last_name
         }
     },
-    props: { propsApplicantDetails: Object, documents: Object, token: String }
+    props: { applicantInformation: Object, documents: Object, token: String }
 }
 </script>
