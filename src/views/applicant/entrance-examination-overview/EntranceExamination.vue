@@ -214,7 +214,7 @@ export default {
     },
     data() {
         let className = { status: 'Pending', cardClass: '', textClass: 'text-muted', stepperStatus: false, badgeColor: 'bg-secondary', contentShow: false }
-        let listScheduled = []
+        const listScheduled = []
         if (this.applicantInformation && this.documents.approvedDocuments) {
             if (this.alumnia) {
                 className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: false }
@@ -242,7 +242,7 @@ export default {
             examinationCode: '',
             schedule: '',
             scheduleTime: '',
-            scheduledList: listScheduled
+            scheduledList: []
         }
     },
     methods: {

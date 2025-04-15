@@ -1,11 +1,8 @@
 import axios from 'axios'
-
-
-const links = [
-  'http://127.0.0.1:7000/api/',
-  'http://one.bma.edu.ph/api/',
-  'http://beta.one.bma.edu.ph/api/'
-]
-const production = links[1]
-const testing = links[0]
-axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? production : testing
+const production = 'http://one.bma.edu.ph/api' // ✅ Use HTTPS in production
+const baseURL = process.env.NODE_ENV === 'production' ? production : '/api'
+const instance = axios.create({
+  baseURL,
+  timeout: 10000
+})
+export default instance
