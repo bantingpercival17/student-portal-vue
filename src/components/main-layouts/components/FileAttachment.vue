@@ -6,11 +6,11 @@
     </div>
     <div v-else class="attachment-section">
         <FileStatus v-if="DocumentFile?.applicant_requirements_v2" :fileData="DocumentFile.applicant_requirements_v2"
-            @reupload="changeUpload()" @viewFile="setImage(DocumentFile.applicant_requirements_v2)" :status="isReupload"
+            @reupload="changeUpload()" :setImage="setImage(DocumentFile.applicant_requirements_v2)" :status="isReupload"
             @closeUpload="closeUpload()" />
 
         <FileStatus v-else-if="uploadedDocuments" :fileData="uploadedDocuments" @reupload="changeUpload()"
-            :status="isReupload" @viewFile="setImage(uploadedDocuments)" @closeUpload="closeUpload()" />
+            :status="isReupload" :setImage="setImage(uploadedDocuments)" @closeUpload="closeUpload()" />
 
         <FileUpload v-else @upload="attachFileUpload" :errors="errors" />
 
@@ -87,10 +87,8 @@ export default {
             })
         },
         setImage(data) {
-            console.log(data)
             const convertJson = JSON.parse(data.file_links)
-            this.imageFile = convertJson[0]
-            console.log(this.imageFile)
+            return convertJson[0]
         },
         changeUpload() {
             this.isReupload = true

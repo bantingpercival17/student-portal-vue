@@ -217,14 +217,17 @@ export default {
             }
             else {
                 if (this.payment) {
-                    console.log(this.payment)
                     if (this.payment.is_approved) {
                         if (this.examination.examinationDetails) {
-                            if (this.examination.examinationDetails.is_finish) {
-                                className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
-                                if (this.medical.medical_result) {
-                                    if (this.medical.medical_result.is_fit !== 0) {
-                                        className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: true }
+                            if (this.examination.examinationDetails) {
+                                if (this.examination.examinationDetails.examination_result_v2) {
+                                    if (this.examination.examinationDetails.examination_result_v2.result === 1) {
+                                        className = { status: 'Progress', cardClass: 'bg-soft-info', textClass: 'text-info', stepperStatus: true, stepperFinish: false, badgeColor: 'bg-info', contentShow: true }
+                                        if (this.medical.medical_result) {
+                                            if (this.medical.medical_result.is_fit !== 0) {
+                                                className = { status: 'Complete', cardClass: 'bg-soft-primary', textClass: 'text-primary', stepperStatus: true, stepperFinish: true, badgeColor: 'bg-primary', contentBody: false, contentShow: true }
+                                            }
+                                        }
                                     }
                                 }
                             }

@@ -1,10 +1,10 @@
 <template>
     <stepper value="" :isActive="className.stepperStatus" :isFinish="className.stepperFinish" />
-    <div :class="`card ${className.cardClass}`" @click="showContent">
+    <div :class="`card ${className.cardClass}`">
         <div class="card-body m-2 p-2">
-            <span :class="`${className.badgeColor} badge float-end`">{{ status }}</span>
+            <span @click="showContent" :class="`${className.badgeColor} badge float-end`">{{ status }}</span>
             <small class="fw-bolder text-muted">{{ progressName }}</small>
-            <h5 :class="`${className.textClass} fw-bolder mb-1`">{{ titleName }}</h5>
+            <h5 @click="showContent" :class="`${className.textClass} fw-bolder mb-1`">{{ titleName }}</h5>
             <!-- Documents List -->
             <div v-if="content" class="document-content p-3">
                 <div class="document-list row" v-if="!documents.disqualification">
@@ -14,106 +14,7 @@
                         </h5>
 
                         <FileAttachment :token="token" :DocumentFile="data" />
-                        <!-- <hr>
-                        <br>
-                        <div class="check" v-if="checkFileUpload(data.id, index)">
-                            <div v-if="form.documentDetails[index].is_approved === null">
-                                <label for="" class="text-info">This Documents is under Verification</label> <br>
-                                <span class="badge bg-primary">File Uploaded Date: {{
-                                    getFormatDate(form.documentDetails[index].created_at) }}</span>
-                            </div>
-                            <div v-else>
-                                <div v-if="form.documentDetails[index].is_approved === 1">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <span class="text-muted">Status: </span>
-                                            <span class="text-primary fw-bolder">APPROVED DOCUMENT</span>
-                                        </div>
-                                        <div class="col-md">
-                                            <div class="form-group">
-                                                <small for="" class="badge bg-secondary me-3">
-                                                    <span>Verified By: </span>
-                                                    <span class="fw-bolder">
-                                                        {{ this.staffName(form.documentDetails[index].staff) }}
-                                                    </span>
-                                                </small>
-                                                <small for="" class="badge bg-secondary">
-                                                    <span>Verified Date: </span>
-                                                    <span class="fw-bolder">
-                                                        {{ getFormatDate(form.documentDetails[index].updated_at) }}
-                                                    </span>
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div v-else>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <span class="text-muted">Status: </span>
-                                            <span class="text-danger fw-bolder">DISAPPROVED DOCUMENT</span>
-                                            <p class="text-info">
-                                                <span>Remarks: </span>
-                                                <span class="fw-bolder">{{ form.documentDetails[index].feedback
-                                                    }}</span>
-                                            </p>
-                                        </div>
-                                        <div class="col-md">
-                                            <div class="form-group">
-                                                <small for="" class="badge bg-secondary me-3">
-                                                    <span>Verified By: </span>
-                                                    <span class="fw-bolder">
-                                                        {{ this.staffName(form.documentDetails[index].staff) }}
-                                                    </span>
-                                                </small>
-                                                <small for="" class="badge bg-secondary">
-                                                    <span>Verified Date: </span>
-                                                    <span class="fw-bolder">
-                                                        {{ getFormatDate(form.documentDetails[index].updated_at) }}
-                                                    </span>
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="file-content">
-                                        <div v-if="form.fileUploaded[index]" class="form-file">
-                                            <label for="" class="text-info">This Documents is under Verification</label>
-                                            <br>
-                                            <span class="text-primary fw-bolder" v-if="form.uploadLoading[index]">
-                                                FILE UPLOADED
-                                            </span>
-                                        </div>
-                                        <div v-else>
-                                            <input type="file"
-                                                class="form-control form-control-sm border border-primary" required
-                                                v-on:change="handleFileChange($event, data.id, index)" />
-                                            <span class="text-info fw-bolder" v-if="form.uploadLoading[index]">Uploading
-                                                Files....</span>
-                                            <small v-if="form.fileError[index]" class="badge bg-danger">{{
-                                                form.fileError[index]
-                                            }}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-else class="file-content">
-                            <div v-if="form.fileUploaded[index]" class="form-file">
-                                <label for="" class="text-info">This Documents is under Verification</label>
-                                <br>
-                                <span class="text-primary fw-bolder" v-if="form.uploadLoading[index]">
-                                    FILE UPLOADED
-                                </span>
-                            </div>
-                            <div v-else>
-                                <input type="file" class="form-control form-control-sm border border-primary" required
-                                    v-on:change="handleFileChange($event, data.id, index)" />
-                                <span class="text-info fw-bolder" v-if="form.uploadLoading[index]">Uploading
-                                    Files....</span>
-                                <small v-if="form.fileError[index]" class="badge bg-danger">{{ form.fileError[index]
-                                    }}</small>
-                            </div>
-                        </div> -->
+
                     </div>
                 </div>
                 <div v-else>

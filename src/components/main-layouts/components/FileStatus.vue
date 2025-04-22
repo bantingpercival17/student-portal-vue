@@ -36,8 +36,7 @@
             </div>
         </div>
         <div class="col-lg-4 col-md-12">
-            <a class="badge bg-primary w-100 mb-2" @click="$emit('viewFile')" data-bs-toggle="modal"
-                data-bs-target="#viewFile">
+            <a class="badge bg-primary w-100 mb-2" @click="showModal = true">
                 VIEW FILE
             </a>
             <div v-if="fileData.is_approved !== 2 && fileData.is_approved !== 1">
@@ -51,13 +50,54 @@
         </div>
 
     </div>
-</template>
+    <div class="modal-viewer">
+        <div v-if="showModal" class="modal fade show d-block" tabindex="-1" role="dialog"
+            aria-labelledby="viewFileLabel" aria-modal="true">
+            <div class="modal-dialog modal-xl modal-lg" role="document">
+                <div class="modal-content">
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title text-primary fw-bolder" id="viewFileLabel">DOCUMENT PREVIEW</h5>
+                        <button type="button" class="btn-close" @click="showModal = false"></button>
+                    </div>
 
+                    <!-- Body -->
+                    <div class="modal-body">
+                        <img v-if="setImage" :src="setImage" alt="Modal Image" class="modal-image" />
+                        <!--  <iframe v-if="setImage" :src="setImage" width="100%" height="700px" frameborder="0"></iframe> -->
+                        <label v-else class="text-info fw-bolder">Wait to Load Image</label>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @click="showModal = false">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Backdrop -->
+        <div v-if="showModal" class="modal-backdrop fade show"></div>
+    </div>
+</template>
+<style>
+.modal-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    /* Ensures the image fits without distorting */
+}
+</style>
 <script>
 export default {
     name: 'FileStatus',
     props: {
-        fileData: Object, status: Boolean
+        fileData: Object, status: Boolean, setImage: String
+    },
+    data() {
+        return {
+            showModal: false
+        }
     },
     methods: {
         getFormatDate(inputDate) {
