@@ -51,6 +51,20 @@
                                 <span class="fw-bolder text-secondary mt-0">062000001037</span>
                             </p>
                         </div>
+                        <div>
+                            <p class="mb-1">
+                                <small class="text-muted">BANK:</small> <br>
+                                <span class="fw-bolder text-secondary mt-0">G-CASH</span>
+                            </p>
+                            <p class="mb-1">
+                                <small class="text-muted">ACCOUNT NAME:</small> <br>
+                                <span class="fw-bolder text-secondary mt-0">Irene camacho</span>
+                            </p>
+                            <p class="mb-1">
+                                <small class="text-muted">ACCOUNT NUMBER:</small> <br>
+                                <span class="fw-bolder text-secondary mt-0">09087374670</span>
+                            </p>
+                        </div>
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <div v-if="payment">

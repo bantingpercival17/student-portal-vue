@@ -96,7 +96,7 @@
                             </div> -->
                             </div>
                             <div v-else>
-                                <div v-if="checkSchedule(examination.examinationSchedule) == true">
+                                <div v-if="checkSchedule(examination.examinationSchedule) == 1">
                                     <div class="card">
                                         <div class="card-body">
                                             <p> <span class="fw-bolder">INSTRUCTION</span></p>
@@ -150,9 +150,10 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div v-else-if="checkSchedule(examination.examinationSchedule) == false">
+                                <div v-else-if="checkSchedule(examination.examinationSchedule) == 0">
                                     <p>
-                                        You Examination was forfeited.
+                                        Your examination has been forfeited. Please contact the registrar's office if
+                                        you wish to reschedule the exam.
                                     </p>
                                 </div>
                                 <div v-else>
@@ -361,16 +362,29 @@ export default {
         },
         checkSchedule(scheduled) {
             const currentDate = new Date() // This gives you the current date and time.
-            const examinationDate = new Date(scheduled.schedule_date) // Replace 'examinationDateFromDatabase' with your actual date.
-            console.log(currentDate)
-            console.log(scheduled.schedule_date)
-            if (currentDate < examinationDate) {
-                return null
-                /*  console.log("The examination is in the future."); */
-            } else if (currentDate === examinationDate) {
-                return true
+
+            // Strip out the time from the current date to compare only the date part
+            const currentDateWithoutTime = new Date(currentDate.setHours(0, 0, 0, 0))
+
+            const examinationDate = new Date(scheduled.schedule_date) // The scheduled examination date
+            const examinationDateWithoutTime = new Date(examinationDate.setHours(0, 0, 0, 0)) // Stripping out time
+
+            // Log the current date and examination date for debugging
+            console.log('Current Date:', currentDateWithoutTime)
+            console.log('Examination Date:', examinationDateWithoutTime)
+
+            if (currentDateWithoutTime < examinationDateWithoutTime) {
+                // The examination is in the future
+                console.log('The examination is in the future.')
+                return 2
+            } else if (currentDateWithoutTime === examinationDateWithoutTime) {
+                // The examination is today
+                console.log('The examination is scheduled for today.')
+                return 1
             } else {
-                return true
+                // The examination date has passed
+                console.log('The examination date has passed.')
+                return 0
             }
         },
         scheduledFormat(date1) {
