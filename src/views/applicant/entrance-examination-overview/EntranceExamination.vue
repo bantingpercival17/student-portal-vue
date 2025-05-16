@@ -96,7 +96,7 @@
                             </div> -->
                             </div>
                             <div v-else>
-                                <div v-if="checkSchedule(examination.examinationSchedule) == 1">
+                                <div v-if="examination.examinationSchedule.is_open">
                                     <div class="card">
                                         <div class="card-body">
                                             <p> <span class="fw-bolder">INSTRUCTION</span></p>
@@ -150,50 +150,18 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div v-else-if="checkSchedule(examination.examinationSchedule) == 0">
+                                <div v-else>
+                                    <p> Your entrance examination is scheduled on <b>{{
+                                        scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>
+                                    </p>
+
                                     <p>
-                                        Your examination has been forfeited. Please contact the registrar's office if
-                                        you wish to reschedule the exam.
+                                        Please ensure to that you take the examination on the specified date and
+                                        time,
+                                        otherwise, your examination slot will be forfeited.
                                     </p>
                                 </div>
-                                <div v-else>
-                                    <div v-if="examination.examinationScheduleHistory > 1">
-                                        <p> Your entrance examination is scheduled on <b>{{
-                                            scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>.
-                                        </p>
-                                        <p>
-                                            Please ensure that you take the entrance examination on the specified date
-                                            and
-                                            time;
-                                            otherwise, your examination
-                                            slot will be forfeited.
-                                        </p>
-                                    </div>
-                                    <div v-else>
-                                        <p> Your entrance examination is scheduled on <b>{{
-                                            scheduledFormat(examination.examinationSchedule.schedule_date) }}</b>
-                                            <!--   or you may opt to choose from the date scheduled below:  --></p>
-                                        <!--  <div class="row">
-                                            <div class="col-md"
-                                                v-for="(data, index) in scheduleListData(examination.examinationSchedule.schedule_date)"
-                                                :key="index">
-                                                <button class="btn btn-primary btn-sm w-100"
-                                                    @click="storeScheduleExamv2(data)">
-                                                    {{ data }} at 9:00 AM
-                                                </button>
-                                            </div>
-                                        </div> -->
-
-                                        <p>
-                                            Please ensure to that you take the examination on the specified date and
-                                            time,
-                                            otherwise, your examination slot will be forfeited.
-                                        </p>
-                                    </div>
-                                </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -384,7 +352,7 @@ export default {
             } else {
                 // The examination date has passed
                 console.log('The examination date has passed.')
-                return 0
+                return 1
             }
         },
         scheduledFormat(date1) {
