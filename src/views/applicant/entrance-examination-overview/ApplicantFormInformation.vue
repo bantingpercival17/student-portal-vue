@@ -451,7 +451,7 @@ export default {
             civilStatusList: ['Single', 'Married', 'Widowed', 'Divorced'],
             educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/a'],
             employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/a'],
-            strandList: ['General Academic Strand', 'Humanities and Social Sciences Strand', 'Science, Technology, Engineering and Mathematics', ' Accountancy, Business and Management', 'Technical Vocational Livelihood', 'Pre-Baccalaureate Maritime Strand', 'N/a'],
+            strandList: ['General Academic Strand', 'Humanities and Social Sciences Strand', 'Science, Technology, Engineering and Mathematics', ' Accountancy, Business and Management', 'Technical Vocational Livelihood', 'TVL (Technical-Vocational-Livelihood) Maritime', 'Pre-Baccalaureate Maritime Strand', 'N/a'],
             arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/a'],
             course: '',
             firstName: '',

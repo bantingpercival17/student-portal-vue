@@ -358,7 +358,7 @@
                                     </div>
                                 </div>
                                 <span class="badge bg-danger mt-2" v-if="errors.available_device">{{
-                errors.available_device[0] }}</span>
+                                    errors.available_device[0] }}</span>
                             </div>
                         </div>
                         <div class="col-xl-12 col-md-12">
@@ -385,7 +385,7 @@
                                     </div>
                                 </div>
                                 <span class="badge bg-danger mt-2" v-if="errors.available_provider">{{
-                errors.available_provider[0] }}</span>
+                                    errors.available_provider[0] }}</span>
                             </div>
                         </div>
                         <div class="col-xl-12 col-md-12">
@@ -407,7 +407,7 @@
                                     </div>
                                 </div>
                                 <span class="badge bg-danger mt-2" v-if="errors.learning_modality">{{
-                errors.learning_modality[0] }}</span>
+                                    errors.learning_modality[0] }}</span>
                             </div>
                         </div>
                         <div class="col-xl-12 col-md-12">
@@ -476,7 +476,7 @@ export default {
             providerList: ['own mobile data', 'own broadband (DSL, Wireless Fiber, Satellite)', 'computer shop', 'other places outside the home with internet connection (library, barangay, neighbor, relatives)', 'none'],
             learningModalityList: ['online learning', 'Blended', 'Face-to-Face'],
             inputsList: ['lack of available gadgets / equipment', 'insufficient load/data allowance', 'existing health condition/s', 'difficulty in independent learning', 'conflict with other activities (i.e. house chores)', 'none or lack of available space for studying', 'distractions (i.e. social media, noise from community/ neighbor)', 'none'],
-            strandList: ['General Academic Strand', 'Humanities and Social Sciences Strand', 'Science, Technology, Engineering and Mathematics', ' Accountancy, Business and Management', 'Technical Vocational Livelihood', 'Pre-Baccalaureate Maritime Strand'],
+            strandList: ['General Academic Strand', 'Humanities and Social Sciences Strand', 'Science, Technology, Engineering and Mathematics', ' Accountancy, Business and Management', 'Technical Vocational Livelihood', 'TVL (Technical-Vocational-Livelihood) Maritime', 'Pre-Baccalaureate Maritime Strand'],
             course: '',
             firstName: '',
             lastName: '',

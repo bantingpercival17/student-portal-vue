@@ -89,7 +89,8 @@
                                             <span class="text-info">This payment was Verified</span>
                                         </div>
                                     </div>
-                                    <div v-if="tuitionDetails.online_transaction.is_approved === 0" class="form-payment">
+                                    <div v-if="tuitionDetails.online_transaction.is_approved === 0"
+                                        class="form-payment">
                                         <h6 class="text-info mb-1 fw-bolder">RE-UPLOAD PAYMENT TRANSACTION</h6>
                                         <form @submit.prevent="submitPaymentTransaction" method="post"
                                             enctype="multipart/form-data">
@@ -97,15 +98,17 @@
                                                 v-model:value="reference_number" :error="errors.reference_number" />
                                             <inputComponentV2 type="date" label="Transaction Date"
                                                 v-model:value="transactionDate" :error="errors.transaction_date" />
-                                            <inputComponentV2 type="text" label="Payment Amount" v-model:value="amountPaid"
-                                                :error="errors.amount_paid" />
+                                            <inputComponentV2 type="text" label="Payment Amount"
+                                                v-model:value="amountPaid" :error="errors.amount_paid" />
                                             <div class="form-group">
                                                 <label for="example-text-input" class="form-control-label fw-bolder">
-                                                    <small>ATTACH PAYMENT RECEIPT<span class="text-danger">*</span></small>
+                                                    <small>ATTACH PAYMENT RECEIPT<span
+                                                            class="text-danger">*</span></small>
                                                 </label>
                                                 <input type="file"
                                                     v-on:change="fileReAttachment($event, tuitionDetails.online_transaction.id)"
-                                                    class="form-control border border-primary" />
+                                                    class="form-control border border-primary"
+                                                    accept=".png, .jpg, .jpeg, .pdf" />
                                                 <span class="badge bg-danger mt-2" v-if="errors.file">{{
                                                     errors.file[0] }}</span>
                                             </div>
@@ -128,7 +131,8 @@
                                                 <small>ATTACH PAYMENT RECEIPT<span class="text-danger">*</span></small>
                                             </label>
                                             <input type="file" v-on:change="fileAttachment"
-                                                class="form-control border border-primary" />
+                                                class="form-control border border-primary"
+                                                accept=".png, .jpg, .jpeg, .pdf" />
                                             <span class="badge bg-danger mt-2" v-if="errors.file">{{
                                                 errors.file[0] }}</span>
                                         </div>
@@ -202,21 +206,51 @@ export default {
             const formattedDate = month + ' ' + day + ', ' + year
             return formattedDate
         },
+        fileValidation(file) {
+            this.errors.file = []
+            if (!file) return false
+            const allowedTypes = [
+                'image/png',
+                'image/jpeg',
+                'image/jpg',
+                'image/jfif',
+                'application/pdf'
+            ]
+            const maxSize = 3 * 1024 * 1024 // 3MB
+            if (!allowedTypes.includes(file.type)) {
+                this.errors.file = ['Only PNG, JPG, JPEG, JFIF, and PDF files are allowed.']
+                return false
+            }
+            if (file.size > maxSize) {
+                this.errors.file = ['File size must not exceed 3MB.']
+                return false
+            }
+            return true
+        },
         fileAttachment(event) {
-            const file = event.target.files[0] // Get the Files in Event
-            this.formData.append('file', file) // Set the File on FormData
+            const file = event.target.files[0]
+            if (!this.fileValidation(file)) return
+            // Use set() to replace any previously attached file
+            this.formData.set('file', file)
         },
         fileReAttachment(event, document) {
-            const file = event.target.files[0] // Get the Files in Event
-            this.formData.append('file', file) // Set the File on FormData
-            this.formData.append('document', document) // Set the File on FormData
+            const file = event.target.files[0]
+            if (!this.fileValidation(file)) return
+            this.formData.set('file', file)
+            this.formData.set('document', document)
         },
         async submitPaymentTransaction() {
             this.showLoading(true)
+            this.errors = {}
+
+            // Start fresh to avoid duplication
+            // this.formData = new FormData(this.formData) // clone existing file-related FormData
+
+            // Append other fields
             this.formData.append('transaction_date', this.transactionDate)
             this.formData.append('amount_paid', this.amountPaid)
             this.formData.append('reference_number', this.reference_number)
-            this.errors = []
+
             axios.post('/student/onboard/enrollment-payment', this.formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -224,20 +258,19 @@ export default {
                 }
             }).then((response) => {
                 this.showLoading(false)
-                console.log(response.data)
                 if (response.status === 200) {
                     this.showAlert(response.data)
                     window.location.reload()
                 }
+                this.formData = new FormData() // reset after submit
             }).catch((error) => {
                 this.showLoading(false)
-                console.log(error)
-                if (error.response.status === 422) {
-                    console.log(error.response.data)
+                if (error.response && error.response.status === 422) {
                     this.errors = error.response.data.errors
                 } else {
                     this.showAlertError(error)
                 }
+                this.formData = new FormData() // reset on error too
             })
         },
         showAlertError(error) {
