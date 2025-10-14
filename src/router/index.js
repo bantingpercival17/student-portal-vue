@@ -48,6 +48,12 @@ const defaultchildRoutes = (prop) => [
     component: () => import('@/views/guest/Research.vue')
   },
   {
+    path: '/publication',
+    name: prop + '.publication',
+    meta: { auth: false, name: 'Publication', user: 'guest' },
+    component: () => import('@/views/guest/Publication.vue')
+  },
+  {
     path: '/student/login',
     name: prop + '.student-login',
     meta: { auth: false, name: 'Student Login', user: 'guest' },
