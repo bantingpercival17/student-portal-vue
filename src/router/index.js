@@ -132,7 +132,8 @@ const routes = [
   {
     path: '/applicant',
     name: 'applicant-layout',
-    component: () => import('../components/main-layouts/applicant-layout.vue'),
+    /* component: () => import('../components/main-layouts/applicant-layout.vue'), */
+    component: () => import('../components/v2/applicant/MainLayout.vue'),
     children: applicantRoute('applicant-layout')
   },
   {
