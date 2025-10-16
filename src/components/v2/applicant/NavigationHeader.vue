@@ -13,7 +13,8 @@
             <div class="d-flex align-items-center ms-auto">
                 <!-- Notifications -->
                 <div class="dropdown">
-                    <button @click="markNotificationsAsRead" class="btn btn-light position-relative" type="button"
+                    <button @click="markNotificationsAsRead"
+                        class="btn btn-sm btn-light position-relative d-none d-lg-block" type="button"
                         data-bs-toggle="dropdown">
                         <i class="bi bi-bell-fill"></i>
                         <span v-if="unreadNotificationCount > 0"
@@ -26,7 +27,7 @@
                                 <a class="dropdown-item d-flex flex-column" href="#">
                                     <span class="small">{{ n.message }}</span>
                                     <span class="text-muted" style="font-size: 0.7rem;">{{ n.timestamp.toLocaleString()
-                                    }}</span>
+                                        }}</span>
                                 </a>
                             </li>
                             <li v-if="notifications.length === 0" class="text-center text-muted p-3 small">No new
@@ -39,15 +40,15 @@
                 <div class="dropdown ms-3">
                     <button class="btn d-flex align-items-center" type="button" data-bs-toggle="dropdown">
                         <div class="text-end">
-                            <div class="fw-semibold small">{{ applicant.name }}</div>
-                            <div class="text-muted" style="font-size: 0.7rem;">ID: {{ applicant.id }}</div>
+                            <div class="fw-bolder small text-black">{{ name }}</div>
+                              <div class="text-muted" style="font-size: 0.7rem;">ID: {{ applicant.id }}</div>
                         </div>
                         <i class="bi bi-chevron-down ms-2 text-muted"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#" @click.prevent="navigateTo('account-settings')">Account
                                 Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item"  @click="logOut">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,6 +56,8 @@
     </header>
 </template>
 <script>
+import { LOGOUT_ACTION, GET_USER_TOKEN, GET_USER_NAME } from '@/store/storeConstants'
+import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'NavigationHeader',
     data() {
@@ -66,6 +69,21 @@ export default {
                 email: 'juan.delacruz@email.com'
             },
             notifications: []
+        }
+    },
+    computed: {
+        ...mapGetters('auth', {
+            token: GET_USER_TOKEN,
+            name: GET_USER_NAME
+        })
+    },
+    methods: {
+        ...mapActions('auth', {
+            logout: LOGOUT_ACTION
+        }),
+        logOut() {
+            this.logout()
+            this.$router.replace('/')
         }
     },
     props: {

@@ -56,14 +56,19 @@
                         <div id="collapseEnrollment" class="accordion-collapse collapse"
                             data-bs-parent="#enrollmentAccordion">
                             <div class="accordion-body">
-                                <ul class="nav flex-column">
-                                    <!-- <li class="nav-item" v-for="(stage, key) in enrollmentStages" :key="key">
-                                        <a href="#" @click.prevent="!isLocked(key) && navigateTo(key)"
+                                <ul class="flex-column" style="list-style: none; padding: 0; margin: 0;">
+                                    <li class="nav-item" v-for="(stage, key) in enrollmentItem" :key="key">
+                                        <router-link :to="stage.status === 'locked' ? '' : { name: stage.url }"
+                                            :class="['sidebar-link', { active: checkRoute(stage.url), locked: stage.status === 'locked' }]"
+                                            @click.prevent="stage.status === 'locked' && $event.preventDefault()">
+                                            {{ stage.title }}
+                                        </router-link>
+                                        <!--   <a href="#" @click.prevent="!isLocked(key) && navigateTo(key)"
                                             class="sidebar-link"
                                             :class="{ 'active': currentView === key, 'locked': isLocked(key) }">
-                                            <i class="bi bi-chevron-right me-2"></i> {{ stage.title }}
-                                        </a>
-                                    </li> -->
+
+                                        </a> -->
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -106,7 +111,8 @@ export default {
         onToggleDesktop: {
             type: Function
         },
-        admissionItem: Object
+        admissionItem: Object,
+        enrollmentItem: Object
     }
 }
 </script>

@@ -1,11 +1,16 @@
 <template>
     <!-- Sidebar Navigation -->
     <SideBarNavigation :isSidebarOpenOnMobile="isSidebarOpenOnMobile" :onToggleMobile="toggleSidebar"
-        :onToggleDesktop="toggleSidebarDesktop" :admissionItem="admissionItem" />
+        :onToggleDesktop="toggleSidebarDesktop" :admissionItem="admissionItem" :enrollmentItem="enrollmentItem" />
 
     <!-- Main Content -->
     <div id="main-content-wrapper" :class="{ 'sidebar-hidden': isSidebarHidden }">
         <NavigationHeader :onToggleMobile="toggleSidebar" :onToggleDesktop="toggleSidebarDesktop" />
+        <main class="flex-grow-1 p-3">
+            <div class="view">
+                <router-view />
+            </div>
+        </main>
     </div>
 
 </template>
@@ -24,24 +29,17 @@ export default {
             { title: 'Pre-Enrollment Briefing', shortTitle: 'Briefing', category: 'admission', status: 'locked', icon: 'bi bi-people-fill', url: 'student-layout.dashboard' },
             { title: 'Medical Examination', shortTitle: 'Medical', category: 'admission', status: 'locked', files: [], icon: 'bi bi-heart-pulse-fill', url: 'student-layout.dashboard' }
         ]
+        const enrollmentItem = [
+            { title: 'Enrollment Form', shortTitle: 'Enrollment Form', category: 'enrollment', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-card-list' },
+            { title: 'View Assessment', shortTitle: 'Assessment', category: 'enrollment', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-calculator-fill' },
+            { title: 'Tuition Payment', shortTitle: 'Tuition Fee', category: 'enrollment', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-wallet2' },
+            { title: 'Confirmation', shortTitle: 'Confirm', category: 'enrollment', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-patch-check-fill' }
+        ]
         return {
             isSidebarHidden: false,
             isSidebarOpenOnMobile: false,
-            admissionItem
-            /*  stages: {
-                 dashboard: { title: 'Dashboard', shortTitle: 'Dashboard', category: 'main', status: 'complete' },
-                 'account-settings': { title: 'Account Settings', shortTitle: 'Settings', category: 'hidden', status: 'complete' },
-                 registration: { title: 'Registration', shortTitle: 'Registration', category: 'admission', status: 'complete', icon: 'bi bi-person-plus-fill' },
-                 documents: { title: 'Documentary Requirements', shortTitle: 'Documents', category: 'admission', status: 'in_progress', files: [], icon: 'bi bi-file-earmark-text-fill' },
-                 payment: { title: 'Entrance Exam Payment', shortTitle: 'Exam Fee', category: 'admission', status: 'locked', icon: 'bi bi-cash-coin' },
-                 exam: { title: 'Entrance Exam', shortTitle: 'Exam', category: 'admission', status: 'locked', scheduled: false, permitReady: false, icon: 'bi bi-pencil-square' },
-                 briefing: { title: 'Pre-Enrollment Briefing', shortTitle: 'Briefing', category: 'admission', status: 'locked', icon: 'bi bi-people-fill' },
-                 medical: { title: 'Medical Examination', shortTitle: 'Medical', category: 'admission', status: 'locked', files: [], icon: 'bi bi-heart-pulse-fill' },
-                 enrollment_form: { title: 'Enrollment Form', shortTitle: 'Enrollment Form', category: 'enrollment', status: 'locked', icon: 'bi bi-card-list' },
-                 enrollment_assessment: { title: 'View Assessment', shortTitle: 'Assessment', category: 'enrollment', status: 'locked', icon: 'bi bi-calculator-fill' },
-                 enrollment_payment: { title: 'Tuition Payment', shortTitle: 'Tuition Fee', category: 'enrollment', status: 'locked', icon: 'bi bi-wallet2' },
-                 enrollment_confirmation: { title: 'Confirmation', shortTitle: 'Confirm', category: 'enrollment', status: 'locked', icon: 'bi bi-patch-check-fill' }
-             } */
+            admissionItem,
+            enrollmentItem
         }
     },
     components: {
