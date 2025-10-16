@@ -29,6 +29,67 @@
                                 Engineering"
                             </li>
                         </ul>
+                        <hr>
+                        <label for="" class="h3 text-primary">
+                            Instruction to Register in 𝗡𝗮𝘁𝗶𝗼𝗻𝗮𝗹 𝗠𝗲𝗿𝗰𝗵𝗮𝗻𝘁 𝗠𝗮𝗿𝗶𝗻𝗲 𝗔𝗽𝘁𝗶𝘁𝘂𝗱𝗲
+                            𝗧𝗲𝘀𝘁 (𝗡𝗮𝗠𝗠𝗔𝗧)
+                        </label>
+                        <ul class="contact-details">
+                            <li>
+                                All students who wish to enroll in any maritime school or program are required to take
+                                and pass the National Maritime Aptitude Test (NAMMAT). This serves as a mandatory
+                                requirement for admission.
+                            </li>
+                            <li>
+                                Applicants must present the official NAMMAT Result as part of their admission
+                                requirements.
+                            </li>
+                            <li>
+                                For details on the registration process, examination schedules, and designated testing
+                                centers, please visit the official NAMMAT website or contact the Admissions Office for
+                                assistance.
+                            </li>
+                            <li> Go to this link: <a href="https://www.cem-inc.org.ph/nammat/user/register"
+                                    target="_blank">NaMMAT Registration</a>
+                            </li>
+                        </ul>
+                        <div id="maritimeCarousel" class="carousel slide" data-bs-ride="carousel">
+
+                            <!-- Carousel Indicators -->
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#maritimeCarousel" data-bs-slide-to="0"
+                                    class="active"></button>
+                                <button type="button" data-bs-target="#maritimeCarousel" data-bs-slide-to="1"></button>
+                                <button type="button" data-bs-target="#maritimeCarousel" data-bs-slide-to="2"></button>
+                            </div>
+
+                            <!-- Carousel Inner -->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img :src="slides[0]" class="d-block w-100" alt="NAMMAT slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img :src="slides[1]" class="d-block w-100" alt="NAMMAT slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img :src="slides[2]" class="d-block w-100" alt="NAMMAT slide">
+                                </div>
+                            </div>
+
+                            <!-- Carousel Controls -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#maritimeCarousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+
+                            <button class="carousel-control-next" type="button" data-bs-target="#maritimeCarousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+
                     </div>
                     <div class="col-md-4">
                         <h4 class="fw-bolder">APPLICATION FORM</h4>
@@ -118,6 +179,100 @@
             </div>
         </div>
     </div>
+    <!-- NaMMAT MODEL -->
+    <div v-if="showModal" class="modal fade show d-block" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary fw-bolder">NaMMAT</h5>
+                    <button type="button" class="btn-close" @click="showModal = false"></button>
+                </div>
+
+                <div class="modal-body">
+                    <label for="" class="h3 text-primary">
+                        Instruction to Register in 𝗡𝗮𝘁𝗶𝗼𝗻𝗮𝗹 𝗠𝗲𝗿𝗰𝗵𝗮𝗻𝘁 𝗠𝗮𝗿𝗶𝗻𝗲 𝗔𝗽𝘁𝗶𝘁𝘂𝗱𝗲
+                        𝗧𝗲𝘀𝘁 (𝗡𝗮𝗠𝗠𝗔𝗧)
+                    </label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <ul class="contact-details">
+                                <li>
+                                    All students who wish to enroll in any maritime school or program are required to
+                                    take
+                                    and pass the National Maritime Aptitude Test (NAMMAT). This serves as a mandatory
+                                    requirement for admission.
+                                </li>
+                                <li>
+                                    Applicants must present the official NAMMAT Result as part of their admission
+                                    requirements.
+                                </li>
+                                <li>
+                                    For details on the registration process, examination schedules, and designated
+                                    testing
+                                    centers, please visit the official NAMMAT website or contact the Admissions Office
+                                    for
+                                    assistance.
+                                </li>
+                                <li> Go to this link: <a href="https://www.cem-inc.org.ph/nammat/user/register"
+                                        target="_blank">NaMMAT Registration</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-7">
+                            <div id="maritimeCarouselModal" class="carousel slide" data-bs-ride="carousel">
+
+                                <!-- Carousel Indicators -->
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#maritimeCarouselModal" data-bs-slide-to="0"
+                                        class="active"></button>
+                                    <button type="button" data-bs-target="#maritimeCarouselModal"
+                                        data-bs-slide-to="1"></button>
+                                    <button type="button" data-bs-target="#maritimeCarouselModal"
+                                        data-bs-slide-to="2"></button>
+                                </div>
+
+                                <!-- Carousel Inner -->
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img :src="slides[0]" class="d-block w-100" alt="NAMMAT slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img :src="slides[1]" class="d-block w-100" alt="NAMMAT slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img :src="slides[2]" class="d-block w-100" alt="NAMMAT slide">
+                                    </div>
+                                </div>
+
+                                <!-- Carousel Controls -->
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#maritimeCarouselModal" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#maritimeCarouselModal" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @click="showModal = false">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dim background -->
+    <div v-if="showModal" class="modal-backdrop fade show"></div>
+    <!-- Modal -->
     <modal id="exampleModal" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl"
         ariaLabelled="exampleModalLabel" :ariaHidden="true" contentrole="document">
         <model-header :dismissable="true">
@@ -397,7 +552,13 @@ export default {
             networkError: [],
             validateClass: '',
             formData,
-            captchaValue: ''
+            captchaValue: '',
+            slides: [
+                require('@/assets/resources/nammat/nammat-1.jpg'),
+                require('@/assets/resources/nammat/nammat-2.jpg'),
+                require('@/assets/resources/nammat/nammat-3.jpg')
+            ],
+            showModal: true
         }
     },
     mounted() {
