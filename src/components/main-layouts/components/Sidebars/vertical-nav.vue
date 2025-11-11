@@ -38,7 +38,7 @@
                 </li>
             </ul>
         </li>
-    </ul>
+    </ul>g
 </template>
 <script>
 export default {

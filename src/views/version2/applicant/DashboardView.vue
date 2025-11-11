@@ -57,85 +57,81 @@
             </div> -->
 
             <!-- Admission Tracker -->
-            <h2 class="fs-5 fw-semibold text-primary border-bottom pb-3 mt-4">ADDMISSION STATUS TRACKER</h2>
+            <h2 class="fs-5 fw-semibold text-secondary border-bottom pb-3 mb-4">Admission Status
+                Tracker</h2>
             <div class="d-flex align-items-start w-100">
-                <div v-for="(stage, key) in admissionItem" :key="key" style="display: contents;">
-                    <!-- <router-link :to="stage.status === 'locked' ? '' : { name: stage.url }"
-                        :class="['sidebar-link', { locked: stage.status === 'locked' }]"
-                        @click.prevent="stage.status === 'locked' && $event.preventDefault()">
-                        {{ stage.title }}
-                    </router-link> -->
-
-                    <div class="text-center px-1" @click.prevent="stage.status === 'locked' && $event.preventDefault()"
-                        :class="['cursor-pointer', { locked: stage.status === 'locked' }]" style="flex: 1 1 80px;">
-                        {{ stage.status }}
-                        <!-- <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center"
-                            :class="getStepClass(stages.status)" style="width: 2rem; height: 2rem;">
-                            <i v-if="stages.status === 'complete'" class="bi bi-check-lg text-white"></i>
+                <div v-for="(stage, key) in admissionProcessStages" :key="key" style="display: contents;">
+                    <div class="text-center px-1" @click="!isLocked(key) && navigateTo(stage.shortTitle)"
+                        :class="{ 'cursor-pointer': !isLocked(key) }" style="flex: 1 1 80px;">
+                        <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center"
+                            :class="getStepClass(stage.status)" style="width: 2rem; height: 2rem;">
+                            <i v-if="stage.status === 'complete'" class="bi bi-check-lg text-white"></i>
                             <i v-else
-                                :class="[stage.icon, stages.status === 'locked' ? 'text-secondary' : 'text-white']"></i>
-                        </div> -->
-                        <!-- <p class="fw-bold mt-2" :class="{ 'text-muted': isLocked(key) }" style="font-size: 0.75rem;">{{
-                            stage.shortTitle }}</p> -->
+                                :class="[stage.icon, stage.status === 'locked' ? 'text-secondary' : 'text-white']"></i>
+                        </div>
+                        <p class="fw-bold mt-2" :class="{ 'text-muted': isLocked(key) }" style="font-size: 0.75rem;">{{
+                            stage.shortTitle }}</p>
                     </div>
-                    <!--  <div v-if="index < Object.keys(admissionProcessStages).length - 1"
-                        class="flex-grow-1 bg-secondary-subtle" style="height: 4px; margin-top: 0.8rem;">
-                        <div class="h-100" :class="{ 'bg-warning': stages[key].status === 'complete' }"
-                            style="width: 100%;"></div>
-                    </div> -->
+                    <div v-if="(key + 1) < admissionProcessStages.length" class="flex-grow-1 bg-secondary-subtle"
+                        style="height: 4px; margin-top: 0.8rem;">
+                        <div class="h-100" :class="{ 'bg-warning': stage.status === 'complete' }" style="width: 100%;">
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="card-stage">
+                <RegistrationCard v-if="'Registration' == activeStage" />
+            </div>
 
-            <!-- Remarks -->
-            <!--  <div v-if="currentStageRemark" class="alert alert-warning d-flex align-items-center mt-4">
-                <i class="bi bi-exclamation-triangle-fill me-3"></i>
-                <div>
-                    <strong class="d-block">Current Task: {{ stages[currentStageKey].title }}</strong>
-                    {{ currentStageRemark }}
-                </div>
-            </div> -->
-            <!--  <div v-if="stages.enrollment_confirmation.status === 'complete'"
-                class="alert alert-success d-flex align-items-center mt-4">
-                <i class="bi bi-check-circle-fill me-3"></i>
-                <div>
-                    <strong class="d-block">Enrollment Complete!</strong>
-                    Congratulations, Cadet! You are officially enrolled.
-                </div>
-            </div> -->
         </div>
     </div>
 </template>
 <script>
+import RegistrationCard from './admission/widgets/RegistrationCard.vue'
+
 /* eslint-disable */
 export default {
     name: 'ApplicantDashboardView',
     data() {
-        const admissionItem = [
-            { title: 'Registration', shortTitle: 'Registration', category: 'admission', status: 'complete', icon: 'bi bi-person-plus-fill', url: 'student-layout.dashboard' },
-            { title: 'Documentary Requirements', shortTitle: 'Documents', category: 'admission', status: 'in_progress', files: [], icon: 'bi bi-file-earmark-text-fill', url: 'student-layout.dashboard' },
-            { title: 'Entrance Exam Payment', shortTitle: 'Exam Fee', category: 'admission', status: 'locked', icon: 'bi bi-cash-coin', url: 'student-layout.dashboard' },
-            { title: 'Entrance Exam', shortTitle: 'Exam', category: 'admission', status: 'locked', scheduled: false, permitReady: false, icon: 'bi bi-pencil-square', url: 'student-layout.dashboard' },
-            { title: 'Pre-Enrollment Briefing', shortTitle: 'Briefing', category: 'admission', status: 'locked', icon: 'bi bi-people-fill', url: 'student-layout.dashboard' },
-            { title: 'Medical Examination', shortTitle: 'Medical', category: 'admission', status: 'locked', files: [], icon: 'bi bi-heart-pulse-fill', url: 'student-layout.dashboard' }
-        ]
         const enrollmentItem = [
-            { title: 'Enrollment Form', shortTitle: 'Enrollment Form', category: 'enrollment', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-card-list' },
-            { title: 'View Assessment', shortTitle: 'Assessment', category: 'enrollment', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-calculator-fill' },
-            { title: 'Tuition Payment', shortTitle: 'Tuition Fee', category: 'enrollment', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-wallet2' },
-            { title: 'Confirmation', shortTitle: 'Confirm', category: 'enrollment', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-patch-check-fill' }
+            { title: 'Enrollment Form', shortTitle: 'Enrollment Form', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-card-list' },
+            { title: 'View Assessment', shortTitle: 'Assessment', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-calculator-fill' },
+            { title: 'Tuition Payment', shortTitle: 'Tuition Fee', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-wallet2' },
+            { title: 'Confirmation', shortTitle: 'Confirm', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-patch-check-fill' }
         ]
         return {
             completedStagesCount: 1,
             inProgressStagesCount: 0,
-            admissionItem,
-            enrollmentItem
+            admissionProcessStages: [],
+            activeStage: 'Registration',
+            enrollmentItem,
+
         }
+    },
+    components: {
+        RegistrationCard
+    },
+    mounted() {
+        this.admissionProcessStages = [
+            { title: 'Registration', shortTitle: 'Registration', status: 'complete', icon: 'bi bi-person-plus-fill', url: 'student-layout.dashboard' },
+            { title: 'Documentary Requirements', shortTitle: 'Documents', status: 'in_progress', files: [], icon: 'bi bi-file-earmark-text-fill', url: 'student-layout.dashboard' },
+            { title: 'Entrance Exam Payment', shortTitle: 'Exam Fee', status: 'locked', icon: 'bi bi-cash-coin', url: 'student-layout.dashboard' },
+            { title: 'Entrance Exam', shortTitle: 'Exam', status: 'locked', scheduled: false, permitReady: false, icon: 'bi bi-pencil-square', url: 'student-layout.dashboard' },
+            { title: 'Pre-Enrollment Briefing', shortTitle: 'Briefing', status: 'locked', icon: 'bi bi-people-fill', url: 'student-layout.dashboard' },
+            { title: 'Medical Examination', shortTitle: 'Medical', status: 'locked', files: [], icon: 'bi bi-heart-pulse-fill', url: 'student-layout.dashboard' }
+        ]
     },
     methods: {
         getStepClass(status) {
-            if (status === 'complete') return 'bg-warning'
-            if (status === 'in_progress') return 'bg-warning'
+            if (status === 'complete') return 'bg-primary'
+            if (status === 'in_progress') return 'bg-info'
             return 'bg-secondary-subtle'
+        },
+        isLocked(key) {
+            return this.admissionProcessStages[key].status === 'locked'
+        },
+        navigateTo(item) {
+            this.activeStage = item
         }
     }
 }

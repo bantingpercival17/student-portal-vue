@@ -1,8 +1,8 @@
 <template>
     <aside id="sidebar" :class="{ 'open': isSidebarOpenOnMobile }">
         <div class="d-flex align-items-center justify-content-center p-3 shadow-sm bg-dark-green">
-            <img src="https://placehold.co/40x40/FFFFFF/15803d?text=BMA" alt="BMA Logo" class="rounded-circle">
-            <span class="ms-3 fs-5 fw-bold">BMA Portal</span>
+            <img :src="require('@/assets/resources/image/bma-logo.jpg')" alt="BMA Logo" class="img-fluid avatar avatar-50 avatar-rounded">
+            <span class="ms-2 fs-5 fw-bold">Admission Portal</span>
         </div>
         <nav class="p-3">
             <ul class="flex-column" style="list-style: none; padding: 0; margin: 0;">
@@ -101,6 +101,9 @@ export default {
         isLocked(key) {
             console.log(this.admissionItem[key].status)
             return this.admissionItem[key].status === 'locked'
+        },
+        navigateTo(routeName) {
+            this.$router.push({ name: 'applicant-layout-v2.' + routeName })
         }
     },
     props: {

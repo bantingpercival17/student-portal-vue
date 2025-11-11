@@ -207,4 +207,59 @@ body {
     background-color: #e9ecef;
     opacity: 1;
 }
+
+/* --- NEW MOBILE SPECIFIC FIXES --- */
+@media (max-width: 768px) {
+
+    /* 1. Condense Dashboard Stat Cards (Completed/In Progress) */
+    .card-body.d-flex.align-items-center {
+        /* Use a smaller gap between icon and text */
+        padding: 0.75rem !important;
+        /* Reduce card padding */
+    }
+
+    .card-body .fs-3 {
+        font-size: 1.5rem !important;
+        /* Smaller number on mobile */
+    }
+
+    .card-body .fs-4 {
+        font-size: 1.25rem !important;
+        /* Smaller icon */
+    }
+
+    /* 2. Fix Admission Status Tracker Overlap/Wrapping */
+    /* Target the text under the icons */
+    .text-center>p.fw-bold {
+        font-size: 0.65rem !important;
+        /* Crucial: Make text smaller to fit */
+        line-height: 1.1;
+        white-space: nowrap;
+        /* Prevent word wrapping if space is really tight */
+        margin-top: 0.5rem !important;
+        margin-bottom: 0 !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Adjust spacing for tracker icons */
+    .text-center.px-1 {
+        padding-left: 0.1rem !important;
+        padding-right: 0.1rem !important;
+        flex: 1 1 50px !important;
+        /* Give less flex space to the container, forcing elements to compress */
+    }
+
+    /* Ensure the line between icons is small */
+    .d-flex.align-items-start.w-100>.flex-grow-1 {
+        margin-left: 0.1rem;
+        margin-right: 0.1rem;
+    }
+
+    /* 3. Adjust Header Text Size */
+    .fs-5.fw-semibold.text-secondary.mb-0.mx-3 {
+        font-size: 1rem !important;
+        /* Smaller header title */
+    }
+}
 </style>

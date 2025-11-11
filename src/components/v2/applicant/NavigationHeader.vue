@@ -27,7 +27,7 @@
                                 <a class="dropdown-item d-flex flex-column" href="#">
                                     <span class="small">{{ n.message }}</span>
                                     <span class="text-muted" style="font-size: 0.7rem;">{{ n.timestamp.toLocaleString()
-                                        }}</span>
+                                    }}</span>
                                 </a>
                             </li>
                             <li v-if="notifications.length === 0" class="text-center text-muted p-3 small">No new
@@ -41,14 +41,15 @@
                     <button class="btn d-flex align-items-center" type="button" data-bs-toggle="dropdown">
                         <div class="text-end">
                             <div class="fw-bolder small text-black">{{ name }}</div>
-                              <div class="text-muted" style="font-size: 0.7rem;">ID: {{ applicant.id }}</div>
+                            <div class="text-muted" style="font-size: 0.7rem;">ID: {{ applicant.id }}</div>
                         </div>
                         <i class="bi bi-chevron-down ms-2 text-muted"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#" @click.prevent="navigateTo('account-settings')">Account
+                        <li><a class="dropdown-item" href="#"
+                                @click.prevent="navigateTo('applicant-layout-v2.settings')">Account
                                 Settings</a></li>
-                        <li><a class="dropdown-item"  @click="logOut">Logout</a></li>
+                        <li><a class="dropdown-item" @click="logOut">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -56,13 +57,14 @@
     </header>
 </template>
 <script>
+/* eslint-disable */
 import { LOGOUT_ACTION, GET_USER_TOKEN, GET_USER_NAME } from '@/store/storeConstants'
 import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'NavigationHeader',
     data() {
         return {
-            currentViewTitle: 'Dashboard',
+            unreadNotificationCount: 0,
             applicant: {
                 name: 'Juan Dela Cruz',
                 id: '2026-00123',
@@ -75,7 +77,10 @@ export default {
         ...mapGetters('auth', {
             token: GET_USER_TOKEN,
             name: GET_USER_NAME
-        })
+        }),
+        currentViewTitle() {
+            return this.$route.meta?.name || 'Dashboard'
+        }
     },
     methods: {
         ...mapActions('auth', {
@@ -84,6 +89,9 @@ export default {
         logOut() {
             this.logout()
             this.$router.replace('/')
+        },
+        navigateTo(routeName) {
+            this.$router.push({ name: routeName })
         }
     },
     props: {
