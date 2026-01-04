@@ -5,6 +5,7 @@ import { IS_USER_AUTHENTICATE_GETTER, GET_USER_TYPE } from '@/store/storeConstan
 import { studentRoute } from './student-route'
 import { applicantRoute } from './applicant-route'
 import { applicantRouteV2 } from './ApplicantRouteV2'
+import { studentRouteV2 } from './StudentRouteV2'
 const defaultchildRoutes = (prop) => [
   {
     path: '/',
@@ -136,12 +137,18 @@ const routes = [
     component: () => import('../components/main-layouts/applicant-layout.vue'),
     children: applicantRoute('applicant-layout')
   },
-   {
-     path: '/applicant/v2',
-     name: 'applicant-layout-v2',
-     component: () => import('../components/v2/applicant/MainLayout.vue'),
-     children: applicantRouteV2('applicant-layout-v2')
-   },
+  {
+    path: '/applicant/v2',
+    name: 'applicant-layout-v2',
+    component: () => import('../components/v2/applicant/MainLayout.vue'),
+    children: applicantRouteV2('applicant-layout-v2')
+  },
+  {
+    path: '/student/v2',
+    name: 'student-layout-v2',
+    component: () => import('../views/version2/student/MainLayout.vue'),
+    children: studentRouteV2('student-layout-v2')
+  },
   {
     path: '/homev2',
     name: 'default.dashboard',

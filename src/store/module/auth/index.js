@@ -11,7 +11,8 @@ import {
   SET_USER_TOKEN_MUTATION,
   APPLICANT_REGISTRATION_ACTION,
   GET_USER_TYPE,
-  GET_NAV_ITEM
+  GET_NAV_ITEM,
+  GET_STUDENT_NUMBER
 } from '@/store/storeConstants'
 import axios from 'axios'
 import LoginValidation from '@/services/validation/LoginValidation.js'
@@ -25,6 +26,7 @@ export default {
       token: '',
       userType: '',
       image: '',
+      studentNumber: '',
       navItem: false
     }
   },
@@ -35,6 +37,7 @@ export default {
       state.token = payload.token
       state.image = payload.image
       state.userId = payload.userId
+      state.studentNumber = payload.studentNumber
       state.userType = payload.userType
       state.navItem = payload.navItem
     }
@@ -61,8 +64,11 @@ export default {
       return state.userType
     },
     [GET_NAV_ITEM]: (state) => {
-        return state.navItem
-      }
+      return state.navItem
+    },
+    [GET_STUDENT_NUMBER]: (state) => {
+      return state.studentNumber
+    }
   },
   actions: {
     [LOGOUT_ACTION](context) {
@@ -72,6 +78,8 @@ export default {
         name: null,
         token: null,
         image: null,
+        studentNumber: null,
+        userType: null,
         navItem: false
       }
       context.commit(SET_USER_TOKEN_MUTATION, tokenData)
@@ -107,7 +115,7 @@ export default {
           password: payload.password
         })
         if (response.status === 200) {
-          const userName = payload.userType === 'student' ? response.data.student.first_name : response.data.student.account.name
+          const userName = payload.userType === 'student' ? response.data.profile.completeName : response.data.student.account.name
           const nav = payload.userType === 'student' && !!response.data.student.comprehensive_examination
           const tokenData = {
             userId: response.data.student.id,
@@ -115,13 +123,14 @@ export default {
             name: userName,
             userType: payload.userType,
             token: response.data.token,
-            image: response.data.profile_picture,
+            image: response.data.profile.profilePicture,
+            studentNumber: payload.userType === 'student' ? response.data.profile.studentNumber : null,
             navItem: nav
           }
           console.log(tokenData)
           localStorage.setItem('userData', JSON.stringify(tokenData))
           context.commit(SET_USER_TOKEN_MUTATION, tokenData)
-          console.log('Save Detials')
+          console.log('Save Details')
         }
       } catch (error) {
         console.log(error)

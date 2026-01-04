@@ -56,7 +56,7 @@ export default {
             { name: 'Semestral Grade', url: 'student-layout.semestral-grade-view' }
         ]
         const enrollment = [
-            { name: 'Current Enrollment', url: 'student-layout.enrollment-overview' },
+            { name: 'Current Enrollment', url: 'student-layout-v2.enrollment' },
             { name: 'History', url: 'student-layout.enrollment-history' }
         ]
         const payment = [

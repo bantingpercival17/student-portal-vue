@@ -59,6 +59,9 @@ export default {
 }
 </script>
 <style>
+@import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css";
+@import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css";
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: #f8f9fa;
