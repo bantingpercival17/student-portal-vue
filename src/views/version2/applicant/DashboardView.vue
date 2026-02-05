@@ -1,8 +1,8 @@
 <template>
     <!-- Cards -->
     <div class="row">
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0 h-100">
+        <div class="col-md-6 mb-2">
+            <div class="card shadow-sm border-0 h-100 mb-2">
                 <div class="card-body d-flex align-items-center">
                     <div class="p-3 badge bg-primary text-white me-3">
                         <i class="bi bi-check2-circle fs-4"></i>
@@ -14,8 +14,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0 h-100">
+        <div class="col-md-6 mb-2">
+            <div class="card shadow-sm border-0 h-100 ">
                 <div class="card-body d-flex align-items-center">
                     <div class="p-3 badge bg-warning text-white me-3">
                         <i class="bi bi-hourglass-split fs-4"></i>
@@ -80,16 +80,16 @@
                 </div>
             </div>
             <div class="card-stage">
-                <RegistrationCard v-if="'Registration' == activeStage" />
+                <RegistrationCard v-if="'Registration' == activeStage" :registration="information" />
             </div>
 
         </div>
     </div>
 </template>
 <script>
-import RegistrationCard from './admission/widgets/RegistrationCard.vue'
-
 /* eslint-disable */
+import { ApplicantAdmissionApi } from '@/services/api/ApplicantApi/admissionApi'
+import RegistrationCard from './admission/widgets/RegistrationCard.vue'
 export default {
     name: 'ApplicantDashboardView',
     data() {
@@ -105,6 +105,10 @@ export default {
             admissionProcessStages: [],
             activeStage: 'Registration',
             enrollmentItem,
+            information: {
+                basicInfo: {},
+                applications: null
+            }
 
         }
     },
@@ -113,13 +117,20 @@ export default {
     },
     mounted() {
         this.admissionProcessStages = [
-            { title: 'Registration', shortTitle: 'Registration', status: 'complete', icon: 'bi bi-person-plus-fill', url: 'student-layout.dashboard' },
-            { title: 'Documentary Requirements', shortTitle: 'Documents', status: 'in_progress', files: [], icon: 'bi bi-file-earmark-text-fill', url: 'student-layout.dashboard' },
-            { title: 'Entrance Exam Payment', shortTitle: 'Exam Fee', status: 'locked', icon: 'bi bi-cash-coin', url: 'student-layout.dashboard' },
+            { title: 'Registration', shortTitle: 'Registration', status: 'in_progress', icon: 'bi bi-person-plus-fill', url: 'student-layout.dashboard' },
+            { title: 'Documentary Requirements', shortTitle: 'Documents', status: 'locked', files: [], icon: 'bi bi-file-earmark-text-fill', url: 'student-layout.dashboard' },
+            /*    { title: 'Entrance Exam Payment', shortTitle: 'Exam Fee', status: 'locked', icon: 'bi bi-cash-coin', url: 'student-layout.dashboard' }, */
             { title: 'Entrance Exam', shortTitle: 'Exam', status: 'locked', scheduled: false, permitReady: false, icon: 'bi bi-pencil-square', url: 'student-layout.dashboard' },
             { title: 'Pre-Enrollment Briefing', shortTitle: 'Briefing', status: 'locked', icon: 'bi bi-people-fill', url: 'student-layout.dashboard' },
             { title: 'Medical Examination', shortTitle: 'Medical', status: 'locked', files: [], icon: 'bi bi-heart-pulse-fill', url: 'student-layout.dashboard' }
         ]
+        const admissionApi = new ApplicantAdmissionApi()
+        const admissionInformation = admissionApi.fetchAdmissionInformation()
+        this.information = {
+            basicInfo: admissionInformation.json_details,
+            applications: admissionInformation.applicant
+        }
+        console.log('Admission Information:', admissionInformation)
     },
     methods: {
         getStepClass(status) {

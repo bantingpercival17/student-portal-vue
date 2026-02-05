@@ -6,7 +6,8 @@ import { studentRoute } from './student-route'
 import { applicantRoute } from './applicant-route'
 import { applicantRouteV2 } from './ApplicantRouteV2'
 import { studentRouteV2 } from './StudentRouteV2'
-const defaultchildRoutes = (prop) => [
+import { TRUE } from 'sass'
+const defaultChildRoutes = (prop) => [
   {
     path: '/',
     name: prop + '.home',
@@ -112,6 +113,32 @@ const authRoute = (prop) => [
     component: () => import('../views/auth/ApplicantForgetPassword.vue')
   }
 ]
+const appRoutes = [
+  {
+    path: '/',
+    name: 'auth-layout',
+    component: () => import('../components/main-layouts/auth-layout.vue'),
+    children: authRoute('auth-layout')
+  },
+  {
+    path: '/',
+    name: 'app-layout',
+    component: () => import('../components/main-layouts/app-layout.vue'),
+    children: defaultChildRoutes('app-layout')
+  },
+  {
+    path: '/student',
+    name: 'student-layout',
+    component: () => import('../components/main-layouts/student-layout.vue'),
+    children: studentRoute('student-layout')
+  },
+  {
+    path: '/student/v2',
+    name: 'student-layout-v2',
+    component: () => import('../views/version2/student/MainLayout.vue'),
+    children: studentRouteV2('student-layout-v2')
+  }
+]
 const routes = [
   /* {
     path: '/',
@@ -123,7 +150,7 @@ const routes = [
     path: '/',
     name: 'app-layout',
     component: () => import('../components/main-layouts/app-layout.vue'),
-    children: defaultchildRoutes('app-layout')
+    children: defaultChildRoutes('app-layout')
   },
   {
     path: '/student',
@@ -164,9 +191,12 @@ const routes = [
   }
 ]
 
+
+const isWeb = true
+const routesToUse = isWeb ? routes : appRoutes
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes: routesToUse
 })
 function studentUserMiddleware(to, from, next) {
   // Regular user middleware logic

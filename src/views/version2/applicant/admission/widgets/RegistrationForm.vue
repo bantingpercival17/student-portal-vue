@@ -1,0 +1,792 @@
+<template>
+    <div class="card ms-5 me-5">
+        <div class="card-header p-3">
+            <div class="header-title">
+                <label for="" class="fw-bolder text-primary h4">STUDENT'S INFORMATION</label>
+                <br>
+                <small for="" class="text-danger">
+                    NOTE: Please ensure that all information/details are correct and filled in,
+                    type/choose N / A if not applicable
+                </small>
+            </div>
+        </div>
+        <div class="card-body">
+            <div v-if="isLoading">
+                <h2 class="fw-bolder text-info">LOADING</h2>
+            </div>
+            <div v-else>
+                <form @submit.prevent="storeDetails" method="post">
+                    <label for="" class="text-primary fw-bolder h4">STUDENT'S DETAILS</label>
+                    <div class="row">
+                        <div class="col-xl col-md">
+                            <input-component label="LAST NAME" v-model:value="lastName" :error="errors.last_name" />
+                        </div>
+                        <div class="col-xl col-md">
+                            <input-component label="FIRST NAME" v-model:value="firstName" :error="errors.first_name" />
+                        </div>
+                        <div class="col-xl col-md">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>MIDDLE NAME</small>
+                                </label>
+                                <input class="form-control form-control-sm border border-primary" v-model="middleName"
+                                    :disabled="noMiddleName">
+                                <div class="form-check">
+                                    <input class="form-check-input input-middle-name" type="checkbox"
+                                        v-model="noMiddleName" id="flexCheckDefault1">
+                                    <small class="form-check-label validate-checkbox" data-input="input-middle-name"
+                                        for="flexCheckDefault1">
+                                        I don't have a Middle Name
+                                    </small>
+                                </div>
+                                <span class="badge bg-danger mt-2" v-if="errors.middle_name">
+                                    {{ errors.middle_name[0] }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label fw-bolder">
+                                    <small>EXTENSION NAME</small>
+                                </label>
+                                <input class="form-control form-control-sm border border-primary"
+                                    v-model="extensionName" :disabled="noExtensionName">
+                                <div class="form-check">
+                                    <input class="form-check-input input-middle-name" type="checkbox"
+                                        v-model="noExtensionName" id="flexCheckDefault1">
+                                    <small class="form-check-label validate-checkbox" data-input="input-middle-name"
+                                        for="flexCheckDefault1">
+                                        I don't have an Extension Name
+                                    </small>
+                                </div>
+                                <span class="badge bg-danger mt-2" v-if="errors.extension_name">
+                                    {{ errors.extension_name[0] }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md">
+                            <select-component label="Gender" v-model:value="gender" :error="errors.gender"
+                                :data="genderi" />
+                        </div>
+
+                        <div class="col-xl col-md-6 mb-xl-0">
+                            <select-component label="HEIGHT - CM" v-model:value="height" :error="errors.height"
+                                :data="heightList" />
+                        </div>
+                        <div class="col-xl col-md-6 mb-xl-0">
+                            <select-component label="WEIGHT - LBS" v-model:value="weight" :error="errors.weight"
+                                :data="weightList" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl col-md-4 mb-xl-0">
+                            <inputComponentV2 label="BIRTH DATE" type="date" v-model:value="birthDate"
+                                :error="errors.birth_date" />
+                        </div>
+                        <div class="col-xl-9 col-md-8 mb-xl-0">
+                            <input-component label="BIRTH PLACE" v-model:value="birthPlace"
+                                :error="errors.birthPlace" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl col-md-6 mb-xl-0">
+                            <select-component label="Civil Status" v-model:value="civilStatus"
+                                :error="errors.civil_status" :data="civilStatusList" />
+                            <!-- <input-component label="CIVIL STATUS" v-model:value="civilStatus"
+                                :error="errors.civil_status" /> -->
+                        </div>
+                        <div class="col-xl col-md-6 mb-xl-0">
+                            <input-component label="NATIONALITY" v-model:value="nationality"
+                                :error="errors.nationality" />
+                        </div>
+                        <div class="col-xl col-md-6 mb-xl-0">
+                            <input-component label="RELIGION" v-model:value="religion" :error="errors.religion" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-md-6 mb-xl-0">
+                            <input-component label="CONTACT NUMBER" v-model:value="contactNumber"
+                                :error="errors.contact_number" />
+                        </div>
+                        <div class="col-xl-6 col-md-6 mb-xl-0">
+                            <input-component label="EMAIL" v-model:value="personalEmail"
+                                :error="errors.personal_email" />
+
+                        </div>
+                    </div>
+                    <label for="" class="text-primary fw-bolder h4">ADDRESS</label>
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <div class="form-group">
+                                <label for="provinceSelect" class="form-control-label fw-bolder">
+                                    <small>PROVINCE <span class="text-danger">*</span></small>
+                                </label>
+
+                                <select v-model="province" class="form-select form-select-sm border border-primary"
+                                    @change="handleProvinceChange" id="provinceSelect">
+                                    <option value="">Select Province</option>
+                                    <option v-for="item in provinceList" :key="item.code" :value="item.name"
+                                        :data-value="item.code">
+                                        {{ item.name }}
+                                    </option>
+                                    <option value="other">Other (Input your province)</option>
+                                </select>
+
+                                <input v-if="isCustomProvince" v-model="customProvince"
+                                    class="form-control form-control-sm border border-primary mt-2"
+                                    placeholder="Enter your province" @input="setCustomProvince" />
+
+                                <span class="badge bg-danger mt-2" v-if="errors.province">
+                                    {{ errors.province[0] }}
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <label for="example-text-input" class="form-control-label fw-bolder">
+                                <small>MUNICIPALITY <span class="text-danger">*</span></small>
+                            </label>
+                            <select v-model="municipality" class="form-select form-select-sm border border-primary"
+                                @change="handleMunicipalityChange">
+                                <option value="">Select MUNICIPALITY</option>
+                                <option v-for="item in municipalityList" :key="item" :value="item.name"
+                                    :data-value="item.code">
+                                    {{ item.name }}</option>
+                                <option value="other">Other (Input your municipality)</option>
+                            </select>
+                            <input v-if="isCustomMunicipality" v-model="customMunicipality"
+                                class="form-control form-control-sm border border-primary mt-2"
+                                placeholder="Enter your Municipality" @input="setCustomMunicipality" />
+                            <span class="badge bg-danger mt-2" v-if="errors.municipality">
+                                {{ errors.municipality[0] }}
+                            </span>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <label for="example-text-input" class="form-control-label fw-bolder">
+                                <small>BARANGAY <span class="text-danger">*</span></small>
+                            </label>
+                            <select v-model="barangay" class="form-select form-select-sm border border-primary"
+                                @change="handleBarangayChange">
+                                <option value="">Select BARANGAY</option>
+                                <option v-for="item in barangayList" :key="item" :value="item.name"
+                                    :data-value="item.code">
+                                    {{ item.name }}</option>
+                                <option value="other">Other (Input your Barangay)</option>
+                            </select>
+                            <input v-if="isCustomBarangay" v-model="customBarangay"
+                                class="form-control form-control-sm border border-primary mt-2"
+                                placeholder="Enter your Barangay" @input="setCustomBarangay" />
+                            <span class="badge bg-danger mt-2" v-if="errors.barangay">
+                                {{ errors.barangay[0] }}
+                            </span>
+                        </div>
+                        <div class="col-xl-8 col-md-6 mb-xl-0">
+                            <input-component label="HOUSE NO. / STREET / BLDG NO" v-model:value="street"
+                                :error="errors.street" />
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-xl-0">
+                            <input-component label="ZIP CODE" v-model:value="zip_code" :error="errors.zip_code" />
+                        </div>
+                    </div>
+                    <label for="" class="text-primary fw-bolder h4">EDUCATIONAL DETAILS</label>
+                    <div v-if="educationaldetails" class="educational-details">
+                        <div class="Elementary School">
+                            <label for="" class="text-muted fw-bolder h6">Elementary School</label>
+                            <div class="row">
+                                <div class="col-xl-4 col-md-6 ">
+                                    <input-component label="school name" v-model:value="elementarySchoolName"
+                                        :error="errors.elementary_school_name" />
+                                </div>
+                                <div class="col-xl-4 col-md-6 ">
+                                    <input-component label="school address" v-model:value="elementarySchoolAddress"
+                                        :error="errors.elementary_school_address" />
+                                </div>
+                                <div class="col-xl-4 col-md-6 ">
+                                    <input-component-v2 label="YEAR GRADUATED" type="month"
+                                        v-model:value="elementarySchoolYear" :error="errors.elementary_school_year" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Junior High School">
+                            <label for="" class="text-muted fw-bolder h6">Junior High School</label>
+                            <div class="row">
+                                <div class="col-xl-4 col-md-6 ">
+                                    <input-component label="school name" v-model:value="juniorHighSchoolName"
+                                        :error="errors.junior_high_school_name" />
+                                </div>
+                                <div class="col-xl-4 col-md-6 ">
+                                    <input-component label="school address" v-model:value="juniorHighSchoolAddress"
+                                        :error="errors.junior_high_school_address" />
+                                </div>
+                                <div class="col-xl-4 col-md-6 ">
+                                    <input-component-v2 label="YEAR GRADUATED" type="month"
+                                        v-model:value="juniorHighSchoolYear" :error="errors.junior_high_school_year" />
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="educationalAttainment.length > 3">
+                            <div class="Junior High School">
+                                <label for="" class="text-muted fw-bolder h6">Senior High School</label>
+                                <div class="row">
+                                    <div class="col-xl-4 col-md-6 ">
+                                        <input-component label="school name" v-model:value="seniorHighSchoolName"
+                                            :error="errors.senior_high_school_name" />
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 ">
+                                        <input-component label="school address" v-model:value="seniorHighSchoolAddress"
+                                            :error="errors.senior_high_school_address" />
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 ">
+                                        <input-component-v2 label="YEAR GRADUATED" type="month"
+                                            v-model:value="seniorHighSchoolYear"
+                                            :error="errors.junior_high_school_year" />
+                                    </div>
+                                </div>
+                            </div>
+                            <select-component label="Senior High School Strand" v-model:value="strand"
+                                :error="errors.strand" :data="strandList" />
+                        </div>
+                    </div>
+                    <br>
+                    <label for="" class="text-primary fw-bolder h4">PARENT DETAILS</label>
+                    <div class="father-information">
+                        <label for="example-text-input" class="form-control-label text-info"><b>Father's
+                                Name</b></label>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-6 ">
+                                <input-component label="LAST NAME" v-model:value="fatherLastName"
+                                    :error="errors.father_last_name" />
+                            </div>
+                            <div class="col-xl-4 col-md-6 ">
+                                <input-component label="FIRST NAME" v-model:value="fatherFirstName"
+                                    :error="errors.father_first_name" />
+                            </div>
+                            <div class="col-xl-4 col-md-6 ">
+                                <input-component label="MIDDLE NAME" v-model:value="fatherMiddleName"
+                                    :error="errors.father_middle_name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6 ">
+                                <input-component label="CONTACT NUMBER" v-model:value="fatherContactNumber"
+                                    :error="errors.father_contact_number" />
+                            </div>
+                            <div class="col-xl-9 col-md-6">
+                                <select-component label="Highest Educational Attainment"
+                                    v-model:value="fatherEducational" :error="errors.father_educational_attainment"
+                                    :data="educationalAttainment" />
+                            </div>
+                            <div class="col-md">
+                                <select-component label="Employment Status" v-model:value="fatherEmployeeStatus"
+                                    :error="errors.father_employee_status" :data="employmentStatus" />
+                            </div>
+                            <div class="col-md">
+                                <select-component label="Working Arrangement" v-model:value="fatherArrangement"
+                                    :error="errors.father_arrangment" :data="arrangement" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mother-maiden">
+                        <label for="example-text-input" class="form-control-label text-info"><b>Mother's Maiden
+                                Name</b></label>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-6F">
+                                <input-component label="LAST  NAME" v-model:value="motherLastName"
+                                    :error="errors.mother_last_name" />
+                            </div>
+                            <div class="col-xl-4 col-md-6 ">
+                                <input-component label="FIRST NAME" v-model:value="motherFirstName"
+                                    :error="errors.mother_first_name" />
+                            </div>
+                            <div class="col-xl-4 col-md-6 ">
+                                <input-component label="MIDDLE NAME" v-model:value="motherMiddleName"
+                                    :error="errors.mother_middle_name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6 ">
+                                <input-component label="CONTACT NUMBER" v-model:value="motherContactNumber"
+                                    :error="errors.mother_contact_number" />
+
+                            </div>
+                            <div class="col-xl-9 col-md-6">
+                                <select-component label="Highest Educational Attainment"
+                                    v-model:value="motherEducational" :error="errors.mother_educational_attainment"
+                                    :data="educationalAttainment" />
+                            </div>
+                            <div class="col-md">
+                                <select-component label="Employment Status" v-model:value="motherEmployeeStatus"
+                                    :error="errors.mother_employee_status" :data="employmentStatus" />
+                            </div>
+                            <div class="col-md">
+                                <select-component label="Working Arrangement" v-model:value="motherArrangement"
+                                    :error="errors.mother_arrangment" :data="arrangement" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="guardian-informtion">
+                        <label for="example-text-input" class="form-control-label text-info"><b>Guardian's
+                                Name</b></label>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-6F">
+                                <input-component label="LAST  NAME" v-model:value="guardianLastName"
+                                    :error="errors.guardian_last_name" />
+                            </div>
+                            <div class="col-xl-4 col-md-6 ">
+                                <input-component label="FIRST NAME" v-model:value="guardianFirstName"
+                                    :error="errors.guardian_first_name" />
+                            </div>
+                            <div class="col-xl-4 col-md-6 ">
+                                <input-component label="MIDDLE NAME" v-model:value="guardianMiddleName"
+                                    :error="errors.guardian_middle_name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6 ">
+                                <input-component label="CONTACT NUMBER" v-model:value="guardianContactNumber"
+                                    :error="errors.guardian_contact_number" />
+
+                            </div>
+                            <div class="col-xl-9 col-md-6">
+                                <select-component label="Highest Educational Attainment"
+                                    v-model:value="guardianEducational" :error="errors.guardian_educational_attainment"
+                                    :data="educationalAttainment" />
+                            </div>
+                            <div class="col-md">
+                                <select-component label="Employment Status" v-model:value="guardianEmployeeStatus"
+                                    :error="errors.guardian_employee_status" :data="employmentStatus" />
+                            </div>
+                            <div class="col-md">
+                                <select-component label="Working Arrangement" v-model:value="guardianArrangement"
+                                    :error="errors.guardian_arrangment" :data="arrangement" />
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2 w-100">Submit Student Information</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+<style>
+.text-primary {
+    color: #0c4a2b !important;
+}
+
+.border-primary {
+    border-color: #0c4a2b !important;
+}
+</style>
+<script>
+/* eslint-disable no-unused-expressions, no-undef */
+import { GET_USER_TOKEN, SHOW_LOADING_MUTATION } from '@/store/storeConstants'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
+import axios from 'axios'
+import inputComponent from '@/components/main-layouts/components/widgets/input-component.vue'
+import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
+import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
+import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
+export default {
+    name: 'EnrollmentRegistrationForm',
+    components: {
+        inputComponent,
+        selectComponent,
+        inputComponentV2
+    },
+    watch: {
+        noMiddleName(newValue) {
+            if (newValue) {
+                this.middleName = '' // Clear middleName if checkbox is checked
+            }
+        },
+        noExtensionName(newValue) {
+            if (newValue) {
+                this.extensionName = '' // Clear middleName if checkbox is checked
+            }
+        }
+    },
+    data() {
+        const element = []
+        for (let index = 100; index < 242; index++) {
+            element.push(index)
+        }
+        const inputValidation = {
+            noMiddleName: false,
+            noExtensionName: false,
+            isLoading: false,
+            errors: [],
+            educationaldetails: [],
+            genderi: ['Male', 'Female'],
+            civilStatusList: ['Single', 'Married', 'Widowed', 'Divorced'],
+            educationalAttainment: ['Elementary Graduate', 'High School Graduate', 'College', 'Vocational', "Master's / Doctorate Degree", 'Did not attend school', 'N/a'],
+            employmentStatus: ['Full Time', 'Part Time', 'Self-employed (i.e. Family Business)', 'Unemployed due to community quarantine', 'Field Work', 'None', 'N/a'],
+            strandList: ['General Academic Strand', 'Humanities and Social Sciences Strand', 'Science, Technology, Engineering and Mathematics', ' Accountancy, Business and Management', 'Technical Vocational Livelihood', 'TVL (Technical-Vocational-Livelihood) Maritime', 'Pre-Baccalaureate Maritime Strand', 'N/a'],
+            arrangement: ['WFH', 'Office', 'Field Work', 'None', 'N/a'],
+            course: '',
+            firstName: '',
+            lastName: '',
+            middleName: '',
+            extensionName: '',
+            gender: '',
+            birthDate: '',
+            birthPlace: '',
+            height: '',
+            weight: '',
+            contactNumber: '',
+            personalEmail: '',
+            civilStatus: '',
+            nationality: '',
+            religion: '',
+            street: '',
+            barangay: '',
+            municipality: '',
+            province: '',
+            zip_code: '',
+            fatherLastName: '',
+            fatherFirstName: '',
+            fatherMiddleName: '',
+            fatherContactNumber: '',
+            fatherEducational: '',
+            fatherEmployeeStatus: '',
+            fatherArrangement: '',
+            motherLastName: '',
+            motherFirstName: '',
+            motherMiddleName: '',
+            motherContactNumber: '',
+            motherEducational: '',
+            motherEmployeeStatus: '',
+            motherArrangement: '',
+            guardianLastName: '',
+            guardianFirstName: '',
+            guardianMiddleName: '',
+            guardianContactNumber: '',
+            guardianEducational: '',
+            guardianEmployeeStatus: '',
+            guardianArrangement: '',
+            elementarySchoolName: '',
+            elementarySchoolAddress: '',
+            elementarySchoolYear: '',
+            juniorHighSchoolName: '',
+            juniorHighSchoolAddress: '',
+            juniorHighSchoolYear: '',
+            seniorHighSchoolName: '',
+            seniorHighSchoolAddress: '',
+            seniorHighSchoolYear: '',
+            strand: '',
+            link: '',
+            heightList: [
+                '157.48', '160.02', '162.56', '165.1', '167.64', '170.18', '172.72', '175.26', '177.8', '180.34', '182.88', '185.42', '187.96', '190.5', '193.4', '195.58', '198.12', '200.66', '203.2', '205.74', '208.28', '210.82'
+            ],
+            weightList: element,
+            region: '',
+            regionList: [],
+            provinceList: [],
+            municipalityList: [],
+            barangayList: [],
+            customProvince: '',
+            isCustomProvince: false,
+            customMunicipality: '',
+            isCustomMunicipality: false,
+            customBarangay: '',
+            isCustomBarangay: false
+
+        }
+        return inputValidation
+    },
+    computed: {
+        ...mapGetters('auth', {
+            token: GET_USER_TOKEN
+        })
+    },
+    async mounted() {
+        axios.get('applicant/information', {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then((response) => {
+            const account = response.data.data
+            const data = response.data.data.applicant
+            if (!data) {
+                if (account.json_details) {
+                    const accountDetails = JSON.parse(account.json_details)
+                    this.firstName = accountDetails.first_name
+                    this.lastName = accountDetails.last_name
+                    this.birthDate = accountDetails.birthday
+                }
+
+                this.setProvince()
+                this.setRegion()
+            }
+            this.contactNumber = account.contact_number
+            this.personalEmail = account.email
+            this.strand = account.strand
+            if (data) {
+                this.firstName = data.first_name
+                this.lastName = data.last_name
+                this.middleName = data.middle_name
+                this.middleInitial = data.middle_initial
+                this.extensionName = data.extention_name
+                this.birthDate = data.birthday
+                this.birthPlace = data.birth_place
+                this.gender = data.sex
+                this.weight = data.weight
+                this.height = data.height
+                this.civilStatus = data.civil_status
+                this.nationality = data.nationality
+                this.religion = data.religion
+                this.street = data.street
+                this.barangay = data.barangay
+                this.municipality = data.municipality
+                this.province = data.province
+                this.zip_code = data.zip_code.toString()
+                /* Father */
+                this.fatherLastName = data.father_last_name
+                this.fatherFirstName = data.father_first_name
+                this.fatherMiddleName = data.father_middle_name
+                this.fatherContactNumber = data.father_contact_number
+                this.fatherEducational = data.father_educational_attainment
+                this.fatherEmployeeStatus = data.father_employment_status
+                this.fatherArrangement = data.father_working_arrangement
+                /* Mother Maiden */
+                this.motherLastName = data.mother_last_name
+                this.motherFirstName = data.mother_first_name
+                this.motherMiddleName = data.mother_middle_name
+                this.motherContactNumber = data.mother_contact_number
+                this.motherEducational = data.mother_educational_attainment
+                this.motherEmployeeStatus = data.mother_employment_status
+                this.motherArrangement = data.mother_working_arrangement
+                /* Guardian */
+                this.guardianLastName = data.guardian_last_name
+                this.guardianFirstName = data.guardian_first_name
+                this.guardianMiddleName = data.guardian_middle_name
+                this.guardianContactNumber = data.guardian_contact_number
+                this.guardianEducational = data.guardian_educational_attainment
+                this.guardianEmployeeStatus = data.guardian_employment_status
+                this.guardianArrangement = data.guardian_working_arrangement
+                this.guardianAddress = data.guardian_address
+                /* Education */
+                this.elementarySchoolName = data.elementary_school_name
+                this.elementarySchoolAddress = data.elementary_school_address
+                this.elementarySchoolYear = this.dateFormat(data.elementary_school_year)
+                this.juniorHighSchoolName = data.junior_high_school_name
+                this.juniorHighSchoolAddress = data.junior_high_school_address
+                this.juniorHighSchoolYear = this.dateFormat(data.junior_high_school_year)
+                this.seniorHighSchoolName = data.senior_high_school_name
+                this.seniorHighSchoolAddress = data.senior_high_school_address
+                this.seniorHighSchoolYear = this.dateFormat(data.senior_high_school_year)
+                this.fetchAddress()
+            }
+
+            this.isLoading = false
+        }).catch((error) => {
+            console.log(error)
+            console.log(error.response)
+        })
+    },
+    methods: {
+        ...mapActions('alert', {
+            successAlert: SUCCESS_ALERT,
+            infoAlert: INFO_ALERT,
+            errorAlert: ERROR_ALERT,
+            encrypt: ENCRYPT_DATA
+        }),
+        ...mapMutations({
+            showLoading: SHOW_LOADING_MUTATION
+        }),
+        dateFormat(data) {
+            const dateParts = data.split('-')
+            const date = dateParts[0] + '-' + dateParts[1]
+            return date
+        },
+        async storeDetails() {
+            this.errors = []
+            this.showLoading(true)
+            const formData = {
+                course: this.course,
+                first_name: this.firstName,
+                last_name: this.lastName,
+                middle_name: this.middleName,
+                extension_name: this.extensionName,
+                gender: this.gender,
+                height: this.height,
+                weight: this.weight,
+                birth_date: this.birthDate,
+                birth_place: this.birthPlace,
+                civil_status: this.civilStatus,
+                nationality: this.nationality,
+                religion: this.religion,
+                street: this.street,
+                barangay: this.barangay,
+                municipality: this.municipality,
+                province: this.province,
+                zip_code: this.zip_code,
+                personal_email: this.personalEmail,
+                contact_number: this.contactNumber,
+                /* Parents */
+                father_last_name: this.fatherLastName,
+                father_first_name: this.fatherFirstName,
+                father_middle_name: this.fatherMiddleName,
+                father_contact_number: this.fatherContactNumber,
+                father_educational_attainment: this.fatherEducational,
+                father_employment_status: this.fatherEmployeeStatus,
+                father_working_arrangement: this.fatherArrangement,
+                mother_last_name: this.motherLastName,
+                mother_first_name: this.motherFirstName,
+                mother_middle_name: this.motherMiddleName,
+                mother_contact_number: this.motherContactNumber,
+                mother_educational_attainment: this.motherEducational,
+                mother_employment_status: this.motherEmployeeStatus,
+                mother_working_arrangement: this.motherArrangement,
+                guardian_last_name: this.guardianLastName,
+                guardian_first_name: this.guardianFirstName,
+                guardian_middle_name: this.guardianMiddleName,
+                guardian_contact_number: this.guardianContactNumber,
+                guardian_educational_attainment: this.guardianEducational,
+                guardian_employment_status: this.guardianEmployeeStatus,
+                guardian_working_arrangement: this.guardianArrangement,
+                /* Educational Background */
+                elementary_school_name: this.elementarySchoolName,
+                elementary_school_address: this.elementarySchoolAddress,
+                elementary_school_year: this.elementarySchoolYear + '-01',
+                junior_high_school_name: this.juniorHighSchoolName,
+                junior_high_school_address: this.juniorHighSchoolAddress,
+                junior_high_school_year: this.juniorHighSchoolYear + '-01',
+                senior_high_school_name: this.seniorHighSchoolName,
+                senior_high_school_address: this.seniorHighSchoolAddress,
+                senior_high_school_year: this.seniorHighSchoolYear + '-01',
+                strand: this.strand
+            }
+            axios.post('applicant/information', formData, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then((response) => {
+                this.showLoading(false)
+                this.successAlert(response.data)
+                this.$router.push('/applicant/dashboard')
+                console.log(response)
+            }).catch((error) => {
+                if (error.response.status === 422) {
+                    this.errors = error.response.data.errors
+                    error = { message: 'Kindly Fill-up the Required Fields' }
+                }
+                this.showLoading(false)
+                this.errorAlert(error)
+            })
+        },
+        async fetchAddress() {
+            await this.setRegion()
+            await this.setProvince()
+            let value = await this.getCode('/provinces/', this.province)
+            this.municipalityList = await this.fetchApi(`/provinces/${value}/cities-municipalities/`)
+            value = await this.getCode(`/provinces/${value}/cities-municipalities/`, this.municipality)
+            this.barangayList = await this.fetchApi(`/cities-municipalities/${value}/barangays/`)
+        },
+        async setRegion() {
+            this.regionList = await this.fetchApi('/regions/')
+            console.log(this.regionList)
+        },
+        async setProvince() {
+            if (this.region !== '') {
+                this.provinceList = await this.fetchApi(`/regions/${this.region}/provinces/`)
+                console.log(this.provinceList)
+            } else {
+                this.provinceList = await this.fetchApi('/provinces/')
+            }
+        },
+        async setMunicipality(event) {
+            const provinceCode = this.getSelectedValue(event)
+            this.municipalityList = await this.fetchApi(`/provinces/${provinceCode}/cities-municipalities/`)
+        },
+
+        async setBarangay(event) {
+            // Set Zip code
+            try {
+                const link = `https://nominatim.openstreetmap.org/search?q=${this.municipality},+${this.province},+Philippines&format=json&addressdetails=1`
+                const response = await axios.get(link)
+                if (response.data) {
+                    const address = response.data[0].address
+                    this.zip_code = address.postcode
+                    console.log(address)
+                }
+            } catch (error) {
+                console.error('Error:', error)
+                return []
+            }
+            const municipalityCode = this.getSelectedValue(event)
+            this.barangayList = await this.fetchApi(`/cities-municipalities/${municipalityCode}/barangays/`)
+        },
+
+        async fetchApi(link) {
+            try {
+                //
+                const response = await axios.get(`https://psgc.gitlab.io/api${link.trim()}`)
+                return response.data
+            } catch (error) {
+                console.error('Error:', error)
+                return []
+            }
+        },
+
+        async getCode(link, name) {
+            const list = await this.fetchApi(link)
+            const match = list.find(item => item.name === name)
+            return match ? match.code : null
+        },
+
+        getSelectedValue(event) {
+            return event.target.options[event.target.selectedIndex].dataset.value.trim()
+        },
+        async handleProvinceChange(event) {
+            if (this.province === 'other') {
+                this.isCustomProvince = true
+            } else {
+                this.isCustomProvince = false
+                const provinceCode = this.getSelectedValue(event)
+                this.municipalityList = await this.fetchApi(`/provinces/${provinceCode}/cities-municipalities/`)
+            }
+        },
+        setCustomProvince() {
+            this.province = this.customProvince // Bind custom input to province
+        },
+        async handleMunicipalityChange(event) {
+            // Check if 'Other' is selected
+            if (this.municipality === 'other') {
+                this.isCustomMunicipality = true
+            } else {
+                this.isCustomMunicipality = false
+                try {
+                    const link = `https://nominatim.openstreetmap.org/search?q=${this.municipality},+${this.province},+Philippines&format=json&addressdetails=1`
+                    const response = await axios.get(link)
+                    if (response.data) {
+                        const address = response.data[0].address
+                        this.zip_code = address.postcode
+                        console.log(address)
+                    }
+                } catch (error) {
+                    console.error('Error:', error)
+                    return []
+                }
+                const municipalityCode = this.getSelectedValue(event)
+                this.barangayList = await this.fetchApi(`/cities-municipalities/${municipalityCode}/barangays/`)
+            }
+        },
+        setCustomMunicipality() {
+            this.municipality = this.customMunicipality
+        },
+        handleBarangayChange() {
+            // Check if 'Other' is selected
+            if (this.barangay === 'other') {
+                this.isCustomBarangay = true
+            } else {
+                this.isCustomBarangay = false
+            }
+        },
+        setCustomBarangay() {
+            this.barangay = this.customBarangay
+        }
+    }
+}
+</script>

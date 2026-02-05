@@ -1,5 +1,17 @@
 <template>
-    <div>
+    <template v-if="!registration.applications">
+        <div class="mt-5">
+            <div class="alert alert-info" role="alert">
+                Kindly proceed to registration to start your admission process.
+                <router-link :to="{ name: 'applicant-layout-v2.registration-form' }"
+                    class="btn btn-sm btn-primary ms-2">
+                    Go to Registration Form
+                </router-link>
+            </div>
+
+        </div>
+    </template>
+    <template v-else>
         <div class="alert alert-success">Your registration is complete. The information below is for
             review purposes only.</div>
         <form class="row g-3 mt-3">
@@ -16,11 +28,17 @@
                 <input type="text" class="form-control" value="BS in Marine Transportation" disabled>
             </div>
         </form>
-    </div>
+    </template>
 </template>
 <script>
 export default {
     name: 'RegistrationCard',
+    props: {
+        registration: {
+            type: Object,
+            required: true
+        }
+    },
     data() {
         return {
             applicant: {

@@ -70,7 +70,8 @@ export default {
             message: [],
             networkError: [],
             errorMessage: '',
-            backMessage: null
+            backMessage: null,
+            passedMessage: null
         }
     },
     mounted() {

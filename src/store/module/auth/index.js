@@ -123,7 +123,7 @@ export default {
             name: userName,
             userType: payload.userType,
             token: response.data.token,
-            image: response.data.profile.profilePicture,
+            image: response.data.profile_picture,
             studentNumber: payload.userType === 'student' ? response.data.profile.studentNumber : null,
             navItem: nav
           }
