@@ -1,149 +1,210 @@
 <template>
-    <!-- Cards -->
-    <div class="row">
-        <div class="col-md-6 mb-2">
-            <div class="card shadow-sm border-0 h-100 mb-2">
-                <div class="card-body d-flex align-items-center">
-                    <div class="p-3 badge bg-primary text-white me-3">
-                        <i class="bi bi-check2-circle fs-4"></i>
-                    </div>
-                    <div>
-                        <p class="text-muted mb-0 small">Completed Stages</p>
-                        <p class="fs-3 fw-bold mb-0">{{ completedStagesCount }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 mb-2">
-            <div class="card shadow-sm border-0 h-100 ">
-                <div class="card-body d-flex align-items-center">
-                    <div class="p-3 badge bg-warning text-white me-3">
-                        <i class="bi bi-hourglass-split fs-4"></i>
-                    </div>
-                    <div>
-                        <p class="text-muted mb-0 small">In Progress</p>
-                        <p class="fs-3 fw-bold mb-0">{{ inProgressStagesCount }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Status Tracker Card -->
     <div class="card shadow border-0 mt-4">
         <div class="card-body p-4">
-            <!-- Enrollment Tracker -->
-            <!--  <div class="mb-5">
-                <h2 class="fs-5 fw-semibold text-secondary border-bottom pb-3 mb-4">Enrollment Status Tracker</h2>
+            <h2 class="fs-5 fw-semibold text-secondary border-bottom pb-3 mb-4">
+                Admission Status Tracker
+            </h2>
+            <template v-if="!isLoading">
                 <div class="d-flex align-items-start w-100">
-                    <div v-for="(stage, key, index) in enrollmentProcessStages" :key="key" style="display: contents;">
-                        <div class="text-center px-1" @click="!isLocked(key) && navigateTo(key)"
+                    <div v-for="(stage, key) in admissionProcessStages" :key="key" style="display: contents;">
+                        <div class="text-center px-1" @click="navigateTo(stage.shortTitle)"
                             :class="{ 'cursor-pointer': !isLocked(key) }" style="flex: 1 1 80px;">
                             <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center"
-                                :class="getStepClass(key)" style="width: 2rem; height: 2rem;">
-                                <i v-if="stages[key].status === 'complete'" class="bi bi-check-lg text-white"></i>
+                                :class="getStepClass(stage.status)" style="width: 2rem; height: 2rem;">
+                                <i v-if="stage.status === 'complete'" class="bi bi-check-lg text-white"></i>
                                 <i v-else
-                                    :class="[stage.icon, stages[key].status === 'locked' ? 'text-secondary' : 'text-white']"></i>
+                                    :class="[stage.icon, stage.status === 'locked' ? 'text-secondary' : 'text-white']"></i>
                             </div>
                             <p class="fw-bold mt-2" :class="{ 'text-muted': isLocked(key) }"
-                                style="font-size: 0.75rem;">{{ stage.shortTitle }}</p>
+                                style="font-size: 0.75rem;">{{
+                                    stage.title }}</p>
                         </div>
-                        <div v-if="index < Object.keys(enrollmentProcessStages).length - 1"
-                            class="flex-grow-1 bg-secondary-subtle" style="height: 4px; margin-top: 0.8rem;">
-                            <div class="h-100" :class="{ 'bg-warning': stages[key].status === 'complete' }"
-                                style="width: 100%;"></div>
+                        <div v-if="(key + 1) < admissionProcessStages.length" class="flex-grow-1 bg-secondary-subtle"
+                            style="height: 4px; margin-top: 0.8rem;">
+                            <div class="h-100" :class="{ 'bg-warning': stage.status === 'complete' }"
+                                style="width: 100%;">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div> -->
+                <div class="card-stage">
+                    <RegistrationCard v-if="'Registration' == activeStage" :registration="information" />
+                    <DocumentUploadCard v-if="'Documents' == activeStage"
+                        :documentList="documentList.listOfDocuments" />
 
-            <!-- Admission Tracker -->
-            <h2 class="fs-5 fw-semibold text-secondary border-bottom pb-3 mb-4">Admission Status
-                Tracker</h2>
-            <div class="d-flex align-items-start w-100">
-                <div v-for="(stage, key) in admissionProcessStages" :key="key" style="display: contents;">
-                    <div class="text-center px-1" @click="!isLocked(key) && navigateTo(stage.shortTitle)"
-                        :class="{ 'cursor-pointer': !isLocked(key) }" style="flex: 1 1 80px;">
-                        <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center"
-                            :class="getStepClass(stage.status)" style="width: 2rem; height: 2rem;">
-                            <i v-if="stage.status === 'complete'" class="bi bi-check-lg text-white"></i>
-                            <i v-else
-                                :class="[stage.icon, stage.status === 'locked' ? 'text-secondary' : 'text-white']"></i>
-                        </div>
-                        <p class="fw-bold mt-2" :class="{ 'text-muted': isLocked(key) }" style="font-size: 0.75rem;">{{
-                            stage.shortTitle }}</p>
-                    </div>
-                    <div v-if="(key + 1) < admissionProcessStages.length" class="flex-grow-1 bg-secondary-subtle"
-                        style="height: 4px; margin-top: 0.8rem;">
-                        <div class="h-100" :class="{ 'bg-warning': stage.status === 'complete' }" style="width: 100%;">
+                </div>
+
+            </template>
+            <template v-else>
+                <div class="page-loader text-center">
+                    <div class="card">
+                        <div class="card-body align-center text-center">
+                            <div class="enrollment-loader"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-stage">
-                <RegistrationCard v-if="'Registration' == activeStage" :registration="information" />
-            </div>
+            </template>
 
         </div>
     </div>
+    <ExaminationCard v-if="'Exam' == activeStage" :examinationData="examination" />
+    <PreBriefingCard v-if="'Briefing' == activeStage" :examinationData="examination" @medical="handleMedicalClick" />
+    <MedicalExaminationCard v-if="'Medical' == activeStage" :medical="medicalInfo"
+        @enrollment="handleEnrollmentClick" />
+    <EnrollmentView v-if="'Enrollment' == activeStage" />
 </template>
 <script>
 /* eslint-disable */
 import { ApplicantAdmissionApi } from '@/services/api/ApplicantApi/admissionApi'
 import RegistrationCard from './admission/widgets/RegistrationCard.vue'
+import DocumentUploadCard from './admission/DocumentUploadCard.vue';
+import ExaminationCard from './admission/ExaminationCard.vue';
+import PreBriefingCard from './admission/PreBriefingCard.vue';
+import MedicalExaminationCard from './admission/MedicalExaminationCard.vue';
+import STAGE_CONFIG from '@/data/userAdmissionStage';
+import EnrollmentView from './EnrollmentView.vue';
 export default {
     name: 'ApplicantDashboardView',
     data() {
-        const enrollmentItem = [
-            { title: 'Enrollment Form', shortTitle: 'Enrollment Form', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-card-list' },
-            { title: 'View Assessment', shortTitle: 'Assessment', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-calculator-fill' },
-            { title: 'Tuition Payment', shortTitle: 'Tuition Fee', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-wallet2' },
-            { title: 'Confirmation', shortTitle: 'Confirm', status: 'locked', url: 'student-layout.dashboard', icon: 'bi bi-patch-check-fill' }
-        ]
         return {
-            completedStagesCount: 1,
-            inProgressStagesCount: 0,
-            admissionProcessStages: [],
+            isLoading: true,
             activeStage: 'Registration',
-            enrollmentItem,
+            admissionInformation: null,
             information: {
                 basicInfo: {},
                 applications: null
-            }
-
+            },
+            documentList: {},
+            examination: {},
+            medicalInfo: {}
         }
     },
     components: {
-        RegistrationCard
+        RegistrationCard, DocumentUploadCard, ExaminationCard, PreBriefingCard, MedicalExaminationCard, EnrollmentView
     },
-    mounted() {
-        this.admissionProcessStages = [
-            { title: 'Registration', shortTitle: 'Registration', status: 'in_progress', icon: 'bi bi-person-plus-fill', url: 'student-layout.dashboard' },
-            { title: 'Documentary Requirements', shortTitle: 'Documents', status: 'locked', files: [], icon: 'bi bi-file-earmark-text-fill', url: 'student-layout.dashboard' },
-            /*    { title: 'Entrance Exam Payment', shortTitle: 'Exam Fee', status: 'locked', icon: 'bi bi-cash-coin', url: 'student-layout.dashboard' }, */
-            { title: 'Entrance Exam', shortTitle: 'Exam', status: 'locked', scheduled: false, permitReady: false, icon: 'bi bi-pencil-square', url: 'student-layout.dashboard' },
-            { title: 'Pre-Enrollment Briefing', shortTitle: 'Briefing', status: 'locked', icon: 'bi bi-people-fill', url: 'student-layout.dashboard' },
-            { title: 'Medical Examination', shortTitle: 'Medical', status: 'locked', files: [], icon: 'bi bi-heart-pulse-fill', url: 'student-layout.dashboard' }
-        ]
-        const admissionApi = new ApplicantAdmissionApi()
-        const admissionInformation = admissionApi.fetchAdmissionInformation()
-        this.information = {
-            basicInfo: admissionInformation.json_details,
-            applications: admissionInformation.applicant
+    computed: {
+        admissionProcessStages() {
+            const stages = {
+                Registration: !!this.admissionInformation?.applicantInfo,
+                Documents: this.documentList?.approvedDocuments === 1,
+                Exam: this.examination?.examination_result_v2?.result === 1,
+                Briefing: !!this.medicalInfo,
+                Medical: !!this.medicalInfo
+            }
+
+            return STAGE_CONFIG.map((stage, index) => {
+                const values = Object.values(stages)
+
+                let status = 'locked'
+
+                if (index === 0 || values[index - 1]) {
+                    status = values[index]
+                        ? stage.key === 'Medical'
+                            ? 'in_progress'
+                            : 'complete'
+                        : 'in_progress'
+                }
+
+                return {
+                    ...stage,
+                    shortTitle: stage.key,
+                    status,
+                    url: 'student-layout.dashboard'
+                }
+            })
         }
-        console.log('Admission Information:', admissionInformation)
+    },
+    async mounted() {
+        this.fetchData()
     },
     methods: {
+        async fetchData() {
+            try {
+                const admissionApi = new ApplicantAdmissionApi()
+
+                const admissionInformation = await admissionApi.admissionDetails()
+                this.admissionInformation = admissionInformation
+                if (!admissionInformation.applicantInfo) {
+                    return
+                }
+                this.information = {
+                    basicInfo: admissionInformation.application,
+                    applications: admissionInformation.applicantInfo
+                }
+                this.documentList = admissionInformation.documents || {}
+                this.examination = admissionInformation.examination?.examinationDetails || {}
+                this.medicalInfo = admissionInformation.medical || {}
+                this.setActiveStage()
+
+            } finally {
+                this.isLoading = false
+            }
+        },
+        setActiveStage() {
+            const currentStage =
+                this.admissionProcessStages.find(
+                    stage => stage.status === 'in_progress'
+                )
+
+            if (currentStage) {
+                this.activeStage = currentStage.shortTitle
+            }
+        },
+
         getStepClass(status) {
-            if (status === 'complete') return 'bg-primary'
+            if (status === 'complete') return 'bg-success'
             if (status === 'in_progress') return 'bg-info'
+
             return 'bg-secondary-subtle'
         },
+
         isLocked(key) {
-            return this.admissionProcessStages[key].status === 'locked'
+            return this.admissionProcessStages[key]
+                ?.status === 'locked'
         },
+
         navigateTo(item) {
-            this.activeStage = item
+            const stage =
+                this.admissionProcessStages.find(
+                    s => s.shortTitle === item
+                )
+
+            if (stage?.status !== 'locked') {
+                this.activeStage = item
+            }
+        },
+
+        handleMedicalClick() {
+            this.activeStage = 'Medical'
+        },
+        handleEnrollmentClick() {
+            this.activeStage = 'Enrollment'
         }
     }
 }
 </script>
+<style>
+.page-loader {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* dark background */
+}
+
+.enrollment-loader {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #38bdf8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+</style>
