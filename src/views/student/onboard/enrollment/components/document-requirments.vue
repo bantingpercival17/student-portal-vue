@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-12">
                         <labelComponent label="COMPANY NAME" :value="deployment.company_name" />
-                     </div>
+                    </div>
                     <div class="col-lg-4 col-md-12">
                         <labelComponent label="SBT BATCH" :value="deployment.sbt_batch" />
                     </div>
@@ -56,7 +56,8 @@
                 </div>
                 <label for="" class="form-label h5 text-primary fw-bolder mt-5">DOCUMENT REQUIREMENTS</label>
                 <div class="row">
-                    <div class="col-lg-6 col-md-12" v-for="(item, index) in deployment.document_requirements" :key="index">
+                    <div class="col-lg-6 col-md-12" v-for="(item, index) in deployment.document_requirements"
+                        :key="index">
                         <label for="example-text-input" class="h5 fw-bolder text-primary">
                             <small>{{ (item.documents.document_name).toUpperCase() }}</small>
                         </label>
@@ -98,7 +99,8 @@
                                         <small for="" class="form-small text-info fw-bolder">{{
                                             item.document_comment }}</small>
                                     </p>
-                                    <form @submit.prevent="reuploadDocument" method="post" enctype="multipart/form-data">
+                                    <form @submit.prevent="reuploadDocument" method="post"
+                                        enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label fw-bolder">
                                                 <small>RE-UPLOAD DOCUMENT<span class="text-danger">*</span></small>
@@ -106,7 +108,8 @@
                                             <div class="row">
                                                 <div class="col-lg-8 col-md-10">
                                                     <input type="file"
-                                                        class="form-control form-control-sm border border-primary" required
+                                                        class="form-control form-control-sm border border-primary"
+                                                        required
                                                         v-on:change="handleFileChange($event, item.id, deployment.id)" />
                                                 </div>
                                                 <div class="col-lg-4 col-md-2">
@@ -142,7 +145,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <selectComponent label="Shipping Company" :data="propsCompany" v-model:value="agency"
-                            :error="errors.agency" columName='agency_name'/>
+                            :error="errors.agency" columName='agency_name' />
                         <div class="form-check mt-0">
                             <input class="form-check-input" type="checkbox" value="0" v-model="otherShipping">
                             <small class="form-check-label validate-checkbox" for="flexCheckDefault1">
@@ -182,7 +185,8 @@
                                 <small>{{ item.document_name }}<span class="text-danger">*</span></small>
                             </label>
                             <input type="hidden" :value="item.id" name="documents">
-                            <input type="file" class="form-control border border-primary" :name="`file${index}`" ref="files"
+                            <input type="file" class="form-control border border-primary" :name="`file${index}`"
+                                ref="files"
                                 @change="onFileChange(index, item.document_name.replaceAll(' ', '_').toLowerCase())" />
                             <span class="badge bg-danger mt-2"
                                 v-if="errors[item.document_name.toLowerCase().replaceAll(' ', '_')]">{{

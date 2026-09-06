@@ -34,5 +34,11 @@ export const studentRouteV2 = (prop) => [
         name: prop + '.grades',
         meta: { auth: true, name: 'Student Grades', user: 'student' },
         component: () => import('../views/version2/student/views/GradesView.vue')
+    },
+    {
+        path: '/student/v2/onboard-training',
+        name: prop + '.onboard-training',
+        meta: { auth: true, name: 'Onboard Training', user: 'student' },
+        component: () => import('../views/version2/student/views/OnboardTrainingView.vue')
     }
 ]

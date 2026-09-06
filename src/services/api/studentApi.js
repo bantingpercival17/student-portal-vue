@@ -16,7 +16,10 @@ export class StudentApi {
         this.endpoints = {
             studentDetails: 'student/v2/student-details',
             grades: 'student/v2/student-grades',
-            statementOfAccount: 'student/v2/student-account-card'
+            statementOfAccount: 'student/v2/student-account-card',
+            updateOnboardData: 'student/v2/update-onboard-details',
+            uploadDocument: 'student/v2/onboard-upload-documents',
+            onboardEnrollment: 'student/v2/onboard-enrollment'
         }
     }
     async studentIdDetails() {
@@ -51,6 +54,46 @@ export class StudentApi {
             return []
         }
     }
-
+    async studentOnboardTraining() {
+        try {
+            const { data } = await this.api.get('student/v2/onboard-training')
+            return data?.data ?? []
+        } catch (error) {
+            console.error('Onboard Training Error:', error)
+            return []
+        }
+    }
+    async updateOnboardDetails(payload) {
+        try {
+            const { data } = await this.api.post(
+                this.endpoints.updateOnboardData,
+                payload
+            )
+            return data?.enrollmentDetails ?? []
+        } catch (error) {
+            console.error('Assessment View Error:', error)
+            return []
+        }
+    }
+    async uploadDocument(payload) {
+        const { data } = await this.api.post(
+            this.endpoints.uploadDocument,
+            payload,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        )
+        return data
+    }
+    async onboardEnrollment() {
+        try {
+            const { data } = await this.api.get(this.endpoints.onboardEnrollment)
+            return data?.data ?? []
+        } catch (error) {
+            console.error('Onboard Training Error:', error)
+            return []
+        }
+    }
 }
-
