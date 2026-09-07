@@ -17,11 +17,11 @@
         <form class="row g-3 mt-3">
             <div class="col-md-12">
                 <label class="form-label">Full Name</label>
-                <input type="text" class="form-control" :value="applicant.name" disabled>
+                <input type="text" class="form-control" :value="registration.basicInfo.name" disabled>
             </div>
             <div class="col-md-6">
                 <label class="form-label">Email Address</label>
-                <input type="email" class="form-control" :value="applicant.email" disabled>
+                <input type="email" class="form-control" :value="registration.basicInfo.email" disabled>
             </div>
             <div class="col-md-6">
                 <label class="form-label">Program Choice</label>

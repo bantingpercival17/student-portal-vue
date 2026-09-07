@@ -7,7 +7,7 @@
             class="form-select form-select-sm border border-primary">
             <option value="">Select {{ label }}</option>
             <option v-for="item in data" :key="item" :value="item.id">
-                {{ item[columName] }}</option>
+                {{ item[columnName] }}</option>
         </select>
         <span class="badge bg-danger mt-2" v-if="error">{{
             error[0] }}</span>
@@ -21,7 +21,7 @@ export default {
             type: String,
             required: true
         },
-        columName: {
+        columnName: {
             type: String,
             required: true
         },

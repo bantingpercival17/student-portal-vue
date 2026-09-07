@@ -115,18 +115,34 @@ export default {
           password: payload.password
         })
         if (response.status === 200) {
-          const userName = payload.userType === 'student' ? response.data.profile.completeName : response.data.student.account.name
-          const nav = payload.userType === 'student' && !!response.data.student.comprehensive_examination
-          const tokenData = {
-            userId: response.data.student.id,
-            email: response.data.email,
-            name: userName,
-            userType: payload.userType,
-            token: response.data.token,
-            image: response.data.profile_picture,
-            studentNumber: payload.userType === 'student' ? response.data.profile.studentNumber : null,
-            navItem: nav
+          let tokenData = []
+          if (payload.userType === 'student') {
+            const account = response.data
+            tokenData = {
+              userId: account.profile.studentID,
+              email: account.profile.email,
+              name: account.profile.completeName,
+              userType: payload.userType,
+              token: response.data.token,
+              image: account.profile.profilePicture,
+              studentNumber: account.profile.studentNumber,
+              navItem: null
+            }
+          } else {
+            const userName = payload.userType === 'student' ? response.data.profile.completeName : response.data.student.account.name
+            const nav = payload.userType === 'student' && !!response.data.student.comprehensive_examination
+            tokenData = {
+              userId: response.data.student.id,
+              email: response.data.email,
+              name: userName,
+              userType: payload.userType,
+              token: response.data.token,
+              image: response.data.profile_picture,
+              studentNumber: payload.userType === 'student' ? response.data.profile.studentNumber : null,
+              navItem: nav
+            }
           }
+
           console.log(tokenData)
           localStorage.setItem('userData', JSON.stringify(tokenData))
           context.commit(SET_USER_TOKEN_MUTATION, tokenData)

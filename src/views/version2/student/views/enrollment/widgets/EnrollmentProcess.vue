@@ -28,7 +28,7 @@
                 <h4 class="fw-bold">Enrollment for A.Y. {{ currentAcademicYear }}</h4>
                 <p class="text-muted">Ready to start the next semester? Click the button below to begin your enrollment
                     process.</p>
-                <button class="btn btn-primary btn-lg mt-3" @click="startEnrollment">Enroll Now</button>
+                <button class="btn btn-primary btn-lg mt-3" @click="startEnrollment()">Enroll Now</button>
             </div>
 
             <!-- Step 1: Verify Information -->
@@ -308,7 +308,18 @@ export default {
                 this.contentLoader = false
             }
         },
-        startEnrollment() { this.enrollmentStep = 1 },
+        startEnrollment() {
+            console.log('clicked')
+            console.log(this.enrollmentDetails)
+            console.log(this.enrollmentDetails?.cci_completer)
+
+            if (!this.enrollmentDetails?.cci_completer) {
+                console.log('redirecting...')
+                window.location.href = '/#/student/v2/onboard-training#enrollment'
+            } else {
+                this.enrollmentStep += 1
+            }
+        },
         nextStep() { this.enrollmentStep++ },
         async submitForEvaluation() {
             this.contentLoader = true

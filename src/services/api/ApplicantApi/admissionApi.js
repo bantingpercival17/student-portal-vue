@@ -1,49 +1,38 @@
 /* eslint-disable */
-import axios from 'axios'
-import store from '@/store'
-import { GET_USER_TOKEN } from '@/store/storeConstants'
+import api from '../api'
 
 export class ApplicantAdmissionApi {
+
     constructor() {
-        this.api = axios.create({
-            headers: {
-                get Authorization() {
-                    return `Bearer ${store.getters[`auth/${GET_USER_TOKEN}`]}`
-                }
-            }
-        })
-
         this.endpoints = {
-            information: '/v2/applicant/admission-information',
-            assessment: 'student/v2/enrollment-assessment',
-            enrollment: 'student/v2/current-enrollment',
-            application: 'student/v2/enrollment-application',
-            paymentMode: 'student/v2/tuition-fee-payment-mode',
-            payments: 'student/v2/enrollment-payment'
+            admission: '/v2/applicant/admission-information',
+            information: '/v2/applicant/applicant-information',
+            storeInformation: '/v2/applicant/store-information',
+            uploadDocument: '/v2/applicant/upload-document'
         }
     }
-
+    async admissionDetails() {
+        const { data } = await api.get(this.endpoints.admission)
+        return data?.applicantDetails ?? []
+    }
     async fetchAdmissionInformation() {
-        try {
-            const { data } = await this.api.get(this.endpoints.information)
-            return data?.admissionInformation ?? []
-        } catch (error) {
-            console.error('Fetch Admission Information Error:', error)
-            return []
-        }
+        const { data } = await api.get(this.endpoints.information)
+        return data?.data ?? []
     }
 
-    async enrollmentAssessmentView(payload) {
-        try {
-            const { data } = await this.api.post(
-                this.endpoints.assessment,
-                payload
-            )
-            return data?.enrollmentDetails ?? []
-        } catch (error) {
-            console.error('Assessment View Error:', error)
-            return []
-        }
+    async storeInformation(payload) {
+        const { data } = await api.post(
+            this.endpoints.storeInformation,
+            payload
+        )
+        return data
     }
+    async uploadDocument(payload) {
+        const { data } = await api.post(
+            this.endpoints.uploadDocument,
+            payload
+        )
+        return data
+    }
+
 }
-

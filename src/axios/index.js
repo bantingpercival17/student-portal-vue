@@ -5,7 +5,8 @@ const links = [
   'http://127.0.0.1:7000/api/',
   'http://api.bma.edu.ph/api/',
   'http://beta.one.bma.edu.ph/api/',
-  'http://20.0.0.120:70/api/'
+  'http://20.0.0.120:70/api/',
+  'http://127.0.0.1:7080/api'
 ]
 const production = links[1]
 const testing = links[1]

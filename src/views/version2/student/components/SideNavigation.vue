@@ -30,7 +30,7 @@
         <nav class="flex-grow-1 p-3">
             <ul class="nav flex-column">
                 <li v-for="item in navItems" :key="item.id" class="nav-item">
-                    <a href="#" class="nav-link" :class="{ 'active': activeTab === item.id }"
+                    <a class="nav-link" :class="{ 'active': activeTab === item.id }"
                         @click.prevent="navigateAndClose(item.id, item.link)">
                         <i :data-feather="item.icon" class="me-3"></i>{{ item.name }}
                     </a>
@@ -164,7 +164,7 @@ export default {
                 { id: 'Account Card', name: 'Account Card', icon: 'credit-card', link: 'student-layout-v2.account-card' },
                 { id: 'Student Grades', name: 'Grades', icon: 'award', link: 'student-layout-v2.grades' },
                 /*  { id: 'lms', name: 'LMS', icon: 'monitor', link: 'student-layout-v2.dashboard' }, */
-                { id: 'onboard', name: 'Onboard Training', icon: 'anchor', link: 'student-layout-v2.dashboard' },
+                { id: 'onboard', name: 'Onboard Training', icon: 'anchor', link: 'student-layout-v2.onboard-training' },
                 { id: 'e-library', name: 'E-Library', icon: 'book', link: 'student-layout-v2.dashboard' }
             ],
             activeTab: 'dashboard',

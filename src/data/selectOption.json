@@ -1,0 +1,53 @@
+{
+  "genderOption": ["Male", "Female"],
+  "civilStatusList": ["Single", "Married", "Widowed", "Divorced"],
+  "heightOption": [
+    "157.48", "160.02", "162.56", "165.1", "167.64", "170.18", "172.72", "175.26", "177.8", "180.34", "182.88", "185.42", "187.96", "190.5", "193.4", "195.58", "198.12", "200.66", "203.2", "205.74", "208.28", "210.82"
+  ],
+  "weightOption": [
+    { "label": "40 kg", "id": 88.18 },
+    { "label": "45 kg", "id": 99.21 },
+    { "label": "50 kg", "id": 110.23 },
+    { "label": "55 kg", "id": 121.25 },
+    { "label": "60 kg", "id": 132.28 },
+    { "label": "65 kg", "id": 143.30 },
+    { "label": "70 kg", "id": 154.32 },
+    { "label": "75 kg", "id": 165.35 },
+    { "label": "80 kg", "id": 176.37 },
+    { "label": "85 kg", "id": 187.39 },
+    { "label": "90 kg", "id": 198.42 },
+    { "label": "95 kg", "id": 209.44 },
+    { "label": "100 kg", "id": 220.46 },
+    { "label": "105 kg", "id": 231.49 },
+    { "label": "110 kg", "id": 242.51 },
+    { "label": "115 kg", "id": 253.53 },
+    { "label": "120 kg", "id": 264.55 }
+  ],
+  "religionsOption": [
+    "Roman Catholic",
+    "Christian (Born Again)",
+    "Iglesia ni Cristo",
+    "Islam",
+    "7th Day Adventist",
+    "Aglipay (IFI)",
+    "Alliance (CAMACOP)",
+    "Baptist",
+    "Buddhism",
+    "Church of the Nazarene",
+    "Hinduism",
+    "Jehovah's Witnesses",
+    "Latter-day Saints (Mormon)",
+    "MCGI (Ang Dating Daan)",
+    "Methodist",
+    "Pentecostal",
+    "PMCC (4th Watch)",
+    "Protestant",
+    "Sikhism",
+    "None / Atheist / Agnostic",
+    "Other"
+  ],
+  "educationalAttainment": ["Elementary Graduate", "High School Graduate", "College", "Vocational", "Master's / Doctorate Degree", "Did not attend school", "N/a"],
+  "employmentStatus": ["Full Time", "Part Time", "Self-employed (i.e. Family Business)", "Unemployed due to community quarantine", "Field Work", "None", "N/a"],
+  "strandList": ["General Academic Strand", "Humanities and Social Sciences Strand", "Science, Technology, Engineering and Mathematics", "Accountancy, Business and Management", "Technical Vocational Livelihood", "TVL (Technical-Vocational-Livelihood) Maritime", "Pre-Baccalaureate Maritime Strand", "N/a"],
+  "arrangement": ["WFH", "Office", "Field Work", "None", "N/a"]
+}

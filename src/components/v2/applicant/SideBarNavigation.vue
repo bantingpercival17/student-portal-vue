@@ -1,7 +1,8 @@
 <template>
     <aside id="sidebar" :class="{ 'open': isSidebarOpenOnMobile }">
         <div class="d-flex align-items-center justify-content-center p-3 shadow-sm bg-dark-green">
-            <img :src="require('@/assets/resources/image/bma-logo.jpg')" alt="BMA Logo" class="img-fluid avatar avatar-50 avatar-rounded">
+            <img :src="require('@/assets/resources/image/bma-logo.jpg')" alt="BMA Logo"
+                class="img-fluid avatar avatar-50 avatar-rounded">
             <span class="ms-2 fs-5 fw-bold">Admission Portal</span>
         </div>
         <nav class="p-3">
@@ -13,67 +14,6 @@
                     </a>
                 </li>
 
-                <!-- Admission -->
-                <div class="accordion accordion-flush" id="admissionAccordion">
-                    <div class="accordion-item bg-transparent">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseAdmission">
-                                <i class="bi bi-journal-text me-3"></i> Admission
-                            </button>
-                        </h2>
-                        <div id="collapseAdmission" class="accordion-collapse collapse"
-                            data-bs-parent="#admissionAccordion">
-                            <div class="accordion-body">
-                                <ul class="flex-column" style="list-style: none; padding: 0; margin: 0;">
-                                    <li class="nav-item" v-for="(stage, key) in admissionItem" :key="key">
-                                        <router-link :to="stage.status === 'locked' ? '' : { name: stage.url }"
-                                            :class="['sidebar-link', { active: checkRoute(stage.url), locked: stage.status === 'locked' }]"
-                                            @click.prevent="stage.status === 'locked' && $event.preventDefault()">
-                                            {{ stage.title }}
-                                        </router-link>
-                                        <!--   <a href="#" @click.prevent="!isLocked(key) && navigateTo(key)"
-                                            class="sidebar-link"
-                                            :class="{ 'active': currentView === key, 'locked': isLocked(key) }">
-
-                                        </a> -->
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Enrollment -->
-                <div class="accordion accordion-flush" id="enrollmentAccordion">
-                    <div class="accordion-item bg-transparent">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseEnrollment">
-                                <i class="bi bi-check-circle-fill me-3"></i> Enrollment
-                            </button>
-                        </h2>
-                        <div id="collapseEnrollment" class="accordion-collapse collapse"
-                            data-bs-parent="#enrollmentAccordion">
-                            <div class="accordion-body">
-                                <ul class="flex-column" style="list-style: none; padding: 0; margin: 0;">
-                                    <li class="nav-item" v-for="(stage, key) in enrollmentItem" :key="key">
-                                        <router-link :to="stage.status === 'locked' ? '' : { name: stage.url }"
-                                            :class="['sidebar-link', { active: checkRoute(stage.url), locked: stage.status === 'locked' }]"
-                                            @click.prevent="stage.status === 'locked' && $event.preventDefault()">
-                                            {{ stage.title }}
-                                        </router-link>
-                                        <!--   <a href="#" @click.prevent="!isLocked(key) && navigateTo(key)"
-                                            class="sidebar-link"
-                                            :class="{ 'active': currentView === key, 'locked': isLocked(key) }">
-
-                                        </a> -->
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </ul>
         </nav>
     </aside>
