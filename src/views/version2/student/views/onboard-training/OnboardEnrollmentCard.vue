@@ -31,7 +31,7 @@
         </div>
         <div v-if="enrollmentStep === 2" class="p-4">
             <EnrollmentEvaluationCard :enrollment-details="enrollmentDetails"
-                :shipboard-information="shipboardInformation" />
+                :shipboard-information="shipboardInformation" @loading="loaderStatus" />
         </div>
     </div>
     <div v-show="contentLoader" class="page-loader">

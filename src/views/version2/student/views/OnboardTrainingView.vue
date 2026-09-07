@@ -37,13 +37,13 @@
                             SRN (MISMO ACCOUNT):
                             <strong id="profile-srn" class="text-dark fw-semibold">{{ shipboardInformation.srn ||
                                 'Not provided'
-                                }}</strong>
+                            }}</strong>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
                             TRB No:
                             <strong id="profile-trb-no" class="text-dark fw-semibold">{{ shipboardInformation.trbNo ?
                                 shipboardInformation.trbNo : 'Not provided'
-                                }}</strong>
+                            }}</strong>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
                             Facebook: <a v-if="shipboardInformation.facebook" class="badge bg-success"
@@ -150,7 +150,8 @@ export default {
                 { id: 'mopm', name: 'MOPM', icon: 'calendar' },
                 { id: 'assessment', name: 'Comprehensive Assessment', icon: 'check-square' }
             ],
-            documentList: []
+            documentList: [],
+            enrollmentDetails: [],
         }
     },
     components: {

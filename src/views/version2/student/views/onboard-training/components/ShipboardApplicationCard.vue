@@ -147,6 +147,7 @@ export default {
                     apiLink.onboardApiLink.shipboardApplication
                 )
                 alertSuccess(response.message)
+                window.location.reload()
                 console.log(response)
             } catch (error) {
                 if (error.response?.status === 422) {
