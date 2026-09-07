@@ -214,6 +214,13 @@ export default {
             scheduledList: []
         }
     },
+    mounted() {
+        if (this.examination) {
+            if (this.examination.examinationDetails) {
+                this.examinationCode = this.examination.examinationDetails.examination_code
+            }
+        }
+    },
     methods: {
         ...mapActions('alert', {
             successAlert: SUCCESS_ALERT,

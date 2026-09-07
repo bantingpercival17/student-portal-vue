@@ -8,7 +8,14 @@
             <small class="fw-bolder text-muted">{{ progressName }}</small>
             <h5 :class="`${className.textClass} fw-bolder mb-1`">{{ titleName }}</h5>
             <!-- Documents List -->
-            <div v-if="content" class="document-content p-3 row">
+            <div v-if="content" class="p-2">
+                <p>Congratulations! You have qualified for the Entrance Examination at Baliwag Maritime Academy, Inc.
+                    for the 2026–2027 academic year.
+
+                    Check your email for the scheduled date and instructions. Please pay the Php 300.00 exam fee at the
+                    Accounting Office on the day of the exam.</p>
+            </div>
+            <!--  <div v-if="content" class="document-content p-3 row">
                 <div v-if="alumnia">
                     <label for="" class="fw-bolder">Senior Highschool Alumnia</label>
                 </div>
@@ -75,7 +82,6 @@
                                         :value="getFormatDate(payment.updated_at)" />
                                 </div>
                                 <div class="col-lg-4 col-md-12">
-                                    <!--  <labelComponent label="SBT BATCH" :value="deployment.sbt_batch" /> -->
                                 </div>
                                 <div class="col-lg-8 col-md-12">
                                     <labelComponent label="reference no." :value="payment.reference_number" />
@@ -177,7 +183,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <modal id="paymentView" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xlg" dialogClass="modal-lg"
@@ -198,21 +204,22 @@
 </template>
 <script>
 import stepper from '@/components/main-layouts/components/widgets/stepper-widget.vue'
-import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
+/* import inputComponentV2 from '@/components/main-layouts/components/widgets/input-component-v2.vue'
 import labelComponent from '@/components/main-layouts/components/widgets/label-component.vue'
+import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue' */
 import { SHOW_LOADING_MUTATION } from '@/store/storeConstants'
 import { mapMutations, mapActions } from 'vuex'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT } from '@/store/storeAlertConstants.js'
 import axios from 'axios'
-import selectComponent from '@/components/main-layouts/components/widgets/select-component.vue'
+
 import SurveyAlert from './component/SurveyAlert.vue'
 export default {
     name: 'ExaminationPayment',
     components: {
         stepper,
-        inputComponentV2,
-        labelComponent,
-        selectComponent,
+        /*  inputComponentV2,
+         labelComponent,
+         selectComponent, */
         SurveyAlert
     },
     data() {

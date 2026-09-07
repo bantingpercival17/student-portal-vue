@@ -6,7 +6,7 @@
         <ul id="top-tab-list" class="p-0 row list-inline category-list">
             <li :class="'col-lg col-md mb-2 text-center ' + activeCategory(index)" v-for="(data, index) in categoryList"
                 :key="index">
-                <a class="category">
+                <a class="category" @click="gotoCategory(index)">
                     <small class="mt-4">{{ data.category_name }}</small>
                 </a>
             </li>
@@ -37,13 +37,17 @@
                             <div class="question-view">
                                 <div v-if="!questionList[data - 1].question">
                                     <img class="img-fluid" :src="questionView(questionList[data - 1].image_path)" alt=""
-                                        style="width: fit-content;height:max-content;">
+                                        style="width: fit-content;height:max-content;"
+                                        @click="preview(questionView(questionList[data - 1].image_path))"
+                                        data-bs-toggle="modal" data-bs-target="#image-question">
                                 </div>
                                 <div v-else>
                                     <p class="text-primary fw-bolder h3" v-html="questionList[data - 1].question"></p>
                                     <img v-if="questionList[data - 1].image_path"
                                         :src="questionView(questionList[data - 1].image_path)"
-                                        style="width: fit-content;height:max-content;" alt="">
+                                        style="width: fit-content;height:max-content;" alt=""
+                                        @click="preview(questionView(questionList[data - 1].image_path))"
+                                        data-bs-toggle="modal" data-bs-target="#image-question">
                                 </div>
                             </div>
                             <div class="question-choices row">
@@ -72,9 +76,12 @@
                                         EXAMINATION</button>
                                 </div>
                             </div>
-                            <button v-else class="btn btn-info text-white  float-end"
-                                @click="nextCategoryReview()">
+
+                            <button v-else class="btn btn-info text-white  float-end" @click="nextCategoryReview()">
                                 NEXT CATEGORY</button>
+                            <button v-if="categoryIndex > 0" class="btn btn-outline-info"
+                                @click="previousCategoryReview()">
+                                PREVIOUS CATEGORY</button>
                         </div>
                     </div>
                 </div>
@@ -153,6 +160,25 @@
             </div>
         </div>
     </div>
+    <modal id="image-question" :tabindex="-1" role="dialog" mainClass="bd-example-modal-xl"
+        ariaLabelled="exampleModalLabel" dialogClass="modal-lg" :ariaHidden="true" contentrole="document">
+        <model-header :dismissable="true">
+            <h5 class="modal-title text-primary fw-bolder" id="exampleModalScrollableTitle">QUESTION IMAGE
+            </h5>
+        </model-header>
+        <model-body>
+            <div v-if="questionImage">
+                <img :src="questionImage" alt="" style="width:100%" />
+            </div>
+            <div v-else>
+                <label class="fw-bolder text-info h4">Kindly wait to load the Image</label>
+            </div>
+        </model-body>
+        <model-footer>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </model-footer>
+
+    </modal>
 </template>
 
 <script>
@@ -160,7 +186,6 @@ import { GET_USER_TOKEN, IS_USER_AUTHENTICATE_GETTER, SHOW_LOADING_MUTATION } fr
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { SUCCESS_ALERT, INFO_ALERT, ERROR_ALERT, ENCRYPT_DATA } from '@/store/storeAlertConstants.js'
 import TimerLayout from './component/TimerLayout.vue'
-import Swal from 'sweetalert2'
 import axios from 'axios'
 export default {
     name: 'Assessment View',
@@ -181,7 +206,8 @@ export default {
             questionIndexReview: 1,
             questionIndexReviewRange: 50,
             reviewModal: true,
-            essay: ''
+            essay: '',
+            questionImage: null
         }
     },
     components: {
@@ -316,6 +342,17 @@ export default {
             this.questionList = this.categoryList[this.categoryIndex].question_lists
             this.questionNumber = this.questionList.length
         },
+        gotoCategory(index) {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            this.reviewModal = true
+            this.categoryIndex = index
+            this.currentQuestion = 0
+            this.questionIndexReview = 1
+            this.categoryDetails = this.categoryList[this.categoryIndex]
+            this.questionList = this.categoryList[this.categoryIndex].question_lists
+            this.questionNumber = this.questionList.length
+            this.questionIndexReviewRange = this.questionList.length
+        },
         nextCategoryReview() {
             if (this.categoryIndex <= this.categoryList.length) {
                 window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -329,6 +366,21 @@ export default {
                 this.questionIndexReviewRange = this.questionList.length
             } else {
                 this.finishExamination()
+            }
+        },
+        previousCategoryReview() {
+            if (this.categoryIndex > 0) {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+                this.reviewModal = true
+
+                this.categoryIndex -= 1
+                this.currentQuestion = 0
+                this.questionIndexReview = 1
+
+                this.categoryDetails = this.categoryList[this.categoryIndex]
+                this.questionList = this.categoryDetails.question_lists
+                this.questionNumber = this.questionList.length
+                this.questionIndexReviewRange = this.questionList.length
             }
         },
         finishExamination() {
@@ -366,6 +418,9 @@ export default {
         },
         range(start, end) {
             return Array.from({ length: end - start + 1 }, (_, index) => start + index)
+        },
+        preview(data) {
+            this.questionImage = data
         }
     }
 }

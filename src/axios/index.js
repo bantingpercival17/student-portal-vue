@@ -8,5 +8,5 @@ const links = [
   'http://20.0.0.120:70/api/'
 ]
 const production = links[1]
-const testing = links[0]
+const testing = links[1]
 axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? production : testing
