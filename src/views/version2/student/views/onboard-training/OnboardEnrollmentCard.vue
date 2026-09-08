@@ -31,7 +31,11 @@
         </div>
         <div v-if="enrollmentStep === 2" class="p-4">
             <EnrollmentEvaluationCard :enrollment-details="enrollmentDetails"
-                :shipboard-information="shipboardInformation" @loading="loaderStatus" />
+                :shipboard-information="shipboardInformation" @loading="loaderStatus" @next-step="nextStep" />
+        </div>
+        <div v-if="enrollmentStep === 3" class="p-4">
+            <FeeAssessmentCard :enrollment-details="enrollmentDetails"
+                :tuition-fee-assessments="tuitionFeeAssessment" />
         </div>
     </div>
     <div v-show="contentLoader" class="page-loader">
@@ -68,16 +72,18 @@
 </style>
 <script>
 import feather from 'feather-icons'
-import ShipboardApplicationCard from './components/ShipboardApplicationCard.vue'
-import { OnboardTrainingApi } from '@/services/api/onboardTrainingApi.js'
-import apiLink from '@/services/api/apiLink.js'
 import { alertError } from '@/utils/alert.js'
+import ShipboardApplicationCard from './components/ShipboardApplicationCard.vue'
 import ShipboardInformationCard from './components/ShipboardInformationCard.vue'
 import EnrollmentEvaluationCard from './components/EnrollmentEvaluationCard.vue'
+import FeeAssessmentCard from './components/FeeAssessmentCard.vue'
 export default {
     name: 'OnboardEnrollmentCard',
     components: {
-        ShipboardApplicationCard, ShipboardInformationCard, EnrollmentEvaluationCard
+        ShipboardApplicationCard, ShipboardInformationCard, EnrollmentEvaluationCard, FeeAssessmentCard
+    },
+    props: {
+        enrollmentData: Object
     },
     data() {
         // const formData = new FormData()
@@ -89,32 +95,30 @@ export default {
             enrollmentDetails: [],
             shipboardApplication: [],
             shipboardInformation: [],
-            errors: [],
-            apiService: new OnboardTrainingApi()
+            tuitionFeeAssessment: [],
+            errors: []
         }
     },
     async mounted() {
-        console.log(this.shipboardApplication)
-        this.fetchData()
+        this.fetchDataV2()
     },
     methods: {
         nextStep() { this.enrollmentStep++ },
-        async fetchData() {
+        fetchDataV2() {
             try {
-                const data = await this.apiService.getData(apiLink.onboardApiLink.onboardEnrollment)
-                if (data) {
-                    this.shipboardApplication = data.shipboardApplication
-                    this.shipboardInformation = data.shipboardInformation
-                    if (data.shipboardInformation) {
-                        if (data.shipboardInformation.is_approved) {
+                if (this.enrollmentData) {
+                    this.shipboardApplication = this.enrollmentData.shipboardApplication
+                    this.shipboardInformation = this.enrollmentData.shipboardApplication.shipboardInformation
+                    if (this.shipboardInformation) {
+                        if (this.shipboardInformation.is_approved) {
                             this.enrollmentStep = 2
-
-                            this.enrollmentDetails = data.enrollment.enrollment
-                            console.log(this.enrollmentDetails)
+                            this.enrollmentDetails = this.enrollmentData
+                            if (this.enrollmentData) {
+                                this.tuitionFeeAssessment = this.enrollmentDetails.tuitionFeeAssessment
+                            }
                         }
                     }
                     this.contentLoader = false
-                    console.log(this.shipboardApplication)
                 }
             } catch (error) {
                 alertError(error.response?.data?.message || error.message)

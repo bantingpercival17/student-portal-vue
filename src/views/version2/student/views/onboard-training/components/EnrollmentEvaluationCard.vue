@@ -1,20 +1,23 @@
 <template>
-    <div>
-        <h4 class="fw-bold mb-3">Step 1: Verify Your Information</h4>
+    <div v-if="!enrollmentDetails.application">
+        <h4 class="fw-bold mb-3">Verify Your Information</h4>
         <p>Please review your personal information below. If everything is correct, submit it for evaluation by
             the registrar's office. If you need to make changes, please visit the "Update Profile" page first.
         </p>
-        <div class="card data-card mb-4">
-            <div class="card-header bg-white py-3 px-4 border-bottom d-flex justify-content-between align-items-center">
+        <hr>
+        <div class="student-information">
+            <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="card-section-title">
-                    <i class="bi bi-person-vcard text-primary fs-5"></i> Personal Details
+                    <h5 class="fw-bold text-primary mb-0">
+                        <i class="bi bi-person-vcard text-primary fs-5"></i> Personal Details
+                    </h5>
                 </span>
                 <span
                     class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-pill">
                     <i class="bi bi-check-circle-fill me-1"></i> Active Record
                 </span>
             </div>
-            <div class="card-body p-4">
+            <div class="">
                 <div class="row g-3">
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
@@ -22,7 +25,7 @@
                             <label class="text-success fw-bolder">{{ enrollmentDetails.studentInfo.fullname }}</label>
                         </div>
                     </div>
-                    <div class="col-6 col-md-3 col-lg-2">
+                    <div class="col-12 col-md-3 col-lg-2">
                         <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                             <small class="text-muted text-sm">STUDENT NUMBER</small> <br>
                             <label class="text-success fw-bolder">
@@ -30,7 +33,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-6 col-md-3 col-lg-3">
+                    <div class="col-12 col-md-3 col-lg-3">
                         <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                             <small class="text-muted text-sm">COURSE PROGRAM</small> <br>
                             <label class="text-success fw-bolder">
@@ -67,84 +70,158 @@
                             <label class="text-success fw-bolder">{{ enrollmentDetails.studentInfo.birthplace }}</label>
                         </div>
                     </div>
-                    {{ shipboardInformation.shipping_company }}
                 </div>
             </div>
+        </div>
+        <hr>
+        <!-- Domestic Shipping Beneficiary Action Alert -->
+        <template v-if="enrollmentDetails.studentInfo.insuranceBeneficiary">
+            <div class="student-beneficiary">
+                <div class="row">
+                    <div class="col-12 col-md-9">
+                        <h5 class="fw-bold text-success mb-0">
+                            <i class="bi bi-person-fill-add text-success fs-4"></i>
+                            Domestic Shipping - Beneficiary Form
+                        </h5>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <button type="button" class="btn btn-outline-success btn-sm float-end" data-bs-toggle="modal"
+                            data-bs-target="#beneficiaryModal">
+                            <i class="bi bi-person-plus-fill me-1"></i> Update Beneficiary Information
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                <small class="text-muted text-sm">FULL NAME</small> <br>
+                                <label class="text-success fw-bolder">
+                                    {{ beneficiaryName(enrollmentDetails.studentInfo.insuranceBeneficiary) }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                <small class="text-muted text-sm">RELATIONSHIP</small> <br>
+                                <label class="text-success fw-bolder">
+                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.relationship }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                <small class="text-muted text-sm">NATIONALITY</small> <br>
+                                <label class="text-success fw-bolder">
+                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.nationality }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                <small class="text-muted text-sm">BIRTH DATE </small> <br>
+                                <label class="text-success fw-bolder">
+                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.birthDate }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                <small class="text-muted text-sm">BIRTH PLACE</small> <br>
+                                <label class="text-success fw-bolder">
+                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.birthPlace }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-3">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                <small class="text-muted text-sm">EMAIL</small> <br>
+                                <label class="text-success fw-bolder">
+                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.email }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                <small class="text-muted text-sm">PHONE NUMBER</small> <br>
+                                <label class="text-success fw-bolder">
+                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.contactNumber }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                <small class="text-muted text-sm">ADDRESS</small> <br>
+                                <label class="text-success fw-bolder">
+                                    {{ enrollmentDetails.studentInfo.address }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </template>
+        <div v-else>
+            <div v-if="shipboardInformation.shipping_company == 'Domestic Shipping' || shipboardInformation.shipping_company == 'DOMESTIC SHIP'"
+                id="domesticBeneficiaryNotice"
+                class="mt-4 mb-3 p-3 bg-warning-subtle border border-warning-subtle rounded-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+                <div class="d-flex align-items-center gap-2 text-warning-emphasis">
+                    <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                    <div>
+                        <strong class="d-block">Domestic Shipping Detected!</strong>
+                        <span id="beneficiaryNoticeText" class="small">
+                            Beneficiary information is required for onboard insurance coverage.
+                        </span>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-success btn-sm pulse-animation text-nowrap"
+                    data-bs-toggle="modal" data-bs-target="#beneficiaryModal">
+                    <i class="bi bi-person-plus-fill me-1"></i>
+                    <span id="beneficiaryBtnLabel">
+                        Fill-Up Beneficiary
+                    </span>
+                </button>
+            </div>
+            <hr>
         </div>
 
-        <!-- Domestic Shipping Beneficiary Action Alert -->
-        <div v-if="shipboardInformation.shipping_company == 'Domestic Shipping' || shipboardInformation.shipping_company == 'DOMESTIC SHIP'"
-            id="domesticBeneficiaryNotice"
-            class="mt-4 mb-3 p-3 bg-warning-subtle border border-warning-subtle rounded-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
-            <div class="d-flex align-items-center gap-2 text-warning-emphasis">
-                <i class="bi bi-exclamation-triangle-fill fs-5"></i>
-                <div>
-                    <strong class="d-block">Domestic Shipping Detected!</strong>
-                    <span id="beneficiaryNoticeText" class="small">Beneficiary information is required for onboard
-                        insurance
-                        coverage.</span>
-                </div>
-            </div>
-            <button type="button" class="btn btn-outline-success btn-sm pulse-animation text-nowrap"
-                data-bs-toggle="modal" data-bs-target="#beneficiaryModal">
-                <i class="bi bi-person-plus-fill me-1"></i>
-                <span id="beneficiaryBtnLabel">
-                    Fill-Up Beneficiary Form
-                </span>
-            </button>
-        </div>
-        <div class="card data-card mb-4">
-            <div class="card-header bg-white py-3 px-4 border-bottom">
+        <div class="enrollment-details mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="card-section-title">
-                    <i class="bi bi-clock-history text-secondary fs-5"></i> Previous Enrollment Details
+                    <h5 class="fw-bold text-primary mb-0">
+                        <i class="bi bi-clock-history text-secondary fs-5"></i> Previous Enrollment Details
+                    </h5>
                 </span>
             </div>
-            <div class="card-body p-4">
-                <div class="row g-3">
-                    <div class="col-6 col-md">
-                        <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                            <small class="text-muted text-sm">ACADEMIC SCHOOL YEAR</small> <br>
-                            <label class="text-success fw-bolder">
-                                {{ enrollmentDetails.studentInfo.previousEnrollment.schoolYear || 'Not provided' }}
-                            </label>
-                        </div>
+            <div class="row g-3">
+                <div class="col-12 col-md">
+                    <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                        <small class="text-muted text-sm">ACADEMIC SCHOOL YEAR</small> <br>
+                        <label class="text-success fw-bolder">
+                            {{ enrollmentDetails.studentInfo.previousEnrollment.schoolYear || 'Not provided' }}
+                        </label>
                     </div>
-                    <div class="col-12 col-md">
-                        <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                            <small class="text-muted text-sm">CURRICULUM TRACK</small> <br>
-                            <label class="text-success fw-bolder">
-                                {{ enrollmentDetails.studentInfo.previousEnrollment.curriculum || 'Not provided' }}
-                            </label>
-                        </div>
+                </div>
+                <div class="col-12 col-md">
+                    <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                        <small class="text-muted text-sm">CURRICULUM TRACK</small> <br>
+                        <label class="text-success fw-bolder">
+                            {{ enrollmentDetails.studentInfo.previousEnrollment.curriculum || 'Not provided' }}
+                        </label>
                     </div>
-                    <div class="col-12 col-md">
-                        <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                            <small class="text-muted text-sm">YEAR LEVEL</small> <br>
-                            <label class="text-success fw-bolder">
-                                {{ convertYearLevel(enrollmentDetails.studentInfo.previousEnrollment.yearLevel)
-                                    || 'Not provided' }}
-                            </label>
-                        </div>
+                </div>
+                <div class="col-12 col-md">
+                    <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                        <small class="text-muted text-sm">YEAR LEVEL</small> <br>
+                        <label class="text-success fw-bolder">
+                            {{ convertYearLevel(enrollmentDetails.studentInfo.previousEnrollment.yearLevel)
+                                || 'Not provided' }}
+                        </label>
                     </div>
                 </div>
             </div>
         </div>
-        <!--  <div id="domesticBeneficiaryNotice"
-            class="mt-4 p-3 bg-warning-subtle border border-warning-subtle rounded-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
-            <div class="d-flex align-items-center gap-2 text-warning-emphasis">
-                <i class="bi bi-exclamation-triangle-fill fs-5"></i>
-                <div>
-                    <strong class="d-block">Domestic Shipping Detected!</strong>
-                    <span id="beneficiaryNoticeText" class="small">Beneficiary information is required for onboard
-                        insurance coverage.</span>
-                </div>
-            </div>
-            <button type="button" class="btn btn-gold btn-sm pulse-animation text-nowrap" data-bs-toggle="modal"
-                data-bs-target="#beneficiaryModal">
-                <i class="bi bi-person-plus-fill me-1"></i> <span id="beneficiaryBtnLabel">Fill-Up Beneficiary
-                    Form</span>
-            </button>
-        </div> -->
         <div class="card border-0 shadow-sm p-4 bg-white rounded-3">
 
             <div class="form-check mb-4">
@@ -182,9 +259,9 @@
                     <div class="modal-header bg-navy text-white" style="background: var(--primary-navy);">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-person-fill-add text-success fs-4"></i>
-                            <h5 class="modal-title fw-bold text-success mb-0" id="beneficiaryModalLabel">Domestic
-                                Shipping
-                                - Beneficiary Form</h5>
+                            <h5 class="modal-title fw-bold text-success mb-0" id="beneficiaryModalLabel">
+                                Domestic Shipping - Beneficiary Form
+                            </h5>
                         </div>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
@@ -203,17 +280,17 @@
                                         Full Name *</label>
                                     <div class="row">
                                         <div class="col-md">
-                                            <input type="text" class="form-control border border-success"
+                                            <input type="text" class="form-control border border-success mb-2"
                                                 v-model="formBeneficiary.lastName" id="benFullName"
                                                 placeholder="LAST NAME" required>
                                         </div>
                                         <div class="col-md">
-                                            <input type="text" class="form-control border border-success"
+                                            <input type="text" class="form-control border border-success mb-2"
                                                 v-model="formBeneficiary.firstName" id="benFullName"
                                                 placeholder="FIRST NAME" required>
                                         </div>
                                         <div class="col-md">
-                                            <input type="text" class="form-control border border-success"
+                                            <input type="text" class="form-control border border-success mb-2"
                                                 v-model="formBeneficiary.middleName" id="benFullName"
                                                 placeholder="MIDDLE NAME" required>
                                         </div>
@@ -226,11 +303,11 @@
                                     <select class="form-select border border-success"
                                         v-model="formBeneficiary.relationship" required>
                                         <option value="" disabled selected>Select Relationship</option>
-                                        <option value="Mother">Mother</option>
-                                        <option value="Father">Father</option>
-                                        <option value="Spouse">Spouse</option>
-                                        <option value="Sibling">Sibling</option>
-                                        <option value="Legal Guardian">Legal Guardian</option>
+                                        <option value="MOTHER">Mother</option>
+                                        <option value="FATHER">Father</option>
+                                        <option value="SPOUSE">Spouse</option>
+                                        <option value="SIBLING">Sibling</option>
+                                        <option value="LEGAL GUARDIAN">Legal Guardian</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-4">
@@ -292,30 +369,28 @@
                 </div>
             </div>
         </div>
-        <!--   <div class="d-flex justify-content-end">
-            <button class="btn btn-secondary me-3" @click="submitForEvaluation">Update Profile</button>
-            <button class="btn btn-primary" @click="submitForEvaluation">Submit for Evaluation</button>
-        </div> -->
     </div>
-
-    <!-- Step 2: Evaluation -->
-    <!--  <div class="text-center p-4">
-        <h4 class="fw-bold mb-3">Step 2: Under Evaluation</h4>
-        <div v-if="evaluationStatus === 'pending'" class="d-flex flex-column align-items-center">
-            <div class="spinner-border text-primary mb-3" role="status">
-                <span class="visually-hidden">Loading...</span>
+    <template v-else>
+        <!-- Step 2: Evaluation -->
+        <div class="text-center p-4">
+            <h4 class="fw-bold mb-3">Step 2: Under Evaluation</h4>
+            <div v-if="!enrollmentDetails.application.isApproved" class="d-flex flex-column align-items-center">
+                <div class="spinner-border text-primary mb-3" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="text-muted">Your records are currently being evaluated by the registrar's office. This may
+                    take a few moments. Please wait.</p>
             </div>
-            <p class="text-muted">Your records are currently being evaluated by the registrar's office. This may
-                take a few moments. Please wait.</p>
+            <div v-else class="d-flex flex-column align-items-center">
+                <i data-feather="check-circle" class="text-success mb-3" style="width: 64px; height: 64px;"></i>
+                <h5 class="fw-bold text-success">Evaluation Complete!</h5>
+                <p class="text-muted">You are cleared to proceed with enrollment. Please view your fee assessment
+                    for the upcoming semester.</p>
+                <button class="btn btn-success mt-3" @click="nextStep">Proceed to Assessment</button>
+            </div>
         </div>
-        <div v-if="evaluationStatus === 'approved'" class="d-flex flex-column align-items-center">
-            <i data-feather="check-circle" class="text-success mb-3" style="width: 64px; height: 64px;"></i>
-            <h5 class="fw-bold text-success">Evaluation Complete!</h5>
-            <p class="text-muted">You are cleared to proceed with enrollment. Please view your fee assessment
-                for the upcoming semester.</p>
-            <button class="btn btn-success mt-3" @click="nextStep">Proceed to Assessment</button>
-        </div>
-    </div> -->
+    </template>
+
 
 </template>
 
@@ -338,13 +413,28 @@ export default {
             email: '',
             address: ''
         }
+        if (this.enrollmentDetails) {
+            if (this.enrollmentDetails.studentInfo.insuranceBeneficiary) {
+                const insurance = this.enrollmentDetails.studentInfo.insuranceBeneficiary
+                formBeneficiary.firstName = insurance.first_name
+                formBeneficiary.lastName = insurance.last_name
+                formBeneficiary.middleName = insurance.middle_name
+                formBeneficiary.relationship = insurance.relationship
+                formBeneficiary.birthDate = insurance.birthDate
+                formBeneficiary.birthPlace = insurance.birthPlace
+                formBeneficiary.nationality = insurance.nationality
+                formBeneficiary.contactNumber = insurance.contactNumber
+                formBeneficiary.email = insurance.email
+                formBeneficiary.address = insurance.address
+            }
+        }
+
         return {
-            enrollmentStep: 1,
-            evaluationStatus: 'pending', // can be 'pending' or 'approved'
             formBeneficiary,
             isConfirmed: false
         }
     },
+    emits: ['loading', 'next-step'],
     props: {
         enrollmentDetails: Object,
         shipboardInformation: Object
@@ -380,6 +470,31 @@ export default {
             } finally {
                 this.$emit('loading', false)
             }
+        },
+        async submitForEvaluation() {
+            this.$emit('loading', true)
+            this.errors = []
+            try {
+                const formData = new FormData()
+                formData.append('category', 'SBT ENROLLMENT')
+                const apiService = new OnboardTrainingApi()
+                const response = await apiService.postForm(
+                    formData,
+                    apiLink.onboardApiLink.enrollmentApplication
+                )
+                alertSuccess('Successfully Submitted')
+                window.location.reload()
+            } catch (error) {
+                if (error.response?.status === 422) {
+                    this.errors = error.response?.data?.errors ?? {}
+                }
+                alertError(error.response?.data?.message || error.message)
+            } finally {
+                this.$emit('loading', false)
+            }
+        },
+        beneficiaryName(data) {
+            return data.last_name + ', ' + data.first_name + ' ' + data.middle_name
         }
     }
 }

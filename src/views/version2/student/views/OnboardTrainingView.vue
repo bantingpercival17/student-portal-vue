@@ -37,13 +37,13 @@
                             SRN (MISMO ACCOUNT):
                             <strong id="profile-srn" class="text-dark fw-semibold">{{ shipboardInformation.srn ||
                                 'Not provided'
-                            }}</strong>
+                                }}</strong>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
                             TRB No:
                             <strong id="profile-trb-no" class="text-dark fw-semibold">{{ shipboardInformation.trbNo ?
                                 shipboardInformation.trbNo : 'Not provided'
-                            }}</strong>
+                                }}</strong>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
                             Facebook: <a v-if="shipboardInformation.facebook" class="badge bg-success"
@@ -71,7 +71,7 @@
                     <PreDocumentsCard :documentList="documentList" />
                 </div>
                 <div id="enrollment" v-show="activeOnboardTab === 'enrollment'">
-                    <OnboardEnrollmentCard />
+                    <OnboardEnrollmentCard :enrollmentData="enrollmentDetails" />
                 </div>
                 <div v-show="activeOnboardTab === 'mopm'">
                     <p>MOPM content goes here...</p>
@@ -148,10 +148,12 @@ export default {
                 { id: 'requirements', name: 'Pre-Onboard Requirements', icon: 'clipboard' },
                 { id: 'enrollment', name: 'Enrollment', icon: 'file-plus' },
                 { id: 'mopm', name: 'MOPM', icon: 'calendar' },
-                { id: 'assessment', name: 'Comprehensive Assessment', icon: 'check-square' }
+                { id: 'assessment', name: 'OBT Assessment', icon: 'check-square' },
+                { id: 'so-filing', name: 'SO Filing', icon: 'clipboard' }
             ],
             documentList: [],
             enrollmentDetails: [],
+            mopmDetails: []
         }
     },
     components: {
@@ -196,6 +198,7 @@ export default {
                     }
                 }
                 this.documentList = response.documentList
+                this.enrollmentDetails = response.enrollment
                 this.contentLoading = false
             }
         },
