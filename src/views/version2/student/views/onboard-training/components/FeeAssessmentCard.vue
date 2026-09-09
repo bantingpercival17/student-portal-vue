@@ -38,8 +38,8 @@
                                 <span>
                                     <select v-model="paymentMode" v-on:change="paymentModeChange"
                                         class="form-select form-select-sm border border-success">
-                                        <option value="0">Full-payment</option>
-                                        <option value="1">Installment</option>
+                                        <option value="fullpayment">Full-payment</option>
+                                        <option value="installment">Installment</option>
                                     </select>
                                 </span>
                             </li>
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end mt-4">
-                <button class="btn btn-secondary me-2" @click="enrollmentStep--">Back</button>
+                <button class="btn btn-secondary me-2" @click="prevStep">Back</button>
                 <button v-if="tuitionFeeDetails" class="btn btn-primary" @click="proceedToPayment">Proceed to
                     Payment</button>
             </div>
@@ -99,6 +99,9 @@
     </div>
 </template>
 <script>
+import apiLink from '@/services/api/apiLink'
+import { OnboardTrainingApi } from '@/services/api/onboardTrainingApi'
+import { alertError, alertSuccess } from '@/utils/alert'
 export default {
     name: 'FeeAssessmentCard',
     props: {
@@ -117,17 +120,18 @@ export default {
             },
             tuitionFeeAssessment: [],
             bankProofUploaded: false,
-            ewalletProofUploaded: false
+            ewalletProofUploaded: false,
+            paymentMode: 'fullpayment'
         }
     },
     async mounted() {
-        this.assignedCourses = this.enrollmentDetails.currentEnrollmentAssessment.subjectList
-        this.tuitionFeeDetails = this.enrollmentDetails.currentEnrollmentAssessment.tuitionFee
-        // this.paymentModeChange()
-        this.tuitionFeeAssessment = this.enrollmentDetails.tuitionFeeAssessment
-        if (this.enrollmentDetails.enrollmentApplication.enrollmentApplication.paymentMode !== null) {
+        this.assignedCourses = this.enrollmentDetails?.currentEnrollmentAssessment?.subjectList
+        this.tuitionFeeDetails = this.enrollmentDetails?.currentEnrollmentAssessment?.tuitionFee
+        this.paymentModeChange()
+        this.tuitionFeeAssessment = this.enrollmentDetails?.tuitionFeeAssessment
+        if (this.enrollmentDetails?.application?.paymentMode !== null) {
             this.tuitionFeeValidation = false
-            this.enrollmentStep = 3
+            // this.enrollmentStep = 3
             if (this.tuitionFeeAssessment) {
                 this.tuitionFeeAmounts = {
                     totalTuitionFee: this.tuitionFeeAssessment.total_payment,
@@ -135,10 +139,61 @@ export default {
                     monthlyFee: this.tuitionFeeAssessment.monthly_payment
                 }
             }
-            if (this.enrollmentDetails.enrollmentApplication.paymentOnlineTransactions.length > 0) {
-                this.enrollmentStep = 4
-                this.paymentOnlineTransactions = this.enrollmentDetails.enrollmentApplication.paymentOnlineTransactions
-                // console.log(this.paymentOnlineTransactions)
+            /*  if (this.enrollmentDetails?.application?.paymentOnlineTransactions.length > 0) {
+                 // this.enrollmentStep = 4
+                 this.paymentOnlineTransactions = this.enrollmentDetails.application.paymentOnlineTransactions
+                 // console.log(this.paymentOnlineTransactions)
+             } */
+        }
+    },
+    emits: ['loading', 'next-step', 'prev-step'],
+    methods: {
+        prevStep() {
+            this.$emit('prev-step')
+        },
+        nextStep() {
+            this.$emit('next-step')
+        },
+        paymentModeChange() {
+            console.log(this.paymentMode)
+            if (this.tuitionFeeDetails) {
+                if (this.paymentMode === 'fullpayment') {
+                    this.tuitionFeeAmounts = {
+                        totalTuitionFee: this.tuitionFeeDetails.total_tuition,
+                        uponEnrollmentFee: this.tuitionFeeDetails.total_tuition,
+                        monthlyFee: 0
+                    }
+                    console.log(this.tuitionFeeAmounts)
+                } else {
+                    this.tuitionFeeAmounts = {
+                        totalTuitionFee: this.tuitionFeeDetails.total_tuition_with_interest,
+                        uponEnrollmentFee: this.tuitionFeeDetails.upon_enrollment,
+                        monthlyFee: this.tuitionFeeDetails.monthly
+                    }
+                    console.log(this.tuitionFeeAmounts)
+                }
+            }
+        },
+        async proceedToPayment() {
+            this.$emit('loading', true)
+            this.errors = []
+            try {
+                const formData = new FormData()
+                formData.append('paymentMode', this.paymentMode)
+                const apiService = new OnboardTrainingApi()
+                const response = await apiService.postForm(
+                    formData,
+                    apiLink.onboardApiLink.paymentMode
+                )
+                alertSuccess(response.message)
+                window.location.reload()
+            } catch (error) {
+                if (error.response?.status === 422) {
+                    this.errors = error.response?.data?.errors ?? {}
+                }
+                alertError(error.response?.data?.message || error.message)
+            } finally {
+                this.$emit('loading', false)
             }
         }
     }

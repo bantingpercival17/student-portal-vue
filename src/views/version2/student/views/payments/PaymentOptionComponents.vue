@@ -312,6 +312,7 @@ export default {
                 this.errors = error.response.data.errors || { general: 'An error occurred. Please try again.' }
             }
             this.submitLoader = false
+            window.location.reload()
         },
 
         fileAttachment(event) {

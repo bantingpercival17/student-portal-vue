@@ -22,14 +22,14 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                             <small class="text-muted text-sm">FULL NAME</small> <br>
-                            <label class="text-success fw-bolder">{{ enrollmentDetails.studentInfo.fullname }}</label>
+                            <label class="text-success fw-bolder">{{ enrollmentDetails.studentInfo?.fullname }}</label>
                         </div>
                     </div>
                     <div class="col-12 col-md-3 col-lg-2">
                         <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                             <small class="text-muted text-sm">STUDENT NUMBER</small> <br>
                             <label class="text-success fw-bolder">
-                                {{ enrollmentDetails.studentInfo.student_number }}
+                                {{ enrollmentDetails.studentInfo?.student_number }}
                             </label>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                             <small class="text-muted text-sm">COURSE PROGRAM</small> <br>
                             <label class="text-success fw-bolder">
-                                {{ enrollmentDetails.studentInfo.course }}
+                                {{ enrollmentDetails.studentInfo?.course }}
                             </label>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                         <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                             <small class="text-muted text-sm">INSTITUTION EMAIL</small> <br>
                             <label class="text-success fw-bolder">
-                                {{ enrollmentDetails.studentInfo.email }}
+                                {{ enrollmentDetails.studentInfo?.email }}
                             </label>
                         </div>
                     </div>
@@ -54,20 +54,20 @@
                         <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                             <small class="text-muted text-sm">PHONE NUMBER</small> <br>
                             <label class="text-success fw-bolder">
-                                {{ enrollmentDetails.studentInfo.contactNumber }}
+                                {{ enrollmentDetails.studentInfo?.contactNumber }}
                             </label>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4">
                         <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                             <small class="text-muted text-sm">BIRTHDAY </small> <br>
-                            <label class="text-success fw-bolder">{{ enrollmentDetails.studentInfo.birthdate }}</label>
+                            <label class="text-success fw-bolder">{{ enrollmentDetails.studentInfo?.birthdate }}</label>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                             <small class="text-muted text-sm">BIRTH PLACE</small> <br>
-                            <label class="text-success fw-bolder">{{ enrollmentDetails.studentInfo.birthplace }}</label>
+                            <label class="text-success fw-bolder">{{ enrollmentDetails.studentInfo?.birthplace }}</label>
                         </div>
                     </div>
                 </div>
@@ -75,92 +75,94 @@
         </div>
         <hr>
         <!-- Domestic Shipping Beneficiary Action Alert -->
-        <template v-if="enrollmentDetails.studentInfo.insuranceBeneficiary">
-            <div class="student-beneficiary">
-                <div class="row">
-                    <div class="col-12 col-md-9">
-                        <h5 class="fw-bold text-success mb-0">
-                            <i class="bi bi-person-fill-add text-success fs-4"></i>
-                            Domestic Shipping - Beneficiary Form
-                        </h5>
+        <template v-if="enrollmentDetails.studentInfo">
+            <template v-if="enrollmentDetails.studentInfo.insuranceBeneficiary">
+                <div class="student-beneficiary">
+                    <div class="row">
+                        <div class="col-12 col-md-9">
+                            <h5 class="fw-bold text-success mb-0">
+                                <i class="bi bi-person-fill-add text-success fs-4"></i>
+                                Domestic Shipping - Beneficiary Form
+                            </h5>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <button type="button" class="btn btn-outline-success btn-sm float-end"
+                                data-bs-toggle="modal" data-bs-target="#beneficiaryModal">
+                                <i class="bi bi-person-plus-fill me-1"></i> Update Beneficiary Information
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-12 col-md-3">
-                        <button type="button" class="btn btn-outline-success btn-sm float-end" data-bs-toggle="modal"
-                            data-bs-target="#beneficiaryModal">
-                            <i class="bi bi-person-plus-fill me-1"></i> Update Beneficiary Information
-                        </button>
+                    <div class="mt-4">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                    <small class="text-muted text-sm">FULL NAME</small> <br>
+                                    <label class="text-success fw-bolder">
+                                        {{ beneficiaryName(enrollmentDetails.studentInfo.insuranceBeneficiary) }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                    <small class="text-muted text-sm">RELATIONSHIP</small> <br>
+                                    <label class="text-success fw-bolder">
+                                        {{ enrollmentDetails.studentInfo.insuranceBeneficiary.relationship }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                    <small class="text-muted text-sm">NATIONALITY</small> <br>
+                                    <label class="text-success fw-bolder">
+                                        {{ enrollmentDetails.studentInfo.insuranceBeneficiary.nationality }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                    <small class="text-muted text-sm">BIRTH DATE </small> <br>
+                                    <label class="text-success fw-bolder">
+                                        {{ enrollmentDetails.studentInfo.insuranceBeneficiary.birthDate }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                    <small class="text-muted text-sm">BIRTH PLACE</small> <br>
+                                    <label class="text-success fw-bolder">
+                                        {{ enrollmentDetails.studentInfo.insuranceBeneficiary.birthPlace }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                    <small class="text-muted text-sm">EMAIL</small> <br>
+                                    <label class="text-success fw-bolder">
+                                        {{ enrollmentDetails.studentInfo.insuranceBeneficiary.email }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                    <small class="text-muted text-sm">PHONE NUMBER</small> <br>
+                                    <label class="text-success fw-bolder">
+                                        {{ enrollmentDetails.studentInfo.insuranceBeneficiary.contactNumber }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
+                                    <small class="text-muted text-sm">ADDRESS</small> <br>
+                                    <label class="text-success fw-bolder">
+                                        {{ enrollmentDetails.studentInfo.address }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="mt-4">
-                    <div class="row g-3">
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                                <small class="text-muted text-sm">FULL NAME</small> <br>
-                                <label class="text-success fw-bolder">
-                                    {{ beneficiaryName(enrollmentDetails.studentInfo.insuranceBeneficiary) }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-3">
-                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                                <small class="text-muted text-sm">RELATIONSHIP</small> <br>
-                                <label class="text-success fw-bolder">
-                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.relationship }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-3">
-                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                                <small class="text-muted text-sm">NATIONALITY</small> <br>
-                                <label class="text-success fw-bolder">
-                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.nationality }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                                <small class="text-muted text-sm">BIRTH DATE </small> <br>
-                                <label class="text-success fw-bolder">
-                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.birthDate }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-8">
-                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                                <small class="text-muted text-sm">BIRTH PLACE</small> <br>
-                                <label class="text-success fw-bolder">
-                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.birthPlace }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                                <small class="text-muted text-sm">EMAIL</small> <br>
-                                <label class="text-success fw-bolder">
-                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.email }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-4">
-                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                                <small class="text-muted text-sm">PHONE NUMBER</small> <br>
-                                <label class="text-success fw-bolder">
-                                    {{ enrollmentDetails.studentInfo.insuranceBeneficiary.contactNumber }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-4">
-                            <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
-                                <small class="text-muted text-sm">ADDRESS</small> <br>
-                                <label class="text-success fw-bolder">
-                                    {{ enrollmentDetails.studentInfo.address }}
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr>
+                <hr>
+            </template>
         </template>
         <div v-else>
             <div v-if="shipboardInformation.shipping_company == 'Domestic Shipping' || shipboardInformation.shipping_company == 'DOMESTIC SHIP'"
@@ -199,7 +201,7 @@
                     <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                         <small class="text-muted text-sm">ACADEMIC SCHOOL YEAR</small> <br>
                         <label class="text-success fw-bolder">
-                            {{ enrollmentDetails.studentInfo.previousEnrollment.schoolYear || 'Not provided' }}
+                            {{ enrollmentDetails.studentInfo?.previousEnrollment.schoolYear || 'Not provided' }}
                         </label>
                     </div>
                 </div>
@@ -207,7 +209,7 @@
                     <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                         <small class="text-muted text-sm">CURRICULUM TRACK</small> <br>
                         <label class="text-success fw-bolder">
-                            {{ enrollmentDetails.studentInfo.previousEnrollment.curriculum || 'Not provided' }}
+                            {{ enrollmentDetails.studentInfo?.previousEnrollment.curriculum || 'Not provided' }}
                         </label>
                     </div>
                 </div>
@@ -215,7 +217,7 @@
                     <div class="p-3 bg-light rounded-3 h-100 border border-light-subtle">
                         <small class="text-muted text-sm">YEAR LEVEL</small> <br>
                         <label class="text-success fw-bolder">
-                            {{ convertYearLevel(enrollmentDetails.studentInfo.previousEnrollment.yearLevel)
+                            {{ convertYearLevel(enrollmentDetails.studentInfo?.previousEnrollment.yearLevel)
                                 || 'Not provided' }}
                         </label>
                     </div>
@@ -414,21 +416,22 @@ export default {
             address: ''
         }
         if (this.enrollmentDetails) {
-            if (this.enrollmentDetails.studentInfo.insuranceBeneficiary) {
-                const insurance = this.enrollmentDetails.studentInfo.insuranceBeneficiary
-                formBeneficiary.firstName = insurance.first_name
-                formBeneficiary.lastName = insurance.last_name
-                formBeneficiary.middleName = insurance.middle_name
-                formBeneficiary.relationship = insurance.relationship
-                formBeneficiary.birthDate = insurance.birthDate
-                formBeneficiary.birthPlace = insurance.birthPlace
-                formBeneficiary.nationality = insurance.nationality
-                formBeneficiary.contactNumber = insurance.contactNumber
-                formBeneficiary.email = insurance.email
-                formBeneficiary.address = insurance.address
+            if (this.enrollmentDetails.studentInfo) {
+                if (this.enrollmentDetails.studentInfo.insuranceBeneficiary) {
+                    const insurance = this.enrollmentDetails.studentInfo.insuranceBeneficiary
+                    formBeneficiary.firstName = insurance.first_name
+                    formBeneficiary.lastName = insurance.last_name
+                    formBeneficiary.middleName = insurance.middle_name
+                    formBeneficiary.relationship = insurance.relationship
+                    formBeneficiary.birthDate = insurance.birthDate
+                    formBeneficiary.birthPlace = insurance.birthPlace
+                    formBeneficiary.nationality = insurance.nationality
+                    formBeneficiary.contactNumber = insurance.contactNumber
+                    formBeneficiary.email = insurance.email
+                    formBeneficiary.address = insurance.address
+                }
             }
         }
-
         return {
             formBeneficiary,
             isConfirmed: false

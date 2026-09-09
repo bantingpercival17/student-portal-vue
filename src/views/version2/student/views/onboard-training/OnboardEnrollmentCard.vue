@@ -6,6 +6,7 @@
     <div class="card bg-light border p-3 mb-4">
         <div class="stepper">
             <div v-for="(step, index) in steps" :key="index" class="stepper-item"
+                @click="enrollmentStep > index + 1 && handleCompletedStep(index + 1)"
                 :class="{ 'completed': enrollmentStep > index + 1, 'active': enrollmentStep === index + 1 }">
                 <div class="stepper-circle" style="border-color: #f8fafc;">
                     <i v-if="enrollmentStep > index + 1" data-feather="check"></i>
@@ -23,19 +24,27 @@
         <!-- Step 0: Start -->
         <div v-if="enrollmentStep === 1" class="p-4">
             <ShipboardApplicationCard v-if="!shipboardInformation"
-                :shipping-agencies="shipboardApplication.shippingAgenciesList"
-                :vessel-type="shipboardApplication.vesselType" :document-list="shipboardApplication.documents"
+                :shipping-agencies="shipboardApplication?.shippingAgenciesList"
+                :vessel-type="shipboardApplication?.vesselType" :document-list="shipboardApplication?.documents"
                 @loading="loaderStatus" />
             <ShipboardInformationCard v-else :information="shipboardInformation"
-                :document-list="shipboardApplication.documents" :isDocumentShow="true" />
+                :document-list="shipboardApplication?.documents" :isDocumentShow="true" />
         </div>
-        <div v-if="enrollmentStep === 2" class="p-4">
+        <div v-else-if="enrollmentStep === 2" class="p-4">
             <EnrollmentEvaluationCard :enrollment-details="enrollmentDetails"
                 :shipboard-information="shipboardInformation" @loading="loaderStatus" @next-step="nextStep" />
         </div>
-        <div v-if="enrollmentStep === 3" class="p-4">
-            <FeeAssessmentCard :enrollment-details="enrollmentDetails"
-                :tuition-fee-assessments="tuitionFeeAssessment" />
+        <div v-else-if="enrollmentStep === 3" class="p-4">
+            <FeeAssessmentCard :enrollment-details="enrollmentDetails" :tuition-fee-assessments="tuitionFeeAssessment"
+                @loading="loaderStatus" @next-step="nextStep" @prev-step="prevStep" />
+        </div>
+        <div v-else-if="enrollmentStep === 4" class="p-4">
+            <PaymentTransactionCard :tuitionFeeAssessments="tuitionFeeAssessment"
+                :paymentOnlineTransactions="paymentOnlineTransactions" @loading="loaderStatus" @next-step="nextStep"
+                @prev-step="prevStep" />
+        </div>
+        <div v-else-if="enrollmentStep === 5" class="p-4">
+            <CompleteEnrollmentCard :enrollment="enrollmentDetails" @loading="loaderStatus" />
         </div>
     </div>
     <div v-show="contentLoader" class="page-loader">
@@ -77,10 +86,12 @@ import ShipboardApplicationCard from './components/ShipboardApplicationCard.vue'
 import ShipboardInformationCard from './components/ShipboardInformationCard.vue'
 import EnrollmentEvaluationCard from './components/EnrollmentEvaluationCard.vue'
 import FeeAssessmentCard from './components/FeeAssessmentCard.vue'
+import PaymentTransactionCard from './components/PaymentTransactionCard.vue'
+import CompleteEnrollmentCard from './CompleteEnrollmentCard.vue'
 export default {
     name: 'OnboardEnrollmentCard',
     components: {
-        ShipboardApplicationCard, ShipboardInformationCard, EnrollmentEvaluationCard, FeeAssessmentCard
+        ShipboardApplicationCard, ShipboardInformationCard, EnrollmentEvaluationCard, FeeAssessmentCard, PaymentTransactionCard, CompleteEnrollmentCard
     },
     props: {
         enrollmentData: Object
@@ -92,10 +103,12 @@ export default {
             steps: [{ name: 'Shipboard Application' }, { name: 'Evaluation' }, { name: 'Fee Assessment' }, { name: 'Payment' }, { name: 'Complete' }],
             paymentMode: 0,
             enrollmentStep: 1,
-            enrollmentDetails: [],
-            shipboardApplication: [],
-            shipboardInformation: [],
-            tuitionFeeAssessment: [],
+            activePanel: 1,
+            enrollmentDetails: null,
+            shipboardApplication: null,
+            shipboardInformation: null,
+            tuitionFeeAssessment: null,
+            paymentOnlineTransactions: null,
             errors: []
         }
     },
@@ -104,6 +117,13 @@ export default {
     },
     methods: {
         nextStep() { this.enrollmentStep++ },
+        prevStep() { this.enrollmentStep-- },
+        handleCompletedStep(index) {
+            console.log(index)
+            console.log(this.enrollmentStep)
+            this.activePanel = index
+            this.enrollmentStep = index
+        },
         fetchDataV2() {
             try {
                 if (this.enrollmentData) {
@@ -114,10 +134,31 @@ export default {
                             this.enrollmentStep = 2
                             this.enrollmentDetails = this.enrollmentData
                             if (this.enrollmentData) {
-                                this.tuitionFeeAssessment = this.enrollmentDetails.tuitionFeeAssessment
+                                // ENROLLMENT APPLICATION
+                                if (this.enrollmentData.application) {
+                                    if (this.enrollmentData.application.isApproved) {
+                                        if (this.tuitionFeeAssessment || this.enrollmentData?.application?.paymentMode !== null) {
+                                            this.enrollmentStep = 3
+                                            if (this.enrollmentDetails.tuitionFeeAssessment) {
+                                                this.tuitionFeeAssessment = this.enrollmentDetails.tuitionFeeAssessment
+                                                if (this.enrollmentDetails.paymentOnlineTransactions.length > 0) {
+                                                    this.enrollmentStep = 4
+                                                    this.paymentOnlineTransactions = this.enrollmentDetails.paymentOnlineTransactions
+                                                    if (this.enrollmentDetails.paymentTransactions) {
+                                                        this.enrollmentStep = 5
+                                                    }
+                                                    // console.log(this.paymentOnlineTransactions)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                /*  this.enrollmentStep = 3
+                                  */
                             }
                         }
                     }
+                    this.activePanel = this.enrollmentStep
                     this.contentLoader = false
                 }
             } catch (error) {
@@ -128,11 +169,14 @@ export default {
             }
         },
         loaderStatus(data) {
-            console.log('LOADING EVENT:', data)
             this.contentLoader = data
         }
     },
-
-    updated() { feather.replace() }
+    updated() {
+        this.$nextTick(() => {
+            feather.replace()
+        })
+    }
+    /* updated() { feather.replace() } */
 }
 </script>
