@@ -20,7 +20,7 @@ export default {
             return this.enrollment.currentEnrollmentAssessment.schoolYear
         },
         downloadCertificate() {
-            console.log('donwload')
+            console.log('download')
         }
     }
 }

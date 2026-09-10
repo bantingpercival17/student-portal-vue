@@ -87,7 +87,7 @@ import ShipboardInformationCard from './components/ShipboardInformationCard.vue'
 import EnrollmentEvaluationCard from './components/EnrollmentEvaluationCard.vue'
 import FeeAssessmentCard from './components/FeeAssessmentCard.vue'
 import PaymentTransactionCard from './components/PaymentTransactionCard.vue'
-import CompleteEnrollmentCard from './CompleteEnrollmentCard.vue'
+import CompleteEnrollmentCard from './components/CompleteEnrollmentCard.vue'
 export default {
     name: 'OnboardEnrollmentCard',
     components: {
