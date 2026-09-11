@@ -57,14 +57,16 @@
                 </div>
             </div>
         </div>
-        <ul class="nav nav-tabs mb-4 tabs-container">
-            <li class="nav-item" v-for="tab in onboardTabs" :key="tab.id">
-                <a class="nav-link d-flex align-items-center" :class="{ active: activeOnboardTab === tab.id }" href="#"
-                    @click.prevent="activeOnboardTab = tab.id">
-                    <i :data-feather="tab.icon" class="me-2"></i>{{ tab.name }}
-                </a>
-            </li>
-        </ul>
+        <div class="nav-scroller mt-2">
+            <ul class="nav nav-tabs mb-4 tabs-container">
+                <li class="nav-item" v-for="tab in onboardTabs" :key="tab.id">
+                    <a class="nav-link d-flex align-items-center" :class="{ active: activeOnboardTab === tab.id }"
+                        href="#" @click.prevent="activeOnboardTab = tab.id">
+                        <i :data-feather="tab.icon" class="me-2"></i>{{ tab.name }}
+                    </a>
+                </li>
+            </ul>
+        </div>
         <div class="card border border-light-subtle rounded-4 p-4 shadow-sm bg-white">
             <div class="tab-content">
                 <div v-show="activeOnboardTab === 'requirements'">
@@ -74,14 +76,14 @@
                     <OnboardEnrollmentCard :enrollmentData="enrollmentDetails" />
                 </div>
                 <div v-show="activeOnboardTab === 'mopm'">
-                    <p>MOPM content goes here...</p>
+                    <MonthlyMonitoringCard :monthlyMonitoring="monthlyMonitoring"
+                        :vesselApplication="enrollmentDetails?.shipboardApplication" />
                 </div>
                 <div v-show="activeOnboardTab === 'assessment'">
                     <p>Comprehensive Assessment content goes here...</p>
                 </div>
             </div>
         </div>
-
     </div>
     <div v-else class="d-flex justify-content-center align-items-center" style="height: 300px;">
         <div class="spinner-border text-primary" role="status">
@@ -135,6 +137,7 @@ import EditProfileModal from './onboard-training/EditProfileModal.vue'
 import PreDocumentsCard from './onboard-training/PreDocumentsCard.vue'
 import { alertSuccess } from '@/utils/alert.js'
 import OnboardEnrollmentCard from './onboard-training/OnboardEnrollmentCard.vue'
+import MonthlyMonitoringCard from './onboard-training/MonthlyMonitoringCard.vue'
 export default {
     name: 'OnboardTrainingView',
     data() {
@@ -153,11 +156,11 @@ export default {
             ],
             documentList: [],
             enrollmentDetails: [],
-            mopmDetails: []
+            monthlyMonitoring: []
         }
     },
     components: {
-        EditProfileModal, PreDocumentsCard, OnboardEnrollmentCard
+        EditProfileModal, PreDocumentsCard, OnboardEnrollmentCard, MonthlyMonitoringCard
     },
     computed: {
         ...mapGetters('auth', {
@@ -179,7 +182,24 @@ export default {
             const hash = window.location.hash
             const parts = hash.split('#')
             if (parts.length > 2) {
-                this.activeOnboardTab = parts[2] // "enrollment"
+                if (parts[2] === 'enrollment') {
+                    this.activeOnboardTab = 'enrollment'
+                }
+                if (parts[2] === 'enrollment') {
+                    this.activeOnboardTab = 'mopm'
+                }
+                switch (parts[2]) {
+                    case 'enrollment':
+                        this.activeOnboardTab = 'enrollment'
+
+                        break
+                    case 'monthly-monitoring':
+                        this.activeOnboardTab = 'mopm'
+                        break
+                    default:
+                        break
+                }
+                console.log(this.activeOnboardTab)
             }
         },
         async fetchData() {
@@ -199,6 +219,7 @@ export default {
                 }
                 this.documentList = response.documentList
                 this.enrollmentDetails = response.enrollment
+                this.monthlyMonitoring = response.monthlyMonitoring
                 this.contentLoading = false
             }
         },

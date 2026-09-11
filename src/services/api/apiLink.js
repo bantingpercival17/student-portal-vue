@@ -6,8 +6,11 @@ const onboardApiLink = {
     changeUploadDocument: 'student/v2/onboard-training/change-uploaded-documents',
     studentInsurance: 'student/v2/onboard-training/insurance', // Store Insurance Details
     enrollmentApplication: 'student/v2/enrollment-application',
-    paymentMode: 'student/v2/tuition-fee-payment-mode'
-
+    paymentMode: 'student/v2/tuition-fee-payment-mode',
+    updateVesselDetails: 'student/v2/update-vessel-details',
+    removeVesselDetails: 'student/v2/remove-vessel-details',
+    // MOPM LINK
+    createMonthlyReport: 'student/v2/create-monthly-report'
 }
 const apiLink = { onboardApiLink }
 export default apiLink
