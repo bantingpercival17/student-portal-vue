@@ -140,11 +140,6 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="font-monospace small bg-light px-2 py-1 rounded text-dark border">
-                                            {{ report.trb_code || '1.1 / 1.2' }}
-                                        </span>
-                                    </td>
-                                    <!-- <td>
                                         <span class="badge rounded-pill px-2.5 py-1"
                                             :class="report.is_approved === 1 ? 'bg-success-subtle text-success border border-success-subtle' : 'bg-warning-subtle text-warning-emphasis border border-warning-subtle'">
                                             <i class="bi me-1"
@@ -152,11 +147,11 @@
                                             {{ report.is_approved === null ? 'DRAFT' :
                                                 (report.is_approved ? 'APPROVED DOCUMENTS' : 'PENDING') }}
                                         </span>
-                                    </td> -->
+                                    </td>
                                     <td>
                                         <span class="badge"
-                                            :class="report.signedByMaster ? 'bg-primary-subtle text-primary' : 'bg-secondary-subtle text-secondary'">
-                                            {{ report.signedByMaster ? 'Yes (Signed)' : 'Pending' }}
+                                            :class="report.have_signature ? 'bg-primary-subtle text-primary' : 'bg-secondary-subtle text-secondary'">
+                                            {{ report.have_signature ? 'Yes (Signed)' : 'Pending' }}
                                         </span>
                                     </td>
                                     <td class="text-end pe-3">
@@ -169,8 +164,8 @@
                                                 title="Export PDF">
                                                 <i class="bi bi-file-earmark-pdf-fill me-1"></i> PDF
                                             </button>
-                                            <button class="btn btn-outline-danger px-2" @click="removeReport(report.id)"
-                                                title="Delete">
+                                            <button class="btn btn-outline-danger px-2"
+                                                @click="removeMonthlyReport(report.id)" title="Delete">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </div>
@@ -190,6 +185,8 @@
     <UpdateVesselModal v-if="modalUpdateVessel" v-model="modalUpdateVessel" :vessel-details="vesselApplication"
         :active-vessel="activeVessel" />
     <CreateMonthlyReportModal v-if="modalCreateReport" v-model="modalCreateReport" :vessel-details="activeVessel" />
+    <ViewMonthlyReportModal v-if="modalViewMonthlyReport" v-model="modalViewMonthlyReport"
+        :vessel-details="activeVessel" />
 </template>
 <script>
 import AddVesselModal from './mopm-components/AddVesselModal.vue'
@@ -199,6 +196,7 @@ import apiLink from '@/services/api/apiLink'
 import { OnboardTrainingApi } from '@/services/api/onboardTrainingApi'
 import { alertError, alertSuccess } from '@/utils/alert'
 import CreateMonthlyReportModal from './mopm-components/CreateMonthlyReportModal.vue'
+import ViewMonthlyReportModal from './mopm-components/ViewMonthlyReportModal.vue'
 export default {
     name: 'MonthlyMonitoringCard',
     props: {
@@ -206,7 +204,7 @@ export default {
         vesselApplication: Object
     },
     components: {
-        AddVesselModal, UpdateVesselModal, CreateMonthlyReportModal
+        AddVesselModal, UpdateVesselModal, CreateMonthlyReportModal, ViewMonthlyReportModal
     },
     data() {
         return {
@@ -214,6 +212,7 @@ export default {
             modalAddVessel: false,
             modalUpdateVessel: false,
             modalCreateReport: false,
+            modalViewMonthlyReport: false,
             selectVessel: null, // this.monthlyMonitoring.seaServiceList.length > 0 ? this.monthlyMonitoring?.seaServiceList[0].id : 0,
             activeVessel: null,
             seaServiceList: null
@@ -241,6 +240,12 @@ export default {
             if (data === 'create-monthly-report') {
                 this.modalCreateReport = true
             }
+            if (data === 'view-monthly-report') {
+                this.modalViewMonthlyReport = true
+            }
+        },
+        viewReportDetails(data) {
+            this.openModal('view-monthly-report')
         },
         changeVessel(data) {
             console.log(data)
@@ -305,6 +310,13 @@ export default {
                 apiLink.onboardApiLink.removeVesselDetails,
                 { vessel: data },
                 'The vessel information has been removed.'
+            )
+        },
+        removeMonthlyReport(data) {
+            this.confirmAndRemove(
+                apiLink.onboardApiLink.removeMonthlyReport,
+                { report: data },
+                'The Month Report has been removed.'
             )
         }
     }
