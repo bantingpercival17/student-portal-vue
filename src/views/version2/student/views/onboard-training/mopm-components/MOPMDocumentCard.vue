@@ -44,25 +44,49 @@
             </li>
         </ul>
     </div>
+
     <div v-if="showModal" class="modal fade show d-block" tabindex="-1" @click.self="closeModal"
         style="background-color: rgba(0,0,0,0.5);">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
+
                 <div class="modal-header">
-                    <h5 class="modal-title">DOCUMENTARY REQUIREMENTS</h5>
+                    <h5 class="modal-title">
+                        DOCUMENTARY REQUIREMENTS
+                    </h5>
+
                     <button type="button" class="btn-close" @click="closeModal"></button>
                 </div>
+
                 <div class="modal-body">
+
                     <template v-if="!modalDetails.isLoading">
+
+                        <!-- Download all files -->
                         <button class="btn btn-outline-primary btn-sm w-100 mb-3"
                             @click="downloadFile(modalDetails.link)">
-                            Download File
+                            Download Files
                         </button>
+
+                        <!-- Display PDF -->
                         <iframe v-if="modalDetails.fileType == 'pdf'" :src="modalDetails.link" width="100%"
                             height="700px"></iframe>
-                        <img v-else-if="['jpg', 'jpeg', 'png'].includes(modalDetails.fileType)" :src="modalDetails.link"
-                            alt="Document Image" class="img-fluid">
+
+                        <!-- Display multiple images -->
+                        <div v-else-if="['jpg', 'jpeg', 'png'].includes(modalDetails.fileType)">
+                            <div v-for="(image, index) in modalDetails.links" :key="index" class="mb-4">
+                                <p class="fw-bold text-muted">
+                                    Image {{ index + 1 }}
+                                </p>
+
+                                <img :src="image" alt="Document Image" class="img-fluid rounded border"
+                                    style="max-height: 700px; width: 100%; object-fit: contain;">
+                            </div>
+                        </div>
+
                     </template>
+
+                    <!-- Loading -->
                     <template v-else>
                         <div class="page-loader text-center">
                             <div class="card">
@@ -72,10 +96,15 @@
                             </div>
                         </div>
                     </template>
+
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" @click="closeModal">Close</button>
+                    <button type="button" class="btn btn-outline-secondary" @click="closeModal">
+                        Close
+                    </button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -171,7 +200,7 @@ export default {
             }
             return 'Attach File'
         },
-        openModal(document) {
+        /* openModal(document) {
             this.showModal = true
             const findDocument = this.documentList.find(data => data.document_id === document)
             console.log(findDocument.link)
@@ -184,6 +213,48 @@ export default {
                     : ''
             }
             console.log(this.modalDetails)
+        }, */
+        openModal(file) {
+            this.modalDetails.isLoading = true
+            this.showModal = true
+
+            try {
+                let links = file.link
+
+                // Convert JSON string into an array
+                if (typeof links === 'string') {
+                    links = JSON.parse(links)
+                }
+
+                // Ensure it is an array
+                if (!Array.isArray(links)) {
+                    links = [links]
+                }
+
+                this.modalDetails.links = links.filter(
+                    link => typeof link === 'string' && link.trim() !== ''
+                )
+
+                this.modalDetails.link = this.modalDetails.links[0] || ''
+
+                // Detect file type using the first file
+                const firstFile = this.modalDetails.link
+                    .split('?')[0]
+                    .split('/')
+                    .pop()
+
+                this.modalDetails.fileType = firstFile
+                    ? firstFile.split('.').pop().toLowerCase()
+                    : ''
+            } catch (error) {
+                console.error('Error parsing file links:', error)
+
+                this.modalDetails.links = []
+                this.modalDetails.link = ''
+                this.modalDetails.fileType = ''
+            } finally {
+                this.modalDetails.isLoading = false
+            }
         },
         closeModal() {
             this.showModal = false
