@@ -51,10 +51,10 @@
                             <select v-model="formData.deployment"
                                 class="form-select form-select-sm border border-success" required>
                                 <option value="INTERNATIONAL SHIPPING">
-                                    International Shipping
+                                    INTERNATIONAL SHIPPING
                                 </option>
                                 <option value="DOMESTIC SHIPPING">
-                                    Domestic Shipping
+                                    DOMESTIC SHIPPING
                                 </option>
                             </select>
                             <span class="badge bg-danger mt-2" v-if="errors['deployment']">{{

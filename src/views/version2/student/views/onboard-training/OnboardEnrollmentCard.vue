@@ -141,7 +141,7 @@ export default {
                                             this.enrollmentStep = 3
                                             if (this.enrollmentDetails.tuitionFeeAssessment) {
                                                 this.tuitionFeeAssessment = this.enrollmentDetails.tuitionFeeAssessment
-                                                if (this.enrollmentDetails.paymentOnlineTransactions.length > 0) {
+                                                if (this.enrollmentDetails.paymentOnlineTransactions.length > 0 || this.enrollmentDetails.paymentTransactions) {
                                                     this.enrollmentStep = 4
                                                     this.paymentOnlineTransactions = this.enrollmentDetails.paymentOnlineTransactions
                                                     if (this.enrollmentDetails.paymentTransactions) {
