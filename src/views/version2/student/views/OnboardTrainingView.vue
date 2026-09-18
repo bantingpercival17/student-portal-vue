@@ -7,7 +7,7 @@
                         <div class="">
                             <h3 id="profile-full-name" class="h4 fw-bolder text-dark mt-1 mb-0">{{ userName }}</h3>
                             <p id="profile-course-title" class="text-warning fw-bold mb-3" style="font-size: 13px;">
-                                {{ shipboardInformation.course || 'Course not provided' }}
+                                {{ shipboardInformation?.course || 'Course not provided' }}
                             </p>
                         </div>
                         <a class="btn btn-outline-primary px-1 py-0" style="font-size:16px;" href="#"
@@ -25,29 +25,29 @@
                         <div class="col-12 col-sm-6 col-md-4">
                             Phone:
                             <strong id="profile-phone" class="text-dark fw-semibold">
-                                {{ shipboardInformation.contactNumber || 'Not provided' }}
+                                {{ shipboardInformation?.contactNumber || 'Not provided' }}
                             </strong>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
                             Email: <strong id="profile-email" class="text-dark fw-semibold">
-                                {{ shipboardInformation.email || 'Not provided' }}
+                                {{ shipboardInformation?.email || 'Not provided' }}
                             </strong>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
                             SRN (MISMO ACCOUNT):
-                            <strong id="profile-srn" class="text-dark fw-semibold">{{ shipboardInformation.srn ||
+                            <strong id="profile-srn" class="text-dark fw-semibold">{{ shipboardInformation?.srn ||
                                 'Not provided'
                                 }}</strong>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
                             TRB No:
-                            <strong id="profile-trb-no" class="text-dark fw-semibold">{{ shipboardInformation.trbNo ?
-                                shipboardInformation.trbNo : 'Not provided'
+                            <strong id="profile-trb-no" class="text-dark fw-semibold">{{ shipboardInformation?.trbNo ?
+                                shipboardInformation?.trbNo : 'Not provided'
                                 }}</strong>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
-                            Facebook: <a v-if="shipboardInformation.facebook" class="badge bg-success"
-                                :href="shipboardInformation.facebook" target="_blank">
+                            Facebook: <a v-if="shipboardInformation?.facebook" class="badge bg-success"
+                                :href="shipboardInformation?.facebook" target="_blank">
                                 <strong>Open Facebook</strong>
                             </a>
 
@@ -61,13 +61,13 @@
             <ul class="nav nav-tabs mb-4 tabs-container">
                 <li class="nav-item" v-for="tab in onboardTabs" :key="tab.id">
                     <a class="nav-link d-flex align-items-center" :class="{ active: activeOnboardTab === tab.id }"
-                        href="#" @click.prevent="activeOnboardTab = tab.id">
+                        href="#" @click.prevent="changeTab(tab.id)">
                         <i :data-feather="tab.icon" class="me-2"></i>{{ tab.name }}
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="card border border-light-subtle rounded-4 p-4 shadow-sm bg-white">
+        <div class="card border border-light-subtle rounded-4 p-2 shadow-sm bg-white">
             <div class="tab-content">
                 <div v-show="activeOnboardTab === 'requirements'">
                     <PreDocumentsCard :documentList="documentList" />
@@ -138,6 +138,7 @@ import PreDocumentsCard from './onboard-training/PreDocumentsCard.vue'
 import { alertSuccess } from '@/utils/alert.js'
 import OnboardEnrollmentCard from './onboard-training/OnboardEnrollmentCard.vue'
 import MonthlyMonitoringCard from './onboard-training/MonthlyMonitoringCard.vue'
+import { setCache, getCache } from '@/utils/cache.js'
 export default {
     name: 'OnboardTrainingView',
     data() {
@@ -173,11 +174,19 @@ export default {
         await this.fetchData()
         feather.replace()
         this.enrollmentTab()
+        if (getCache('activeOnboardTab')) {
+            const cache = getCache('activeOnboardTab')
+            this.activeOnboardTab = cache.tab
+        }
     },
     updated() {
         feather.replace() // ensures icons update after DOM changes
     },
     methods: {
+        changeTab(data) {
+            this.activeOnboardTab = data
+            setCache('activeOnboardTab', { tab: this.activeOnboardTab }, (60 * 1500))
+        },
         enrollmentTab() {
             const hash = window.location.hash
             const parts = hash.split('#')

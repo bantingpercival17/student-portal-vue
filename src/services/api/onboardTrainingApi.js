@@ -48,12 +48,12 @@ export class OnboardTrainingApi {
         try {
             const { data } = await this.api.post(
                 api,
+                payload,
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     }
-                },
-                payload
+                }
             )
             return data?.data ?? []
         } catch (error) {

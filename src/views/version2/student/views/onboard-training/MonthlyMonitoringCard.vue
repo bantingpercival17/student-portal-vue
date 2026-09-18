@@ -34,7 +34,7 @@
                 </div>
             </div>
             <!-- Active Vessel Details Header Panel -->
-            <div class="card-body p-4 border-bottom bg-light-subtle" v-if="activeVessel">
+            <div class="card-body p-0 pt-4 border-bottom bg-light-subtle" v-if="activeVessel">
                 <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
                     <div>
                         <h4 class="h5 fw-bold text-dark mb-1 d-flex align-items-center gap-2">
@@ -186,7 +186,7 @@
         :active-vessel="activeVessel" />
     <CreateMonthlyReportModal v-if="modalCreateReport" v-model="modalCreateReport" :vessel-details="activeVessel" />
     <ViewMonthlyReportModal v-if="modalViewMonthlyReport" v-model="modalViewMonthlyReport"
-        :vessel-details="activeVessel" />
+        :monthReport="seletedMonthlyReport" :vessel-details="activeVessel" />
 </template>
 <script>
 import AddVesselModal from './mopm-components/AddVesselModal.vue'
@@ -197,6 +197,7 @@ import { OnboardTrainingApi } from '@/services/api/onboardTrainingApi'
 import { alertError, alertSuccess } from '@/utils/alert'
 import CreateMonthlyReportModal from './mopm-components/CreateMonthlyReportModal.vue'
 import ViewMonthlyReportModal from './mopm-components/ViewMonthlyReportModal.vue'
+import { setCache, getCache, pushCache } from '@/utils/cache.js'
 export default {
     name: 'MonthlyMonitoringCard',
     props: {
@@ -214,6 +215,7 @@ export default {
             modalCreateReport: false,
             modalViewMonthlyReport: false,
             selectVessel: null, // this.monthlyMonitoring.seaServiceList.length > 0 ? this.monthlyMonitoring?.seaServiceList[0].id : 0,
+            seletedMonthlyReport: null,
             activeVessel: null,
             seaServiceList: null
         }
@@ -226,6 +228,18 @@ export default {
                 this.activeVessel = this.seaServiceList.find(
                     e => e.id === this.selectVessel
                 )
+            }
+            const cache = getCache('activeOnboardTab')
+            if (cache) {
+                if (!cache?.vesselID) {
+                    pushCache('activeOnboardTab', {
+                        vesselID: this.selectVessel,
+                        vesselData: this.activeVessel
+                    })
+                }
+            } else {
+                this.selectVessel = cache?.vesselID
+                this.activeVessel = cache?.vesselData
             }
         }
     },
@@ -246,6 +260,9 @@ export default {
         },
         viewReportDetails(data) {
             this.openModal('view-monthly-report')
+            console.log(data)
+            this.seletedMonthlyReport = data
+            this.recentOpenReport()
         },
         changeVessel(data) {
             console.log(data)
@@ -253,7 +270,10 @@ export default {
             this.activeVessel = this.seaServiceList.find(
                 e => e.id === this.selectVessel
             )
-            console.log(this.activeVessel)
+            pushCache('activeOnboardTab', {
+                vesselID: data,
+                vesselData: this.activeVessel
+            })
         },
         convertDate(date) {
             date = new Date(date)
@@ -304,6 +324,15 @@ export default {
                     }
                 }
             })
+        },
+        recentOpenReport() {
+            const cache = getCache('activeOnboardTab')
+            if (cache.vesselID) {
+                const data = {
+                    report: this.seletedMonthlyReport
+                }
+                pushCache('activeOnboardTab', data, 60000)
+            }
         },
         removeVessel(data) {
             this.confirmAndRemove(

@@ -11,7 +11,9 @@ const onboardApiLink = {
     removeVesselDetails: 'student/v2/remove-vessel-details',
     // MOPM LINK
     createMonthlyReport: 'student/v2/create-monthly-report',
-    removeMonthlyReport: 'student/v2/remove-monthly-report'
+    removeMonthlyReport: 'student/v2/remove-monthly-report',
+    updateMonthlyReport: 'student/v2/update-monthly-report',
+    uploadFileMonthlyReport: 'student/v2/upload-file-monthly-report'
 }
 const apiLink = { onboardApiLink }
 export default apiLink
