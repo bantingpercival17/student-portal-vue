@@ -24,7 +24,7 @@
                             Upload File <input type="file" @change="handleFileUpload($event, file.document_id)" hidden
                                 accept=".png,.jpg,.pdf">
                         </label>
-                        <span class="btn btn-sm btn-success ms-2" @click="openModal(file.document_id)">View</span>
+                        <!--  <span class="btn btn-sm btn-success ms-2" @click="openModal(file.document_id)">View</span> -->
                     </div>
                     <div v-else-if="file.status == null" class="">
                         <span class="btn btn-sm btn-success me-2" @click="openModal(file.document_id)">View</span>
@@ -33,7 +33,8 @@
                                 accept=".png,.jpg,.pdf">
                         </label>
                     </div>
-                    <span v-else class="small text-muted">{{ file.file }}</span>
+                    <span v-else class="small text-muted"><span class="btn btn-sm btn-success me-2"
+                            @click="openModal(file.document_id)">View</span></span>
                 </div>
             </li>
         </ul>
@@ -140,7 +141,7 @@ export default {
         openModal(document) {
             this.showModal = true
             const findDocument = this.documentList.find(data => data.document_id === document)
-            console.log(findDocument.link)
+            console.log(findDocument)
             this.modalDetails = {
                 isLoading: false,
                 link: findDocument?.link || '',

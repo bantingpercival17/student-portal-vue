@@ -18,16 +18,14 @@
                     <template v-if="!file.loadingStatus">
                         <div v-if="file.link.length > 0">
                             <template v-if="file.status === 1">
-                                <span class="btn btn-sm btn-success me-2"
-                                    @click="openModal(file.document_id)">View</span>
+                                <span class="btn btn-sm btn-success me-2" @click="openDocument(file)">View</span>
                             </template>
                             <template v-else>
                                 <label class="btn btn-sm btn-outline-info">
                                     Change <input type="file" @change="handleFileUpload($event, file)" hidden
                                         accept=".png,.jpg" multiple>
                                 </label>
-                                <span class="btn btn-sm btn-success ms-2"
-                                    @click="openModal(file.document_id)">View</span>
+                                <span class="btn btn-sm btn-success ms-2" @click="openDocument(file)">View</span>
                             </template>
                         </div>
                         <template v-else>
@@ -47,9 +45,10 @@
 
     <div v-if="showModal" class="modal fade show d-block" tabindex="-1" @click.self="closeModal"
         style="background-color: rgba(0,0,0,0.5);">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
 
+                <!-- HEADER -->
                 <div class="modal-header">
                     <h5 class="modal-title">
                         DOCUMENTARY REQUIREMENTS
@@ -58,51 +57,69 @@
                     <button type="button" class="btn-close" @click="closeModal"></button>
                 </div>
 
+                <!-- BODY -->
                 <div class="modal-body">
 
-                    <template v-if="!modalDetails.isLoading">
-
-                        <!-- Download all files -->
-                        <button class="btn btn-outline-primary btn-sm w-100 mb-3"
-                            @click="downloadFile(modalDetails.link)">
-                            Download Files
-                        </button>
-
-                        <!-- Display PDF -->
-                        <iframe v-if="modalDetails.fileType == 'pdf'" :src="modalDetails.link" width="100%"
-                            height="700px"></iframe>
-
-                        <!-- Display multiple images -->
-                        <div v-else-if="['jpg', 'jpeg', 'png'].includes(modalDetails.fileType)">
-                            <div v-for="(image, index) in modalDetails.links" :key="index" class="mb-4">
-                                <p class="fw-bold text-muted">
-                                    Image {{ index + 1 }}
-                                </p>
-
-                                <img :src="image" alt="Document Image" class="img-fluid rounded border"
-                                    style="max-height: 700px; width: 100%; object-fit: contain;">
-                            </div>
+                    <!-- LOADING -->
+                    <div v-if="modalDetails.isLoading" class="text-center py-5">
+                        <div class="enrollment-loader"></div>
+                        <p class="mt-3">
+                            Loading files...
+                        </p>
+                    </div>
+                    <!-- CAROUSEL -->
+                    <div v-else-if="modalDetails.links.length > 0" class="document-carousel">
+                        <!-- IMAGE -->
+                        <div class="text-center">
+                            <img :src="modalDetails.links[currentFileIndex]" class="img-fluid rounded border"
+                                alt="Document" style="
+                                max-height: 650px;
+                                width: 100%;
+                                object-fit: contain;
+                            ">
                         </div>
-
-                    </template>
-
-                    <!-- Loading -->
-                    <template v-else>
-                        <div class="page-loader text-center">
-                            <div class="card">
-                                <div class="card-body align-center text-center">
-                                    <div class="enrollment-loader"></div>
-                                </div>
-                            </div>
+                        <!-- CONTROLS -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <!-- PREVIOUS -->
+                            <button class="btn btn-outline-primary" @click="previousFile"
+                                :disabled="currentFileIndex === 0">
+                                <i class="bi bi-chevron-left"></i>
+                                Previous
+                            </button>
+                            <!-- COUNTER -->
+                            <span class="fw-bold text-muted">
+                                {{ currentFileIndex + 1 }}
+                                /
+                                {{ modalDetails.links.length }}
+                            </span>
+                            <!-- NEXT -->
+                            <button class="btn btn-outline-primary" @click="nextFile" :disabled="currentFileIndex ===
+                                modalDetails.links.length - 1
+                                ">
+                                Next
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
                         </div>
-                    </template>
+                        <!-- FILE NAME -->
+                        <div class="text-center mt-2">
+                            <small class="text-muted">
+                                {{ getFileName(modalDetails.links[currentFileIndex]) }}
+                            </small>
+                        </div>
+                    </div>
+                    <!-- NO FILE -->
+                    <div v-else class="text-center py-5 text-muted">
+                        No files available.
+                    </div>
 
                 </div>
-
+                <!-- FOOTER -->
                 <div class="modal-footer">
+
                     <button type="button" class="btn btn-outline-secondary" @click="closeModal">
                         Close
                     </button>
+
                 </div>
 
             </div>
@@ -118,18 +135,36 @@ export default {
     data() {
         return {
             showModal: false,
+            currentFileIndex: 0,
             modalDetails: {
-                isLoading: true,
-                link: null,
-                name: null
+                isLoading: false,
+                links: []
             }
         }
     },
     props: {
         documentList: Object,
-        apiService: Function
+        apiService: Object
     },
     methods: {
+        previousFile() {
+            if (this.currentFileIndex > 0) {
+                this.currentFileIndex--
+            }
+        },
+        nextFile() {
+            if (
+                this.currentFileIndex <
+                this.modalDetails.links.length - 1
+            ) {
+                this.currentFileIndex++
+            }
+        },
+        getFileName(url) {
+            return decodeURIComponent(
+                url.split('/').pop()
+            )
+        },
         async handleFileUpload(event, document) {
             const files = event.target.files
             if (!files || files.length === 0) return
@@ -200,58 +235,35 @@ export default {
             }
             return 'Attach File'
         },
-        /* openModal(document) {
+        async openDocument(document) {
             this.showModal = true
-            const findDocument = this.documentList.find(data => data.document_id === document)
-            console.log(findDocument.link)
-            this.modalDetails = {
-                isLoading: false,
-                link: findDocument?.link || '',
-                name: findDocument?.documentName,
-                fileType: findDocument?.link
-                    ? findDocument.link.split('.').pop().toLowerCase()
-                    : ''
-            }
-            console.log(this.modalDetails)
-        }, */
-        openModal(file) {
             this.modalDetails.isLoading = true
-            this.showModal = true
-
+            this.currentFileIndex = 0
             try {
-                let links = file.link
-
-                // Convert JSON string into an array
+                let links = document.link
+                const links1 = JSON.parse(links)
+                console.log(links1)
+                // If Laravel returned JSON as string
                 if (typeof links === 'string') {
                     links = JSON.parse(links)
                 }
-
-                // Ensure it is an array
+                // Make sure it is an array
                 if (!Array.isArray(links)) {
                     links = [links]
                 }
-
                 this.modalDetails.links = links.filter(
-                    link => typeof link === 'string' && link.trim() !== ''
+                    link => link && link.trim() !== ''
                 )
-
-                this.modalDetails.link = this.modalDetails.links[0] || ''
-
-                // Detect file type using the first file
-                const firstFile = this.modalDetails.link
-                    .split('?')[0]
-                    .split('/')
-                    .pop()
-
-                this.modalDetails.fileType = firstFile
-                    ? firstFile.split('.').pop().toLowerCase()
-                    : ''
+                console.log(
+                    'Files:',
+                    this.modalDetails.links
+                )
             } catch (error) {
-                console.error('Error parsing file links:', error)
-
+                console.error(
+                    'Error loading files:',
+                    error
+                )
                 this.modalDetails.links = []
-                this.modalDetails.link = ''
-                this.modalDetails.fileType = ''
             } finally {
                 this.modalDetails.isLoading = false
             }

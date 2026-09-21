@@ -160,7 +160,7 @@
                                                 @click="viewReportDetails(report)" title="View Full Report">
                                                 <i class="bi bi-eye-fill me-1"></i> View
                                             </button>
-                                            <button class="btn btn-outline-primary px-3" @click="triggerPdfView(report)"
+                                            <button class="btn btn-outline-primary px-3" @click="viewReportPDF(report)"
                                                 title="Export PDF">
                                                 <i class="bi bi-file-earmark-pdf-fill me-1"></i> PDF
                                             </button>
@@ -187,6 +187,9 @@
     <CreateMonthlyReportModal v-if="modalCreateReport" v-model="modalCreateReport" :vessel-details="activeVessel" />
     <ViewMonthlyReportModal v-if="modalViewMonthlyReport" v-model="modalViewMonthlyReport"
         :monthReport="seletedMonthlyReport" :vessel-details="activeVessel" />
+    <MonthlyReportPDFModal v-if="modalMonthlyReportPDF" v-model="modalMonthlyReportPDF"
+        :monthReport="seletedMonthlyReport" :vessel-details="activeVessel" />
+
 </template>
 <script>
 import AddVesselModal from './mopm-components/AddVesselModal.vue'
@@ -198,6 +201,7 @@ import { alertError, alertSuccess } from '@/utils/alert'
 import CreateMonthlyReportModal from './mopm-components/CreateMonthlyReportModal.vue'
 import ViewMonthlyReportModal from './mopm-components/ViewMonthlyReportModal.vue'
 import { setCache, getCache, pushCache } from '@/utils/cache.js'
+import MonthlyReportPDFModal from './mopm-components/MonthlyReportPDFModal.vue'
 export default {
     name: 'MonthlyMonitoringCard',
     props: {
@@ -205,7 +209,7 @@ export default {
         vesselApplication: Object
     },
     components: {
-        AddVesselModal, UpdateVesselModal, CreateMonthlyReportModal, ViewMonthlyReportModal
+        AddVesselModal, UpdateVesselModal, CreateMonthlyReportModal, ViewMonthlyReportModal, MonthlyReportPDFModal
     },
     data() {
         return {
@@ -214,7 +218,8 @@ export default {
             modalUpdateVessel: false,
             modalCreateReport: false,
             modalViewMonthlyReport: false,
-            selectVessel: null, // this.monthlyMonitoring.seaServiceList.length > 0 ? this.monthlyMonitoring?.seaServiceList[0].id : 0,
+            modalMonthlyReportPDF: false,
+            selectVessel: null,
             seletedMonthlyReport: null,
             activeVessel: null,
             seaServiceList: null
@@ -237,9 +242,13 @@ export default {
                         vesselData: this.activeVessel
                     })
                 }
+                else {
+                    this.selectVessel = cache?.vesselID
+                    this.activeVessel = cache?.vesselData
+                }
+                console.log('Have a Cache ' + cache)
             } else {
-                this.selectVessel = cache?.vesselID
-                this.activeVessel = cache?.vesselData
+                console.log('No Cache history')
             }
         }
     },
@@ -263,6 +272,11 @@ export default {
             console.log(data)
             this.seletedMonthlyReport = data
             this.recentOpenReport()
+        },
+        viewReportPDF(data) {
+            this.modalMonthlyReportPDF = true
+            this.seletedMonthlyReport = data
+            console.log(data.pdfLink)
         },
         changeVessel(data) {
             console.log(data)
@@ -327,7 +341,7 @@ export default {
         },
         recentOpenReport() {
             const cache = getCache('activeOnboardTab')
-            if (cache.vesselID) {
+            if (cache?.vesselID) {
                 const data = {
                     report: this.seletedMonthlyReport
                 }
