@@ -61,6 +61,17 @@
                                 errors['deployment'][0] }}</span>
                         </div>
                         <div class="form-group">
+                            <small class="text-muted fw-bolder">RANK / POSITION <span
+                                    class="text-danger">*</span></small>
+                            <select v-model="formData.rank" class="form-select form-select-sm border border-success">
+                                <option v-for="(data, index) in positions" :key="index" :value="data">
+                                    {{ data }}
+                                </option>
+                            </select>
+                            <span class="badge bg-danger mt-2" v-if="errors['rank']">{{
+                                errors['type'][0] }}</span>
+                        </div>
+                        <div class="form-group">
                             <small class="text-muted fw-bolder">DATE OF EMBARKATION <span
                                     class="text-danger">*</span></small>
                             <input type="date" v-model="formData.date"
@@ -110,12 +121,14 @@ export default {
             type: '',
             deployment: '',
             date: '',
-            dateDisembrakation: ''
+            dateDisembrakation: '',
+            rank: ''
         }
         if (this.activeVessel) {
             formData.company = this.activeVessel.company_id
             formData.date = this.activeVessel.embarked
             formData.dateDisembrakation = this.activeVessel.disembarked
+            formData.rank = this.activeVessel.position
         }
         return {
             formData,
@@ -125,7 +138,21 @@ export default {
             documentList: this.vesselDetails.documents,
             vesselList: this.vesselDetails.shippingAgenciesList.find(item => item.id === this.activeVessel.company_id),
             files: [],
-            errors: []
+            errors: [],
+            positions: [
+                'Deck Cadet',
+                'Engine Cadet',
+                'Deck Apprentice',
+                'Apprentice Engineer',
+                'Ordinary Seaman',
+                'Able Seafarer Deck',
+                'Boatswain',
+                'Wiper',
+                'Fitter',
+                'Oiler',
+                'Motorman',
+                'Able Seafarer Engine'
+            ]
         }
     },
     methods: {

@@ -46,6 +46,16 @@
                 errors['deployment'][0] }}</span>
         </div>
         <div class="form-group">
+            <small class="text-muted fw-bolder">RANK / POSITION <span class="text-danger">*</span></small>
+            <select v-model="formData.rank" class="form-select form-select-sm border border-success">
+                <option v-for="(data, index) in positions" :key="index" :value="data">
+                    {{ data }}
+                </option>
+            </select>
+            <span class="badge bg-danger mt-2" v-if="errors['rank']">{{
+                errors['type'][0] }}</span>
+        </div>
+        <div class="form-group">
             <small class="text-muted fw-bolder">DATE OF EMBARKATION <span class="text-danger">*</span></small>
             <input type="date" v-model="formData.date" class="form-control form-control border border-success">
             <span class="badge bg-danger mt-2" v-if="errors['date']">{{
@@ -96,6 +106,7 @@ export default {
     },
     data() {
         const formInputData = new FormData()
+
         return {
             formData: {
                 company: '',
@@ -107,7 +118,21 @@ export default {
             formInputData,
             vesselList: [],
             files: [],
-            errors: []
+            errors: [],
+            positions: [
+                'Deck Cadet',
+                'Engine Cadet',
+                'Deck Apprentice',
+                'Apprentice Engineer',
+                'Ordinary Seaman',
+                'Able Seafarer Deck',
+                'Boatswain',
+                'Wiper',
+                'Fitter',
+                'Oiler',
+                'Motorman',
+                'Able Seafarer Engine'
+            ]
         }
     },
     methods: {
